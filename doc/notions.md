@@ -16,9 +16,17 @@
 ### Bookmarks
 
 - [cppreference.com: Namespaces](https://en.cppreference.com/w/cpp/language/namespace)
+- [cppreference.com: Name lookup](https://en.cppreference.com/w/cpp/language/lookup)
+- [cppreference.com: std::allocator](https://en.cppreference.com/w/cpp/memory/allocator)
 - [Subclass/inherit standard containers?](https://stackoverflow.com/a/39755599)
 - [Don’t inherit from standard types](https://quuxplusone.github.io/blog/2018/12/11/dont-inherit-from-std-types/)
 - [16.2 — Composition](https://www.learncpp.com/cpp-tutorial/composition/)
+- [In C++11, the using keyword when used for type alias is identical to typedef](https://stackoverflow.com/a/20791007)
+
+#### Vector
+
+- [cppreference.com: Standard library header <vector>](https://en.cppreference.com/w/cpp/header/vector)
+- [cplusplus.com: std::vector](https://www.cplusplus.com/reference/vector/vector/)
 
 ### Style guidelines
 
