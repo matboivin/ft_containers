@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/05 16:44:27 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/05 16:49:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 
 #include <memory>
 #include <iterator>
+
+/*
+ * Vector template class
+ *
+ * Array which size can change dynamically
+ */
 
 namespace ft {
 
@@ -30,11 +36,13 @@ namespace ft {
 		typedef typename allocator_type::const_reference		const_reference;
 		typedef typename allocator_type::pointer				pointer;
 		typedef typename allocator_type::const_pointer			const_pointer;
+		// TODO
 		// iterator
 		// const_iterator
 		// typedef std::reverse_iterator<iterator>					reverse_iterator;
 		// typedef std::reverse_iterator<const_iterator>			const_reverse_iterator;
 		// typedef std::iterator_traits<iterator>::difference_type	difference_type;
+		// TODO: Re-implement iterators_traits and reverse_iterator
 		typedef std::size_t										size_type;
 
 	};
