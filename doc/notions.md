@@ -15,6 +15,7 @@
 
 ### Bookmarks
 
+- [cppreference.com: Namespaces](https://en.cppreference.com/w/cpp/language/namespace)
 - [Subclass/inherit standard containers?](https://stackoverflow.com/a/39755599)
 - [Don’t inherit from standard types](https://quuxplusone.github.io/blog/2018/12/11/dont-inherit-from-std-types/)
 - [16.2 — Composition](https://www.learncpp.com/cpp-tutorial/composition/)
