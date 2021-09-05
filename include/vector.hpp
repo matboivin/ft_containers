@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/05 17:00:28 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/05 17:19:16 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 namespace ft {
 
 	template< typename T, typename Allocator = std::allocator<T> >
-	class Vector {
+	class vector {
 
 	public:
 
@@ -46,27 +46,26 @@ namespace ft {
 		typedef std::size_t										size_type;
 
 		// Default constructor
-		Vector( void ) : Vector( Allocator() ) {}
+		vector( void ) : vector( Allocator() ) {}
 
 		// Destructor
-		~Vector( void ) {}
+		~vector( void ) {}
 
 		// Assignment operator
-		Vector&	operator=( const Vector& rhs ) {
+		vector&	operator=( const vector& rhs ) {
 
 			static_cast<void>(rhs);
 			return (*this); // tmp
 		}
+
+		// allocator
+		allocator_type	get_allocator( void ) const;
 
 		// iterators
 		// iterator				begin( void );
 		// iterator				end( void );
 		// reverse_iterator		rbegin( void );
 		// reverse_iterator		rend( void );
-		// const_iterator			cbegin( void );
-		// const_iterator			cend( void );
-		// const_reverse_iterator	crbegin( void );
-		// const_reverse_iterator	crend( void );
 
 		// capacity
 		bool		empty( void ) const;
@@ -74,10 +73,61 @@ namespace ft {
 		size_type	max_size( void ) const;
 		size_type	capacity( void ) const;
 		void		reserve( size_type n );
-		void		shrink_to_fit( void );
+
+		// element access
+		reference		operator[]( size_type n );
+		const_reference	operator[]( size_type n ) const;
+		reference		at( size_type n );
+		const_reference	at( size_type n ) const;
+		reference		front( void );
+		const_reference	front( void ) const;
+		reference		back( void );
+		const_reference	back( void ) const;
+
+		// modifiers
+		template < typename InputIterator >
+			void	assign( InputIterator first, InputIterator last );
+		void		assign( size_type n, const value_type& val );
+		void		push_back( const value_type& val );
+		void		pop_back( void );
+		iterator	insert( iterator position, const value_type& val );
+		void		insert( iterator position, size_type n, const value_type& val );
+		template < typename InputIterator >
+			void	insert( iterator position, InputIterator first, InputIterator last );
+		iterator	erase( iterator position );
+		iterator	erase( iterator first, iterator last );
+		void		swap( vector& x );
+		void		clear( void );
 
 	};
 
 }
+
+// non-member function overloads
+
+// relational operators
+
+template < typename T, typename Allocator >
+	bool	operator==( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
+
+template < typename T, typename Allocator >
+	bool	operator!=( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
+
+template < typename T, typename Allocator >
+	bool	operator<( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
+
+template < typename T, typename Allocator >
+	bool	operator<=( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
+
+template < typename T, typename Allocator >
+	bool	operator>(const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
+
+template < typename T, typename Allocator >
+	bool	operator>=( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
+
+// swap
+
+template < typename T, typename Allocator >
+	void	swap( vector<T,Allocator>& x, vector<T,Allocator>& y );
 
 #endif
