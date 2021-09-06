@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 15:31:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 16:04:52 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ namespace ft {
 				const allocator_type& allocator = allocator_type() );
 		
 		// range constructor
-		template < typename InputIterator >
+		template< typename InputIterator >
 			vector( InputIterator first,
 					InputIterator last,
 					const allocator_type& allocator = allocator_type() );
@@ -108,14 +108,14 @@ namespace ft {
 		// const_reference	back( void ) const;
 
 		// modifiers
-		// template < typename InputIterator >
+		// template< typename InputIterator >
 		// 	void	assign( InputIterator first, InputIterator last );
 		// void		assign( size_type n, const value_type& val );
 		// void		push_back( const value_type& val );
 		// void		pop_back( void );
 		// iterator	insert( iterator position, const value_type& val );
 		// void		insert( iterator position, size_type n, const value_type& val );
-		// template < typename InputIterator >
+		// template< typename InputIterator >
 		// 	void	insert( iterator position, InputIterator first, InputIterator last );
 		// iterator	erase( iterator position );
 		// iterator	erase( iterator first, iterator last );
@@ -135,9 +135,15 @@ namespace ft {
 		std::cout << "ft::vector default constructor called" << std::endl;
 	}
 
-	// fill constructor
+	/*
+	 * Fill constructor
+	 *
+	 * Constructs a container with n elements. Each element is a copy of val.
+	 */
 	template< typename T, typename Allocator >
-	vector<T,Allocator>::vector( size_type n, const value_type& val, const allocator_type& allocator )
+	vector<T,Allocator>::vector( size_type n,
+								 const value_type& val,
+								 const allocator_type& allocator )
 			: _allocator( allocator() ),
 			  _size(n),
 			  _capacity(n) {
@@ -149,7 +155,22 @@ namespace ft {
 	}
 
 	/*
-	 *  Destructor
+	 * Range constructor
+	 *
+	 * Constructs a container with as many elements as the range [first,last),
+	 * with each element constructed from its corresponding element in that range,
+	 * in the same order.
+	 */
+	// template< typename InputIterator >
+	// vector<T,Allocator>::vector( InputIterator first, InputIterator last,
+	// 							const allocator_type& allocator = allocator_type() ) {
+	// 		: _allocator( allocator() ) {
+
+	// 	std::cout << "ft::vector range constructor called" << std::endl;
+	// }
+
+	/*
+	 * Destructor
 	 *
 	 * Destroys all container elements, and deallocates all the storage capacity allocated
 	 * by the vector using its allocator.
@@ -185,10 +206,7 @@ namespace ft {
 			_capacity = calculateGrowth( rhs.capacity() );
 
 			_elements = _allocator.allocate( rhs.size() );
-			_allocator.construct( _elements, 0 );
-
-			for ( int i = 0; i < rhs.size(); i++ )
-				_elements[i] = rhs._elements[i];
+			_allocator.construct( _elements, rhs._elements );
 		}
 
 		return ( *this );
