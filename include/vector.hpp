@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 12:58:47 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 13:20:34 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ namespace ft {
 
 	private:
 
-		Allocator	_alloc;
-		size_type	_size;       // number of elements
-		size_type	_capacity;
-		T*			_elements;
+		allocator_type	_allocator;
+		size_type		_size;       // number of elements
+		size_type		_capacity;
+		T*				_elements;
 
 	public:
 
@@ -124,7 +124,7 @@ namespace ft {
 	// default constructor
 	template< typename T, typename Allocator >
 	vector<T,Allocator>::vector( void )
-			: _alloc( Allocator() ),
+			: _allocator( Allocator() ),
 			  _size(0),
 			  _capacity(0),
 			  _elements() {
@@ -135,14 +135,14 @@ namespace ft {
 	// fill constructor
 	template< typename T, typename Allocator >
 	vector<T,Allocator>::vector( size_type n, const value_type& val, const allocator_type& allocator )
-			: _alloc( allocator() ),
+			: _allocator( allocator() ),
 			  _size(n),
 			  _capacity(n) {
 
 		std::cout << "ft::vector fill constructor called" << std::endl;
 
-		this->_elements = allocator.allocate(n);
-		allocator.construct( this->_elements, val );
+		_elements = allocator.allocate(n);
+		allocator.construct( _elements, val );
 	}
 
 	// destructor
@@ -151,8 +151,8 @@ namespace ft {
 
 		std::cout << "ft::vector destructor called" << std::endl;
 
-		this->_alloc.destroy( this->_elements );
-		this->_alloc.deallocate( this->_elements, this->capacity() );
+		_allocator.destroy( _elements );
+		_allocator.deallocate( _elements, _capacity );
 	}
 
 	// assignment operator
@@ -163,20 +163,30 @@ namespace ft {
 
 		if ( this != &rhs ) {
 
-			this->_alloc.destroy( this->_elements );
-			this->_alloc.deallocate( this->_elements, this->capacity() );
+			this->_allocator.destroy( this->_elements );
+			this->_allocator.deallocate( this->_elements, this->capacity() );
 
-			this->_alloc = rhs._alloc();
+			this->_allocator = rhs._alloc();
 			this->_size = rhs.size();
 			this->_capacity = rhs.capacity();
 
-			this->_elements = this->_alloc.allocate( rhs.size() );
-			this->_alloc.construct( this->_elements, 0 );
+			this->_elements = this->_allocator.allocate( rhs.size() );
+			this->_allocator.construct( this->_elements, 0 );
+
 			for ( int i = 0; i < rhs.size(); i++ )
 				this->_elements[i] = rhs._elements[i];
 		}
 
 		return ( *this );
+	}
+
+	/*
+	 * Returns a copy of the allocator object associated with the vector.
+	 */
+	template< typename T, typename Allocator >
+	allocator_type	vector<T,Allocator>::get_allocator( void ) const {
+
+		return ( static_cast<allocator_type>(this->_allocator) );
 	}
 
 	// capacity
