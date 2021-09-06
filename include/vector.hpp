@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 19:14:38 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 20:13:51 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -489,6 +489,7 @@ namespace ft {
 	void	vector<T,Allocator>::push_back( const value_type& val ) {
 
 		_capacity = calculateGrowth( size() + 1 );
+		reserve(_capacity);
 		// TODO
 
 		_elements[size()] = val;
