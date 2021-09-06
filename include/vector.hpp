@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 17:29:16 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 17:42:37 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ namespace ft {
 	private:
 
 		// attributes
-		allocator_type	_allocator;  // The container keeps and uses an internal copy of this allocator
+		allocator_type	_allocator;  // The container keeps and uses an internal copy of the allocator
 		size_type		_size;       // number of elements
 		size_type		_capacity;
 		T*				_elements;
@@ -94,19 +94,20 @@ namespace ft {
 		// capacity
 		bool		empty( void ) const;
 		size_type	size( void ) const;
+		// void		resize( size_type n, value_type val = value_type() );
 		size_type	max_size( void ) const;
 		size_type	capacity( void ) const;
-		void		reserve( size_type n );
+		// void		reserve( size_type n );
 
 		// element access
 		reference		operator[]( size_type n );
 		const_reference	operator[]( size_type n ) const;
 		reference		at( size_type n );
 		const_reference	at( size_type n ) const;
-		// reference		front( void );
-		// const_reference	front( void ) const;
-		// reference		back( void );
-		// const_reference	back( void ) const;
+		reference		front( void );
+		const_reference	front( void ) const;
+		reference		back( void );
+		const_reference	back( void ) const;
 
 		// modifiers
 		// template< typename InputIterator >
@@ -257,12 +258,14 @@ namespace ft {
 		return ( static_cast<allocator_type>(this->_allocator) );
 	}
 
-	// capacity
+
+	/* capacity ************************************************************* */
+
 
 	/*
 	 * Checks whether the vector is empty (i.e. whether its size is 0).
 	 *
-	 * @return true if the container size is 0, false otherwise.
+	 * @return true if the container size is 0, false otherwise
 	 */
 	template< typename T, typename Allocator >
 	bool	vector<T,Allocator>::empty( void ) const {
@@ -273,7 +276,7 @@ namespace ft {
 	/*
 	 * Get the size of the vector
 	 *
-	 * @return The number of elements in the vector.
+	 * @return The number of elements in the vector
 	 */
 	template< typename T, typename Allocator >
 	typename vector<T,Allocator>::size_type	vector<T,Allocator>::size( void ) const {
@@ -287,13 +290,16 @@ namespace ft {
 	 * This is the maximum potential size the container can reach due to known system
 	 * or library implementation limitations.
 	 *
-	 * @return The maximum number of elements a vector container can hold as content.
+	 * @return The maximum number of elements a vector container can hold as content
 	 */
 	template< typename T, typename Allocator >
 	typename vector<T,Allocator>::size_type	vector<T,Allocator>::max_size( void ) const {
 
 		return ( this->_allocator.max_size() );
 	}
+
+	//TODO
+	//resize
 
 	/*
 	 * Calculates capacity growth (private member function to help)
@@ -329,14 +335,19 @@ namespace ft {
 		return ( this->_capacity );
 	}
 
-	// element access
+	//TODO
+	//reserve
+
+
+	/* element access ******************************************************* */
+
 
 	/* 
 	 * Access an element of the vector
 	 *
-	 * @param n  Position of an element in the container.
+	 * @param n  Position of an element in the container
 	 *
-	 * @return A reference to the element at position n in the vector container.
+	 * @return A reference to the element at position n in the vector container
 	 *
 	 * @exceptsafe If the container size is greater than n, the function
 	 * never throws exceptions.
@@ -357,9 +368,9 @@ namespace ft {
 	/* 
 	 * Access an element of the vector
 	 *
-	 * @param n  Position of an element in the container.
+	 * @param n  Position of an element in the container
 	 *
-	 * @return The element at the specified position in the container.
+	 * @return The element at the specified position in the container
 	 *
 	 * @exceptsafe If n is out of bounds, out_of_range si thrown
 	 */
@@ -367,7 +378,7 @@ namespace ft {
 	typename vector<T,Allocator>::reference	vector<T,Allocator>::at( size_type n ) {
 
 		if ( n > size() )
-			throw std::out_of_range("vector::_M_range_check");
+			throw std::out_of_range("ft::vector::_M_range_check");
 
 		return ( this->_elements[n] );
 	}
@@ -376,15 +387,57 @@ namespace ft {
 	typename vector<T,Allocator>::const_reference	vector<T,Allocator>::at( size_type n ) const {
 
 		if ( n > size() )
-			throw std::out_of_range("vector::_M_range_check");
+			throw std::out_of_range("ft::vector::_M_range_check");
 
 		return ( this->_elements[n] );
 	}
 
+	/* 
+	 * Access the first element in the vector
+	 *
+	 * @return A reference to the first element in the vector container
+	 */
+	template < typename T, typename Allocator >
+	typename vector<T,Allocator>::reference	vector<T,Allocator>::front( void ) {
 
-	// non-member function overloads
+		return ( this->_elements[0] );
+	}
 
-	// relational operators
+	template < typename T, typename Allocator >
+	typename vector<T,Allocator>::const_reference	vector<T,Allocator>::front( void ) const {
+
+		return ( this->_elements[0] );
+	}
+
+	/* 
+	 * Access the last element in the vector
+	 *
+	 * @return A reference to the last element in the vector container
+	 */
+	template < typename T, typename Allocator >
+	typename vector<T,Allocator>::reference	vector<T,Allocator>::back( void ) {
+
+		size_type	idx = size() - 1;
+
+		return ( this->_elements[idx] );
+	}
+
+	template < typename T, typename Allocator >
+	typename vector<T,Allocator>::const_reference	vector<T,Allocator>::back( void ) const {
+
+		size_type	idx = size() - 1;
+
+		return ( this->_elements[idx] );
+	}
+
+
+	/* modifiers ************************************************************ */
+
+
+	/* non-member function overloads **************************************** */
+
+
+	/* relational operators ************************************************* */
 
 	template < typename T, typename Allocator >
 		bool	operator==( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
