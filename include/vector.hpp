@@ -6,13 +6,14 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/05 18:55:55 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 11:30:35 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
+#include <iostream>
 #include <memory>
 #include <iterator>
 
@@ -32,10 +33,10 @@ namespace ft {
 		// types
 		typedef T												value_type;
 		typedef Allocator										allocator_type;
-		typedef typename allocator_type::reference				reference;
-		typedef typename allocator_type::const_reference		const_reference;
-		typedef typename allocator_type::pointer				pointer;
-		typedef typename allocator_type::const_pointer			const_pointer;
+		// typedef typename allocator_type::reference				reference;
+		// typedef typename allocator_type::const_reference		const_reference;
+		// typedef typename allocator_type::pointer				pointer;
+		// typedef typename allocator_type::const_pointer			const_pointer;
 		// TODO
 		// iterator
 		// const_iterator
@@ -93,14 +94,14 @@ namespace ft {
 		void		reserve( size_type n );
 
 		// element access
-		reference		operator[]( size_type n );
-		const_reference	operator[]( size_type n ) const;
-		reference		at( size_type n );
-		const_reference	at( size_type n ) const;
-		reference		front( void );
-		const_reference	front( void ) const;
-		reference		back( void );
-		const_reference	back( void ) const;
+		// reference		operator[]( size_type n );
+		// const_reference	operator[]( size_type n ) const;
+		// reference		at( size_type n );
+		// const_reference	at( size_type n ) const;
+		// reference		front( void );
+		// const_reference	front( void ) const;
+		// reference		back( void );
+		// const_reference	back( void ) const;
 
 		// modifiers
 		// template < typename InputIterator >
@@ -122,20 +123,20 @@ namespace ft {
 	// default constructor
 	template< typename T, typename Allocator >
 	vector<T,Allocator>::vector( void )
-			: vector( Allocator() ),
-			  _elements(),
+			: _elements(),
 			  _size(0),
 			  _capacity(0) {
 
-		return ;
+		std::cout << "ft::vector default constructor called" << std::endl;
 	}
 
 	// fill constructor
 	template< typename T, typename Allocator >
 	vector<T,Allocator>::vector( size_type n, const value_type& val, const allocator_type& allocator )
-			: vector( Allocator() ),
-			  _size(n),
+			: _size(n),
 			  _capacity(n) {
+
+		std::cout << "ft::vector fill constructor called" << std::endl;
 
 		// TODO
 		static_cast<void>(allocator);
@@ -150,12 +151,16 @@ namespace ft {
 	template< typename T, typename Allocator >
 	vector<T,Allocator>::~vector( void ) {
 
+		std::cout << "ft::vector destructor called" << std::endl;
+
 		delete [] this->_elements;
 	}
 
 	// assignment operator
 	template< typename T, typename Allocator >
 	vector<T,Allocator>&	vector<T,Allocator>::operator=( const vector& rhs ) {
+
+		std::cout << "ft::vector assignment operator called" << std::endl;
 
 		if ( this != &rhs ) {
 

@@ -13,11 +13,19 @@
 - [The Four Polymorphisms in C++](https://catonmat.net/cpp-polymorphism)
 - [cppreference.com: Containers library](https://en.cppreference.com/w/cpp/container)
 
-### Bookmarks
+### Namespaces
 
 - [cppreference.com: Namespaces](https://en.cppreference.com/w/cpp/language/namespace)
 - [cppreference.com: Name lookup](https://en.cppreference.com/w/cpp/language/lookup)
+
+### Allocators
+
 - [cppreference.com: std::allocator](https://en.cppreference.com/w/cpp/memory/allocator)
+- [CppCon 2014: Stephan Lavavej "STL Features And Implementation Techniques"](https://youtu.be/dTeKf5Oek2c)
+- [Is Stephen Lavavej’s Mallocator the same in C++11?](https://isocpp.org/blog/2016/04/quick-q-is-stephen-lavavejs-mallocator-the-same-in-cpp11)
+
+### Bookmarks
+
 - [Subclass/inherit standard containers?](https://stackoverflow.com/a/39755599)
 - [Don’t inherit from standard types](https://quuxplusone.github.io/blog/2018/12/11/dont-inherit-from-std-types/)
 - [16.2 — Composition](https://www.learncpp.com/cpp-tutorial/composition/)
