@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 19:01:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 19:14:55 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	displayInfos( const std::string& title, const Vec& v ) {
 			  << "\n- size:        " << v.size()
 			  << "\n- capacity:    " << v.capacity() << std::endl;
 
-	for ( std::size_t i = 0; i < v.size(); i++ )
+	for ( std::size_t i = 0; i < v.capacity(); i++ )
 		std::cout << v[i] << ' ';
 
 	std::cout << "\n\n";
@@ -145,11 +145,48 @@ void	testCopy( void ) {
 	displayInfos("ft_vec 1", ft_vec1);
 }
 
+void	testCapacity( void ) {
+
+	std::vector<int>	vec1(14);
+
+	vec1.push_back(3);
+	vec1.push_back(5);
+	vec1.push_back(737);
+	vec1.push_back(1);
+	vec1.push_back(5);
+	vec1.push_back(58);
+	vec1.push_back(42);
+
+	displayInfos("vec 1", vec1);
+
+	vec1.reserve(100);
+	displayInfos("vec 1", vec1);
+
+	std::cout << "______________\n\n";
+
+	std::vector<int>	ft_vec1(14);
+
+	ft_vec1.push_back(3);
+	ft_vec1.push_back(5);
+	ft_vec1.push_back(737);
+	ft_vec1.push_back(1);
+	ft_vec1.push_back(5);
+	ft_vec1.push_back(58);
+	ft_vec1.push_back(42);
+
+	displayInfos("ft_vec 1", ft_vec1);
+
+	ft_vec1.reserve(100);
+
+	displayInfos("ft_vec 1", ft_vec1);
+}
+
 int	main( void ) {
 
 	//testDefaultConstructors();
 	//testConstructors();
-	testCopy();
+	//testCopy();
+	testCapacity();
 
 	return (0);
 }

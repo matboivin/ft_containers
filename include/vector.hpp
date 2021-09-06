@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 19:00:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 19:14:38 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ namespace ft {
 		void		resize( size_type n, value_type val = value_type() );
 		size_type	max_size( void ) const;
 		size_type	capacity( void ) const;
-		// void		reserve( size_type n );
+		void		reserve( size_type n );
 
 		// element access
 		reference		operator[]( size_type n );
@@ -365,9 +365,24 @@ namespace ft {
 		return ( this->_capacity );
 	}
 
-	//TODO
-	//reserve
+	/*
+	 * Requests that the vector capacity be at least enough to contain n elements.
+	 *
+	 * If n is greater than the current vector capacity, the function causes
+	 * the container to reallocate its storage increasing its capacity to n or greater
+	 *
+	 * @param n  Minimum capacity for the vector
+	 *           Note that the resulting vector capacity may be equal or greater than n
+	 */
+	template< typename T, typename Allocator >
+	void	vector<T,Allocator>::reserve( size_type n ) {
 
+		if ( n <= capacity() )
+			return ;
+
+		_capacity = calculateGrowth( size() + 1 );
+		_elements = _allocator.allocate( _capacity );
+	}
 
 	/* element access ******************************************************* */
 
