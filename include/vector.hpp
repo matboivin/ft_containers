@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 11:30:35 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 12:58:47 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ namespace ft {
 		// types
 		typedef T												value_type;
 		typedef Allocator										allocator_type;
-		// typedef typename allocator_type::reference				reference;
-		// typedef typename allocator_type::const_reference		const_reference;
-		// typedef typename allocator_type::pointer				pointer;
-		// typedef typename allocator_type::const_pointer			const_pointer;
+		typedef typename allocator_type::reference				reference;
+		typedef typename allocator_type::const_reference		const_reference;
+		typedef typename allocator_type::pointer				pointer;
+		typedef typename allocator_type::const_pointer			const_pointer;
 		// TODO
 		// iterator
 		// const_iterator
@@ -48,9 +48,10 @@ namespace ft {
 
 	private:
 
-		T*			_elements;
+		Allocator	_alloc;
 		size_type	_size;       // number of elements
 		size_type	_capacity;
+		T*			_elements;
 
 	public:
 
@@ -123,9 +124,10 @@ namespace ft {
 	// default constructor
 	template< typename T, typename Allocator >
 	vector<T,Allocator>::vector( void )
-			: _elements(),
+			: _alloc( Allocator() ),
 			  _size(0),
-			  _capacity(0) {
+			  _capacity(0),
+			  _elements() {
 
 		std::cout << "ft::vector default constructor called" << std::endl;
 	}
@@ -133,18 +135,14 @@ namespace ft {
 	// fill constructor
 	template< typename T, typename Allocator >
 	vector<T,Allocator>::vector( size_type n, const value_type& val, const allocator_type& allocator )
-			: _size(n),
+			: _alloc( allocator() ),
+			  _size(n),
 			  _capacity(n) {
 
 		std::cout << "ft::vector fill constructor called" << std::endl;
 
-		// TODO
-		static_cast<void>(allocator);
-
-		this->elements = new T[n];
-
-		for ( size_type i = 0; i < n; i++ )
-			this->elements[i] = val;
+		this->_elements = allocator.allocate(n);
+		allocator.construct( this->_elements, val );
 	}
 
 	// destructor
@@ -153,7 +151,8 @@ namespace ft {
 
 		std::cout << "ft::vector destructor called" << std::endl;
 
-		delete [] this->_elements;
+		this->_alloc.destroy( this->_elements );
+		this->_alloc.deallocate( this->_elements, this->capacity() );
 	}
 
 	// assignment operator
@@ -164,9 +163,17 @@ namespace ft {
 
 		if ( this != &rhs ) {
 
-			// TODO
+			this->_alloc.destroy( this->_elements );
+			this->_alloc.deallocate( this->_elements, this->capacity() );
+
+			this->_alloc = rhs._alloc();
 			this->_size = rhs.size();
 			this->_capacity = rhs.capacity();
+
+			this->_elements = this->_alloc.allocate( rhs.size() );
+			this->_alloc.construct( this->_elements, 0 );
+			for ( int i = 0; i < rhs.size(); i++ )
+				this->_elements[i] = rhs._elements[i];
 		}
 
 		return ( *this );

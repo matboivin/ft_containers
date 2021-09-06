@@ -6,8 +6,7 @@ RM = /bin/rm
 .SUFFIXES:
 .SUFFIXES: .cpp .hpp .o
 
-INC_FILES = vector.hpp \
-			mallocator.hpp
+INC_FILES = vector.hpp
 
 SRC_FILES = main.cpp
 
@@ -24,7 +23,7 @@ VPATH = $(SRC_DIR)
 
 CPPFLAGS = -I$(INC_DIR)
 CXX = clang++
-CXXFLAGS = -Wall -Wextra -Werror #-std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 all: $(BIN_NAME)
 

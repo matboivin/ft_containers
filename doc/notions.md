@@ -23,6 +23,7 @@
 - [cppreference.com: std::allocator](https://en.cppreference.com/w/cpp/memory/allocator)
 - [CppCon 2014: Stephan Lavavej "STL Features And Implementation Techniques"](https://youtu.be/dTeKf5Oek2c)
 - [Is Stephen Lavavej’s Mallocator the same in C++11?](https://isocpp.org/blog/2016/04/quick-q-is-stephen-lavavejs-mallocator-the-same-in-cpp11)
+- [What is an Allocator?](https://medium.com/@vgasparyan1995/what-is-an-allocator-c8df15a93ed)
 
 ### Bookmarks
 
