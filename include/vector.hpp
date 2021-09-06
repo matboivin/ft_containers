@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 13:20:34 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 14:26:51 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,7 +166,7 @@ namespace ft {
 			this->_allocator.destroy( this->_elements );
 			this->_allocator.deallocate( this->_elements, this->capacity() );
 
-			this->_allocator = rhs._alloc();
+			this->_allocator = rhs.get_allocator();
 			this->_size = rhs.size();
 			this->_capacity = rhs.capacity();
 
@@ -184,7 +184,7 @@ namespace ft {
 	 * Returns a copy of the allocator object associated with the vector.
 	 */
 	template< typename T, typename Allocator >
-	allocator_type	vector<T,Allocator>::get_allocator( void ) const {
+	typename vector<T,Allocator>::allocator_type	vector<T,Allocator>::get_allocator( void ) const {
 
 		return ( static_cast<allocator_type>(this->_allocator) );
 	}
@@ -210,6 +210,15 @@ namespace ft {
 	typename vector<T,Allocator>::size_type	vector<T,Allocator>::size( void ) const {
 
 		return ( this->_size );
+	}
+
+	/*
+	 * Returns the maximum number of elements that the vector can hold.
+	 */
+	template< typename T, typename Allocator >
+	typename vector<T,Allocator>::size_type	vector<T,Allocator>::max_size( void ) const {
+
+		return ( this->_allocator.max_size() );
 	}
 
 	/* 
