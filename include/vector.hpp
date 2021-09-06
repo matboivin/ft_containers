@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 18:50:16 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 19:00:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ namespace ft {
 		// capacity
 		bool		empty( void ) const;
 		size_type	size( void ) const;
-		// void		resize( size_type n, value_type val = value_type() );
+		void		resize( size_type n, value_type val = value_type() );
 		size_type	max_size( void ) const;
 		size_type	capacity( void ) const;
 		// void		reserve( size_type n );
@@ -122,7 +122,7 @@ namespace ft {
 		// iterator	erase( iterator position );
 		// iterator	erase( iterator first, iterator last );
 		// void		swap( vector& x );
-		// void		clear( void );
+		void		clear( void );
 	};
 
 	/*
@@ -298,8 +298,38 @@ namespace ft {
 		return ( this->_allocator.max_size() );
 	}
 
-	//TODO
-	//resize
+	/*
+	 * Resizes the container so that it contains n elements.
+	 *
+	 * If n is smaller than the current container size, the content is reduced to
+	 * its first n elements, removing those beyond (and destroying them).
+	 *
+	 * If n is greater than the current container size, the content is expanded
+	 * by inserting at the end as many elements as needed to reach a size of n.
+	 *
+	 * If val is specified, the new elements are initialized as copies of val,
+	 * otherwise, they are value-initialized.
+	 *
+	 * If n is also greater than the current container capacity, an automatic reallocation
+	 * of the allocated storage space takes place.
+	 *
+	 * @param n    New container size, expressed in number of elements
+	 * @param val  Object whose content is copied to the added elements in case that n
+	 *             is greater than the current container size.
+	 *             If not specified, the default constructor is used instead.
+	 */
+
+	// TODO
+	// insert, erase
+	// template< typename T, typename Allocator >
+	// void	vector<T,Allocator>::resize( size_type n, value_type val = value_type() ) {
+
+	// 	if ( n < size() )
+			
+
+	// 	else if ( n > size() )
+			
+	// }
 
 	/*
 	 * Calculates capacity growth (private member function to help)
@@ -342,7 +372,7 @@ namespace ft {
 	/* element access ******************************************************* */
 
 
-	/* 
+	/*
 	 * Access an element of the vector
 	 *
 	 * @param n  Position of an element in the container
@@ -365,7 +395,7 @@ namespace ft {
 		return ( this->_elements[n] );
 	}
 
-	/* 
+	/*
 	 * Access an element of the vector
 	 *
 	 * @param n  Position of an element in the container
@@ -392,7 +422,7 @@ namespace ft {
 		return ( this->_elements[n] );
 	}
 
-	/* 
+	/*
 	 * Access the first element in the vector
 	 *
 	 * @return A reference to the first element in the vector container
@@ -409,7 +439,7 @@ namespace ft {
 		return ( this->_elements[0] );
 	}
 
-	/* 
+	/*
 	 * Access the last element in the vector
 	 *
 	 * @return A reference to the last element in the vector container
@@ -433,7 +463,7 @@ namespace ft {
 
 	/* modifiers ************************************************************ */
 
-	/* 
+	/*
 	 * Adds a new element at the end of the vector, after its current last element.
 	 * If the new vector size surpasses the current vector capacity,
 	 * it causes an automatic reallocation of the allocated storage space.
@@ -450,7 +480,7 @@ namespace ft {
 		_size += 1;
 	}
 
-	/* 
+	/*
 	 * Removes the last element in the vector, effectively reducing the container size by one.
 	 * This destroys the removed element.
 	 */
@@ -459,6 +489,18 @@ namespace ft {
 
 		_allocator.destroy( *_elements[size()] );
 		_size -= 1;
+	}
+
+	/*
+	 * Removes all elements from the vector (which are destroyed),
+	 * leaving the container with a size of 0.
+	 */
+	template < typename T, typename Allocator >
+	void	vector<T,Allocator>::clear( void ) {
+
+		_allocator.destroy( _elements );
+		_allocator.deallocate( _elements, _capacity );
+		_size = 0;
 	}
 
 
