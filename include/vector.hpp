@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 15:28:34 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 15:31:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,17 +178,17 @@ namespace ft {
 
 		if ( this != &rhs ) {
 
-			this->_allocator.destroy( this->_elements );
-			this->_allocator.deallocate( this->_elements, this->capacity() );
+			_allocator.destroy( _elements );
+			_allocator.deallocate( _elements, capacity() );
 
-			this->_size = rhs.size();
-			this->_capacity = calculateGrowth( rhs.capacity() );
+			_size = rhs.size();
+			_capacity = calculateGrowth( rhs.capacity() );
 
-			this->_elements = this->_allocator.allocate( rhs.size() );
-			this->_allocator.construct( this->_elements, 0 );
+			_elements = _allocator.allocate( rhs.size() );
+			_allocator.construct( _elements, 0 );
 
 			for ( int i = 0; i < rhs.size(); i++ )
-				this->_elements[i] = rhs._elements[i];
+				_elements[i] = rhs._elements[i];
 		}
 
 		return ( *this );
@@ -211,11 +211,11 @@ namespace ft {
 	template< typename T, typename Allocator >
 	typename vector<T,Allocator>::size_type	vector<T,Allocator>::calculateGrowth( const size_type newSize) const {
 
-		const size_type	currCapacity = this->capacity();
-		size_type		capacityLeft = this->max_size() - currCapacity;
+		const size_type	currCapacity = capacity();
+		size_type		capacityLeft = max_size() - currCapacity;
 
 		if ( currCapacity > capacityLeft )
-			return ( this->max_size() );
+			return ( max_size() );
 		
 		const size_type	newCapacity = currCapacity + currCapacity;
 
