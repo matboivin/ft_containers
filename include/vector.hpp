@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 17:42:37 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 18:39:50 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ namespace ft {
 		// template< typename InputIterator >
 		// 	void	assign( InputIterator first, InputIterator last );
 		// void		assign( size_type n, const value_type& val );
-		// void		push_back( const value_type& val );
+		void		push_back( const value_type& val );
 		// void		pop_back( void );
 		// iterator	insert( iterator position, const value_type& val );
 		// void		insert( iterator position, size_type n, const value_type& val );
@@ -160,7 +160,7 @@ namespace ft {
 		std::cout << "ft::vector fill constructor called" << std::endl;
 
 		_elements = allocator.allocate(n);
-		allocator.construct( _elements, val ); //TODO
+		allocator.construct( _elements, val );
 	}
 
 	/*
@@ -196,7 +196,7 @@ namespace ft {
 		std::cout << "ft::vector copy constructor called" << std::endl;
 
 		_elements = _allocator.allocate( x.size() );
-		_allocator.construct( _elements, x._elements ); // TODO
+		_allocator.construct( _elements, x._elements );
 	}
 
 	/*
@@ -211,7 +211,7 @@ namespace ft {
 		std::cout << "ft::vector destructor called" << std::endl;
 
 		_allocator.destroy( _elements );
-		//_allocator.deallocate( _elements, _capacity );
+		_allocator.deallocate( _elements, _capacity );
 	}
 
 	/*
@@ -241,7 +241,7 @@ namespace ft {
 			_capacity = calculateGrowth( rhs.capacity() );
 
 			_elements = _allocator.allocate( rhs.size() );
-			_allocator.construct( _elements, rhs._elements ); // TODO
+			_allocator.construct( _elements, rhs._elements );
 		}
 
 		return ( *this );
@@ -432,6 +432,23 @@ namespace ft {
 
 
 	/* modifiers ************************************************************ */
+
+	/* 
+	 * Adds a new element at the end of the vector, after its current last element.
+	 * If the new vector size surpasses the current vector capacity,
+	 * it causes an automatic reallocation of the allocated storage space.
+	 *
+	 * @param val  Value to be copied (or moved) to the new element
+	 */
+	template < typename T, typename Allocator >
+	void	vector<T,Allocator>::push_back( const value_type& val ) {
+
+		_capacity = calculateGrowth( size() + 1 );
+		// TODO
+
+		_elements[size()] = val;
+		_size += 1;
+	}
 
 
 	/* non-member function overloads **************************************** */

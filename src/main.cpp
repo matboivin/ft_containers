@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 17:29:44 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 18:38:24 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,8 +104,16 @@ void	testCopy( void ) {
 
 	std::cout << "______________\n\n";
 
-	std::vector<int>	ft_vec1(14, 1);
-	std::vector<int>	ft_vec2(4,  3);
+	std::vector<int>	ft_vec1(14);
+	std::vector<int>	ft_vec2(4);
+
+	ft_vec1.push_back(3);
+	ft_vec1.push_back(5);
+	ft_vec1.push_back(737);
+	ft_vec1.push_back(1);
+	ft_vec1.push_back(5);
+	ft_vec1.push_back(58);
+	ft_vec1.push_back(0);
 
 	try {
 		ft_vec1.at(42) = 42;
