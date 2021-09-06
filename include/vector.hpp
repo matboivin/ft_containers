@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 17:07:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 17:29:16 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,8 @@ namespace ft {
 		// element access
 		reference		operator[]( size_type n );
 		const_reference	operator[]( size_type n ) const;
-		// reference		at( size_type n );
-		// const_reference	at( size_type n ) const;
+		reference		at( size_type n );
+		const_reference	at( size_type n ) const;
 		// reference		front( void );
 		// const_reference	front( void ) const;
 		// reference		back( void );
@@ -338,7 +338,8 @@ namespace ft {
 	 *
 	 * @return A reference to the element at position n in the vector container.
 	 *
-	 * @exceptsafe If the container size is greater than n, the function never throws exceptions.
+	 * @exceptsafe If the container size is greater than n, the function
+	 * never throws exceptions.
 	 * Otherwise, the behavior is undefined.
 	 */
 	template< typename T, typename Allocator >
@@ -352,6 +353,34 @@ namespace ft {
 
 		return ( this->_elements[n] );
 	}
+
+	/* 
+	 * Access an element of the vector
+	 *
+	 * @param n  Position of an element in the container.
+	 *
+	 * @return The element at the specified position in the container.
+	 *
+	 * @exceptsafe If n is out of bounds, out_of_range si thrown
+	 */
+	template < typename T, typename Allocator >
+	typename vector<T,Allocator>::reference	vector<T,Allocator>::at( size_type n ) {
+
+		if ( n > size() )
+			throw std::out_of_range("vector::_M_range_check");
+
+		return ( this->_elements[n] );
+	}
+
+	template < typename T, typename Allocator >
+	typename vector<T,Allocator>::const_reference	vector<T,Allocator>::at( size_type n ) const {
+
+		if ( n > size() )
+			throw std::out_of_range("vector::_M_range_check");
+
+		return ( this->_elements[n] );
+	}
+
 
 	// non-member function overloads
 
