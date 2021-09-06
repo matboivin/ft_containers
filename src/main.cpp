@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 18:38:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 18:48:16 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,10 @@ void	testCopy( void ) {
 	vec1.push_back(5);
 	vec1.push_back(58);
 	vec1.push_back(0);
+	vec1.push_back(0);
+
+	displayInfos("vec 1", vec1);
+	vec1.pop_back();
 
 	try {
 		vec1.at(42) = 42;
@@ -114,6 +118,10 @@ void	testCopy( void ) {
 	ft_vec1.push_back(5);
 	ft_vec1.push_back(58);
 	ft_vec1.push_back(0);
+	ft_vec1.push_back(0);
+
+	displayInfos("ft_vec 1", ft_vec1);
+	ft_vec1.pop_back();
 
 	try {
 		ft_vec1.at(42) = 42;

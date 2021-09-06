@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 18:39:50 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 18:50:16 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ namespace ft {
 		// 	void	assign( InputIterator first, InputIterator last );
 		// void		assign( size_type n, const value_type& val );
 		void		push_back( const value_type& val );
-		// void		pop_back( void );
+		void		pop_back( void );
 		// iterator	insert( iterator position, const value_type& val );
 		// void		insert( iterator position, size_type n, const value_type& val );
 		// template< typename InputIterator >
@@ -448,6 +448,17 @@ namespace ft {
 
 		_elements[size()] = val;
 		_size += 1;
+	}
+
+	/* 
+	 * Removes the last element in the vector, effectively reducing the container size by one.
+	 * This destroys the removed element.
+	 */
+	template < typename T, typename Allocator >
+	void	vector<T,Allocator>::pop_back( void ) {
+
+		_allocator.destroy( *_elements[size()] );
+		_size -= 1;
 	}
 
 
