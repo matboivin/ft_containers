@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 16:10:56 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 16:12:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ void	testDefaultConstructors( void ) {
 
 void	testConstructors( void ) {
 
-	std::vector<int>	vec1(14);
-	std::vector<int>	vec2(42);
-	std::vector<int>	vec3(4);
+	std::vector<int>	vec1(14, 1);
+	std::vector<int>	vec2(42, 2);
+	std::vector<int>	vec3(4,  3);
 
 	std::cout << "VEC 1"
 			  << "\nvec size:        " << vec1.size()
@@ -57,9 +57,9 @@ void	testConstructors( void ) {
 			  << "\nvec size:        " << vec3.size()
 			  << "\nvec capacity:    " << vec3.capacity() << std::endl;
 
-	std::vector<int>	ft_vec1(14);
-	std::vector<int>	ft_vec2(42);
-	std::vector<int>	ft_vec3(4);
+	std::vector<int>	ft_vec1(14, 1);
+	std::vector<int>	ft_vec2(42, 2);
+	std::vector<int>	ft_vec3(4,  3);
 
 		std::cout << "\n\nFT_VEC 1"
 			  << "\nvec size:        " << ft_vec1.size()

@@ -41,3 +41,4 @@
 
 - [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 - [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
+- [Documenting C++ Code](https://developer.lsst.io/cpp/api-docs.html)
