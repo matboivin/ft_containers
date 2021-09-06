@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 14:26:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/06 15:28:34 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ namespace ft {
 		size_type		_size;       // number of elements
 		size_type		_capacity;
 		T*				_elements;
+
+		// calculate capacity growth
+		size_type		calculateGrowth( const size_type newSize) const;
 
 	public:
 
@@ -145,7 +148,12 @@ namespace ft {
 		allocator.construct( _elements, val );
 	}
 
-	// destructor
+	/*
+	 *  Destructor
+	 *
+	 * Destroys all container elements, and deallocates all the storage capacity allocated
+	 * by the vector using its allocator.
+	 */
 	template< typename T, typename Allocator >
 	vector<T,Allocator>::~vector( void ) {
 
@@ -155,7 +163,14 @@ namespace ft {
 		_allocator.deallocate( _elements, _capacity );
 	}
 
-	// assignment operator
+	/*
+	 * Assignment operator
+	 *
+	 * Assigns new contents to the container, replacing its current contents,
+	 * and modifying its size accordingly.
+	 * The container preserves its current allocator, which is used to allocate storage
+	 * in case of reallocation.
+	 */
 	template< typename T, typename Allocator >
 	vector<T,Allocator>&	vector<T,Allocator>::operator=( const vector& rhs ) {
 
@@ -166,9 +181,8 @@ namespace ft {
 			this->_allocator.destroy( this->_elements );
 			this->_allocator.deallocate( this->_elements, this->capacity() );
 
-			this->_allocator = rhs.get_allocator();
 			this->_size = rhs.size();
-			this->_capacity = rhs.capacity();
+			this->_capacity = calculateGrowth( rhs.capacity() );
 
 			this->_elements = this->_allocator.allocate( rhs.size() );
 			this->_allocator.construct( this->_elements, 0 );
@@ -190,6 +204,26 @@ namespace ft {
 	}
 
 	// capacity
+
+	/*
+	 * Calculate capacity growth
+	 */
+	template< typename T, typename Allocator >
+	typename vector<T,Allocator>::size_type	vector<T,Allocator>::calculateGrowth( const size_type newSize) const {
+
+		const size_type	currCapacity = this->capacity();
+		size_type		capacityLeft = this->max_size() - currCapacity;
+
+		if ( currCapacity > capacityLeft )
+			return ( this->max_size() );
+		
+		const size_type	newCapacity = currCapacity + currCapacity;
+
+		if ( newSize > newCapacity )
+			return ( newSize );
+
+		return ( newCapacity );
+	}
 
 	/*
 	 * Returns whether the vector is empty (i.e. whether its size is 0).
