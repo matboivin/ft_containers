@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 20:13:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/07 16:25:47 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -380,8 +380,8 @@ namespace ft {
 		if ( n <= capacity() )
 			return ;
 
-		_capacity = calculateGrowth( size() + 1 );
-		_elements = _allocator.allocate( _capacity );
+		_capacity = calculateGrowth(n);
+		_elements = _allocator.allocate(_capacity);
 	}
 
 	/* element access ******************************************************* */
@@ -419,7 +419,7 @@ namespace ft {
 	 *
 	 * @exceptsafe If n is out of bounds, out_of_range si thrown
 	 */
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 	typename vector<T,Allocator>::reference	vector<T,Allocator>::at( size_type n ) {
 
 		if ( n > size() )
@@ -428,7 +428,7 @@ namespace ft {
 		return ( this->_elements[n] );
 	}
 
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 	typename vector<T,Allocator>::const_reference	vector<T,Allocator>::at( size_type n ) const {
 
 		if ( n > size() )
@@ -442,13 +442,13 @@ namespace ft {
 	 *
 	 * @return A reference to the first element in the vector container
 	 */
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 	typename vector<T,Allocator>::reference	vector<T,Allocator>::front( void ) {
 
 		return ( this->_elements[0] );
 	}
 
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 	typename vector<T,Allocator>::const_reference	vector<T,Allocator>::front( void ) const {
 
 		return ( this->_elements[0] );
@@ -459,7 +459,7 @@ namespace ft {
 	 *
 	 * @return A reference to the last element in the vector container
 	 */
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 	typename vector<T,Allocator>::reference	vector<T,Allocator>::back( void ) {
 
 		size_type	idx = size() - 1;
@@ -467,7 +467,7 @@ namespace ft {
 		return ( this->_elements[idx] );
 	}
 
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 	typename vector<T,Allocator>::const_reference	vector<T,Allocator>::back( void ) const {
 
 		size_type	idx = size() - 1;
@@ -485,12 +485,13 @@ namespace ft {
 	 *
 	 * @param val  Value to be copied (or moved) to the new element
 	 */
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 	void	vector<T,Allocator>::push_back( const value_type& val ) {
 
-		_capacity = calculateGrowth( size() + 1 );
-		reserve(_capacity);
-		// TODO
+		size_type	newSize = size() + 1;
+
+		if ( newSize > _capacity )
+			reserve(newSize);
 
 		_elements[size()] = val;
 		_size += 1;
@@ -500,7 +501,7 @@ namespace ft {
 	 * Removes the last element in the vector, effectively reducing the container size by one.
 	 * This destroys the removed element.
 	 */
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 	void	vector<T,Allocator>::pop_back( void ) {
 
 		_allocator.destroy( *_elements[size()] );
@@ -511,7 +512,7 @@ namespace ft {
 	 * Removes all elements from the vector (which are destroyed),
 	 * leaving the container with a size of 0.
 	 */
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 	void	vector<T,Allocator>::clear( void ) {
 
 		_allocator.destroy( _elements );
@@ -525,27 +526,32 @@ namespace ft {
 
 	/* relational operators ************************************************* */
 
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 		bool	operator==( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
 
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 		bool	operator!=( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
 
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 		bool	operator<( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
 
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 		bool	operator<=( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
 
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 		bool	operator>(const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
 
-	template < typename T, typename Allocator >
+	template< typename T, typename Allocator >
 		bool	operator>=( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
 
-	// swap
 
-	template < typename T, typename Allocator >
+	/*
+	 * Exchange contents of vectors
+	 *
+	 * @param x,y  vector containers of the same type
+	 *             (i.e., having both the same template parameters, T and Allocator)
+	 */
+	template< typename T, typename Allocator >
 		void	swap( vector<T,Allocator>& x, vector<T,Allocator>& y );
 
 }
