@@ -6,7 +6,8 @@ RM = /bin/rm
 .SUFFIXES:
 .SUFFIXES: .cpp .hpp .o
 
-INC_FILES = vector.hpp
+INC_FILES = iterator.hpp \
+			vector.hpp
 
 SRC_FILES = main.cpp
 
