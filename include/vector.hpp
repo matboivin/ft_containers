@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/07 16:36:39 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/07 17:59:11 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <iostream>
 #include <memory>
+#include <vector>
 #include <iterator>
 #include <iterator.hpp>
 
@@ -38,13 +39,14 @@ namespace ft {
 		typedef typename allocator_type::const_reference		const_reference;
 		typedef typename allocator_type::pointer				pointer;
 		typedef typename allocator_type::const_pointer			const_pointer;
-		// TODO
-		// iterator
-		// const_iterator
-		// typedef std::reverse_iterator<iterator>					reverse_iterator;
-		// typedef std::reverse_iterator<const_iterator>			const_reverse_iterator;
-		// typedef std::iterator_traits<iterator>::difference_type	difference_type;
-		// TODO: Re-implement iterators_traits and reverse_iterator
+
+		// iterator tmp
+		typedef typename std::vector<T>::iterator							iterator;
+		typedef typename std::vector<T>::const_iterator						const_iterator;
+		typedef typename std::reverse_iterator<iterator>					reverse_iterator;
+		typedef typename std::reverse_iterator<const_iterator>				const_reverse_iterator;
+		typedef typename std::iterator_traits<iterator>::difference_type	difference_type;
+
 		typedef std::size_t										size_type;
 
 	private:
@@ -113,11 +115,11 @@ namespace ft {
 		// modifiers
 		// template< typename InputIterator >
 		// 	void	assign( InputIterator first, InputIterator last );
-		// void		assign( size_type n, const value_type& val );
+		void		assign( size_type n, const value_type& val );
 		void		push_back( const value_type& val );
 		void		pop_back( void );
-		// iterator	insert( iterator position, const value_type& val );
-		// void		insert( iterator position, size_type n, const value_type& val );
+		iterator	insert( iterator position, const value_type& val );
+		void		insert( iterator position, size_type n, const value_type& val );
 		// template< typename InputIterator >
 		// 	void	insert( iterator position, InputIterator first, InputIterator last );
 		// iterator	erase( iterator position );
@@ -160,8 +162,8 @@ namespace ft {
 
 		std::cout << "ft::vector fill constructor called" << std::endl;
 
-		_elements = allocator.allocate(n);
-		allocator.construct( _elements, val );
+		_elements = _allocator.allocate(n);
+		_allocator.construct( _elements, val );
 	}
 
 	/*
@@ -344,7 +346,7 @@ namespace ft {
 		// handle overflow
 		if ( currCapacity > capacityLeft )
 			return ( max_size() );
-		
+
 		const size_type	newCapacity = currCapacity + currCapacity;
 
 		if ( newSize > newCapacity )
@@ -480,7 +482,25 @@ namespace ft {
 	/* modifiers ************************************************************ */
 
 	/*
+	 * Assigns new contents to the vector, replacing its current contents,
+	 * and modifying its size accordingly.
+	 *
+	 * @param n    New size for the container
+	 * @param val  Value to fill the container with. Each of the n elements in
+	 *             the container will be initialized to a copy of this value
+	 */
+	template< typename T, typename Allocator >
+	void	vector<T,Allocator>::assign( size_type n, const value_type& val ) {
+
+		this->clear();
+		_size = n;
+		_elements = _allocator.allocate(n);
+		_allocator.construct( _elements, val );
+	}
+
+	/*
 	 * Adds a new element at the end of the vector, after its current last element.
+	 *
 	 * If the new vector size surpasses the current vector capacity,
 	 * it causes an automatic reallocation of the allocated storage space.
 	 *
@@ -495,7 +515,7 @@ namespace ft {
 			reserve(newSize);
 
 		_elements[size()] = val;
-		_size += 1;
+		_size = newSize;
 	}
 
 	/*
@@ -507,6 +527,64 @@ namespace ft {
 
 		_allocator.destroy( *_elements[size()] );
 		_size -= 1;
+	}
+
+	/*
+	 * Insert elements
+	 * The vector is extended by inserting new elements before the element at the specified
+	 * position, effectively increasing the container size by the number of elements inserted.
+	 *
+	 * If the new vector size surpasses the current vector capacity,
+	 * it causes an automatic reallocation of the allocated storage space.
+	 *
+	 * @param position  Position in the vector where the new elements are inserted
+	 * @param val       Value to be copied (or moved) to the inserted elements
+	 *
+	 * @return An iterator that points to the first of the newly inserted elements
+	 */
+	template< typename T, typename Allocator >
+	typename vector<T,Allocator>::iterator	vector<T,Allocator>::insert( iterator position, const value_type& val ) {
+
+		size_type	newSize = size() + 1;
+
+		if ( newSize > _capacity )
+			reserve(newSize);
+
+		*position = val;
+		_size = newSize;
+
+		return (position);
+	}
+
+	/*
+	 * Insert elements
+	 * The vector is extended by inserting new elements before the element at the specified
+	 * position, effectively increasing the container size by the number of elements inserted.
+	 *
+	 * If the new vector size surpasses the current vector capacity,
+	 * it causes an automatic reallocation of the allocated storage space.
+	 *
+	 * @param position  Position in the vector where the new elements are inserted
+	 * @param n         Number of elements to insert. Each element is initialized to a copy of val
+	 * @param val       Value to be copied (or moved) to the inserted elements
+	 *
+	 * @return An iterator that points to the first of the newly inserted elements
+	 */
+	template< typename T, typename Allocator >
+	void	vector<T,Allocator>::insert( iterator position, size_type n, const value_type& val ) {
+
+		size_type	newSize = size() + n;
+
+		if ( newSize > _capacity )
+			reserve(newSize);
+		
+		typename T::iterator	ite = position;
+		std::advance(ite, n);
+		
+		for ( typename T::iterator it = position; it != ite; ++it )
+			*it = val;
+
+		_size = newSize;
 	}
 
 	/*

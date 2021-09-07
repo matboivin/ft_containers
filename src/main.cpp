@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/06 19:14:55 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/07 18:00:01 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	testConstructors( void ) {
 
 	std::cout << "______________\n\n";
 
-	std::vector<int>	ft_vec1(14, 1);
-	std::vector<int>	ft_vec2(42, 2);
-	std::vector<int>	ft_vec3(4,  3);
+	ft::vector<int>	ft_vec1(14, 1);
+	ft::vector<int>	ft_vec2(42, 2);
+	ft::vector<int>	ft_vec3(4,  3);
 
 	displayInfos("ft_vec 1", ft_vec1);
 	displayInfos("ft_vec 2", ft_vec2);
@@ -111,8 +111,8 @@ void	testCopy( void ) {
 
 	std::cout << "______________\n\n";
 
-	std::vector<int>	ft_vec1(14);
-	std::vector<int>	ft_vec2(4);
+	ft::vector<int>	ft_vec1(14);
+	ft::vector<int>	ft_vec2(4);
 
 	ft_vec1.push_back(3);
 	ft_vec1.push_back(5);
@@ -164,7 +164,7 @@ void	testCapacity( void ) {
 
 	std::cout << "______________\n\n";
 
-	std::vector<int>	ft_vec1(14);
+	ft::vector<int>	ft_vec1(14);
 
 	ft_vec1.push_back(3);
 	ft_vec1.push_back(5);
@@ -181,12 +181,52 @@ void	testCapacity( void ) {
 	displayInfos("ft_vec 1", ft_vec1);
 }
 
+void	testElements( void ) {
+
+	std::vector<int>::iterator	it;
+	std::vector<int>::iterator	position;
+	std::vector<int>			vec(4, 100);
+	std::vector<int>			vec2(20);
+
+	displayInfos("vec", vec);
+
+	vec2 = vec;
+
+	displayInfos("vec2", vec2);
+
+	it = vec.begin();
+	position = vec.insert(it, 200);
+
+	displayInfos("vec", vec);
+
+	vec.assign(2, 4);
+	displayInfos("vec", vec);
+
+	std::cout << "______________\n\n";
+
+	ft::vector<int>	ft_vec(4, 100);
+	ft::vector<int>	ft_vec2(20);
+
+	displayInfos("ft_vec", ft_vec);
+
+	ft_vec2 = ft_vec;
+
+	displayInfos("ft_vec2", ft_vec2);
+
+	// std::vector<int>	ft_vec(3, 100);
+
+	// position = ft_vec.insert(it, 200);
+
+	// displayInfos("ft_vec", ft_vec);
+}
+
 int	main( void ) {
 
 	//testDefaultConstructors();
 	//testConstructors();
 	//testCopy();
-	testCapacity();
+	//testCapacity();
+	testElements();
 
 	return (0);
 }
