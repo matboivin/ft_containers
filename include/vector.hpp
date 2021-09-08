@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 15:44:55 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 16:34:31 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,9 @@ namespace ft {
 		std::cout << "ft::vector fill constructor called" << std::endl;
 
 		_elements = _allocator.allocate(n);
-		_allocator.construct( _elements, val );
+
+		for ( size_type i = 0; i < n; i++ )
+			_allocator.construct( _elements + i, val );
 	}
 
 	/*
@@ -192,14 +194,19 @@ namespace ft {
 	 */
 	template< typename T, typename Allocator >
 	vector<T,Allocator>::vector( const vector& x )
-			: _allocator( x._allocator() ),
+			: _allocator( x._allocator ),
 			  _size( x.size() ),
 			  _capacity( x.capacity() ) {
 
 		std::cout << "ft::vector copy constructor called" << std::endl;
 
 		_elements = _allocator.allocate( x.size() );
-		_allocator.construct( _elements, x._elements );
+
+		for ( size_type i = 0; i < _size; i++ ) {
+
+			const value_type& val = x._elements[i];
+			_allocator.construct( _elements + i, val);
+		}
 	}
 
 	/*
@@ -238,7 +245,7 @@ namespace ft {
 		if ( this != &rhs ) {
 
 			_allocator.destroy( _elements );
-			_allocator.deallocate( _elements, capacity() );
+			_allocator.deallocate( _elements, _capacity );
 
 			_size = rhs.size();
 			if (rhs.size() > _capacity)
@@ -246,8 +253,11 @@ namespace ft {
 
 			_elements = _allocator.allocate( rhs.size() );
 
-			for ( size_type i = 0; i < rhs.size(); i++ )
-				_elements[i] = rhs._elements[i];
+			for ( size_type i = 0; i < _size; i++ ) {
+
+				const value_type& val = rhs._elements[i];
+				_allocator.construct( _elements + i, val);
+			}
 		}
 
 		return ( *this );

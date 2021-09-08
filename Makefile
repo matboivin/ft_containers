@@ -7,9 +7,11 @@ RM = /bin/rm
 .SUFFIXES: .cpp .hpp .o
 
 INC_FILES = iterator.hpp \
-			vector.hpp
+			vector.hpp \
+			vector_tests.hpp
 
-SRC_FILES = main.cpp
+SRC_FILES = main.cpp \
+			vector_tests.cpp
 
 OBJ_FILES = $(SRC_FILES:%.cpp=%.o)
 
