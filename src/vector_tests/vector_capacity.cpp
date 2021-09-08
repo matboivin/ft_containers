@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:05:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 19:05:58 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 19:11:08 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,6 +174,78 @@ int	cmpVecMaxSize( void ) {
 			  << "\n______________ Capacity methods: max_size()\n\n" << COL_RESET;
 
 	showTestInfos("This member function returns the maximum number of elements that the vector can hold.");
+
+	// First test
+	std::cout << COL_BLUE_B << "\n______ TEST1: Vectors of int\n\n" << COL_RESET;
+
+	// Create two vectors of size 42
+	std::vector<int>	vec1(42);
+	ft::vector<int>		ft_vec1(42);
+
+	std::cout << std::endl;
+
+	// Retrieve their max size
+	std::size_t	vec_max_size = vec1.max_size();
+	std::size_t	ft_vec_max_size = ft_vec1.max_size();
+
+	// Display sizes
+	std::cout << COL_BLUE << "std::vector max size is: " << COL_RESET << vec_max_size << "\n\n";
+	std::cout << COL_BLUE << "ft::vector max size:     " << COL_RESET << ft_vec_max_size<< "\n\n";
+
+	// Print if the results are the same or not between original and ft::vector
+	if ( vec_max_size == ft_vec_max_size ) {
+		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
+	}
+	else {
+
+		std::cout << COL_RED_B << "[KO] Different results" << COL_RESET << std::endl;
+		return (1);
+	}
+
+	// Second test whith vectors of char
+	std::cout << COL_BLUE_B << "\n______ TEST2: Vectors of chars\n\n" << COL_RESET;
+
+	// Create two vectors of size 42
+	std::vector<char>	vec2(42);
+	ft::vector<char>	ft_vec2(42);
+
+	std::cout << std::endl;
+
+	// Retrieve their max size
+	vec_max_size = vec2.max_size();
+	ft_vec_max_size = ft_vec2.max_size();
+
+	// Display sizes
+	std::cout << COL_BLUE << "std::vector max size is: " << COL_RESET << vec_max_size << "\n\n";
+	std::cout << COL_BLUE << "ft::vector max size:     " << COL_RESET << ft_vec_max_size<< "\n\n";
+
+	// Print if the results are the same or not between original and ft::vector
+	if ( vec_max_size == ft_vec_max_size ) {
+		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
+	}
+	else {
+
+		std::cout << COL_RED_B << "[KO] Different results" << COL_RESET << std::endl;
+		return (1);
+	}
+
+	std::cout << std::endl;
+
+	return (0);
+}
+
+/*
+ * Compare capacity
+ *
+ * This member function returns the size of allocated storage capacity
+ */
+
+int	cmpCapacity( void ) {
+
+	std::cout << COL_BLUE_B
+			  << "\n______________ Capacity methods: capacity()\n\n" << COL_RESET;
+
+	showTestInfos("This member function returns the size of allocated storage capacity.");
 
 	// First test
 	std::cout << COL_BLUE_B << "\n______ TEST1: Vectors of int\n\n" << COL_RESET;

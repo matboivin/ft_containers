@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 19:02:45 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 19:07:24 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int		cmpVecEmpty( void );
 int		cmpVecSize( void );
 // int		cmpVecResize( void );
 int		cmpVecMaxSize( void );
+int		cmpCapacity( void );
 
 int		testVector( void );
 
