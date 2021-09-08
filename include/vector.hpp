@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 16:34:31 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 17:14:49 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,15 @@
 #include <memory>
 #include <vector>
 #include <iterator>
-#include <iterator.hpp>
+#include "iterator.hpp"
+
+#define COL_RESET "\033[0m"
+#define COL_RED "\033[0;31m"
+#define COL_RED_B "\033[1;31m"
+#define COL_GREEN "\033[0;32m"
+#define COL_GREEN_B "\033[1;32m"
+#define COL_YELLOW "\033[0;33m"
+#define COL_YELLOW_B "\033[1;33m"
 
 /*
  * Vector template class
@@ -141,7 +149,9 @@ namespace ft {
 			  _capacity(0),
 			  _elements() {
 
-		std::cout << "ft::vector default constructor called" << std::endl;
+		std::cout << COL_GREEN
+				  << "ft::vector default constructor called" << COL_RESET
+				  << std::endl;
 	}
 
 	/*
@@ -160,7 +170,9 @@ namespace ft {
 			  _size(n),
 			  _capacity(n) {
 
-		std::cout << "ft::vector fill constructor called" << std::endl;
+		std::cout << COL_GREEN
+				  << "ft::vector fill constructor called" << COL_RESET
+				  << std::endl;
 
 		_elements = _allocator.allocate(n);
 
@@ -198,7 +210,9 @@ namespace ft {
 			  _size( x.size() ),
 			  _capacity( x.capacity() ) {
 
-		std::cout << "ft::vector copy constructor called" << std::endl;
+		std::cout << COL_GREEN
+				  << "ft::vector copy constructor called" << COL_RESET
+				  << std::endl;
 
 		_elements = _allocator.allocate( x.size() );
 
@@ -218,7 +232,9 @@ namespace ft {
 	template< typename T, typename Allocator >
 	vector<T,Allocator>::~vector( void ) {
 
-		std::cout << "ft::vector destructor called" << std::endl;
+		std::cout << COL_YELLOW
+				  << "ft::vector destructor called" << COL_RESET
+				  << std::endl;
 
 		_allocator.destroy( _elements );
 		_allocator.deallocate( _elements, _capacity );
@@ -240,7 +256,9 @@ namespace ft {
 	template< typename T, typename Allocator >
 	vector<T,Allocator>&	vector<T,Allocator>::operator=( const vector& rhs ) {
 
-		std::cout << "ft::vector assignment operator called" << std::endl;
+		std::cout << COL_GREEN
+				  << "ft::vector assignment operator called" << COL_RESET
+				  << std::endl;
 
 		if ( this != &rhs ) {
 
