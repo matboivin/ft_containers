@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/07 17:59:11 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 15:25:11 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ namespace ft {
 		typedef typename allocator_type::const_pointer			const_pointer;
 
 		// iterator tmp
-		typedef typename std::vector<T>::iterator							iterator;
-		typedef typename std::vector<T>::const_iterator						const_iterator;
-		typedef typename std::reverse_iterator<iterator>					reverse_iterator;
-		typedef typename std::reverse_iterator<const_iterator>				const_reverse_iterator;
-		typedef typename std::iterator_traits<iterator>::difference_type	difference_type;
+		// typedef TODO	iterator;
+		// typedef TODO	const_iterator;
+		// typedef typename std::reverse_iterator<iterator>					reverse_iterator;
+		// typedef typename std::reverse_iterator<const_iterator>				const_reverse_iterator;
+		// typedef typename std::iterator_traits<iterator>::difference_type	difference_type;
 
 		typedef std::size_t										size_type;
 
@@ -71,10 +71,10 @@ namespace ft {
 				const allocator_type& allocator = allocator_type() );
 		
 		// range constructor
-		template< typename InputIterator >
-			vector( InputIterator first,
-					InputIterator last,
-					const allocator_type& allocator = allocator_type() );
+		// template< typename InputIterator >
+		// 	vector( InputIterator first,
+		// 			InputIterator last,
+		// 			const allocator_type& allocator = allocator_type() );
 
 		// copy constructor
 		vector( const vector& x );
@@ -118,8 +118,8 @@ namespace ft {
 		void		assign( size_type n, const value_type& val );
 		void		push_back( const value_type& val );
 		void		pop_back( void );
-		iterator	insert( iterator position, const value_type& val );
-		void		insert( iterator position, size_type n, const value_type& val );
+		// iterator	insert( iterator position, const value_type& val );
+		// void		insert( iterator position, size_type n, const value_type& val );
 		// template< typename InputIterator >
 		// 	void	insert( iterator position, InputIterator first, InputIterator last );
 		// iterator	erase( iterator position );
@@ -244,7 +244,9 @@ namespace ft {
 			_capacity = calculateGrowth( rhs.capacity() );
 
 			_elements = _allocator.allocate( rhs.size() );
-			_allocator.construct( _elements, rhs._elements );
+
+			for ( size_type i = 0; i < rhs.size(); i++ )
+				_elements[i] = rhs._elements[i];
 		}
 
 		return ( *this );
@@ -387,6 +389,7 @@ namespace ft {
 		_elements = _allocator.allocate(_capacity);
 	}
 
+
 	/* element access ******************************************************* */
 
 
@@ -481,6 +484,27 @@ namespace ft {
 
 	/* modifiers ************************************************************ */
 
+
+	/*
+	 * Assigns new contents to the vector, replacing its current contents,
+	 * and modifying its size accordingly.
+	 *
+	 * The new contents are elements constructed from each of the elements
+	 * in the range between first and last, in the same order.
+	 *
+	 * @param first, last  Input iterators to the initial and final positions in a sequence
+	 */
+	// template< typename T, typename Allocator >
+	// template< typename InputIterator >
+	// void	vector<T,Allocator>::assign( InputIterator first, InputIterator last ) {
+
+	// 	this->clear();
+	// 	_size = std::distance(first, last);
+	// 	// TODO capacity
+	// 	_elements = _allocator.allocate(_size);
+	// 	_allocator.construct( _elements, val );
+	// }
+
 	/*
 	 * Assigns new contents to the vector, replacing its current contents,
 	 * and modifying its size accordingly.
@@ -494,6 +518,7 @@ namespace ft {
 
 		this->clear();
 		_size = n;
+		// TODO capacity
 		_elements = _allocator.allocate(n);
 		_allocator.construct( _elements, val );
 	}
@@ -522,12 +547,14 @@ namespace ft {
 	 * Removes the last element in the vector, effectively reducing the container size by one.
 	 * This destroys the removed element.
 	 */
-	template< typename T, typename Allocator >
-	void	vector<T,Allocator>::pop_back( void ) {
+	// template< typename T, typename Allocator >
+	// void	vector<T,Allocator>::pop_back( void ) {
 
-		_allocator.destroy( *_elements[size()] );
-		_size -= 1;
-	}
+	// 	pointer&	last = _elements[size() - 1];
+
+	// 	_allocator.destroy(last);
+	// 	_size -= 1;
+	// }
 
 	/*
 	 * Insert elements
@@ -542,19 +569,19 @@ namespace ft {
 	 *
 	 * @return An iterator that points to the first of the newly inserted elements
 	 */
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::iterator	vector<T,Allocator>::insert( iterator position, const value_type& val ) {
+	// template< typename T, typename Allocator >
+	// typename vector<T,Allocator>::iterator	vector<T,Allocator>::insert( iterator position, const value_type& val ) {
 
-		size_type	newSize = size() + 1;
+	// 	size_type	newSize = size() + 1;
 
-		if ( newSize > _capacity )
-			reserve(newSize);
+	// 	if ( newSize > _capacity )
+	// 		reserve(newSize);
 
-		*position = val;
-		_size = newSize;
+	// 	*position = val;
+	// 	_size = newSize;
 
-		return (position);
-	}
+	// 	return (position);
+	// }
 
 	/*
 	 * Insert elements
@@ -570,22 +597,22 @@ namespace ft {
 	 *
 	 * @return An iterator that points to the first of the newly inserted elements
 	 */
-	template< typename T, typename Allocator >
-	void	vector<T,Allocator>::insert( iterator position, size_type n, const value_type& val ) {
+	// template< typename T, typename Allocator >
+	// void	vector<T,Allocator>::insert( iterator position, size_type n, const value_type& val ) {
 
-		size_type	newSize = size() + n;
+	// 	size_type	newSize = size() + n;
 
-		if ( newSize > _capacity )
-			reserve(newSize);
+	// 	if ( newSize > _capacity )
+	// 		reserve(newSize);
 		
-		typename T::iterator	ite = position;
-		std::advance(ite, n);
+	// 	typename T::iterator	ite = position;
+	// 	std::advance(ite, n);
 		
-		for ( typename T::iterator it = position; it != ite; ++it )
-			*it = val;
+	// 	for ( typename T::iterator it = position; it != ite; ++it )
+	// 		*it = val;
 
-		_size = newSize;
-	}
+	// 	_size = newSize;
+	// }
 
 	/*
 	 * Removes all elements from the vector (which are destroyed),

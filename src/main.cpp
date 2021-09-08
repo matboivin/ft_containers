@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/07 18:00:01 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 15:25:43 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	testCopy( void ) {
 	ft_vec1.push_back(0);
 
 	displayInfos("ft_vec 1", ft_vec1);
-	ft_vec1.pop_back();
+	//ft_vec1.pop_back();
 
 	try {
 		ft_vec1.at(42) = 42;
@@ -185,39 +185,40 @@ void	testElements( void ) {
 
 	std::vector<int>::iterator	it;
 	std::vector<int>::iterator	position;
-	std::vector<int>			vec(4, 100);
+	std::vector<int>			vec1(4, 100);
 	std::vector<int>			vec2(20);
 
-	displayInfos("vec", vec);
+	displayInfos("vec1", vec1);
 
-	vec2 = vec;
+	vec2 = vec1;
 
 	displayInfos("vec2", vec2);
 
-	it = vec.begin();
-	position = vec.insert(it, 200);
+	// it = vec1.begin();
+	// position = vec1.insert(it, 200);
 
-	displayInfos("vec", vec);
+	// displayInfos("vec1", vec1);
 
-	vec.assign(2, 4);
-	displayInfos("vec", vec);
+	vec1.assign(2, 4);
+	displayInfos("vec1", vec1);
 
 	std::cout << "______________\n\n";
 
-	ft::vector<int>	ft_vec(4, 100);
+	ft::vector<int>	ft_vec1(4, 100);
 	ft::vector<int>	ft_vec2(20);
 
-	displayInfos("ft_vec", ft_vec);
+	std::cout << std::endl;
 
-	ft_vec2 = ft_vec;
+	displayInfos("ft_vec1", ft_vec1);
+
+	ft_vec2 = ft_vec1;
+
+	std::cout << std::endl;
 
 	displayInfos("ft_vec2", ft_vec2);
 
-	// std::vector<int>	ft_vec(3, 100);
-
-	// position = ft_vec.insert(it, 200);
-
-	// displayInfos("ft_vec", ft_vec);
+	ft_vec1.assign(2, 4);
+	displayInfos("ft_vec1", ft_vec1);
 }
 
 int	main( void ) {
