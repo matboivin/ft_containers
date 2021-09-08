@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 17:18:40 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 17:58:55 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,12 @@
 #include <vector>
 #include "vector.hpp"
 
-#define COL_RESET "\033[0m"
+#define COL_RESET  "\033[0m"
+#define COL_BLUE   "\033[0;34m"
 #define COL_BLUE_B "\033[1;34m"
-#define COL_RED "\033[0;31m"
+#define COL_GREEN "\033[0;32m"
+#define COL_RED    "\033[0;31m"
+#define COL_RED_B  "\033[1;31m"
 
 /*
  * Display the vector size, capacity and content
@@ -57,5 +60,11 @@ void	cmpCopyConstructor( void );
 void	cmpAssignmentOperator( void );
 
 int		testVector( void );
+
+/*
+ * Lowercase string
+ */
+
+std::string	strToLower( std::string str );
 
 #endif
