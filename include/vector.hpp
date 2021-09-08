@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 19:29:34 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 19:35:41 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@
 #include <vector>
 #include <iterator>
 #include "iterator.hpp"
+
+/*
+ * Colors for a more readable output
+ * (there will be a lot of things to read hehe)
+ */
 
 #define COL_RESET    "\033[0m"
 #define COL_RED      "\033[0;31m"
@@ -189,6 +194,7 @@ namespace ft {
 	 * @param alloc        Allocator object
 	 * @param first, last  Input iterators to the initial and final positions in a range
 	 */
+	// template< typename T, typename Allocator >
 	// template< typename InputIterator >
 	// vector<T,Allocator>::vector( InputIterator first, InputIterator last,
 	// 							const allocator_type& allocator = allocator_type() ) {
