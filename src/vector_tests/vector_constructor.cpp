@@ -6,12 +6,13 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 17:26:29 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 18:24:45 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <vector>
+#include "test_utils.hpp"
 #include "vector.hpp"
 #include "vector_tests.hpp"
 
@@ -19,7 +20,7 @@
  * Compare default constructor
  */
 
-void	cmpDefaultConstructor( void ) {
+void	cmpVecDefaultConstructor( void ) {
 
 	std::cout << COL_BLUE_B
 			  << "\n______________ Default Constructor\n\nstd::vector\n\n"
@@ -42,7 +43,7 @@ void	cmpDefaultConstructor( void ) {
  * Compare fill constructor
  */
 
-void	cmpFillConstructor( void ) {
+void	cmpVecFillConstructor( void ) {
 
 	std::cout << COL_BLUE_B
 			  << "\n______________ Fill Constructor\n\nstd::vector\n\n"
@@ -75,7 +76,7 @@ void	cmpFillConstructor( void ) {
  * Compare copy constructor
  */
 
-void	cmpCopyConstructor( void ) {
+void	cmpVecCopyConstructor( void ) {
 
 	std::cout << COL_BLUE_B
 			  << "\n______________ Copy constructor\n\nstd::vector\n\n"

@@ -11,10 +11,13 @@ RM = /bin/rm
 INC_FILES = iterator.hpp \
 			vector.hpp
 
-INC_TEST_FILES = vector_tests.hpp
+INC_TEST_FILES = test_utils.hpp \
+				 vector_tests.hpp
 
 SRC_FILES = main.cpp \
+			test_utils.cpp \
 			vector_assignment_op.cpp \
+			vector_capacity.cpp \
 			vector_constructor.cpp \
 			vector_tests.cpp
 

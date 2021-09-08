@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 17:14:49 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 18:04:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 #include <iterator>
 #include "iterator.hpp"
 
-#define COL_RESET "\033[0m"
-#define COL_RED "\033[0;31m"
-#define COL_RED_B "\033[1;31m"
-#define COL_GREEN "\033[0;32m"
-#define COL_GREEN_B "\033[1;32m"
-#define COL_YELLOW "\033[0;33m"
+#define COL_RESET    "\033[0m"
+#define COL_RED      "\033[0;31m"
+#define COL_RED_B    "\033[1;31m"
+#define COL_GREEN    "\033[0;32m"
+#define COL_GREEN_B  "\033[1;32m"
+#define COL_YELLOW   "\033[0;33m"
 #define COL_YELLOW_B "\033[1;33m"
 
 /*

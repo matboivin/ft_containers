@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 17:58:55 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 18:23:49 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,7 @@
 #include <string>
 #include <vector>
 #include "vector.hpp"
-
-#define COL_RESET  "\033[0m"
-#define COL_BLUE   "\033[0;34m"
-#define COL_BLUE_B "\033[1;34m"
-#define COL_GREEN "\033[0;32m"
-#define COL_RED    "\033[0;31m"
-#define COL_RED_B  "\033[1;31m"
+#include "test_utils.hpp"
 
 /*
  * Display the vector size, capacity and content
@@ -51,20 +45,20 @@ static void	displayInfos( const Vec& v, const std::string& title="vector" ) {
 }
 
 /*
- * Test launchers
+ * Construct/Destroy/Assign
  */
 
-void	cmpDefaultConstructor( void );
-void	cmpFillConstructor( void );
-void	cmpCopyConstructor( void );
-void	cmpAssignmentOperator( void );
-
-int		testVector( void );
+void	cmpVecDefaultConstructor( void );
+void	cmpVecFillConstructor( void );
+void	cmpVecCopyConstructor( void );
+void	cmpVecAssignmentOperator( void );
 
 /*
- * Lowercase string
+ * Capacity
  */
 
-std::string	strToLower( std::string str );
+int		cmpVecEmpty( void );
+
+int		testVector( void );
 
 #endif
