@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 18:04:29 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 19:29:34 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -414,8 +414,20 @@ namespace ft {
 		if ( n <= capacity() )
 			return ;
 
-		_capacity = calculateGrowth(n);
-		_elements = _allocator.allocate(_capacity);
+		size_type	newCapacity = calculateGrowth(n);
+		T*			newElements = _allocator.allocate(newCapacity);
+
+		for ( size_type i = 0; i < _size; i++ ) {
+
+			const value_type& val = _elements[i];
+			_allocator.construct( newElements + i, val);
+		}
+
+		_allocator.destroy( _elements );
+		_allocator.deallocate( _elements, _capacity );
+
+		_elements = newElements;
+		_capacity = newCapacity;
 	}
 
 
