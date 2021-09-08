@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 15:25:43 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 15:40:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	displayInfos( const std::string& title, const Vec& v ) {
 			  << "\n- size:        " << v.size()
 			  << "\n- capacity:    " << v.capacity() << std::endl;
 
-	for ( std::size_t i = 0; i < v.capacity(); i++ )
+	for ( std::size_t i = 0; i < v.size(); i++ )
 		std::cout << v[i] << ' ';
 
 	std::cout << "\n\n";
@@ -76,7 +76,7 @@ void	testConstructors( void ) {
 
 void	testCopy( void ) {
 
-	std::vector<int>	vec1(14);
+	std::vector<int>	vec1(140);
 	std::vector<int>	vec2(4);
 
 	vec1.push_back(3);
@@ -85,17 +85,17 @@ void	testCopy( void ) {
 	vec1.push_back(1);
 	vec1.push_back(5);
 	vec1.push_back(58);
-	vec1.push_back(0);
-	vec1.push_back(0);
+	vec1.push_back(4);
+	vec1.push_back(3);
 
-	displayInfos("vec 1", vec1);
-	vec1.pop_back();
+	// displayInfos("vec 1", vec1);
+	// vec1.pop_back();
 
-	try {
-		vec1.at(42) = 42;
-	} catch ( std::out_of_range& oor ) {
-		std::cout << oor.what() << std::endl;
-	}
+	// try {
+	// 	vec1.at(42) = 42;
+	// } catch ( std::out_of_range& oor ) {
+	// 	std::cout << oor.what() << std::endl;
+	// }
 
 	displayInfos("vec 1", vec1);
 	displayInfos("vec 2", vec2);
@@ -111,7 +111,7 @@ void	testCopy( void ) {
 
 	std::cout << "______________\n\n";
 
-	ft::vector<int>	ft_vec1(14);
+	ft::vector<int>	ft_vec1(140);
 	ft::vector<int>	ft_vec2(4);
 
 	ft_vec1.push_back(3);
@@ -120,17 +120,17 @@ void	testCopy( void ) {
 	ft_vec1.push_back(1);
 	ft_vec1.push_back(5);
 	ft_vec1.push_back(58);
-	ft_vec1.push_back(0);
-	ft_vec1.push_back(0);
+	ft_vec1.push_back(4);
+	ft_vec1.push_back(3);
 
-	displayInfos("ft_vec 1", ft_vec1);
-	//ft_vec1.pop_back();
+	// displayInfos("ft_vec 1", ft_vec1);
+	// ft_vec1.pop_back();
 
-	try {
-		ft_vec1.at(42) = 42;
-	} catch ( std::out_of_range& oor ) {
-		std::cout << oor.what() << std::endl;
-	}
+	// try {
+	// 	ft_vec1.at(42) = 42;
+	// } catch ( std::out_of_range& oor ) {
+	// 	std::cout << oor.what() << std::endl;
+	// }
 
 	displayInfos("ft_vec 1", ft_vec1);
 	displayInfos("ft_vec 2", ft_vec2);
@@ -225,9 +225,9 @@ int	main( void ) {
 
 	//testDefaultConstructors();
 	//testConstructors();
-	//testCopy();
+	testCopy();
 	//testCapacity();
-	testElements();
+	//testElements();
 
 	return (0);
 }

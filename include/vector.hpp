@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 15:25:11 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 15:44:55 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,7 +241,8 @@ namespace ft {
 			_allocator.deallocate( _elements, capacity() );
 
 			_size = rhs.size();
-			_capacity = calculateGrowth( rhs.capacity() );
+			if (rhs.size() > _capacity)
+				_capacity = _size;
 
 			_elements = _allocator.allocate( rhs.size() );
 
@@ -516,9 +517,14 @@ namespace ft {
 	template< typename T, typename Allocator >
 	void	vector<T,Allocator>::assign( size_type n, const value_type& val ) {
 
+		size_type	oldSize = size();
+
 		this->clear();
+
+		if ( n > oldSize && n > capacity() )
+			_capacity = calculateGrowth(n);
+
 		_size = n;
-		// TODO capacity
 		_elements = _allocator.allocate(n);
 		_allocator.construct( _elements, val );
 	}
@@ -622,7 +628,6 @@ namespace ft {
 	void	vector<T,Allocator>::clear( void ) {
 
 		_allocator.destroy( _elements );
-		_allocator.deallocate( _elements, _capacity );
 		_size = 0;
 	}
 
