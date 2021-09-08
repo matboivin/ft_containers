@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 18:23:49 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 18:47:42 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  */
 
 template< typename Vec >
-static void	displayInfos( const Vec& v, const std::string& title="vector" ) {
+static void	displayVecInfos( const Vec& v, const std::string& title="vector" ) {
 
 	std::cout << title
 			  << "\n- size:        " << v.size()
@@ -58,6 +58,7 @@ void	cmpVecAssignmentOperator( void );
  */
 
 int		cmpVecEmpty( void );
+int		cmpVecSize( void );
 
 int		testVector( void );
 

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:22:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 18:24:26 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 18:47:34 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,13 @@ std::string	strToLower( std::string str ) {
 	}
 
 	return (str);
+}
+
+void	showTestInfos( const std::string& msg ) {
+
+	std::cout << COL_BLUE_B << "Test description:\n"
+			  << COL_BLUE << msg << '\n'
+			  << COL_RESET << std::endl;
 }
 
 int	continueTests( const std::string& next_test ) {

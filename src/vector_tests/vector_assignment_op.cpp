@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 18:33:52 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 18:56:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,18 @@
 #include "vector_tests.hpp"
 
 /*
- * Compare assignment operator
+ * Compare Copy assignment operator
  */
 
 void	cmpVecAssignmentOperator( void ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______________ Assignment Operator\n\nstd::vector\n\n"
+			  << "\n______________ Copy assignment operator\n\n"
 			  << COL_RESET;
+
+	showTestInfos("operator=");
+
+	std::cout << COL_BLUE_B << "______ std::vector\n\n" << COL_RESET;
 
 	// Create 3 different vectors
 	std::vector<int>	vec1(14, 1);
@@ -32,9 +36,9 @@ void	cmpVecAssignmentOperator( void ) {
 	std::vector<int>	vec3(4,  3);
 
 	// Display their informations
-	displayInfos(vec1, "std::vector 1");
-	displayInfos(vec2, "std::vector 2");
-	displayInfos(vec3, "std::vector 3");
+	displayVecInfos(vec1, "std::vector 1");
+	displayVecInfos(vec2, "std::vector 2");
+	displayVecInfos(vec3, "std::vector 3");
 
 	// vec2 and vec3 become both copies of vec1
 	vec2 = vec1;
@@ -43,10 +47,10 @@ void	cmpVecAssignmentOperator( void ) {
 	std::cout << COL_BLUE_B << "AFTER\n\n" << COL_RESET;
 
 	// Display vec2 and vec3 informations after copy
-	displayInfos(vec2, "std::vector 2");
-	displayInfos(vec3, "std::vector 3");
+	displayVecInfos(vec2, "std::vector 2");
+	displayVecInfos(vec3, "std::vector 3");
 
-	std::cout << COL_BLUE_B << "______________\n\nft::vector\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B << "______ ft::vector\n\n" << COL_RESET;
 
 	// Create 3 different vectors
 	ft::vector<int>	ft_vec1(14, 1);
@@ -56,9 +60,9 @@ void	cmpVecAssignmentOperator( void ) {
 	std::cout << std::endl;
 
 	// Display their informations
-	displayInfos(ft_vec1, "ft::vector 1");
-	displayInfos(ft_vec2, "ft::vector 2");
-	displayInfos(ft_vec3, "ft::vector 3");
+	displayVecInfos(ft_vec1, "ft::vector 1");
+	displayVecInfos(ft_vec2, "ft::vector 2");
+	displayVecInfos(ft_vec3, "ft::vector 3");
 
 	std::cout << COL_BLUE_B << "Creating copies:\n" << COL_RESET;
 
@@ -69,8 +73,8 @@ void	cmpVecAssignmentOperator( void ) {
 	std::cout << COL_BLUE_B << "\nAFTER\n\n" << COL_RESET;
 
 	// Display vec2 and vec3 informations after copy
-	displayInfos(ft_vec2, "ft::vector 2");
-	displayInfos(ft_vec3, "ft::vector 3");
+	displayVecInfos(ft_vec2, "ft::vector 2");
+	displayVecInfos(ft_vec3, "ft::vector 3");
 
 	std::cout << std::endl;
 }

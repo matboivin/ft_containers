@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 18:26:15 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 18:52:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,36 @@ int	testVector( void ) {
 
 	int	has_failed = 0;
 
-	// cmpVecDefaultConstructor();
+	cmpVecDefaultConstructor();
 
-	// if ( !continueTests("Fill constructor") )
-	// 	return (0);
+	if ( !continueTests("Fill constructor") )
+		return (0);
 
-	// cmpVecFillConstructor();
+	cmpVecFillConstructor();
 
-	// if ( !continueTests("Copy constructor") )
-	// 	return (0);
+	if ( !continueTests("Copy constructor") )
+		return (0);
 
-	// cmpVecCopyConstructor();
+	cmpVecCopyConstructor();
 
-	// if ( !continueTests("Assignment operator") )
-	// 	return (0);
+	if ( !continueTests("Assignment operator") )
+		return (0);
 
-	// cmpVecAssignmentOperator();
+	cmpVecAssignmentOperator();
+
+	if ( !continueTests("Capacity member function: empty") )
+		return (0);
 
 	has_failed = cmpVecEmpty();
+	if ( has_failed )
+		return (1);
 
-	return (has_failed);
+	if ( !continueTests("Capacity member function: size") )
+		return (0);
+
+	has_failed = cmpVecSize();
+	if ( has_failed )
+		return (1);
+
+	return (0);
 }

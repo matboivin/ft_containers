@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 18:23:35 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 18:47:14 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@
 #define COL_RED_B   "\033[1;31m"
 
 std::string	strToLower( std::string str );
-int	continueTests( const std::string& next_test );
+void		showTestInfos( const std::string& msg );
+int			continueTests( const std::string& next_test );
 
 #endif
