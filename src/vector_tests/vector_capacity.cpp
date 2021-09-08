@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:05:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 19:11:08 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/08 19:21:38 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,8 +136,10 @@ int	cmpVecSize( void ) {
 	std::size_t	ft_vec_size = ft_vec.size();
 
 	// Display sizes
-	std::cout << COL_BLUE << "std::vector size is: " << COL_RESET << vec_size << "\n\n";
-	std::cout << COL_BLUE << "ft::vector size: " << COL_RESET << ft_vec_size<< "\n\n";
+	std::cout << COL_BLUE << "std::vector size is: " << COL_RESET
+			  << vec_size << '\n'
+			  << COL_BLUE << "ft::vector size is:  " << COL_RESET
+			  << ft_vec_size << "\n\n";
 
 	// Print if the results are the same or not between original and ft::vector
 	if ( vec_size == ft_vec_size ) {
@@ -189,8 +191,10 @@ int	cmpVecMaxSize( void ) {
 	std::size_t	ft_vec_max_size = ft_vec1.max_size();
 
 	// Display sizes
-	std::cout << COL_BLUE << "std::vector max size is: " << COL_RESET << vec_max_size << "\n\n";
-	std::cout << COL_BLUE << "ft::vector max size:     " << COL_RESET << ft_vec_max_size<< "\n\n";
+	std::cout << COL_BLUE << "std::vector max size is: " << COL_RESET
+			  << vec_max_size << '\n'
+			  << COL_BLUE << "ft::vector max size is:  " << COL_RESET
+			  << ft_vec_max_size << "\n\n";
 
 	// Print if the results are the same or not between original and ft::vector
 	if ( vec_max_size == ft_vec_max_size ) {
@@ -216,8 +220,10 @@ int	cmpVecMaxSize( void ) {
 	ft_vec_max_size = ft_vec2.max_size();
 
 	// Display sizes
-	std::cout << COL_BLUE << "std::vector max size is: " << COL_RESET << vec_max_size << "\n\n";
-	std::cout << COL_BLUE << "ft::vector max size:     " << COL_RESET << ft_vec_max_size<< "\n\n";
+	std::cout << COL_BLUE << "std::vector max size is: " << COL_RESET
+			  << vec_max_size << '\n'
+			  << COL_BLUE << "ft::vector max size is:  " << COL_RESET
+			  << ft_vec_max_size << "\n\n";
 
 	// Print if the results are the same or not between original and ft::vector
 	if ( vec_max_size == ft_vec_max_size ) {
@@ -240,7 +246,7 @@ int	cmpVecMaxSize( void ) {
  * This member function returns the size of allocated storage capacity
  */
 
-int	cmpCapacity( void ) {
+int	cmpVecCapacity( void ) {
 
 	std::cout << COL_BLUE_B
 			  << "\n______________ Capacity methods: capacity()\n\n" << COL_RESET;
@@ -256,16 +262,18 @@ int	cmpCapacity( void ) {
 
 	std::cout << std::endl;
 
-	// Retrieve their max size
-	std::size_t	vec_max_size = vec1.max_size();
-	std::size_t	ft_vec_max_size = ft_vec1.max_size();
+	// Retrieve their capacity
+	std::size_t	vec_capacity = vec1.capacity();
+	std::size_t	ft_vec_capacity = ft_vec1.capacity();
 
 	// Display sizes
-	std::cout << COL_BLUE << "std::vector max size is: " << COL_RESET << vec_max_size << "\n\n";
-	std::cout << COL_BLUE << "ft::vector max size:     " << COL_RESET << ft_vec_max_size<< "\n\n";
+	std::cout << COL_BLUE << "std::vector capacity is: " << COL_RESET
+			  << vec_capacity << '\n'
+			  << COL_BLUE << "ft::vector capacity is:  " << COL_RESET
+			  << ft_vec_capacity << "\n\n";
 
 	// Print if the results are the same or not between original and ft::vector
-	if ( vec_max_size == ft_vec_max_size ) {
+	if ( vec_capacity == ft_vec_capacity ) {
 		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
 	}
 	else {
@@ -283,16 +291,74 @@ int	cmpCapacity( void ) {
 
 	std::cout << std::endl;
 
-	// Retrieve their max size
-	vec_max_size = vec2.max_size();
-	ft_vec_max_size = ft_vec2.max_size();
+	// Retrieve their capacity
+	vec_capacity = vec2.capacity();
+	ft_vec_capacity = ft_vec2.capacity();
 
 	// Display sizes
-	std::cout << COL_BLUE << "std::vector max size is: " << COL_RESET << vec_max_size << "\n\n";
-	std::cout << COL_BLUE << "ft::vector max size:     " << COL_RESET << ft_vec_max_size<< "\n\n";
+	std::cout << COL_BLUE << "std::vector capacity is: " << COL_RESET
+			  << vec_capacity << '\n'
+			  << COL_BLUE << "ft::vector capacity is:  " << COL_RESET
+			  << ft_vec_capacity << "\n\n";
 
 	// Print if the results are the same or not between original and ft::vector
-	if ( vec_max_size == ft_vec_max_size ) {
+	if ( vec_capacity == ft_vec_capacity ) {
+		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
+	}
+	else {
+
+		std::cout << COL_RED_B << "[KO] Different results" << COL_RESET << std::endl;
+		return (1);
+	}
+
+	std::cout << std::endl;
+
+	return (0);
+}
+
+/*
+ * Compare reserve
+ *
+ * This member function requests that the vector capacity be at least enough
+ * to contain n elements
+ */
+
+int	cmpVecReserve( void ) {
+
+	std::cout << COL_BLUE_B
+			  << "\n______________ Capacity methods: reserve()\n\n" << COL_RESET;
+
+	showTestInfos("This member function requests that the vector capacity be at least enough to contain n elements.");
+
+	// Create two vectors of size 1
+	std::vector<int>	vec(1);
+	ft::vector<int>		ft_vec(1);
+
+	std::cout << std::endl;
+
+	// Display their informations
+	displayVecInfos(vec, "std::vector");
+	displayVecInfos(ft_vec, "ft::vector");
+	std::cout << COL_BLUE << "std::vector capacity is: " << COL_RESET
+			  << vec.capacity() << '\n'
+			  << COL_BLUE << "ft::vector capacity is:  " << COL_RESET
+			  << ft_vec.capacity() << "\n\n";
+
+	std::cout << COL_BLUE_B << "AFTER\n\n" << COL_RESET;
+
+	vec.reserve(42);
+	ft_vec.reserve(42);
+
+	// Display their informations after calling reserve()
+	displayVecInfos(vec, "std::vector");
+	displayVecInfos(ft_vec, "ft::vector");
+	std::cout << COL_BLUE << "std::vector capacity is: " << COL_RESET
+			  << vec.capacity() << '\n'
+			  << COL_BLUE << "ft::vector capacity is:  " << COL_RESET
+			  << ft_vec.capacity() << "\n\n";
+
+	// Print if the results are the same or not between original and ft::vector
+	if ( vec.capacity() == ft_vec.capacity() ) {
 		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
 	}
 	else {
