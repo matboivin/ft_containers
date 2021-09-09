@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:05:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 19:21:38 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/09 11:17:16 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ int	cmpVecMaxSize( void ) {
 		return (1);
 	}
 
-	// Second test whith vectors of char
+	// Second test with vectors of char
 	std::cout << COL_BLUE_B << "\n______ TEST2: Vectors of chars\n\n" << COL_RESET;
 
 	// Create two vectors of size 42
@@ -282,7 +282,7 @@ int	cmpVecCapacity( void ) {
 		return (1);
 	}
 
-	// Second test whith vectors of char
+	// Second test with vectors of char
 	std::cout << COL_BLUE_B << "\n______ TEST2: Vectors of chars\n\n" << COL_RESET;
 
 	// Create two vectors of size 42

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 19:35:41 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/09 11:46:23 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,21 @@
 
 /*
  * Vector template class
- *
  * Array which size can change dynamically
+ *
+ * Comments from: www.cplusplus.com
  */
 
 namespace ft {
 
-	template< typename T, typename Allocator = std::allocator<T> >
+	template< typename T, typename Alloc = std::allocator<T> >
 	class vector {
 
 	public:
 
 		// types
 		typedef T												value_type;
-		typedef Allocator										allocator_type;
+		typedef Alloc											allocator_type;
 		typedef typename allocator_type::reference				reference;
 		typedef typename allocator_type::const_reference		const_reference;
 		typedef typename allocator_type::pointer				pointer;
@@ -65,10 +66,10 @@ namespace ft {
 	private:
 
 		// attributes
-		allocator_type	_allocator;  // The container keeps and uses an internal copy of the allocator
-		size_type		_size;       // number of elements
+		allocator_type	_alloc;    // The container keeps and uses an internal copy of the allocator
+		size_type		_size;     // number of elements
 		size_type		_capacity;
-		T*				_elements;
+		value_type*		_elements;
 
 		// calculate capacity growth
 		size_type		calculateGrowth( const size_type newSize) const;
@@ -76,18 +77,18 @@ namespace ft {
 	public:
 
 		// default constructor
-		vector( const allocator_type& allocator = allocator_type() );
+		vector( const allocator_type& alloc = allocator_type() );
 
 		// fill constructor
 		vector( size_type n,
 				const value_type& val = value_type(),
-				const allocator_type& allocator = allocator_type() );
+				const allocator_type& alloc = allocator_type() );
 		
 		// range constructor
 		// template< typename InputIterator >
 		// 	vector( InputIterator first,
 		// 			InputIterator last,
-		// 			const allocator_type& allocator = allocator_type() );
+		// 			const allocator_type& alloc = allocator_type() );
 
 		// copy constructor
 		vector( const vector& x );
@@ -99,7 +100,7 @@ namespace ft {
 		vector&	operator=( const vector& rhs );
 
 		// allocator
-		allocator_type	get_allocator( void ) const;
+		allocator_type	get_alloc( void ) const;
 
 		// iterators
 		// iterator				begin( void );
@@ -147,9 +148,9 @@ namespace ft {
 	 *
 	 * @param alloc  Allocator object
 	 */
-	template< typename T, typename Allocator >
-	vector<T,Allocator>::vector( const allocator_type& allocator )
-			: _allocator(allocator),
+	template< typename T, typename Alloc >
+	vector<T,Alloc>::vector( const allocator_type& alloc )
+			: _alloc(alloc),
 			  _size(0),
 			  _capacity(0),
 			  _elements() {
@@ -167,11 +168,11 @@ namespace ft {
 	 * @param val    Value to fill the container with
 	 * @param alloc  Allocator object
 	 */
-	template< typename T, typename Allocator >
-	vector<T,Allocator>::vector( size_type n,
+	template< typename T, typename Alloc >
+	vector<T,Alloc>::vector( size_type n,
 								 const value_type& val,
-								 const allocator_type& allocator )
-			: _allocator(allocator),
+								 const allocator_type& alloc )
+			: _alloc(alloc),
 			  _size(n),
 			  _capacity(n) {
 
@@ -179,10 +180,10 @@ namespace ft {
 				  << "ft::vector fill constructor called" << COL_RESET
 				  << std::endl;
 
-		_elements = _allocator.allocate(n);
+		_elements = _alloc.allocate(n);
 
 		for ( size_type i = 0; i < n; i++ )
-			_allocator.construct( _elements + i, val );
+			_alloc.construct( _elements + i, val );
 	}
 
 	/*
@@ -194,11 +195,11 @@ namespace ft {
 	 * @param alloc        Allocator object
 	 * @param first, last  Input iterators to the initial and final positions in a range
 	 */
-	// template< typename T, typename Allocator >
+	// template< typename T, typename Alloc >
 	// template< typename InputIterator >
-	// vector<T,Allocator>::vector( InputIterator first, InputIterator last,
-	// 							const allocator_type& allocator = allocator_type() ) {
-	// 		: _allocator( allocator() ) {
+	// vector<T,Alloc>::vector( InputIterator first, InputIterator last,
+	// 							const allocator_type& alloc = allocator_type() ) {
+	// 		: _alloc(alloc) {
 
 	// 	std::cout << "ft::vector range constructor called" << std::endl;
 	// }
@@ -210,9 +211,9 @@ namespace ft {
 	 * @param x  Another vector object of the same type
 	 *           (with the same class template arguments T and Allocator)
 	 */
-	template< typename T, typename Allocator >
-	vector<T,Allocator>::vector( const vector& x )
-			: _allocator( x._allocator ),
+	template< typename T, typename Alloc >
+	vector<T,Alloc>::vector( const vector& x )
+			: _alloc( x._alloc ),
 			  _size( x.size() ),
 			  _capacity( x.capacity() ) {
 
@@ -220,13 +221,10 @@ namespace ft {
 				  << "ft::vector copy constructor called" << COL_RESET
 				  << std::endl;
 
-		_elements = _allocator.allocate( x.size() );
+		_elements = _alloc.allocate( x.size() );
 
-		for ( size_type i = 0; i < _size; i++ ) {
-
-			const value_type& val = x._elements[i];
-			_allocator.construct( _elements + i, val);
-		}
+		for ( size_type i = 0; i < _size; i++ )
+			_alloc.construct( _elements + i, x[i]);
 	}
 
 	/*
@@ -235,15 +233,17 @@ namespace ft {
 	 * Destroys all container elements, and deallocates all the storage capacity
 	 * allocated by the vector using its allocator.
 	 */
-	template< typename T, typename Allocator >
-	vector<T,Allocator>::~vector( void ) {
+	template< typename T, typename Alloc >
+	vector<T,Alloc>::~vector( void ) {
 
 		std::cout << COL_YELLOW
 				  << "ft::vector destructor called" << COL_RESET
 				  << std::endl;
 
-		_allocator.destroy( _elements );
-		_allocator.deallocate( _elements, _capacity );
+		for ( size_type i = 0; i < _size; i++ )
+			_alloc.destroy( _elements + i );
+
+		_alloc.deallocate( _elements, _capacity );
 	}
 
 	/*
@@ -259,8 +259,8 @@ namespace ft {
 	 *
 	 * @return  *this
 	 */
-	template< typename T, typename Allocator >
-	vector<T,Allocator>&	vector<T,Allocator>::operator=( const vector& rhs ) {
+	template< typename T, typename Alloc >
+	vector<T,Alloc>&	vector<T,Alloc>::operator=( const vector& rhs ) {
 
 		std::cout << COL_GREEN
 				  << "ft::vector assignment operator called" << COL_RESET
@@ -268,20 +268,19 @@ namespace ft {
 
 		if ( this != &rhs ) {
 
-			_allocator.destroy( _elements );
-			_allocator.deallocate( _elements, _capacity );
+			for ( size_type i = 0; i < _size; i++ )
+				_alloc.destroy( _elements + i );
+
+			_alloc.deallocate( _elements, _capacity );
 
 			_size = rhs.size();
-			if (rhs.size() > _capacity)
+			if ( _size > _capacity )
 				_capacity = _size;
 
-			_elements = _allocator.allocate( rhs.size() );
+			_elements = _alloc.allocate( _size );
 
-			for ( size_type i = 0; i < _size; i++ ) {
-
-				const value_type& val = rhs._elements[i];
-				_allocator.construct( _elements + i, val);
-			}
+			for ( size_type i = 0; i < _size; i++ )
+				_alloc.construct( _elements + i, rhs[i]);
 		}
 
 		return ( *this );
@@ -292,10 +291,10 @@ namespace ft {
 	 *
 	 * @return The allocator
 	 */
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::allocator_type	vector<T,Allocator>::get_allocator( void ) const {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::allocator_type	vector<T,Alloc>::get_alloc( void ) const {
 
-		return ( static_cast<allocator_type>(this->_allocator) );
+		return ( static_cast<allocator_type>(this->_alloc) );
 	}
 
 
@@ -307,10 +306,10 @@ namespace ft {
 	 *
 	 * @return true if the container size is 0, false otherwise
 	 */
-	template< typename T, typename Allocator >
-	bool	vector<T,Allocator>::empty( void ) const {
+	template< typename T, typename Alloc >
+	bool	vector<T,Alloc>::empty( void ) const {
 
-		return ( this->size() == 0 );
+		return ( this->_size == 0 );
 	}
 
 	/*
@@ -318,8 +317,8 @@ namespace ft {
 	 *
 	 * @return The number of elements in the vector
 	 */
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::size_type	vector<T,Allocator>::size( void ) const {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::size_type	vector<T,Alloc>::size( void ) const {
 
 		return ( this->_size );
 	}
@@ -332,10 +331,10 @@ namespace ft {
 	 *
 	 * @return The maximum number of elements a vector container can hold as content
 	 */
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::size_type	vector<T,Allocator>::max_size( void ) const {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::size_type	vector<T,Alloc>::max_size( void ) const {
 
-		return ( this->_allocator.max_size() );
+		return ( this->_alloc.max_size() );
 	}
 
 	/*
@@ -361,8 +360,8 @@ namespace ft {
 
 	// TODO
 	// insert, erase
-	// template< typename T, typename Allocator >
-	// void	vector<T,Allocator>::resize( size_type n, value_type val = value_type() ) {
+	// template< typename T, typename Alloc >
+	// void	vector<T,Alloc>::resize( size_type n, value_type val = value_type() ) {
 
 	// 	if ( n < size() )
 			
@@ -374,10 +373,10 @@ namespace ft {
 	/*
 	 * Calculates capacity growth (private member function to help)
 	 */
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::size_type	vector<T,Allocator>::calculateGrowth( const size_type newSize) const {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::size_type	vector<T,Alloc>::calculateGrowth( const size_type newSize) const {
 
-		const size_type	currCapacity = capacity();
+		const size_type	currCapacity = _capacity;
 		size_type		capacityLeft = max_size() - currCapacity;
 
 		// handle overflow
@@ -399,8 +398,8 @@ namespace ft {
 	 *
 	 * @return The size of the currently allocated storage capacity in the vector
 	 */
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::size_type	vector<T,Allocator>::capacity( void ) const {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::size_type	vector<T,Alloc>::capacity( void ) const {
 
 		return ( this->_capacity );
 	}
@@ -414,24 +413,22 @@ namespace ft {
 	 * @param n  Minimum capacity for the vector
 	 *           Note that the resulting vector capacity may be equal or greater than n
 	 */
-	template< typename T, typename Allocator >
-	void	vector<T,Allocator>::reserve( size_type n ) {
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::reserve( size_type n ) {
 
 		if ( n <= capacity() )
 			return ;
 
 		size_type	newCapacity = calculateGrowth(n);
-		T*			newElements = _allocator.allocate(newCapacity);
+		value_type*	newElements = _alloc.allocate(newCapacity);
 
 		for ( size_type i = 0; i < _size; i++ ) {
 
-			const value_type& val = _elements[i];
-			_allocator.construct( newElements + i, val);
+			_alloc.construct( newElements + i, _elements[i]);
+			_alloc.destroy( _elements + i );
 		}
 
-		_allocator.destroy( _elements );
-		_allocator.deallocate( _elements, _capacity );
-
+		_alloc.deallocate( _elements, _capacity );
 		_elements = newElements;
 		_capacity = newCapacity;
 	}
@@ -451,14 +448,14 @@ namespace ft {
 	 * never throws exceptions.
 	 * Otherwise, the behavior is undefined.
 	 */
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::reference	vector<T,Allocator>::operator[]( size_type n ) {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::reference	vector<T,Alloc>::operator[]( size_type n ) {
 
 		return ( this->_elements[n] );
 	}
 
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::const_reference	vector<T,Allocator>::operator[]( size_type n ) const {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::const_reference	vector<T,Alloc>::operator[]( size_type n ) const {
 
 		return ( this->_elements[n] );
 	}
@@ -472,8 +469,8 @@ namespace ft {
 	 *
 	 * @exceptsafe If n is out of bounds, out_of_range si thrown
 	 */
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::reference	vector<T,Allocator>::at( size_type n ) {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::reference	vector<T,Alloc>::at( size_type n ) {
 
 		if ( n > size() )
 			throw std::out_of_range("ft::vector::_M_range_check");
@@ -481,8 +478,8 @@ namespace ft {
 		return ( this->_elements[n] );
 	}
 
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::const_reference	vector<T,Allocator>::at( size_type n ) const {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::const_reference	vector<T,Alloc>::at( size_type n ) const {
 
 		if ( n > size() )
 			throw std::out_of_range("ft::vector::_M_range_check");
@@ -495,14 +492,14 @@ namespace ft {
 	 *
 	 * @return A reference to the first element in the vector container
 	 */
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::reference	vector<T,Allocator>::front( void ) {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::reference	vector<T,Alloc>::front( void ) {
 
 		return ( this->_elements[0] );
 	}
 
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::const_reference	vector<T,Allocator>::front( void ) const {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::const_reference	vector<T,Alloc>::front( void ) const {
 
 		return ( this->_elements[0] );
 	}
@@ -512,16 +509,16 @@ namespace ft {
 	 *
 	 * @return A reference to the last element in the vector container
 	 */
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::reference	vector<T,Allocator>::back( void ) {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::reference	vector<T,Alloc>::back( void ) {
 
 		size_type	idx = size() - 1;
 
 		return ( this->_elements[idx] );
 	}
 
-	template< typename T, typename Allocator >
-	typename vector<T,Allocator>::const_reference	vector<T,Allocator>::back( void ) const {
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::const_reference	vector<T,Alloc>::back( void ) const {
 
 		size_type	idx = size() - 1;
 
@@ -541,15 +538,15 @@ namespace ft {
 	 *
 	 * @param first, last  Input iterators to the initial and final positions in a sequence
 	 */
-	// template< typename T, typename Allocator >
+	// template< typename T, typename Alloc >
 	// template< typename InputIterator >
-	// void	vector<T,Allocator>::assign( InputIterator first, InputIterator last ) {
+	// void	vector<T,Alloc>::assign( InputIterator first, InputIterator last ) {
 
 	// 	this->clear();
 	// 	_size = std::distance(first, last);
 	// 	// TODO capacity
-	// 	_elements = _allocator.allocate(_size);
-	// 	_allocator.construct( _elements, val );
+	// 	_elements = _alloc.allocate(_size);
+	// 	_alloc.construct( _elements, val );
 	// }
 
 	/*
@@ -560,19 +557,25 @@ namespace ft {
 	 * @param val  Value to fill the container with. Each of the n elements in
 	 *             the container will be initialized to a copy of this value
 	 */
-	template< typename T, typename Allocator >
-	void	vector<T,Allocator>::assign( size_type n, const value_type& val ) {
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::assign( size_type n, const value_type& val ) {
 
-		size_type	oldSize = size();
+		size_type	oldSize = _size;
 
 		this->clear();
 
-		if ( n > oldSize && n > capacity() )
+		if ( n != oldSize ) {
+
+			_alloc.deallocate( _elements, _capacity );
+			_elements = _alloc.allocate(n);
+		}
+
+		if ( n > _capacity )
 			_capacity = calculateGrowth(n);
 
 		_size = n;
-		_elements = _allocator.allocate(n);
-		_allocator.construct( _elements, val );
+		for ( size_type i = 0; i < n; i++ )
+			_alloc.construct( _elements + i, val );
 	}
 
 	/*
@@ -583,15 +586,15 @@ namespace ft {
 	 *
 	 * @param val  Value to be copied (or moved) to the new element
 	 */
-	template< typename T, typename Allocator >
-	void	vector<T,Allocator>::push_back( const value_type& val ) {
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::push_back( const value_type& val ) {
 
-		size_type	newSize = size() + 1;
+		size_type	newSize = _size + 1;
 
 		if ( newSize > _capacity )
 			reserve(newSize);
 
-		_elements[size()] = val;
+		_elements[_size] = val;
 		_size = newSize;
 	}
 
@@ -599,12 +602,12 @@ namespace ft {
 	 * Removes the last element in the vector, effectively reducing the container size by one.
 	 * This destroys the removed element.
 	 */
-	// template< typename T, typename Allocator >
-	// void	vector<T,Allocator>::pop_back( void ) {
+	// template< typename T, typename Alloc >
+	// void	vector<T,Alloc>::pop_back( void ) {
 
-	// 	pointer&	last = _elements[size() - 1];
+	// 	pointer&	last = _elements[_size - 1];
 
-	// 	_allocator.destroy(last);
+	// 	_alloc.destroy(last);
 	// 	_size -= 1;
 	// }
 
@@ -621,10 +624,10 @@ namespace ft {
 	 *
 	 * @return An iterator that points to the first of the newly inserted elements
 	 */
-	// template< typename T, typename Allocator >
-	// typename vector<T,Allocator>::iterator	vector<T,Allocator>::insert( iterator position, const value_type& val ) {
+	// template< typename T, typename Alloc >
+	// typename vector<T,Alloc>::iterator	vector<T,Alloc>::insert( iterator position, const value_type& val ) {
 
-	// 	size_type	newSize = size() + 1;
+	// 	size_type	newSize = _size + 1;
 
 	// 	if ( newSize > _capacity )
 	// 		reserve(newSize);
@@ -649,8 +652,8 @@ namespace ft {
 	 *
 	 * @return An iterator that points to the first of the newly inserted elements
 	 */
-	// template< typename T, typename Allocator >
-	// void	vector<T,Allocator>::insert( iterator position, size_type n, const value_type& val ) {
+	// template< typename T, typename Alloc >
+	// void	vector<T,Alloc>::insert( iterator position, size_type n, const value_type& val ) {
 
 	// 	size_type	newSize = size() + n;
 
@@ -670,10 +673,12 @@ namespace ft {
 	 * Removes all elements from the vector (which are destroyed),
 	 * leaving the container with a size of 0.
 	 */
-	template< typename T, typename Allocator >
-	void	vector<T,Allocator>::clear( void ) {
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::clear( void ) {
 
-		_allocator.destroy( _elements );
+		for ( size_type i = 0; i < _size; i++ )
+			_alloc.destroy( _elements + i );
+
 		_size = 0;
 	}
 
@@ -683,23 +688,23 @@ namespace ft {
 
 	/* relational operators ************************************************* */
 
-	template< typename T, typename Allocator >
-		bool	operator==( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
+	template< typename T, typename Alloc >
+		bool	operator==( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
 
-	template< typename T, typename Allocator >
-		bool	operator!=( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
+	template< typename T, typename Alloc >
+		bool	operator!=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
 
-	template< typename T, typename Allocator >
-		bool	operator<( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
+	template< typename T, typename Alloc >
+		bool	operator<( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
 
-	template< typename T, typename Allocator >
-		bool	operator<=( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
+	template< typename T, typename Alloc >
+		bool	operator<=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
 
-	template< typename T, typename Allocator >
-		bool	operator>(const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
+	template< typename T, typename Alloc >
+		bool	operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
 
-	template< typename T, typename Allocator >
-		bool	operator>=( const vector<T,Allocator>& lhs, const vector<T,Allocator>& rhs );
+	template< typename T, typename Alloc >
+		bool	operator>=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
 
 
 	/*
@@ -708,8 +713,8 @@ namespace ft {
 	 * @param x,y  vector containers of the same type
 	 *             (i.e., having both the same template parameters, T and Allocator)
 	 */
-	template< typename T, typename Allocator >
-		void	swap( vector<T,Allocator>& x, vector<T,Allocator>& y );
+	template< typename T, typename Alloc >
+		void	swap( vector<T,Alloc>& x, vector<T,Alloc>& y );
 
 }
 
