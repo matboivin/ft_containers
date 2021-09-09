@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/09 11:46:23 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/09 18:53:03 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 
 /*
  * Colors for a more readable output
- * (there will be a lot of things to read hehe)
  */
 
 #define COL_RESET    "\033[0m"
@@ -33,14 +32,20 @@
 #define COL_YELLOW_B "\033[1;33m"
 
 /*
- * Vector template class
- * Array which size can change dynamically
- *
- * Comments from: www.cplusplus.com
+ * Credits:
+ * Detailed comments mostly from www.cplusplus.com
  */
 
 namespace ft {
 
+	/*
+	 * Vector template class
+	 * Array which size can change dynamically
+	 *
+	 * @param T      Type of the elements
+	 * @param Alloc  Type of the allocator object used to define the storage
+	 *               allocation model
+	 */
 	template< typename T, typename Alloc = std::allocator<T> >
 	class vector {
 
@@ -141,6 +146,8 @@ namespace ft {
 		// void		swap( vector& x );
 		void		clear( void );
 	};
+
+	/* construct/copy/destroy *********************************************** */
 
 	/*
 	 * Default constructor

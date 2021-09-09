@@ -13,6 +13,13 @@
 - [The Four Polymorphisms in C++](https://catonmat.net/cpp-polymorphism)
 - [cppreference.com: Containers library](https://en.cppreference.com/w/cpp/container)
 
+### Bookmarks
+
+- [Subclass/inherit standard containers?](https://stackoverflow.com/a/39755599)
+- [Don’t inherit from standard types](https://quuxplusone.github.io/blog/2018/12/11/dont-inherit-from-std-types/)
+- [16.2 — Composition](https://www.learncpp.com/cpp-tutorial/composition/)
+- [In C++11, the using keyword when used for type alias is identical to typedef](https://stackoverflow.com/a/20791007)
+
 ### Namespaces
 
 - [cppreference.com: Namespaces](https://en.cppreference.com/w/cpp/language/namespace)
@@ -25,12 +32,9 @@
 - [Is Stephen Lavavej’s Mallocator the same in C++11?](https://isocpp.org/blog/2016/04/quick-q-is-stephen-lavavejs-mallocator-the-same-in-cpp11)
 - [What is an Allocator?](https://medium.com/@vgasparyan1995/what-is-an-allocator-c8df15a93ed)
 
-### Bookmarks
+#### Iterator
 
-- [Subclass/inherit standard containers?](https://stackoverflow.com/a/39755599)
-- [Don’t inherit from standard types](https://quuxplusone.github.io/blog/2018/12/11/dont-inherit-from-std-types/)
-- [16.2 — Composition](https://www.learncpp.com/cpp-tutorial/composition/)
-- [In C++11, the using keyword when used for type alias is identical to typedef](https://stackoverflow.com/a/20791007)
+- [How to implement an STL-style iterator and avoid common pitfalls?](https://stackoverflow.com/a/8054856)
 
 #### Vector
 
