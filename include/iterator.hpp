@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/09 19:33:58 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/11 16:28:43 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,34 +57,34 @@ namespace ft {
 	public:
 
 		// types
-		typedef Iterator::iterator_category	iterator_category;
-		typedef Iterator::value_type		value_type;
-		typedef Iterator::difference_type	difference_type;
-		typedef Iterator::pointer			pointer;
-		typedef Iterator::reference			reference;
+		typedef typename Iterator::iterator_category	iterator_category;
+		typedef typename Iterator::value_type			value_type;
+		typedef typename Iterator::difference_type		difference_type;
+		typedef typename Iterator::pointer				pointer;
+		typedef typename Iterator::reference			reference;
 	};
 
 	/*
 	 * Specialization for pointers
 	 */
-	template< typename iterator_traits<T*> >
-	class iterator_traits {
+	template< typename T >
+	class iterator_traits<T*> {
 
 	public:
 
 		// types
 		//typedef ft::random_access_iterator_tag	iterator_category;
-		typedef T								value_type;
-		typedef std::ptrdiff_t					difference_type;
-		typedef T*								pointer;
-		typedef T&								reference;
+		typedef T				value_type;
+		typedef std::ptrdiff_t	difference_type;
+		typedef T*				pointer;
+		typedef T&				reference;
 	};
 
 	/*
 	 * Specialization for pointers to const
 	 */
-	template< typename iterator_traits<const T*> >
-	class iterator_traits {
+	template< typename T >
+	class iterator_traits<const T*> {
 
 	public:
 
