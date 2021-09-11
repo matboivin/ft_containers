@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 18:21:14 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/11 18:39:57 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,8 +272,8 @@ namespace ft {
 	 * The container preserves its current allocator, which is used to allocate storage
 	 * in case of reallocation.
 	 *
-	 * @param x Another vector object of the same type
-	 *          (with the same class template arguments T and Allocator)
+	 * @param x  Another vector object of the same type
+	 *           (with the same class template arguments T and Allocator)
 	 *
 	 * @return  *this
 	 */
@@ -307,7 +307,7 @@ namespace ft {
 	/*
 	 * Returns a copy of the allocator object associated with the vector.
 	 *
-	 * @return The allocator
+	 * @return  The allocator
 	 */
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::allocator_type	vector<T,Alloc>::get_alloc( void ) const {
@@ -322,7 +322,7 @@ namespace ft {
 	/*
 	 * Checks whether the vector is empty (i.e. whether its size is 0).
 	 *
-	 * @return true if the container size is 0, false otherwise
+	 * @return  true if the container size is 0, false otherwise
 	 */
 	template< typename T, typename Alloc >
 	bool	vector<T,Alloc>::empty( void ) const {
@@ -333,7 +333,7 @@ namespace ft {
 	/*
 	 * Get the size of the vector
 	 *
-	 * @return The number of elements in the vector
+	 * @return  The number of elements in the vector
 	 */
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::size_type	vector<T,Alloc>::size( void ) const {
@@ -347,7 +347,7 @@ namespace ft {
 	 * This is the maximum potential size the container can reach due to known system
 	 * or library implementation limitations.
 	 *
-	 * @return The maximum number of elements a vector container can hold as content
+	 * @return  The maximum number of elements a vector container can hold as content
 	 */
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::size_type	vector<T,Alloc>::max_size( void ) const {
@@ -414,7 +414,7 @@ namespace ft {
 	 * i.e., size of the storage space currently allocated for the vector,
 	 * expressed in terms of elements.
 	 *
-	 * @return The size of the currently allocated storage capacity in the vector
+	 * @return  The size of the currently allocated storage capacity in the vector
 	 */
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::size_type	vector<T,Alloc>::capacity( void ) const {
@@ -460,7 +460,7 @@ namespace ft {
 	 *
 	 * @param n  Position of an element in the container
 	 *
-	 * @return A reference to the element at position n in the vector container
+	 * @return  A reference to the element at position n in the vector container
 	 *
 	 * @exceptsafe If the container size is greater than n, the function
 	 * never throws exceptions.
@@ -483,7 +483,7 @@ namespace ft {
 	 *
 	 * @param n  Position of an element in the container
 	 *
-	 * @return The element at the specified position in the container
+	 * @return  The element at the specified position in the container
 	 *
 	 * @exceptsafe If n is out of bounds, out_of_range si thrown
 	 */
@@ -508,7 +508,7 @@ namespace ft {
 	/*
 	 * Access the first element in the vector
 	 *
-	 * @return A reference to the first element in the vector container
+	 * @return  A reference to the first element in the vector container
 	 */
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::reference	vector<T,Alloc>::front( void ) {
@@ -525,7 +525,7 @@ namespace ft {
 	/*
 	 * Access the last element in the vector
 	 *
-	 * @return A reference to the last element in the vector container
+	 * @return  A reference to the last element in the vector container
 	 */
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::reference	vector<T,Alloc>::back( void ) {
@@ -640,7 +640,7 @@ namespace ft {
 	 * @param position  Position in the vector where the new elements are inserted
 	 * @param val       Value to be copied (or moved) to the inserted elements
 	 *
-	 * @return An iterator that points to the first of the newly inserted elements
+	 * @return  An iterator that points to the first of the newly inserted elements
 	 */
 	// template< typename T, typename Alloc >
 	// typename vector<T,Alloc>::iterator	vector<T,Alloc>::insert( iterator position, const value_type& val ) {
@@ -668,7 +668,7 @@ namespace ft {
 	 * @param n         Number of elements to insert. Each element is initialized to a copy of val
 	 * @param val       Value to be copied (or moved) to the inserted elements
 	 *
-	 * @return An iterator that points to the first of the newly inserted elements
+	 * @return  An iterator that points to the first of the newly inserted elements
 	 */
 	// template< typename T, typename Alloc >
 	// void	vector<T,Alloc>::insert( iterator position, size_type n, const value_type& val ) {

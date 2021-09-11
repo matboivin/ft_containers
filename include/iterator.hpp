@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 18:29:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/11 18:45:26 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,8 +184,29 @@ namespace ft {
 		template< typename Iter >
 			reverse_iterator( const reverse_iterator<Iter>& rev_it );
 
+		// assignment operator
+		template< typename Iter >
+			reverse_iterator&	operator=( const reverse_iterator<Iter>& other );
+
 		// return copy of the original iterator
 		iterator_type	base( void ) const;
+
+		// accesses the pointed-to element
+		reference	operator*( void ) const;
+		reference	operator*( void ) const;
+
+		// accesses an element by index
+		reference	operator[]( difference_type n ) const;
+
+		// advances or decrements the iterator
+		reverse_iterator&	operator++( void );
+		reverse_iterator	operator++( int );
+		reverse_iterator&	operator+= ( difference_type n );
+		reverse_iterator	operator+( difference_type n ) const;
+		reverse_iterator&	operator--( void );
+		reverse_iterator	operator--( int );
+		reverse_iterator&	operator-=( difference_type n );
+		reverse_iterator	operator-( difference_type n ) const;
 
 	};
 
@@ -230,7 +251,7 @@ namespace ft {
 	template< typename Iterator >
 	template< typename Iter >
 	reverse_iterator<Iterator>::reverse_iterator( const reverse_iterator<Iter>& rev_it )
-			: _baseIterator( rev_it.base() ) {
+			: _baseIterator( rev_it._baseIterator ) {
 
 		std::cout << COL_GREEN
 				  << "ft::reverse_iterator copy constructor called" << COL_RESET
@@ -238,9 +259,30 @@ namespace ft {
 	}
 
 	/*
+	 * Assignment operator
+	 *
+	 * @param other  An iterator of a reverse_iterator type
+	 *
+	 * @return  *this
+	 */
+	template< typename Iterator >
+	template< typename Iter >
+	reverse_iterator<Iterator>::reverse_iterator&	operator=( const reverse_iterator<Iter>& other ) {
+
+		std::cout << COL_GREEN
+				  << "ft::reverse_iterator assignment operator called" << COL_RESET
+				  << std::endl;
+
+		if ( this != &rhs )
+			_baseIterator = other.base();
+
+		return ( *this );
+	}
+
+	/*
 	 * Returns a copy of the base iterator
 	 *
-	 * @return A copy of the base iterator, which iterates in the opposite direction
+	 * @return  A copy of the base iterator, which iterates in the opposite direction
 	 */
 	template< typename Iterator >
 	typename reverse_iterator<Iterator>::iterator_type	reverse_iterator<Iterator>::base( void ) const {
