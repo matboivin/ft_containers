@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 18:45:26 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/11 18:59:22 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,7 +193,7 @@ namespace ft {
 
 		// accesses the pointed-to element
 		reference	operator*( void ) const;
-		reference	operator*( void ) const;
+		reference	operator->( void ) const;
 
 		// accesses an element by index
 		reference	operator[]( difference_type n ) const;
@@ -267,17 +267,21 @@ namespace ft {
 	 */
 	template< typename Iterator >
 	template< typename Iter >
-	reverse_iterator<Iterator>::reverse_iterator&	operator=( const reverse_iterator<Iter>& other ) {
+	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator=( const reverse_iterator<Iter>& other ) {
 
 		std::cout << COL_GREEN
 				  << "ft::reverse_iterator assignment operator called" << COL_RESET
 				  << std::endl;
 
-		if ( this != &rhs )
+		if ( this != &other )
 			_baseIterator = other.base();
 
 		return ( *this );
 	}
+
+
+	/* getter *************************************************************** */
+
 
 	/*
 	 * Returns a copy of the base iterator
@@ -289,6 +293,100 @@ namespace ft {
 
 		return (_baseIterator);
 	}
+
+
+	/* element access ******************************************************* */
+
+
+	/*
+	 * Dereference iterator
+	 * Internally, the function decreases a copy of its base iterator and returns
+	 * the result of dereferencing it
+	 *
+	 * @return  A reference to the element pointed by the iterator
+	 */
+	template< typename Iterator >
+	typename reverse_iterator<Iterator>::reference	reverse_iterator<Iterator>::operator*( void ) const {
+
+		iterator_type	copy = _baseIterator;
+
+		--copy;
+		return ( *copy );
+	}
+
+	// template< typename Iterator >
+	// typename reverse_iterator<Iterator>::reference	reverse_iterator<Iterator>::operator->( void ) const {
+
+	// 	return (  );
+	// }
+
+	// template< typename Iterator >
+	// typename reverse_iterator<Iterator>::reference	reverse_iterator<Iterator>::operator[]( difference_type n ) const {
+
+	// 	return (  );
+	// }
+
+	// advances or decrements the iterator
+
+
+	/* advance/decrement **************************************************** */
+
+	template< typename Iterator >
+	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator++( void ) {
+
+		--_baseIterator;
+		return ( *this );
+	}
+
+	template< typename Iterator >
+	reverse_iterator<Iterator>	reverse_iterator<Iterator>::operator++( int ) {
+
+		reverse_iterator	backup = *this;
+		--_baseIterator;
+		return ( backup );
+	}
+
+	template< typename Iterator >
+	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator+= ( difference_type n ) {
+
+		_baseIterator -= n;
+		return ( *this );
+	}
+
+	template< typename Iterator >
+	reverse_iterator<Iterator>	reverse_iterator<Iterator>::operator+( difference_type n ) const {
+
+		return ( reverse_iterator( _baseIterator - n ) );
+	}
+
+	template< typename Iterator >
+	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator--( void ) {
+
+		++_baseIterator;
+		return ( *this );
+	}
+
+	template< typename Iterator >
+	reverse_iterator<Iterator>	reverse_iterator<Iterator>::operator--( int ) {
+
+		reverse_iterator	backup = *this;
+		++_baseIterator;
+		return ( backup );
+	}
+
+	template< typename Iterator >
+	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator-=( difference_type n ) {
+
+		_baseIterator += n;
+		return ( *this );
+	}
+
+	template< typename Iterator >
+	reverse_iterator<Iterator>	reverse_iterator<Iterator>::operator-( difference_type n ) const {
+
+		return ( reverse_iterator( _baseIterator + n ) );
+	}
+
 
 }
 
