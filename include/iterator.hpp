@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 17:08:29 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/11 18:11:00 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,23 @@
 namespace ft {
 
 	/*
-	 * Iterator Tags
-	 * Empty types to identify categories.
+	 * Iterators
+	 *
+	 * Category Tags: Empty classes to identify categories
+	 *
+	 * Classes
+	 *   iterator
+	 *   iterator_traits
+	 *   iterator_traits: Partial specialization for pointers
+	 *   iterator_traits: Partial specialization for pointers to const
+	 *
+	 * Predefined iterators
+	 *   reverse_iterator
 	 */
+
+
+	/* Category tags ******************************************************** */
+
 
 	// each value pointed by the iterator is read only once and then the iterator is incremented
 	struct input_iterator_tag {};
@@ -34,6 +48,10 @@ namespace ft {
 	struct bidirectional_iterator_tag : public forward_iterator_tag {};
 	// access elements at an arbitrary offset position relative to the element they point to
 	struct random_access_iterator_tag : public bidirectional_iterator_tag {};
+
+
+	/* Classes ************************************************************** */
+
 
 	/*
 	 * Base class to define required types for simple iterators
@@ -107,6 +125,67 @@ namespace ft {
 		typedef const T*						pointer;
 		typedef const T&						reference;
 	};
+
+
+	/* Predefined iterators ************************************************* */
+
+
+	/*
+	 * Reverse iterator
+	 *
+	 * This class reverses the direction in which a bidirectional or
+	 * random-access iterator iterates through a range.
+	 *
+	 * A copy of the original iterator (the base iterator) is kept internally and used
+	 * to reflect the operations performed on the reverse_iterator:
+	 * whenever the reverse_iterator is incremented, its base iterator is decreased,
+	 * and vice versa.
+	 * A copy of the base iterator with the current state can be obtained at any time
+	 * by calling member base.
+	 *
+	 * @param Iterator  A bidirectional iterator type
+	 *                  Or a random-access iterator
+	 */
+	template< typename Iterator >
+	class reverse_iterator
+			: public ft::iterator< typename ft::iterator_traits<Iterator>::iterator_category,
+								   typename ft::iterator_traits<Iterator>::value_type,
+								   typename ft::iterator_traits<Iterator>::difference_type,
+								   typename ft::iterator_traits<Iterator>::pointer,
+								   typename ft::iterator_traits<Iterator>::reference >
+	{
+
+	public:
+
+		// types
+		typedef Iterator	iterator_type;
+		typedef typename ft::iterator_traits<Iterator>::iterator_category	iterator_category;
+		typedef typename ft::iterator_traits<Iterator>::value_type			value_type;
+		typedef typename ft::iterator_traits<Iterator>::difference_type		difference_type;
+		typedef typename ft::iterator_traits<Iterator>::pointer				pointer;
+		typedef typename ft::iterator_traits<Iterator>::reference			reference;
+
+	protected:
+
+		iterator_type	_base; // copy of the original iterator
+
+	public:
+
+		// return copy of the original iterator
+		iterator_type	base( void ) const;
+
+	};
+
+
+	/* Reverse iterator implementation ************************************** */
+
+	// return copy of the original iterator
+	template< typename Iterator >
+	typename reverse_iterator<Iterator>::iterator_type	reverse_iterator<Iterator>::base( void ) const {
+
+		return (_base);
+	}
+
 }
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 17:19:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/11 18:15:15 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,26 @@
 namespace ft {
 
 	/*
+	 * Vector
+	 *
+	 * Vector definition
+	 *
+	 * Vector implementation
+	 *   construct/copy/destroy
+	 *   capacity
+	 *   element access
+	 *   modifiers
+	 *
+	 * non-member function overloads
+	 *   relational operators
+	 *   swap
+	 */
+
+
+	/* Vector definition **************************************************** */
+
+
+	/*
 	 * Vector template class
 	 * Array which size can change dynamically
 	 *
@@ -59,8 +79,8 @@ namespace ft {
 		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef std::size_t									size_type;
 
-		typedef ft::iterator<random_access_iterator_tag,value_type>			iterator;
-		typedef ft::iterator<random_access_iterator_tag,const value_type>	const_iterator;
+		typedef ft::iterator<ft::random_access_iterator_tag,value_type>			iterator;
+		typedef ft::iterator<ft::random_access_iterator_tag,const value_type>	const_iterator;
 		// typedef ft::reverse_iterator<iterator>				reverse_iterator;
 		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		typedef typename ft::iterator_traits<iterator>::difference_type		difference_type;
@@ -144,7 +164,12 @@ namespace ft {
 		void		clear( void );
 	};
 
+
+	/* Vector implementation ************************************************ */
+
+
 	/* construct/copy/destroy *********************************************** */
+
 
 	/*
 	 * Default constructor
