@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 16:58:20 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/11 17:08:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ namespace ft {
 	/*
 	 * Base class to define required types for simple iterators
 	 *
+	 * @param Category  Category to which the iterator belongs to (Iterator Tags)
 	 * @param T         Type of elements pointed by the iterator
 	 * @param Distance  Type to represent the difference between two iterators
 	 * @param Pointer   Type to represent a pointer to an element pointed by the iterator
