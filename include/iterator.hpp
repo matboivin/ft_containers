@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 16:28:43 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/11 16:58:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,22 @@
 namespace ft {
 
 	/*
-	 * Base class to ease the definition of required types for simple iterators
-	 *
-	 * This is a base class template that can be used to derive iterator classes
-	 * from it. It is not an iterator class and does not provide any of the functionality
-	 * an iterator is expected to have.
+	 * Iterator Tags
+	 * Empty types to identify categories.
+	 */
+
+	// each value pointed by the iterator is read only once and then the iterator is incremented
+	struct input_iterator_tag {};
+	struct output_iterator_tag {};
+	// access the sequence of elements in a range from its beginning towards its end
+	struct forward_iterator_tag : public input_iterator_tag {};
+	// access the sequence of elements in a range in both directions
+	struct bidirectional_iterator_tag : public forward_iterator_tag {};
+	// access elements at an arbitrary offset position relative to the element they point to
+	struct random_access_iterator_tag : public bidirectional_iterator_tag {};
+
+	/*
+	 * Base class to define required types for simple iterators
 	 *
 	 * @param T         Type of elements pointed by the iterator
 	 * @param Distance  Type to represent the difference between two iterators
@@ -65,7 +76,7 @@ namespace ft {
 	};
 
 	/*
-	 * Specialization for pointers
+	 * Partial specialization for pointers
 	 */
 	template< typename T >
 	class iterator_traits<T*> {
@@ -73,15 +84,15 @@ namespace ft {
 	public:
 
 		// types
-		//typedef ft::random_access_iterator_tag	iterator_category;
-		typedef T				value_type;
-		typedef std::ptrdiff_t	difference_type;
-		typedef T*				pointer;
-		typedef T&				reference;
+		typedef ft::random_access_iterator_tag	iterator_category;
+		typedef T								value_type;
+		typedef std::ptrdiff_t					difference_type;
+		typedef T*								pointer;
+		typedef T&								reference;
 	};
 
 	/*
-	 * Specialization for pointers to const
+	 * Partial specialization for pointers to const
 	 */
 	template< typename T >
 	class iterator_traits<const T*> {
@@ -89,7 +100,7 @@ namespace ft {
 	public:
 
 		// types
-		//typedef ft::random_access_iterator_tag	iterator_category;
+		typedef ft::random_access_iterator_tag	iterator_category;
 		typedef T								value_type;
 		typedef std::ptrdiff_t					difference_type;
 		typedef const T*						pointer;
