@@ -46,6 +46,11 @@ CPPFLAGS = -I$(INC_DIR) -I$(INC_SUBDIRS)
 CXX = clang++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
+# COLORS
+
+COL_WHITE_B = \033[1;37m
+COL_RESET = \033[0m
+
 # RULES
 
 all: $(BIN_NAME)
@@ -64,7 +69,7 @@ $(OBJ_DIR)/%.o : %.cpp
 
 $(BIN_NAME): $(OBJ_DIR) $(OBJ) $(INC) $(INC_TEST)
 	$(CXX) $(OBJ) -o $@
-	@echo "\nOK\t$@ is ready"
+	@echo "$(COL_WHITE_B)$@ $(COL_RESET)created in working directory"
 
 # DEBUG
 debug: $(BIN_NAME)
