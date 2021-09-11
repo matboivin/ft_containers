@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 18:15:15 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/11 18:21:14 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,7 @@
 #include <memory>
 #include <vector>
 #include "iterator.hpp"
-
-/*
- * Colors for a more readable output
- */
-
-#define COL_RESET    "\033[0m"
-#define COL_RED      "\033[0;31m"
-#define COL_RED_B    "\033[1;31m"
-#define COL_GREEN    "\033[0;32m"
-#define COL_GREEN_B  "\033[1;32m"
-#define COL_YELLOW   "\033[0;33m"
-#define COL_YELLOW_B "\033[1;33m"
+#include "utils.hpp"
 
 /*
  * Credits:
@@ -323,7 +312,7 @@ namespace ft {
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::allocator_type	vector<T,Alloc>::get_alloc( void ) const {
 
-		return ( static_cast<allocator_type>(this->_alloc) );
+		return ( static_cast<allocator_type>(_alloc) );
 	}
 
 
@@ -338,7 +327,7 @@ namespace ft {
 	template< typename T, typename Alloc >
 	bool	vector<T,Alloc>::empty( void ) const {
 
-		return ( this->_size == 0 );
+		return ( _size == 0 );
 	}
 
 	/*
@@ -349,7 +338,7 @@ namespace ft {
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::size_type	vector<T,Alloc>::size( void ) const {
 
-		return ( this->_size );
+		return ( _size );
 	}
 
 	/*
@@ -363,7 +352,7 @@ namespace ft {
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::size_type	vector<T,Alloc>::max_size( void ) const {
 
-		return ( this->_alloc.max_size() );
+		return ( _alloc.max_size() );
 	}
 
 	/*
@@ -430,7 +419,7 @@ namespace ft {
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::size_type	vector<T,Alloc>::capacity( void ) const {
 
-		return ( this->_capacity );
+		return ( _capacity );
 	}
 
 	/*
@@ -480,13 +469,13 @@ namespace ft {
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::reference	vector<T,Alloc>::operator[]( size_type n ) {
 
-		return ( this->_elements[n] );
+		return ( _elements[n] );
 	}
 
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::const_reference	vector<T,Alloc>::operator[]( size_type n ) const {
 
-		return ( this->_elements[n] );
+		return ( _elements[n] );
 	}
 
 	/*
@@ -504,7 +493,7 @@ namespace ft {
 		if ( n > size() )
 			throw std::out_of_range("ft::vector::_M_range_check");
 
-		return ( this->_elements[n] );
+		return ( _elements[n] );
 	}
 
 	template< typename T, typename Alloc >
@@ -513,7 +502,7 @@ namespace ft {
 		if ( n > size() )
 			throw std::out_of_range("ft::vector::_M_range_check");
 
-		return ( this->_elements[n] );
+		return ( _elements[n] );
 	}
 
 	/*
@@ -524,13 +513,13 @@ namespace ft {
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::reference	vector<T,Alloc>::front( void ) {
 
-		return ( this->_elements[0] );
+		return ( _elements[0] );
 	}
 
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::const_reference	vector<T,Alloc>::front( void ) const {
 
-		return ( this->_elements[0] );
+		return ( _elements[0] );
 	}
 
 	/*
@@ -543,7 +532,7 @@ namespace ft {
 
 		size_type	idx = size() - 1;
 
-		return ( this->_elements[idx] );
+		return ( _elements[idx] );
 	}
 
 	template< typename T, typename Alloc >
@@ -551,7 +540,7 @@ namespace ft {
 
 		size_type	idx = size() - 1;
 
-		return ( this->_elements[idx] );
+		return ( _elements[idx] );
 	}
 
 

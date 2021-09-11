@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 19:12:45 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/11 18:20:04 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include <vector>
 #include "vector.hpp"
 #include "test_utils.hpp"
+#include "utils.hpp"
 
 /*
  * Display the vector size, capacity and content

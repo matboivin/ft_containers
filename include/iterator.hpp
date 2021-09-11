@@ -6,12 +6,14 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 18:11:00 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/11 18:29:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP
 #define ITERATOR_HPP
+
+#include "utils.hpp"
 
 /*
  * Credits:
@@ -167,9 +169,20 @@ namespace ft {
 
 	protected:
 
-		iterator_type	_base; // copy of the original iterator
+		// attributes
+		iterator_type	_baseIterator; // copy of the original iterator
 
 	public:
+
+		// default constructor
+		reverse_iterator( void );
+
+		// initalization constructor
+		explicit reverse_iterator( iterator_type it );
+
+		// copy constructor
+		template< typename Iter >
+			reverse_iterator( const reverse_iterator<Iter>& rev_it );
 
 		// return copy of the original iterator
 		iterator_type	base( void ) const;
@@ -179,11 +192,60 @@ namespace ft {
 
 	/* Reverse iterator implementation ************************************** */
 
-	// return copy of the original iterator
+
+	/* construct/copy/destroy *********************************************** */
+
+	/*
+	 * Default constructor
+	 * Constructs a reverse iterator that points to no object
+	 */
+	template< typename Iterator >
+	reverse_iterator<Iterator>::reverse_iterator( void ) : _baseIterator(0) {
+
+		std::cout << COL_GREEN
+				  << "ft::reverse_iterator default constructor called" << COL_RESET
+				  << std::endl;
+	}
+
+	/*
+	 * Initalization constructor
+	 * Constructs a reverse iterator from some original iterator it
+	 *
+	 * @param it  An iterator
+	 */
+	template< typename Iterator >
+	reverse_iterator<Iterator>::reverse_iterator( iterator_type it ) : _baseIterator(it) {
+
+		std::cout << COL_GREEN
+				  << "ft::reverse_iterator initalization constructor called" << COL_RESET
+				  << std::endl;
+	}
+
+	/*
+	 * Copy constructor
+	 * Constructs a reverse iterator from some other reverse iterator
+	 *
+	 * @param rev_it  An iterator of a reverse_iterator type
+	 */
+	template< typename Iterator >
+	template< typename Iter >
+	reverse_iterator<Iterator>::reverse_iterator( const reverse_iterator<Iter>& rev_it )
+			: _baseIterator( rev_it.base() ) {
+
+		std::cout << COL_GREEN
+				  << "ft::reverse_iterator copy constructor called" << COL_RESET
+				  << std::endl;
+	}
+
+	/*
+	 * Returns a copy of the base iterator
+	 *
+	 * @return A copy of the base iterator, which iterates in the opposite direction
+	 */
 	template< typename Iterator >
 	typename reverse_iterator<Iterator>::iterator_type	reverse_iterator<Iterator>::base( void ) const {
 
-		return (_base);
+		return (_baseIterator);
 	}
 
 }

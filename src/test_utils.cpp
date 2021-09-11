@@ -6,13 +6,14 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:22:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 18:47:34 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/11 18:29:51 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <string>
 #include "test_utils.hpp"
+#include "utils.hpp"
 
 std::string	strToLower( std::string str ) {
 

@@ -9,7 +9,8 @@ RM = /bin/rm
 # FILES
 
 INC_FILES = iterator.hpp \
-			vector.hpp
+			vector.hpp \
+			utils.hpp
 
 INC_TEST_FILES = test_utils.hpp \
 				 vector_tests.hpp
