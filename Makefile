@@ -20,6 +20,8 @@ SRC_FILES = main.cpp \
 			test_utils.cpp \
 			rev_it_tests.cpp \
 			rev_it_assignment_op.cpp \
+			rev_it_decrement.cpp \
+			rev_it_increment.cpp \
 			rev_it_relational_ops.cpp \
 			vector_assignment_op.cpp \
 			vector_capacity.cpp \

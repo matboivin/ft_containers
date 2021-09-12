@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 14:30:14 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 16:50:57 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -376,7 +376,7 @@ namespace ft {
 	reverse_iterator<Iterator>::operator++( int ) {
 
 		reverse_iterator	backup = *this;
-		--(*this);
+		++(*this);
 		return ( backup );
 	}
 
@@ -433,7 +433,7 @@ namespace ft {
 	reverse_iterator<Iterator>::operator--( int ) {
 
 		reverse_iterator	backup = *this;
-		++(*this);
+		--(*this);
 		return ( backup );
 	}
 
