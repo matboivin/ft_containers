@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:33:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 17:19:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 17:44:36 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ int	testReverseIterator( void ) {
 
 	int	has_failed = 0;
 
-	// operator=
-	has_failed = cmpRevItAssignmentOperator();
-	if ( has_failed )
-		return ( exitFailedTest("reverse_iterator: assignement operator") );
+	// // operator=
+	// has_failed = cmpRevItAssignmentOperator();
+	// if ( has_failed )
+	// 	return ( exitFailedTest("reverse_iterator: assignement operator") );
 
 	// advance/decrease
 	has_failed = cmpRevItIncrement();
@@ -44,10 +44,26 @@ int	testReverseIterator( void ) {
 	if ( has_failed )
 		return ( exitFailedTest("reverse_iterator: operator--") );
 
-	// Relational operators
-	has_failed = cmpRevItRelationalOps();
+	has_failed = cmpRevItAdvanceOp();
 	if ( has_failed )
-		return ( exitFailedTest("reverse_iterator: relational operators") );
+		return ( exitFailedTest("reverse_iterator: operator+=") );
+	
+	has_failed = cmpRevItAdditionOp();
+	if ( has_failed )
+		return ( exitFailedTest("reverse_iterator: operator+") );
+	
+	has_failed = cmpRevItRetrocedeOp();
+	if ( has_failed )
+		return ( exitFailedTest("reverse_iterator: operator-=") );
+	
+	has_failed = cmpRevItSubtractOp();
+	if ( has_failed )
+		return ( exitFailedTest("reverse_iterator: operator-") );
+
+	// // Relational operators
+	// has_failed = cmpRevItRelationalOps();
+	// if ( has_failed )
+	// 	return ( exitFailedTest("reverse_iterator: relational operators") );
 
 	return (0);
 }

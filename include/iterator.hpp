@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 16:50:57 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 17:42:31 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -390,7 +390,7 @@ namespace ft {
 	 */
 	template< typename Iterator >
 	reverse_iterator<Iterator>&
-	reverse_iterator<Iterator>::operator+= ( difference_type n ) {
+	reverse_iterator<Iterator>::operator+=( difference_type n ) {
 
 		current -= n;
 		return ( *this );
@@ -439,7 +439,7 @@ namespace ft {
 
 	/*
 	 * Retrocede iterator
-	 * Descreases the reverse_iterator by n element positions
+	 * Decreases the reverse_iterator by n element positions
 	 *
 	 * @param n  Number of elements to offset
 	 *

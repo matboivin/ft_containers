@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:32:00 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 17:03:38 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 17:42:58 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ int	cmpRevItAssignmentOperator( void );
 
 int	cmpRevItIncrement( void );
 int	cmpRevItDecrement( void );
+int	cmpRevItAdvanceOp( void );
+int	cmpRevItAdditionOp( void );
+int	cmpRevItRetrocedeOp( void );
+int	cmpRevItSubtractOp( void );
 
 /*
  * Relational operators

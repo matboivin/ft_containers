@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:33:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 17:01:56 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 17:32:25 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,7 @@ int	cmpRevItRelationalOps( void ) {
 	std::cout << COL_BLUE_B
 			  << "\n______________ Relational operators\n\n"
 			  << COL_RESET;
-	
+
 	showTestInfos("Operators to make comparison between two reverse iterators.");
 
 	int	arr[10];
@@ -275,11 +275,11 @@ int	cmpRevItRelationalOps( void ) {
 	// Test operator!=
 	if ( cmpRevItNotEqualTo(std_it, std_ite, ft_it, ft_ite) )
 		return (1);
-	
+
 	// Test operator<
 	if ( cmpRevItLessThan(std_it, std_ite, ft_it, ft_ite) )
 		return (1);
-	
+
 	// Test operator>
 	if ( cmpRevItGreaterThan(std_it, std_ite, ft_it, ft_ite) )
 		return (1);
@@ -287,7 +287,7 @@ int	cmpRevItRelationalOps( void ) {
 	// Test operator<=
 	if ( cmpRevItLessEqual(std_it, std_ite, ft_it, ft_ite) )
 		return (1);
-	
+
 	// Test operator>=
 	if ( cmpRevItGreaterEqual(std_it, std_ite, ft_it, ft_ite) )
 		return (1);

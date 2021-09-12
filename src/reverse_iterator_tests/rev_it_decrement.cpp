@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 16:47:31 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 17:19:52 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 17:47:01 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,10 @@ int	cmpRevItDecrement( void ) {
 
 	std::cout << COL_BLUE_B << "\n______ pre-decrement version\n\n" << COL_RESET;
 
-	std::cout << "std::it:   " << *std_it
-			  << "\n--std::it: " << *(--std_it)
-			  << "\nstd::it:   " << *std_it << "\n\n";
+	std::cout << "std::it   " << *std_it << "\tft::it    " << *ft_it
+			  << "\n--std::it " << *(--std_it) << "\t--ft::it  " << *(--ft_it)
+			  << "\nstd::it   " << *std_it << "\tft::it    " << *ft_it << "\n\n";
 
-	std::cout << "ft::it:    " << *ft_it
-			  << "\n--ft::it:  " << *(--ft_it)
-			  << "\nft::it:    " << *ft_it << "\n\n";
-	
 	if ( cmpResults(*std_it == *ft_it) )
 		return (1);
 
@@ -56,13 +52,9 @@ int	cmpRevItDecrement( void ) {
 
 	std::cout << COL_BLUE_B << "______ post-decrement version\n\n" << COL_RESET;
 
-	std::cout << "std::it:   " << *std_it
-			  << "\nstd::it--: " << *(std_it--)
-			  << "\nstd::it:   " << *std_it << "\n\n";
-
-	std::cout << "ft::it:    " << *ft_it
-			  << "\nft::it--:  " << *(ft_it--)
-			  << "\nft::it:    " << *ft_it << "\n\n";
+	std::cout << "std::it   " << *std_it << "\tft::it    " << *ft_it
+			  << "\nstd::it-- " << *(std_it--) << "\tft::it--  " << *(ft_it--)
+			  << "\nstd::it   " << *std_it << "\tft::it    " << *ft_it << "\n\n";
 
 	return ( cmpResults(*std_it == *ft_it) );
 }
