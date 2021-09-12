@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 16:34:12 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 16:56:00 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 17:02:45 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	cmpRevItIncrement( void ) {
 			  << "\nft::it:    " << *ft_it << "\n\n";
 	
 	if ( cmpResults(*std_it == *ft_it) )
-	return (1);
+		return (1);
 
 	// restore
 	std_it--;

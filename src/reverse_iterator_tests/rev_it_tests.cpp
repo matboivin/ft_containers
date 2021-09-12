@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:33:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 16:56:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 17:19:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,37 +28,26 @@ int	testReverseIterator( void ) {
 				 "::::::::::::::::::::::::::::::::::::::::::::\n"
 			  << COL_RESET << std::endl;
 
-	int	arr[10];
-
-	std::cout << "Test array of 10 elements: ";
-	for ( int i = 0; i < 10; i++ ) {
-
-		arr[i] = i;
-		std::cout << arr[i] << ' ';
-	}
-
-	std::cout << COL_BLUE_B << "\n\nCreate 4 reverse iterators:\n"
-			  << COL_BLUE << "(2 originals + 2 ft::reverse_iterator)\n" << COL_RESET;
-
-	// Original
-	std::reverse_iterator<int*>	std_it(arr + 1);
-	std::reverse_iterator<int*>	std_ite(arr + 10);
-
-	// ft
-	ft::reverse_iterator<int*>	ft_it(arr + 1);
-	ft::reverse_iterator<int*>	ft_ite(arr + 10);
-
-	std::cout << std::endl;
+	int	has_failed = 0;
 
 	// operator=
-	//cmpRevItAssignmentOperator(std_it, std_ite, ft_it, ft_ite);
+	has_failed = cmpRevItAssignmentOperator();
+	if ( has_failed )
+		return ( exitFailedTest("reverse_iterator: assignement operator") );
 
 	// advance/decrease
-	cmpRevItIncrement();
-	cmpRevItDecrement();
+	has_failed = cmpRevItIncrement();
+	if ( has_failed )
+		return ( exitFailedTest("reverse_iterator: operator++") );
+
+	has_failed = cmpRevItDecrement();
+	if ( has_failed )
+		return ( exitFailedTest("reverse_iterator: operator--") );
 
 	// Relational operators
-	//cmpRevItRelationalOps(std_it, std_ite, ft_it, ft_ite);
+	has_failed = cmpRevItRelationalOps();
+	if ( has_failed )
+		return ( exitFailedTest("reverse_iterator: relational operators") );
 
 	return (0);
 }

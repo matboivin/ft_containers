@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:32:00 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 16:56:10 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 17:03:38 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,7 @@
  * Assign
  */
 
-void	cmpRevItAssignmentOperator( std::reverse_iterator<int*> std_it,
-									std::reverse_iterator<int*> std_ite,
-									ft::reverse_iterator<int*> ft_it,
-									ft::reverse_iterator<int*> ft_ite );
+int	cmpRevItAssignmentOperator( void );
 
 /*
  * advance/decrease
@@ -37,10 +34,7 @@ int	cmpRevItDecrement( void );
  * Relational operators
  */
 
-int	cmpRevItRelationalOps( std::reverse_iterator<int*> std_it,
-						   std::reverse_iterator<int*> std_ite,
-						   ft::reverse_iterator<int*> ft_it,
-						   ft::reverse_iterator<int*> ft_ite );
+int	cmpRevItRelationalOps( void );
 
 /*
  * Run all reverse iterator tests

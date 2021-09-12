@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:33:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 16:19:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 17:01:56 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ static int	cmpRevItEqualTo( std::reverse_iterator<int*> std_it,
 							 ft::reverse_iterator<int*> ft_it,
 							 ft::reverse_iterator<int*> ft_ite ) {
 
-	std::cout << COL_BLUE_B << "\n______ Test operator== (equal to)\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B
+			  << "\n______ Test operator== (equal to)\n\n" << COL_RESET;
 
 	bool	std_res = (std_it == std_ite);
 	bool	ft_res = (ft_it == ft_ite);
@@ -61,7 +62,8 @@ static int	cmpRevItNotEqualTo( std::reverse_iterator<int*> std_it,
 							 ft::reverse_iterator<int*> ft_it,
 							 ft::reverse_iterator<int*> ft_ite ) {
 
-	std::cout << COL_BLUE_B << "\n______ Test operator!= (not equal to)\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B
+			  << "\n______ Test operator!= (not equal to)\n\n" << COL_RESET;
 
 	bool	std_res = (std_it != std_ite);
 	bool	ft_res = (ft_it != ft_ite);
@@ -97,7 +99,8 @@ static int	cmpRevItLessThan( std::reverse_iterator<int*> std_it,
 							  ft::reverse_iterator<int*> ft_it,
 							  ft::reverse_iterator<int*> ft_ite ) {
 
-	std::cout << COL_BLUE_B << "\n______ Test operator< (less than)\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B
+			  << "\n______ Test operator< (less than)\n\n" << COL_RESET;
 
 	bool	std_res = (std_it < std_ite);
 	bool	ft_res = (ft_it < ft_ite);
@@ -133,7 +136,8 @@ static int	cmpRevItGreaterThan( std::reverse_iterator<int*> std_it,
 								 ft::reverse_iterator<int*> ft_it,
 								 ft::reverse_iterator<int*> ft_ite ) {
 
-	std::cout << COL_BLUE_B << "\n______ Test operator> (greater than)\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B
+			  << "\n______ Test operator> (greater than)\n\n" << COL_RESET;
 
 	bool	std_res = (std_it > std_ite);
 	bool	ft_res = (ft_it > ft_ite);
@@ -238,16 +242,28 @@ static int	cmpRevItGreaterEqual( std::reverse_iterator<int*> std_it,
  * Compare relational operators
  */
 
-int	cmpRevItRelationalOps( std::reverse_iterator<int*> std_it,
-						   std::reverse_iterator<int*> std_ite,
-						   ft::reverse_iterator<int*> ft_it,
-						   ft::reverse_iterator<int*> ft_ite ) {
+int	cmpRevItRelationalOps( void ) {
 
 	std::cout << COL_BLUE_B
 			  << "\n______________ Relational operators\n\n"
 			  << COL_RESET;
 	
 	showTestInfos("Operators to make comparison between two reverse iterators.");
+
+	int	arr[10];
+
+	// fill test array
+	for ( int i = 0; i < 10; i++ )
+		arr[i] = i;
+
+	// Original
+	std::reverse_iterator<int*>	std_it(arr + 1);
+	std::reverse_iterator<int*>	std_ite(arr + 10);
+
+	// ft
+	ft::reverse_iterator<int*>	ft_it(arr + 1);
+	ft::reverse_iterator<int*>	ft_ite(arr + 10);
+	std::cout << std::endl;
 
 	std::cout << "std::it:  " << *std_it << "\tft::it:  " << *ft_it
 			  << "\nstd::ite: " << *std_ite << "\tft::ite: " << *ft_ite << std::endl;

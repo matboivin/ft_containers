@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 18:56:29 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 17:07:42 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	cmpVecAssignmentOperator( void ) {
 	vec2 = vec1;
 	vec3 = vec1;
 
-	std::cout << COL_BLUE_B << "AFTER\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B << "AFTER COPY\n\n" << COL_RESET;
 
 	// Display vec2 and vec3 informations after copy
 	displayVecInfos(vec2, "std::vector 2");
@@ -70,7 +70,7 @@ void	cmpVecAssignmentOperator( void ) {
 	ft_vec2 = ft_vec1;
 	ft_vec3 = ft_vec1;
 
-	std::cout << COL_BLUE_B << "\nAFTER\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B << "\nAFTER COPY\n\n" << COL_RESET;
 
 	// Display vec2 and vec3 informations after copy
 	displayVecInfos(ft_vec2, "ft::vector 2");

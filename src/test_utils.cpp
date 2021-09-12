@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:22:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 15:39:26 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 17:17:27 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	continueTests( const std::string& next_test ) {
 		} else {
 
 			std::cout << COL_RED_B << "Error:"
-					  << COL_RED << " invalid input.\n" << COL_RESET;;
+					  << COL_RED << " invalid input.\n" << COL_RESET;
 		}
 	}
 
@@ -81,4 +81,13 @@ int	cmpResults( bool condition ) {
 		return (1);
 	}
 	return (0);
+}
+
+int	exitFailedTest( const std::string& test_name ) {
+
+	std::cout << COL_RED_B << "\n______ FAILED TEST"
+			  << COL_RED << "\n       " << test_name
+			  << COL_RESET << "\n\n";
+
+	return (1);
 }
