@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 13:34:45 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 14:23:11 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,22 @@ namespace ft {
 	 *   iterator_traits: Partial specialization for pointers to const
 	 *
 	 * Predefined iterators
-	 *   reverse_iterator
+	 *   reverse_iterator definition
+	 *
+	 * reverse_iterator implementation
+	 *   construct/copy/destroy
+	 *   getter
+	 *   element access
+	 *   advance/decrease
+	 *
+	 * non-member function overloads
+	 *   relational operators
+	 *   operator+
+	 *   operator-
 	 */
 
 
 	/* Category tags ******************************************************** */
-
 
 	// each value pointed by the iterator is read only once and then the iterator is incremented
 	struct input_iterator_tag {};
@@ -53,7 +63,6 @@ namespace ft {
 
 
 	/* Classes ************************************************************** */
-
 
 	/*
 	 * Base class to define required types for simple iterators
@@ -130,7 +139,6 @@ namespace ft {
 
 
 	/* Predefined iterators ************************************************* */
-
 
 	/*
 	 * Reverse iterator
@@ -212,7 +220,6 @@ namespace ft {
 
 	/* Reverse iterator implementation ************************************** */
 
-
 	/* construct/copy/destroy *********************************************** */
 
 	/*
@@ -266,7 +273,8 @@ namespace ft {
 	 */
 	template< typename Iterator >
 	template< typename Iter >
-	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator=( const reverse_iterator<Iter>& other ) {
+	reverse_iterator<Iterator>&
+	reverse_iterator<Iterator>::operator=( const reverse_iterator<Iter>& other ) {
 
 		std::cout << COL_GREEN
 				  << "ft::reverse_iterator assignment operator called" << COL_RESET
@@ -281,21 +289,20 @@ namespace ft {
 
 	/* getter *************************************************************** */
 
-
 	/*
 	 * Returns a copy of the base iterator
 	 *
 	 * @return  A copy of the base iterator, which iterates in the opposite direction
 	 */
 	template< typename Iterator >
-	typename reverse_iterator<Iterator>::iterator_type	reverse_iterator<Iterator>::base( void ) const {
+	typename reverse_iterator<Iterator>::iterator_type
+	reverse_iterator<Iterator>::base( void ) const {
 
 		return (current);
 	}
 
 
 	/* element access ******************************************************* */
-
 
 	/*
 	 * Dereference iterator
@@ -305,7 +312,8 @@ namespace ft {
 	 * @return  A reference to the element pointed by the iterator
 	 */
 	template< typename Iterator >
-	typename reverse_iterator<Iterator>::reference	reverse_iterator<Iterator>::operator*( void ) const {
+	typename reverse_iterator<Iterator>::reference
+	reverse_iterator<Iterator>::operator*( void ) const {
 
 		iterator_type	copy = current;
 
@@ -320,7 +328,8 @@ namespace ft {
 	 * @return  A pointer to the element pointed to by the iterator
 	 */
 	template< typename Iterator >
-	typename reverse_iterator<Iterator>::reference	reverse_iterator<Iterator>::operator->( void ) const {
+	typename reverse_iterator<Iterator>::reference
+	reverse_iterator<Iterator>::operator->( void ) const {
 
 		return ( &(operator*()) );
 	}
@@ -335,14 +344,14 @@ namespace ft {
 	 * @return  A reference to the element
 	 */
 	template< typename Iterator >
-	typename reverse_iterator<Iterator>::reference	reverse_iterator<Iterator>::operator[]( difference_type n ) const {
+	typename reverse_iterator<Iterator>::reference
+	reverse_iterator<Iterator>::operator[]( difference_type n ) const {
 
 		return ( *(*this + n) );
 	}
 
 
-	/* advance/decrement **************************************************** */
-
+	/* advance/decrease ***************************************************** */
 
 	/*
 	 * Increment iterator position: pre-increment version
@@ -350,7 +359,8 @@ namespace ft {
 	 * @return  *this
 	 */
 	template< typename Iterator >
-	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator++( void ) {
+	reverse_iterator<Iterator>&
+	reverse_iterator<Iterator>::operator++( void ) {
 
 		--current;
 		return ( *this );
@@ -362,7 +372,8 @@ namespace ft {
 	 * @return  A copy of *this that was made before the change
 	 */
 	template< typename Iterator >
-	reverse_iterator<Iterator>	reverse_iterator<Iterator>::operator++( int ) {
+	reverse_iterator<Iterator>
+	reverse_iterator<Iterator>::operator++( int ) {
 
 		reverse_iterator	backup = *this;
 		--(*this);
@@ -378,7 +389,8 @@ namespace ft {
 	 * @return  *this
 	 */
 	template< typename Iterator >
-	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator+= ( difference_type n ) {
+	reverse_iterator<Iterator>&
+	reverse_iterator<Iterator>::operator+= ( difference_type n ) {
 
 		current -= n;
 		return ( *this );
@@ -392,7 +404,8 @@ namespace ft {
 	 * @return  An iterator pointing to the element n positions away
 	 */
 	template< typename Iterator >
-	reverse_iterator<Iterator>	reverse_iterator<Iterator>::operator+( difference_type n ) const {
+	reverse_iterator<Iterator>
+	reverse_iterator<Iterator>::operator+( difference_type n ) const {
 
 		return ( reverse_iterator( base() - n ) );
 	}
@@ -403,7 +416,8 @@ namespace ft {
 	 * @return  *this
 	 */
 	template< typename Iterator >
-	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator--( void ) {
+	reverse_iterator<Iterator>&
+	reverse_iterator<Iterator>::operator--( void ) {
 
 		++current;
 		return ( *this );
@@ -415,7 +429,8 @@ namespace ft {
 	 * @return  A copy of *this that was made before the change
 	 */
 	template< typename Iterator >
-	reverse_iterator<Iterator>	reverse_iterator<Iterator>::operator--( int ) {
+	reverse_iterator<Iterator>
+	reverse_iterator<Iterator>::operator--( int ) {
 
 		reverse_iterator	backup = *this;
 		++(*this);
@@ -431,7 +446,8 @@ namespace ft {
 	 * @return  *this
 	 */
 	template< typename Iterator >
-	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator-=( difference_type n ) {
+	reverse_iterator<Iterator>&
+	reverse_iterator<Iterator>::operator-=( difference_type n ) {
 
 		current += n;
 		return ( *this );
@@ -445,9 +461,47 @@ namespace ft {
 	 * @return  An iterator pointing to the element n positions before the currently pointed one
 	 */
 	template< typename Iterator >
-	reverse_iterator<Iterator>	reverse_iterator<Iterator>::operator-( difference_type n ) const {
+	reverse_iterator<Iterator>
+	reverse_iterator<Iterator>::operator-( difference_type n ) const {
 
 		return ( reverse_iterator( base() + n ) );
+	}
+
+
+	/* non-member function overloads **************************************** */
+
+	/*
+	 * Addition operator
+	 * Returns a reverse iterator pointing to the element located n positions
+	 * away from the element pointed to by rev_it
+	 *
+	 * @param n       Number of elements to offset
+	 * @param rev_it  Reverse iterator
+	 *
+	 * @return  An iterator pointing to the element n positions away from rev_it
+	 */
+	template< typename Iterator >
+	reverse_iterator<Iterator>
+	operator+( typename reverse_iterator<Iterator>::difference_type n,
+			   const reverse_iterator<Iterator>& rev_it ) {
+
+		return ( reverse_iterator<Iterator>( rev_it.base() - n ) );
+	}
+
+	/*
+	 * Subtraction operator
+	 * Computes the distance between two reverse iterators
+	 * The function returns the same as subtracting lhs's base iterator from rhs's base iterator
+	 *
+	 * @param lhs, rhs  reverse_iterator objects having both the same template parameter
+	 *
+	 * @return  The number of elements between lhs and rhs
+	 */
+	template< typename Iterator >
+	typename reverse_iterator<Iterator>::difference_type
+	operator-( const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs) {
+
+		return ( rhs.base() - lhs.base() );
 	}
 
 }

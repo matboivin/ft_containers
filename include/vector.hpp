@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 18:39:57 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 13:38:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ namespace ft {
 	/*
 	 * Vector
 	 *
-	 * Vector definition
+	 * vector definition
 	 *
-	 * Vector implementation
+	 * vector implementation
 	 *   construct/copy/destroy
 	 *   capacity
 	 *   element access
