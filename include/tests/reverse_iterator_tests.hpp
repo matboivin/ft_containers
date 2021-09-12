@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:32:00 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 14:50:04 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 16:12:56 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,14 @@
 #include "test_utils.hpp"
 #include "utils.hpp"
 
-void	cmpRevItRelationalOps( void );
+/*
+ * Compare relational operators
+ */
+
+int	cmpRevItRelationalOps( std::reverse_iterator<int*> std_it,
+						   std::reverse_iterator<int*> std_ite,
+						   ft::reverse_iterator<int*> ft_it,
+						   ft::reverse_iterator<int*> ft_ite );
 
 /*
  * Run all reverse iterator tests

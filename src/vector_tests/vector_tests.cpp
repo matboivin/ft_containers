@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 15:32:20 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 16:05:37 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ int	testVector( void ) {
 
 	int	has_failed = 0;
 
+	// constructors
 	cmpVecDefaultConstructor();
 
 	if ( !continueTests("Fill constructor") )
@@ -46,11 +47,13 @@ int	testVector( void ) {
 	if ( !continueTests("Assignment operator") )
 		return (0);
 
+	// assignment operator
 	cmpVecAssignmentOperator();
 
 	if ( !continueTests("Capacity member function: empty()") )
 		return (0);
 
+	// capacity member functions
 	has_failed = cmpVecEmpty();
 	if ( has_failed )
 		return (1);

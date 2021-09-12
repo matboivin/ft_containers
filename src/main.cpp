@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 15:39:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 15:58:55 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main( void ) {
 	// 				  << COL_RED << " invalid input.\n\n" << COL_RESET;
 	// }
 
-	testVector();
+	//testVector();
 	testReverseIterator();
 
 	return (0);

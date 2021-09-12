@@ -18,7 +18,8 @@ INC_TEST_FILES = test_utils.hpp \
 
 SRC_FILES = main.cpp \
 			test_utils.cpp \
-			reverse_iterator_tests.cpp \
+			rev_it_tests.cpp \
+			rev_it_relationalops_tests.cpp \
 			vector_assignment_op.cpp \
 			vector_capacity.cpp \
 			vector_constructor.cpp \
