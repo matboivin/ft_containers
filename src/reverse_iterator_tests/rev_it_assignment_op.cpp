@@ -1,0 +1,65 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rev_it_assignment_op.cpp                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/09/12 16:16:53 by mboivin           #+#    #+#             */
+/*   Updated: 2021/09/12 16:33:29 by mboivin          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include <iostream>
+#include <iterator>
+#include "iterator.hpp"
+#include "test_utils.hpp"
+#include "reverse_iterator_tests.hpp"
+
+/*
+ * Compare Copy assignment operator
+ */
+
+void	cmpRevItAssignmentOperator( std::reverse_iterator<int*> std_it,
+									std::reverse_iterator<int*> std_ite,
+									ft::reverse_iterator<int*> ft_it,
+									ft::reverse_iterator<int*> ft_ite ) {
+
+	std::cout << COL_BLUE_B
+			  << "\n______________ Copy assignment operator\n\n"
+			  << COL_RESET;
+
+	showTestInfos("operator=");
+
+	std::cout << COL_BLUE_B << "______ std::reverse_iterator\n\n" << COL_RESET;
+
+	// Create a new reverse iterator
+	std::reverse_iterator<int*>	std_copy(std_ite);
+
+	std::cout << "std::it:      " << *std_it
+			  << "\nstd::it_copy: " << *std_copy;
+
+	// copy
+	std_copy = std_it;
+
+	std::cout << COL_BLUE_B << "\nAFTER" << COL_RESET
+			  << "\nstd::it:      " << *std_it
+			  << "\nstd::it_copy: " << *std_copy;
+
+	std::cout << COL_BLUE_B << "\n\n______ ft::reverse_iterator\n\n" << COL_RESET;
+
+	// Create a new reverse iterator
+	ft::reverse_iterator<int*>	ft_copy(ft_ite);
+
+	std::cout << "\nft::it:      " << *ft_it
+			  << "\nft::it_copy: " << *ft_copy;
+
+	// copy
+	ft_copy = ft_it;
+
+	std::cout << COL_BLUE_B << "\nAFTER" << COL_RESET
+			  << "\nft::it:      " << *ft_it
+			  << "\nft::it_copy: " << *ft_copy;
+
+	std::cout << std::endl;
+}

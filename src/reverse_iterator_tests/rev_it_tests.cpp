@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:33:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 16:13:08 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 16:27:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,11 @@ int	testReverseIterator( void ) {
 
 	std::cout << std::endl;
 
-	std::cout << "std::it:  " << *std_it << "\tft::it:  " << *ft_it
-			  << "\nstd::ite: " << *std_ite << "\tft::ite: " << *ft_ite << std::endl;
+	// operator=
+	cmpRevItAssignmentOperator(std_it, std_ite, ft_it, ft_ite);
 
-	cmpRevItRelationalOps(std_it, std_ite, ft_it, ft_ite);
+	// Relational operators
+	//cmpRevItRelationalOps(std_it, std_ite, ft_it, ft_ite);
 
 	return (0);
 }
