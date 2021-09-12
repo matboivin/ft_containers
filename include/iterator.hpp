@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 18:59:22 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 13:19:56 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,19 +314,32 @@ namespace ft {
 		return ( *copy );
 	}
 
-	// template< typename Iterator >
-	// typename reverse_iterator<Iterator>::reference	reverse_iterator<Iterator>::operator->( void ) const {
+	/*
+	 * Dereference iterator
+	 * Internally, the function calls operator* and returns its address
+	 *
+	 * @return  A pointer to the element pointed to by the iterator
+	 */
+	template< typename Iterator >
+	typename reverse_iterator<Iterator>::reference	reverse_iterator<Iterator>::operator->( void ) const {
 
-	// 	return (  );
-	// }
+		return ( &(operator*()) );
+	}
 
-	// template< typename Iterator >
-	// typename reverse_iterator<Iterator>::reference	reverse_iterator<Iterator>::operator[]( difference_type n ) const {
+	/*
+	 * Dereference iterator with offset
+	 * Accesses the element located n positions away from the element
+	 * currently pointed to by the iterator.
+	 *
+	 * @param n  Number of elements to offset
+	 *
+	 * @return  A reference to the element
+	 */
+	template< typename Iterator >
+	typename reverse_iterator<Iterator>::reference	reverse_iterator<Iterator>::operator[]( difference_type n ) const {
 
-	// 	return (  );
-	// }
-
-	// advances or decrements the iterator
+		return ( *(*this + n) );
+	}
 
 
 	/* advance/decrement **************************************************** */
@@ -386,7 +399,6 @@ namespace ft {
 
 		return ( reverse_iterator( _baseIterator + n ) );
 	}
-
 
 }
 
