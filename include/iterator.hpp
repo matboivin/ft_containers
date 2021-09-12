@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 13:19:56 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 13:30:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -344,6 +344,12 @@ namespace ft {
 
 	/* advance/decrement **************************************************** */
 
+
+	/*
+	 * Increment iterator position: pre-increment version
+	 *
+	 * @return  *this
+	 */
 	template< typename Iterator >
 	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator++( void ) {
 
@@ -351,14 +357,27 @@ namespace ft {
 		return ( *this );
 	}
 
+	/*
+	 * Increment iterator position: post-increment version
+	 *
+	 * @return  A copy of *this that was made before the change
+	 */
 	template< typename Iterator >
 	reverse_iterator<Iterator>	reverse_iterator<Iterator>::operator++( int ) {
 
 		reverse_iterator	backup = *this;
-		--_baseIterator;
+		--(*this);
 		return ( backup );
 	}
 
+	/*
+	 * Advance iterator
+	 * Advances the reverse_iterator by n element positions
+	 *
+	 * @param n  Number of elements to offset
+	 *
+	 * @return  *this
+	 */
 	template< typename Iterator >
 	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator+= ( difference_type n ) {
 
@@ -366,12 +385,24 @@ namespace ft {
 		return ( *this );
 	}
 
+	/*
+	 * Addition operator
+	 *
+	 * @param n  Number of elements to offset
+	 *
+	 * @return  An iterator pointing to the element n positions away
+	 */
 	template< typename Iterator >
 	reverse_iterator<Iterator>	reverse_iterator<Iterator>::operator+( difference_type n ) const {
 
-		return ( reverse_iterator( _baseIterator - n ) );
+		return ( reverse_iterator( base() - n ) );
 	}
 
+	/*
+	 * Decrease iterator position: pre-decrement version
+	 *
+	 * @return  *this
+	 */
 	template< typename Iterator >
 	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator--( void ) {
 
@@ -379,14 +410,27 @@ namespace ft {
 		return ( *this );
 	}
 
+	/*
+	 * Decrease iterator position: post-decrement version
+	 *
+	 * @return  A copy of *this that was made before the change
+	 */
 	template< typename Iterator >
 	reverse_iterator<Iterator>	reverse_iterator<Iterator>::operator--( int ) {
 
 		reverse_iterator	backup = *this;
-		++_baseIterator;
+		++(*this);
 		return ( backup );
 	}
 
+	/*
+	 * Retrocede iterator
+	 * Descreases the reverse_iterator by n element positions
+	 *
+	 * @param n  Number of elements to offset
+	 *
+	 * @return  *this
+	 */
 	template< typename Iterator >
 	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator-=( difference_type n ) {
 
@@ -394,10 +438,17 @@ namespace ft {
 		return ( *this );
 	}
 
+	/*
+	 * Subtraction operator
+	 *
+	 * @param n  Number of elements to offset
+	 *
+	 * @return  An iterator pointing to the element n positions before the currently pointed one
+	 */
 	template< typename Iterator >
 	reverse_iterator<Iterator>	reverse_iterator<Iterator>::operator-( difference_type n ) const {
 
-		return ( reverse_iterator( _baseIterator + n ) );
+		return ( reverse_iterator( base() + n ) );
 	}
 
 }
