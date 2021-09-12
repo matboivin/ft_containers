@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 13:30:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 13:34:45 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,7 @@ namespace ft {
 
 	protected:
 
-		// attributes
-		iterator_type	_baseIterator; // copy of the original iterator
+		iterator_type	current; // copy of the original iterator
 
 	public:
 
@@ -221,7 +220,7 @@ namespace ft {
 	 * Constructs a reverse iterator that points to no object
 	 */
 	template< typename Iterator >
-	reverse_iterator<Iterator>::reverse_iterator( void ) : _baseIterator(0) {
+	reverse_iterator<Iterator>::reverse_iterator( void ) : current(0) {
 
 		std::cout << COL_GREEN
 				  << "ft::reverse_iterator default constructor called" << COL_RESET
@@ -235,7 +234,7 @@ namespace ft {
 	 * @param it  An iterator
 	 */
 	template< typename Iterator >
-	reverse_iterator<Iterator>::reverse_iterator( iterator_type it ) : _baseIterator(it) {
+	reverse_iterator<Iterator>::reverse_iterator( iterator_type it ) : current(it) {
 
 		std::cout << COL_GREEN
 				  << "ft::reverse_iterator initalization constructor called" << COL_RESET
@@ -251,7 +250,7 @@ namespace ft {
 	template< typename Iterator >
 	template< typename Iter >
 	reverse_iterator<Iterator>::reverse_iterator( const reverse_iterator<Iter>& rev_it )
-			: _baseIterator( rev_it._baseIterator ) {
+			: current( rev_it.current ) {
 
 		std::cout << COL_GREEN
 				  << "ft::reverse_iterator copy constructor called" << COL_RESET
@@ -274,7 +273,7 @@ namespace ft {
 				  << std::endl;
 
 		if ( this != &other )
-			_baseIterator = other.base();
+			current = other.base();
 
 		return ( *this );
 	}
@@ -291,7 +290,7 @@ namespace ft {
 	template< typename Iterator >
 	typename reverse_iterator<Iterator>::iterator_type	reverse_iterator<Iterator>::base( void ) const {
 
-		return (_baseIterator);
+		return (current);
 	}
 
 
@@ -308,7 +307,7 @@ namespace ft {
 	template< typename Iterator >
 	typename reverse_iterator<Iterator>::reference	reverse_iterator<Iterator>::operator*( void ) const {
 
-		iterator_type	copy = _baseIterator;
+		iterator_type	copy = current;
 
 		--copy;
 		return ( *copy );
@@ -353,7 +352,7 @@ namespace ft {
 	template< typename Iterator >
 	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator++( void ) {
 
-		--_baseIterator;
+		--current;
 		return ( *this );
 	}
 
@@ -381,7 +380,7 @@ namespace ft {
 	template< typename Iterator >
 	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator+= ( difference_type n ) {
 
-		_baseIterator -= n;
+		current -= n;
 		return ( *this );
 	}
 
@@ -406,7 +405,7 @@ namespace ft {
 	template< typename Iterator >
 	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator--( void ) {
 
-		++_baseIterator;
+		++current;
 		return ( *this );
 	}
 
@@ -434,7 +433,7 @@ namespace ft {
 	template< typename Iterator >
 	reverse_iterator<Iterator>&	reverse_iterator<Iterator>::operator-=( difference_type n ) {
 
-		_baseIterator += n;
+		current += n;
 		return ( *this );
 	}
 
