@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:22:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 18:29:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 15:39:26 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,13 @@ int	continueTests( const std::string& next_test ) {
 
 		if ( strToLower(user_input) == "exit" ) {
 
-			std::cout << COL_GREEN << "Back to menu.\n\n" << COL_RESET;
+			std::cout << COL_WHITE_B << "Back to menu.\n\n" << COL_RESET;
 			break ;
 		}
 
 		if ( user_input.empty() ) {
 
-			std::cout << COL_GREEN << "-> Next test\n\n" << COL_RESET;
+			std::cout << COL_WHITE_B << "-> Next test\n\n" << COL_RESET;
 			return (1);
 
 		} else {
@@ -66,5 +66,19 @@ int	continueTests( const std::string& next_test ) {
 		}
 	}
 
+	return (0);
+}
+
+int	cmpResults( bool condition ) {
+
+	if ( condition ) {
+
+		std::cout << COL_GREEN_B << "[OK] Same results\n\n" << COL_RESET;
+	}
+	else {
+
+		std::cout << COL_RED_B << "[KO] Different results\n\n" << COL_RESET;
+		return (1);
+	}
 	return (0);
 }

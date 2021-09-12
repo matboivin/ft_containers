@@ -13,10 +13,12 @@ INC_FILES = iterator.hpp \
 			utils.hpp
 
 INC_TEST_FILES = test_utils.hpp \
+				 reverse_iterator_tests.hpp \
 				 vector_tests.hpp
 
 SRC_FILES = main.cpp \
 			test_utils.cpp \
+			reverse_iterator_tests.cpp \
 			vector_assignment_op.cpp \
 			vector_capacity.cpp \
 			vector_constructor.cpp \
@@ -30,7 +32,7 @@ INC_DIR = include
 SRC_DIR = src
 OBJ_DIR = obj
 
-SUB_DIRS = vector_tests
+SUB_DIRS = vector_tests reverse_iterator_tests
 SRC_SUBDIRS = $(addprefix $(SRC_DIR)/, $(SUB_DIRS))
 
 INC_SUBDIRS = $(addprefix $(INC_DIR)/, tests)

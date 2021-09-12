@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/11 18:20:04 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 15:39:11 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,14 @@
 template< typename Vec >
 static void	displayVecInfos( const Vec& v, const std::string& title="vector" ) {
 
-	std::cout << title
+	std::cout << COL_WHITE_B << title << COL_RESET
 			  << "\n- size:        " << v.size()
 			  << "\n- capacity:    " << v.capacity()
 			  << "\n- contents:";
 			
 	if ( !v.size() ) {
 
-		std::cout << COL_RED << " (empty)\n\n" << COL_RESET;
+		std::cout << " (empty)\n\n";
 		return ;
 	}
 
@@ -64,6 +64,10 @@ int		cmpVecSize( void );
 int		cmpVecMaxSize( void );
 int		cmpVecCapacity( void );
 int		cmpVecReserve( void );
+
+/*
+ * Run all vector tests
+ */
 
 int		testVector( void );
 

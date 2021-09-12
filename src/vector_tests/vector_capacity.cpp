@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:05:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/09 11:17:16 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 15:35:49 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int	cmpVecEmpty( void ) {
 
 	std::cout << COL_BLUE_B << "______ TEST 1: size equal to zero\n\n" << COL_RESET;
 
-	int	ret = 0;
-
 	// Create two default vectors (size == 0)
 	std::vector<int>	vec1;
 	ft::vector<int>		ft_vec1;
@@ -64,15 +62,9 @@ int	cmpVecEmpty( void ) {
 	std::cout << COL_BLUE << "Is ft::vector 1 empty? " << COL_RESET
 			  << std::boolalpha << ft_vec_is_empty << "\n\n";
 
-	// Print if the results are the same or not between original and ft::vector
-	if ( vec_is_empty == ft_vec_is_empty ) {
-		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
-	}
-	else {
-
-		std::cout << COL_RED_B << "[KO] Different results" << COL_RESET << std::endl;
+	// Check if the results are the same or not between original and ft::vector
+	if ( cmpResults(vec_is_empty == ft_vec_is_empty) )
 		return (1);
-	}
 
 	// Second test where size is not zero
 	std::cout << COL_BLUE_B << "\n______ TEST2: size not zero\n\n" << COL_RESET;
@@ -97,19 +89,8 @@ int	cmpVecEmpty( void ) {
 	std::cout << COL_BLUE << "Is ft::vector 2 empty? " << COL_RESET
 			  << std::boolalpha << ft_vec_is_empty << "\n\n";
 
-	// Print if the results are the same or not between original and ft::vector
-	if ( vec_is_empty == ft_vec_is_empty ) {
-		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
-	}
-	else {
-
-		std::cout << COL_RED_B << "[KO] Different results" << COL_RESET << std::endl;
-		return (1);
-	}
-
-	std::cout << std::endl;
-
-	return (ret);
+	// Check if the results are the same or not between original and ft::vector
+	return ( cmpResults(vec_is_empty == ft_vec_is_empty) );
 }
 
 /*
@@ -141,19 +122,8 @@ int	cmpVecSize( void ) {
 			  << COL_BLUE << "ft::vector size is:  " << COL_RESET
 			  << ft_vec_size << "\n\n";
 
-	// Print if the results are the same or not between original and ft::vector
-	if ( vec_size == ft_vec_size ) {
-		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
-	}
-	else {
-
-		std::cout << COL_RED_B << "[KO] Different results" << COL_RESET << std::endl;
-		return (1);
-	}
-
-	std::cout << std::endl;
-
-	return (0);
+	// Check if the results are the same or not between original and ft::vector
+	return ( cmpResults(vec_size == ft_vec_size) );
 }
 
 /*
@@ -196,15 +166,9 @@ int	cmpVecMaxSize( void ) {
 			  << COL_BLUE << "ft::vector max size is:  " << COL_RESET
 			  << ft_vec_max_size << "\n\n";
 
-	// Print if the results are the same or not between original and ft::vector
-	if ( vec_max_size == ft_vec_max_size ) {
-		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
-	}
-	else {
-
-		std::cout << COL_RED_B << "[KO] Different results" << COL_RESET << std::endl;
+	// Check if the results are the same or not between original and ft::vector
+	if ( cmpResults(vec_max_size == ft_vec_max_size) )
 		return (1);
-	}
 
 	// Second test with vectors of char
 	std::cout << COL_BLUE_B << "\n______ TEST2: Vectors of chars\n\n" << COL_RESET;
@@ -225,19 +189,8 @@ int	cmpVecMaxSize( void ) {
 			  << COL_BLUE << "ft::vector max size is:  " << COL_RESET
 			  << ft_vec_max_size << "\n\n";
 
-	// Print if the results are the same or not between original and ft::vector
-	if ( vec_max_size == ft_vec_max_size ) {
-		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
-	}
-	else {
-
-		std::cout << COL_RED_B << "[KO] Different results" << COL_RESET << std::endl;
-		return (1);
-	}
-
-	std::cout << std::endl;
-
-	return (0);
+	// Check if the results are the same or not between original and ft::vector
+	return ( cmpResults(vec_max_size == ft_vec_max_size) );
 }
 
 /*
@@ -272,15 +225,9 @@ int	cmpVecCapacity( void ) {
 			  << COL_BLUE << "ft::vector capacity is:  " << COL_RESET
 			  << ft_vec_capacity << "\n\n";
 
-	// Print if the results are the same or not between original and ft::vector
-	if ( vec_capacity == ft_vec_capacity ) {
-		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
-	}
-	else {
-
-		std::cout << COL_RED_B << "[KO] Different results" << COL_RESET << std::endl;
+	// Check if the results are the same or not between original and ft::vector
+	if ( cmpResults(vec_capacity == ft_vec_capacity) )
 		return (1);
-	}
 
 	// Second test with vectors of char
 	std::cout << COL_BLUE_B << "\n______ TEST2: Vectors of chars\n\n" << COL_RESET;
@@ -301,19 +248,8 @@ int	cmpVecCapacity( void ) {
 			  << COL_BLUE << "ft::vector capacity is:  " << COL_RESET
 			  << ft_vec_capacity << "\n\n";
 
-	// Print if the results are the same or not between original and ft::vector
-	if ( vec_capacity == ft_vec_capacity ) {
-		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
-	}
-	else {
-
-		std::cout << COL_RED_B << "[KO] Different results" << COL_RESET << std::endl;
-		return (1);
-	}
-
-	std::cout << std::endl;
-
-	return (0);
+	// Check if the results are the same or not between original and ft::vector
+	return ( cmpResults(vec_capacity == ft_vec_capacity) );
 }
 
 /*
@@ -357,17 +293,6 @@ int	cmpVecReserve( void ) {
 			  << COL_BLUE << "ft::vector capacity is:  " << COL_RESET
 			  << ft_vec.capacity() << "\n\n";
 
-	// Print if the results are the same or not between original and ft::vector
-	if ( vec.capacity() == ft_vec.capacity() ) {
-		std::cout << COL_GREEN_B << "[OK] Same results" << COL_RESET << std::endl;
-	}
-	else {
-
-		std::cout << COL_RED_B << "[KO] Different results" << COL_RESET << std::endl;
-		return (1);
-	}
-
-	std::cout << std::endl;
-
-	return (0);
+	// Check if the results are the same or not between original and ft::vector
+	return ( cmpResults(vec.capacity() == ft_vec.capacity()) );
 }

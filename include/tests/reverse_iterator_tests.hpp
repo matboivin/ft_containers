@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.hpp                                          :+:      :+:    :+:   */
+/*   reverse_iterator_tests.hpp                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/11 18:18:16 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 15:38:23 by mboivin          ###   ########.fr       */
+/*   Created: 2021/09/12 14:32:00 by mboivin           #+#    #+#             */
+/*   Updated: 2021/09/12 14:50:04 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_HPP
-#define UTILS_HPP
+#ifndef REVERSE_ITERATOR_HPP
+#define REVERSE_ITERATOR_HPP
+
+#include <iostream>
+#include "test_utils.hpp"
+#include "utils.hpp"
+
+void	cmpRevItRelationalOps( void );
 
 /*
- * Colors for a more readable output
+ * Run all reverse iterator tests
  */
 
-#define COL_RESET    "\033[0m"
-#define COL_WHITE_B  "\033[1;37m"
-#define COL_BLUE     "\033[0;34m"
-#define COL_BLUE_B   "\033[1;34m"
-#define COL_RED      "\033[0;31m"
-#define COL_RED_B    "\033[1;31m"
-#define COL_GREEN    "\033[0;32m"
-#define COL_GREEN_B  "\033[1;32m"
-#define COL_YELLOW   "\033[0;33m"
-#define COL_YELLOW_B "\033[1;33m"
+int	testReverseIterator( void );
 
 #endif

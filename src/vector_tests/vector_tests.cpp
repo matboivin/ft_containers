@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/09 11:47:07 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 15:32:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 /*
  * Run all vector tests
-*/
+ */
 
 int	testVector( void ) {
 
@@ -31,53 +31,53 @@ int	testVector( void ) {
 
 	int	has_failed = 0;
 
-	// cmpVecDefaultConstructor();
+	cmpVecDefaultConstructor();
 
-	// if ( !continueTests("Fill constructor") )
-	// 	return (0);
+	if ( !continueTests("Fill constructor") )
+		return (0);
 
-	// cmpVecFillConstructor();
+	cmpVecFillConstructor();
 
-	// if ( !continueTests("Copy constructor") )
-	// 	return (0);
+	if ( !continueTests("Copy constructor") )
+		return (0);
 
-	// cmpVecCopyConstructor();
+	cmpVecCopyConstructor();
 
-	// if ( !continueTests("Assignment operator") )
-	// 	return (0);
+	if ( !continueTests("Assignment operator") )
+		return (0);
 
-	// cmpVecAssignmentOperator();
+	cmpVecAssignmentOperator();
 
-	// if ( !continueTests("Capacity member function: empty()") )
-	// 	return (0);
+	if ( !continueTests("Capacity member function: empty()") )
+		return (0);
 
-	// has_failed = cmpVecEmpty();
-	// if ( has_failed )
-	// 	return (1);
+	has_failed = cmpVecEmpty();
+	if ( has_failed )
+		return (1);
 
-	// if ( !continueTests("Capacity member function: size()") )
-	// 	return (0);
+	if ( !continueTests("Capacity member function: size()") )
+		return (0);
 
-	// has_failed = cmpVecSize();
-	// if ( has_failed )
-	// 	return (1);
+	has_failed = cmpVecSize();
+	if ( has_failed )
+		return (1);
 	
-	// if ( !continueTests("Capacity member function: max_size()") )
-	// 	return (0);
+	if ( !continueTests("Capacity member function: max_size()") )
+		return (0);
 	
-	// has_failed = cmpVecMaxSize();
-	// if ( has_failed )
-	// 	return (1);
+	has_failed = cmpVecMaxSize();
+	if ( has_failed )
+		return (1);
 	
-	// if ( !continueTests("Capacity member function: capacity()") )
-	// 	return (0);
+	if ( !continueTests("Capacity member function: capacity()") )
+		return (0);
 	
-	// has_failed = cmpVecCapacity();
-	// if ( has_failed )
-	// 	return (1);
+	has_failed = cmpVecCapacity();
+	if ( has_failed )
+		return (1);
 	
-	// if ( !continueTests("Capacity member function: reserve()") )
-	// 	return (0);
+	if ( !continueTests("Capacity member function: reserve()") )
+		return (0);
 
 	has_failed = cmpVecReserve();
 	if ( has_failed )

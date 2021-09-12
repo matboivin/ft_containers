@@ -6,13 +6,14 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/08 18:24:07 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 15:39:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include "test_utils.hpp"
 #include "vector_tests.hpp"
+#include "reverse_iterator_tests.hpp"
 
 int	main( void ) {
 
@@ -40,6 +41,7 @@ int	main( void ) {
 	// }
 
 	testVector();
+	testReverseIterator();
 
 	return (0);
 }
