@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 14:23:11 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/12 14:30:14 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -469,6 +469,49 @@ namespace ft {
 
 
 	/* non-member function overloads **************************************** */
+
+	/*
+	 * relational operators
+	 */
+
+	template< typename Iterator >
+	bool	operator==( const reverse_iterator<Iterator>& lhs,
+						const reverse_iterator<Iterator>& rhs ) {
+
+		return ( lhs.base() == rhs.base() );
+	}
+
+	template< typename Iterator >
+	bool	operator!=( const reverse_iterator<Iterator>& lhs,
+						const reverse_iterator<Iterator>& rhs ) {
+
+		return ( lhs.base() != rhs.base() );
+	}
+
+	template< typename Iterator >
+	bool	operator<( const reverse_iterator<Iterator>& lhs,
+					   const reverse_iterator<Iterator>& rhs ) {
+		return ( lhs.base() > rhs.base() );
+	}
+
+	template< typename Iterator >
+	bool	operator<=( const reverse_iterator<Iterator>& lhs,
+						const reverse_iterator<Iterator>& rhs ) {
+		return ( lhs.base() >= rhs.base() );
+	}
+
+	template< typename Iterator >
+	bool	operator>( const reverse_iterator<Iterator>& lhs,
+					   const reverse_iterator<Iterator>& rhs ) {
+		return ( lhs.base() < rhs.base() );
+	}
+
+	template< typename Iterator >
+	bool	operator>=( const reverse_iterator<Iterator>& lhs,
+						const reverse_iterator<Iterator>& rhs ) {
+		return ( lhs.base() <= rhs.base() );
+	}
+
 
 	/*
 	 * Addition operator
