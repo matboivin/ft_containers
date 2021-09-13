@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 17:43:41 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 19:34:30 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ namespace ft {
 	/*
 	 * Uniform interface to the properties of an iterator
 	 *
-	 * @param Iterator  The iterator type to retrieve properties for
+	 * @param Iterator  The iterator type to retrieve properties for iterators
 	 */
 	template< typename Iterator >
 	class iterator_traits {

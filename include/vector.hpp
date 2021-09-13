@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 19:11:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 19:45:43 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <memory>
 #include <vector>
 #include "iterator.hpp"
+#include "vector_iterator.hpp"
 #include "utils.hpp"
 
 /*
@@ -42,9 +43,15 @@ namespace ft {
 	 *   swap
 	 */
 
+	// See vector_iterator.hpp
+	template< typename T >
+	class vector_iterator;
+
+	template< typename T >
+	class const_vector_iterator;
+
 
 	/* Vector definition **************************************************** */
-
 
 	/*
 	 * Vector template class
@@ -67,13 +74,10 @@ namespace ft {
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef std::size_t									size_type;
-
-		typedef ft::iterator<ft::random_access_iterator_tag,value_type>			iterator;
-		typedef ft::iterator<ft::random_access_iterator_tag,const value_type>	const_iterator;
-
+		typedef ft::vector_iterator<T>						iterator;
+		typedef ft::const_vector_iterator<T>				const_iterator;
 		typedef ft::reverse_iterator<iterator>				reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
-
 		typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 
 	private:
