@@ -24,14 +24,11 @@ SRC_FILES += vector_assignment_op.cpp \
 			 vector_construct.cpp \
 			 vector_tests.cpp
 
-SRC_FILES += rev_it_addition_op.cpp \
-			 rev_it_advance_op.cpp \
+SRC_FILES += rev_it_advance.cpp \
+			 rev_it_advdecr.cpp \
 			 rev_it_assignment_op.cpp \
-			 rev_it_decrement.cpp \
-			 rev_it_increment.cpp \
+			 rev_it_decrease.cpp \
 			 rev_it_relational_ops.cpp \
-			 rev_it_retrocede_op.cpp \
-			 rev_it_subtraction_op.cpp \
 			 rev_it_tests.cpp
 
 OBJ_FILES = $(SRC_FILES:%.cpp=%.o)

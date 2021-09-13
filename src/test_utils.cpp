@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:22:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 17:17:27 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:03:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 #include <string>
 #include "test_utils.hpp"
 #include "utils.hpp"
+
+/*
+ * Lowercase the string passed as parameter
+ */
 
 std::string	strToLower( std::string str ) {
 
@@ -27,12 +31,50 @@ std::string	strToLower( std::string str ) {
 	return (str);
 }
 
-void	showTestInfos( const std::string& msg ) {
+/*
+ * Display explainations about the unit tested
+ */
 
-	std::cout << COL_BLUE_B << "Test description:\n"
-			  << COL_BLUE << msg << '\n'
+void	explainUnit( const std::string& msg ) {
+
+	std::cout << COL_BLUE << msg << '\n'
 			  << COL_RESET << std::endl;
 }
+
+/*
+ * Display the test results between original behavior and project's
+ */
+
+int	displayTestResult( bool condition ) {
+
+	if ( condition ) {
+
+		std::cout << COL_GREEN_B << "[OK] Same results\n\n" << COL_RESET;
+	}
+	else {
+
+		std::cout << COL_RED_B << "[KO] Different results\n\n" << COL_RESET;
+		return (1);
+	}
+	return (0);
+}
+
+/*
+ * Display a message if a test failed
+ */
+
+int	exitFailedTest( const std::string& test_name ) {
+
+	std::cout << COL_RED_B << "\n______ FAILED TEST"
+			  << COL_RED << "\n       " << test_name
+			  << COL_RESET << "\n\n";
+
+	return (1);
+}
+
+/*
+ * Prompt the user to continue or stop the tests
+ */
 
 int	continueTests( const std::string& next_test ) {
 
@@ -67,27 +109,4 @@ int	continueTests( const std::string& next_test ) {
 	}
 
 	return (0);
-}
-
-int	cmpResults( bool condition ) {
-
-	if ( condition ) {
-
-		std::cout << COL_GREEN_B << "[OK] Same results\n\n" << COL_RESET;
-	}
-	else {
-
-		std::cout << COL_RED_B << "[KO] Different results\n\n" << COL_RESET;
-		return (1);
-	}
-	return (0);
-}
-
-int	exitFailedTest( const std::string& test_name ) {
-
-	std::cout << COL_RED_B << "\n______ FAILED TEST"
-			  << COL_RED << "\n       " << test_name
-			  << COL_RESET << "\n\n";
-
-	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 15:39:11 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 13:52:22 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,21 +28,25 @@ template< typename Vec >
 static void	displayVecInfos( const Vec& v, const std::string& title="vector" ) {
 
 	std::cout << COL_WHITE_B << title << COL_RESET
-			  << "\n- size:        " << v.size()
-			  << "\n- capacity:    " << v.capacity()
-			  << "\n- contents:";
+			  << "\n- size:      " << v.size()
+			  << "\n- capacity:  " << v.capacity()
+			  << "\n- contents:  ";
 			
 	if ( !v.size() ) {
 
-		std::cout << " (empty)\n\n";
+		std::cout << "(empty)\n\n";
 		return ;
 	}
 
-	std::cout << '\n';
-	for ( std::size_t i = 0; i < v.size(); i++ )
-		std::cout << v[i] << ' ';
+	std::cout << "[ ";
+	for ( std::size_t i = 0; i < v.size(); i++ ) {
 
-	std::cout << "\n\n";
+		std::cout << v[i];
+		if ( i < v.size() - 1 )
+			std::cout << ", ";
+	}
+
+	std::cout << " ]\n\n";
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 16:16:25 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:03:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,20 @@
 void	cmpVecDefaultConstructor( void ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______________ Default Constructor\n\n"
+			  << "\n___________ Default Constructor ____________\n\n"
 			  << COL_RESET;
 
-	showTestInfos("Constructs an empty container, with no elements.");
+	explainUnit("Constructs an empty container, with no elements.");
 
-	std::cout << COL_BLUE_B << "______ std::vector\n\n" << COL_RESET;
+	// Original
+	std::cout << COL_BLUE_B << "_ std::vector\n\n" << COL_RESET;
 
 	std::vector<int>	vec;
 
 	displayVecInfos(vec, "std::vector");
 
-	std::cout << COL_BLUE_B << "______ ft::vector\n\n" << COL_RESET;
+	// ft::vector
+	std::cout << COL_BLUE_B << "_ ft::vector\n\n" << COL_RESET;
 
 	ft::vector<int>		ft_vec;
 
@@ -50,32 +52,29 @@ void	cmpVecDefaultConstructor( void ) {
 void	cmpVecFillConstructor( void ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______________ Fill Constructor\n\n"
+			  << "\n_____________ Fill Constructor _____________\n\n"
 			  << COL_RESET;
 	
-	showTestInfos("Constructs a container with n elements. Each element is a copy of value passed as parameter.");
+	explainUnit("Constructs a container with n elements. Each element is a copy of value passed as parameter.");
 
-	std::cout << COL_BLUE_B << "______ std::vector\n\n" << COL_RESET;
+	// Original
+	std::cout << COL_BLUE_B << "_ std::vector\n\n" << COL_RESET;
 
 	std::vector<int>	vec1(14, 1);
-	std::vector<int>	vec2(42, 2);
-	std::vector<int>	vec3(4,  3);
+	std::vector<int>	vec2(5,  2);
 
-	displayVecInfos(vec1, "std::vector 1");
-	displayVecInfos(vec2, "std::vector 2");
-	displayVecInfos(vec3, "std::vector 3");
+	displayVecInfos(vec1, "std::vector 1 (14, 1)");
+	displayVecInfos(vec2, "std::vector 2 (5,  2)");
 
-	std::cout << COL_BLUE_B << "______ ft::vector\n\n" << COL_RESET;
+	// ft::vector
+	std::cout << COL_BLUE_B << "_ ft::vector\n\n" << COL_RESET;
 
 	ft::vector<int>	ft_vec1(14, 1);
-	ft::vector<int>	ft_vec2(42, 2);
-	ft::vector<int>	ft_vec3(4,  3);
-
+	ft::vector<int>	ft_vec2(5,  2);
 	std::cout << std::endl;
 
-	displayVecInfos(ft_vec1, "ft::vector 1");
-	displayVecInfos(ft_vec2, "ft::vector 2");
-	displayVecInfos(ft_vec3, "ft::vector 3");
+	displayVecInfos(ft_vec1, "ft::vector 1 (14, 1)");
+	displayVecInfos(ft_vec2, "ft::vector 2 (5,  2)");
 
 	std::cout << std::endl;
 }
@@ -87,33 +86,51 @@ void	cmpVecFillConstructor( void ) {
 void	cmpVecCopyConstructor( void ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______________ Copy constructor\n\n"
+			  << "\n_____________ Copy constructor _____________\n\n"
 			  << COL_RESET;
 	
-	showTestInfos("Creates a new object from existing one passed as parameter.");
+	explainUnit("Creates a new object from existing one passed as parameter.");
 
-	std::cout << COL_BLUE_B << "______ std::vector\n\n" << COL_RESET;
+	// Original
+	std::cout << COL_BLUE_B << "_ std::vector\n\n" << COL_RESET;
 
-	std::vector<int>	vec1(14, 1);
+	// create a vector
+	std::vector<int>	vec1(5);
+	// add some numbers to it
+	vec1.push_back(12);
+	vec1.push_back(5);
+	vec1.push_back(42);
+	vec1.push_back(100);
+	vec1.push_back(25);
 
+	// display vec1
 	displayVecInfos(vec1, "std::vector 1");
 
+	// create a copy from vec1
 	std::vector<int>	vec2(vec1);
-
+	// display copy
 	displayVecInfos(vec2, "std::vector 2");
 
-	std::cout << COL_BLUE_B << "______ ft::vector\n\n" << COL_RESET;
+	// ft::vector
+	std::cout << COL_BLUE_B << "_ ft::vector\n\n" << COL_RESET;
 
-	ft::vector<int>	ft_vec1(14, 1);
-
+	// create a vector
+	ft::vector<int>	ft_vec1(5);
 	std::cout << std::endl;
+	// add some numbers to it
+	ft_vec1.push_back(12);
+	ft_vec1.push_back(5);
+	ft_vec1.push_back(42);
+	ft_vec1.push_back(100);
+	ft_vec1.push_back(25);
 
+	// display ft_vec1
 	displayVecInfos(ft_vec1, "ft::vector 1");
 
+	// create a copy from ft_vec1
 	ft::vector<int>	ft_vec2(ft_vec1);
-
 	std::cout << std::endl;
-
+	// display copy
 	displayVecInfos(ft_vec2, "ft::vector 2");
 
 	std::cout << std::endl;

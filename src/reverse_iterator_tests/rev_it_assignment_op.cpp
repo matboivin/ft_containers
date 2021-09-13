@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 16:16:53 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 17:04:46 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:03:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,10 @@
 int	cmpRevItAssignmentOperator( void ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______________ Copy assignment operator\n\n"
+			  << "\n_________ Copy assignment operator _________\n\n"
 			  << COL_RESET;
 
-	showTestInfos("operator=");
+	explainUnit("operator=");
 
 	int	arr[10];
 
@@ -43,7 +43,7 @@ int	cmpRevItAssignmentOperator( void ) {
 	ft::reverse_iterator<int*>	ft_ite(arr + 10);
 	std::cout << std::endl;
 
-	std::cout << COL_BLUE_B << "______ std::reverse_iterator\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B << "_ std::reverse_iterator\n\n" << COL_RESET;
 
 	// Create a new reverse iterator
 	std::reverse_iterator<int*>	std_copy(std_ite);
@@ -54,14 +54,14 @@ int	cmpRevItAssignmentOperator( void ) {
 	// copy
 	std_copy = std_it;
 
-	std::cout << COL_BLUE_B << "\nAFTER COPY (must be the same)" << COL_RESET
+	std::cout << COL_BLUE_B << "\n\nAFTER COPY (must be the same)\n" << COL_RESET
 			  << "\nstd::it:      " << *std_it
 			  << "\nstd::it_copy: " << *std_copy << "\n\n";
 
-	if ( cmpResults(*std_it == *std_copy) )
+	if ( displayTestResult(*std_it == *std_copy) )
 		return (1);
 
-	std::cout << COL_BLUE_B << "\n\n______ ft::reverse_iterator\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B << "_ ft::reverse_iterator\n" << COL_RESET;
 
 	// Create a new reverse iterator
 	ft::reverse_iterator<int*>	ft_copy(ft_ite);
@@ -72,9 +72,9 @@ int	cmpRevItAssignmentOperator( void ) {
 	// copy
 	ft_copy = ft_it;
 
-	std::cout << COL_BLUE_B << "\nAFTER COPY (must be the same)" << COL_RESET
+	std::cout << COL_BLUE_B << "\nAFTER COPY (must be the same)\n" << COL_RESET
 			  << "\nft::it:      " << *ft_it
-			  << "\nft::it_copy: " << *ft_copy;
+			  << "\nft::it_copy: " << *ft_copy << std::endl;
 
-	return ( cmpResults(*ft_it == *ft_copy) );
+	return ( displayTestResult(*ft_it == *ft_copy) );
 }

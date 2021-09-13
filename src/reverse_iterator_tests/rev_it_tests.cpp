@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:33:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 17:44:36 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:05:56 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,40 +30,26 @@ int	testReverseIterator( void ) {
 
 	int	has_failed = 0;
 
-	// // operator=
-	// has_failed = cmpRevItAssignmentOperator();
-	// if ( has_failed )
-	// 	return ( exitFailedTest("reverse_iterator: assignement operator") );
+	// operator=
+	has_failed = cmpRevItAssignmentOperator();
+	if ( has_failed )
+		return ( exitFailedTest("reverse_iterator: assignment operator") );
+
+	if ( !continueTests("advance/decrease operators") )
+		return (0);
 
 	// advance/decrease
-	has_failed = cmpRevItIncrement();
+	has_failed = cmpRevItAdvDecr();
 	if ( has_failed )
-		return ( exitFailedTest("reverse_iterator: operator++") );
-
-	has_failed = cmpRevItDecrement();
-	if ( has_failed )
-		return ( exitFailedTest("reverse_iterator: operator--") );
-
-	has_failed = cmpRevItAdvanceOp();
-	if ( has_failed )
-		return ( exitFailedTest("reverse_iterator: operator+=") );
+		return (1);
 	
-	has_failed = cmpRevItAdditionOp();
-	if ( has_failed )
-		return ( exitFailedTest("reverse_iterator: operator+") );
-	
-	has_failed = cmpRevItRetrocedeOp();
-	if ( has_failed )
-		return ( exitFailedTest("reverse_iterator: operator-=") );
-	
-	has_failed = cmpRevItSubtractOp();
-	if ( has_failed )
-		return ( exitFailedTest("reverse_iterator: operator-") );
+	if ( !continueTests("relational operators") )
+		return (0);
 
-	// // Relational operators
-	// has_failed = cmpRevItRelationalOps();
-	// if ( has_failed )
-	// 	return ( exitFailedTest("reverse_iterator: relational operators") );
+	// Relational operators
+	has_failed = cmpRevItRelationalOps();
+	if ( has_failed )
+		return (1);
 
 	return (0);
 }

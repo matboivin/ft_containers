@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:33:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 17:32:25 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:03:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 #include "reverse_iterator_tests.hpp"
 
 /*
- * Test operator==
+ * Compare operator== (equal to)
  */
 
 static int	cmpRevItEqualTo( std::reverse_iterator<int*> std_it,
@@ -26,35 +26,37 @@ static int	cmpRevItEqualTo( std::reverse_iterator<int*> std_it,
 							 ft::reverse_iterator<int*> ft_ite ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______ Test operator== (equal to)\n\n" << COL_RESET;
+			  << "\n_ TEST: operator== (equal to)\n\n" << COL_RESET;
 
 	bool	std_res = (std_it == std_ite);
 	bool	ft_res = (ft_it == ft_ite);
 
 	std::cout << std::boolalpha
-			  << COL_BLUE << "std::it == std::ite ? " << COL_RESET << std_res
-			  << COL_BLUE << " \nft::it == ft::ite ?   " << COL_RESET << ft_res << "\n\n";
+			  << "std::it == std::it ? " << COL_WHITE_B << std_res << COL_RESET
+			  << " \nft::it == ft::it ?   " << COL_WHITE_B << ft_res << COL_RESET
+			  << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(std_res == ft_res) )
+	if ( displayTestResult(std_res == ft_res) )
 		return (1);
 
 	std_res = (std_it == std_it);
 	ft_res = (ft_it == ft_it);
 
 	std::cout << std::boolalpha
-			  << COL_BLUE << "std::it == std::it ? " << COL_RESET << std_res
-			  << COL_BLUE << " \nft::it == ft::it ?   " << COL_RESET << ft_res << "\n\n";
+			  << "std::it == std::it ? " << COL_WHITE_B << std_res << COL_RESET
+			  << " \nft::it == ft::it ?   " << COL_WHITE_B << ft_res << COL_RESET
+			  << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(std_res == ft_res) )
+	if ( displayTestResult(std_res == ft_res) )
 		return (1);
 
 	return (0);
 }
 
 /*
- * Test operator!=
+ * Compare operator!= (not equal to)
  */
 
 static int	cmpRevItNotEqualTo( std::reverse_iterator<int*> std_it,
@@ -63,35 +65,37 @@ static int	cmpRevItNotEqualTo( std::reverse_iterator<int*> std_it,
 							 ft::reverse_iterator<int*> ft_ite ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______ Test operator!= (not equal to)\n\n" << COL_RESET;
+			  << "\n_ TEST: operator!= (not equal to)\n\n" << COL_RESET;
 
 	bool	std_res = (std_it != std_ite);
 	bool	ft_res = (ft_it != ft_ite);
 
 	std::cout << std::boolalpha
-			  << COL_BLUE << "std::it != std::ite ? " << COL_RESET << std_res
-			  << COL_BLUE << " \nft::it != ft::ite ?   " << COL_RESET << ft_res << "\n\n";
+			  << "std::it != std::it ? " << COL_WHITE_B << std_res << COL_RESET
+			  << " \nft::it != ft::it ?   " << COL_WHITE_B << ft_res << COL_RESET
+			  << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(std_res == ft_res) )
+	if ( displayTestResult(std_res == ft_res) )
 		return (1);
 
 	std_res = (std_it != std_it);
 	ft_res = (ft_it != ft_it);
 
 	std::cout << std::boolalpha
-			  << COL_BLUE << "std::it != std::it ? " << COL_RESET << std_res
-			  << COL_BLUE << " \nft::it != ft::it ?   " << COL_RESET << ft_res << "\n\n";
+			  << "std::it != std::it ? " << COL_WHITE_B << std_res << COL_RESET
+			  << " \nft::it != ft::it ?   " << COL_WHITE_B << ft_res << COL_RESET
+			  << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(std_res == ft_res) )
+	if ( displayTestResult(std_res == ft_res) )
 		return (1);
 
 	return (0);
 }
 
 /*
- * Test operator<
+ * Compare operator< (less than)
  */
 
 static int	cmpRevItLessThan( std::reverse_iterator<int*> std_it,
@@ -100,35 +104,37 @@ static int	cmpRevItLessThan( std::reverse_iterator<int*> std_it,
 							  ft::reverse_iterator<int*> ft_ite ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______ Test operator< (less than)\n\n" << COL_RESET;
+			  << "\n_ TEST: operator< (less than)\n\n" << COL_RESET;
 
 	bool	std_res = (std_it < std_ite);
 	bool	ft_res = (ft_it < ft_ite);
 
 	std::cout << std::boolalpha
-			  << COL_BLUE << "std::it < std::ite ? " << COL_RESET << std_res
-			  << COL_BLUE << " \nft::it < ft::ite ?   " << COL_RESET << ft_res << "\n\n";
+			  << "std::it < std::it ? " << COL_WHITE_B << std_res << COL_RESET
+			  << " \nft::it < ft::it ?   " << COL_WHITE_B << ft_res << COL_RESET
+			  << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(std_res == ft_res) )
+	if ( displayTestResult(std_res == ft_res) )
 		return (1);
 
 	std_res = (std_it < std_it);
 	ft_res = (ft_it < ft_it);
 
 	std::cout << std::boolalpha
-			  << COL_BLUE << "std::it < std::it ? " << COL_RESET << std_res
-			  << COL_BLUE << " \nft::it < ft::it ?   " << COL_RESET << ft_res << "\n\n";
+			  << "std::it < std::it ? " << COL_WHITE_B << std_res << COL_RESET
+			  << " \nft::it < ft::it ?   " << COL_WHITE_B << ft_res << COL_RESET
+			  << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(std_res == ft_res) )
+	if ( displayTestResult(std_res == ft_res) )
 		return (1);
 
 	return (0);
 }
 
 /*
- * Test operator>
+ * Compare operator> (greater than)
  */
 
 static int	cmpRevItGreaterThan( std::reverse_iterator<int*> std_it,
@@ -137,35 +143,37 @@ static int	cmpRevItGreaterThan( std::reverse_iterator<int*> std_it,
 								 ft::reverse_iterator<int*> ft_ite ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______ Test operator> (greater than)\n\n" << COL_RESET;
+			  << "\n_ TEST: operator> (greater than)\n\n" << COL_RESET;
 
 	bool	std_res = (std_it > std_ite);
 	bool	ft_res = (ft_it > ft_ite);
 
 	std::cout << std::boolalpha
-			  << COL_BLUE << "std::it > std::ite ? " << COL_RESET << std_res
-			  << COL_BLUE << " \nft::it > ft::ite ?   " << COL_RESET << ft_res << "\n\n";
+			  << "std::it > std::it ? " << COL_WHITE_B << std_res << COL_RESET
+			  << " \nft::it > ft::it ?   " << COL_WHITE_B << ft_res << COL_RESET
+			  << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(std_res == ft_res) )
+	if ( displayTestResult(std_res == ft_res) )
 		return (1);
 
 	std_res = (std_it > std_it);
 	ft_res = (ft_it > ft_it);
 
 	std::cout << std::boolalpha
-			  << COL_BLUE << "std::it > std::it ? " << COL_RESET << std_res
-			  << COL_BLUE << " \nft::it > ft::it ?   " << COL_RESET << ft_res << "\n\n";
+			  << "std::it > std::it ? " << COL_WHITE_B << std_res << COL_RESET
+			  << " \nft::it > ft::it ?   " << COL_WHITE_B << ft_res << COL_RESET
+			  << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(std_res == ft_res) )
+	if ( displayTestResult(std_res == ft_res) )
 		return (1);
 
 	return (0);
 }
 
 /*
- * Test operator<=
+ * Compare operator<= (less than or equal to)
  */
 
 static int	cmpRevItLessEqual( std::reverse_iterator<int*> std_it,
@@ -174,35 +182,37 @@ static int	cmpRevItLessEqual( std::reverse_iterator<int*> std_it,
 							   ft::reverse_iterator<int*> ft_ite ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______ Test operator<= (less than or equal to)\n\n" << COL_RESET;
+			  << "\n_ TEST: operator<= (less than or equal to)\n\n" << COL_RESET;
 
 	bool	std_res = (std_it <= std_ite);
 	bool	ft_res = (ft_it <= ft_ite);
 
 	std::cout << std::boolalpha
-			  << COL_BLUE << "std::it <= std::ite ? " << COL_RESET << std_res
-			  << COL_BLUE << " \nft::it <= ft::ite ?   " << COL_RESET << ft_res << "\n\n";
+			  << "std::it <= std::it ? " << COL_WHITE_B << std_res << COL_RESET
+			  << " \nft::it <= ft::it ?   " << COL_WHITE_B << ft_res << COL_RESET
+			  << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(std_res == ft_res) )
+	if ( displayTestResult(std_res == ft_res) )
 		return (1);
 
 	std_res = (std_it <= std_it);
 	ft_res = (ft_it <= ft_it);
 
 	std::cout << std::boolalpha
-			  << COL_BLUE << "std::it <= std::it ? " << COL_RESET << std_res
-			  << COL_BLUE << " \nft::it <= ft::it ?   " << COL_RESET << ft_res << "\n\n";
+			  << "std::it <= std::it ? " << COL_WHITE_B << std_res << COL_RESET
+			  << " \nft::it <= ft::it ?   " << COL_WHITE_B << ft_res << COL_RESET
+			  << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(std_res == ft_res) )
+	if ( displayTestResult(std_res == ft_res) )
 		return (1);
 
 	return (0);
 }
 
 /*
- * Test operator>=
+ * Compare operator>= (greater than or equal to)
  */
 
 static int	cmpRevItGreaterEqual( std::reverse_iterator<int*> std_it,
@@ -211,28 +221,30 @@ static int	cmpRevItGreaterEqual( std::reverse_iterator<int*> std_it,
 								  ft::reverse_iterator<int*> ft_ite ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______ Test operator>= (greater than or equal to)\n\n" << COL_RESET;
+			  << "\n_ TEST: operator>= (greater than or equal to)\n\n" << COL_RESET;
 
 	bool	std_res = (std_it >= std_ite);
 	bool	ft_res = (ft_it >= ft_ite);
 
 	std::cout << std::boolalpha
-			  << COL_BLUE << "std::it >= std::ite ? " << COL_RESET << std_res
-			  << COL_BLUE << " \nft::it >= ft::ite ?   " << COL_RESET << ft_res << "\n\n";
+			  << "std::it >= std::it ? " << COL_WHITE_B << std_res << COL_RESET
+			  << " \nft::it >= ft::it ?   " << COL_WHITE_B << ft_res << COL_RESET
+			  << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(std_res == ft_res) )
+	if ( displayTestResult(std_res == ft_res) )
 		return (1);
 
 	std_res = (std_it >= std_it);
 	ft_res = (ft_it >= ft_it);
 
 	std::cout << std::boolalpha
-			  << COL_BLUE << "std::it >= std::it ? " << COL_RESET << std_res
-			  << COL_BLUE << " \nft::it >= ft::it ?   " << COL_RESET << ft_res << "\n\n";
+			  << "std::it >= std::it ? " << COL_WHITE_B << std_res << COL_RESET
+			  << " \nft::it >= ft::it ?   " << COL_WHITE_B << ft_res << COL_RESET
+			  << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(std_res == ft_res) )
+	if ( displayTestResult(std_res == ft_res) )
 		return (1);
 
 	return (0);
@@ -245,10 +257,10 @@ static int	cmpRevItGreaterEqual( std::reverse_iterator<int*> std_it,
 int	cmpRevItRelationalOps( void ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______________ Relational operators\n\n"
+			  << "\n___________ Relational operators ___________\n\n"
 			  << COL_RESET;
 
-	showTestInfos("Operators to make comparison between two reverse iterators.");
+	explainUnit("Operators to make comparison between two reverse iterators.");
 
 	int	arr[10];
 
@@ -270,27 +282,27 @@ int	cmpRevItRelationalOps( void ) {
 
 	// Test operator==
 	if ( cmpRevItEqualTo(std_it, std_ite, ft_it, ft_ite) )
-		return (1);
+		return ( exitFailedTest("reverse_iterator: relational operator==") );
 
 	// Test operator!=
 	if ( cmpRevItNotEqualTo(std_it, std_ite, ft_it, ft_ite) )
-		return (1);
+		return ( exitFailedTest("reverse_iterator: relational operator!=") );
 
 	// Test operator<
 	if ( cmpRevItLessThan(std_it, std_ite, ft_it, ft_ite) )
-		return (1);
+		return ( exitFailedTest("reverse_iterator: relational operator<") );
 
 	// Test operator>
 	if ( cmpRevItGreaterThan(std_it, std_ite, ft_it, ft_ite) )
-		return (1);
+		return ( exitFailedTest("reverse_iterator: relational operator>") );
 
 	// Test operator<=
 	if ( cmpRevItLessEqual(std_it, std_ite, ft_it, ft_ite) )
-		return (1);
+		return ( exitFailedTest("reverse_iterator: relational operator<=") );
 
 	// Test operator>=
 	if ( cmpRevItGreaterEqual(std_it, std_ite, ft_it, ft_ite) )
-		return (1);
+		return ( exitFailedTest("reverse_iterator: relational operator>=") );
 
 	return (0);
 }

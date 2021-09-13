@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:05:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 16:04:42 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:03:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@
 int	cmpVecEmpty( void ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______________ Capacity member function: empty()\n\n" << COL_RESET;
+			  << "\n__________ Capacity method: empty __________\n\n"
+			  << COL_RESET;
 
-	showTestInfos("This member function returns true if the vector is empty. False otherwise.");
+	explainUnit("This member function returns true if the vector is empty. False otherwise.");
 
-	std::cout << COL_BLUE_B << "______ TEST 1: size equal to zero\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B << "_ TEST 1: size equal to zero\n\n" << COL_RESET;
 
 	// Create two default vectors (size == 0)
 	std::vector<int>	vec1;
@@ -54,20 +55,20 @@ int	cmpVecEmpty( void ) {
 
 	// Display std::vector infos + is empty
 	displayVecInfos(vec1, "std::vector 1");
-	std::cout << COL_BLUE << "Is std::vector 1 empty? " << COL_RESET
-			  << std::boolalpha << vec_is_empty << "\n\n";
+	std::cout << "Is std::vector 1 empty? " << std::boolalpha
+			  << COL_WHITE_B << vec_is_empty << COL_RESET << "\n\n";
 
 	// Display ft::vector infos + is empty
 	displayVecInfos(ft_vec1, "ft::vector 1");
-	std::cout << COL_BLUE << "Is ft::vector 1 empty? " << COL_RESET
-			  << std::boolalpha << ft_vec_is_empty << "\n\n";
+	std::cout << "Is ft::vector 1 empty? " << std::boolalpha
+			  << COL_WHITE_B << ft_vec_is_empty << COL_RESET << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(vec_is_empty == ft_vec_is_empty) )
+	if ( displayTestResult(vec_is_empty == ft_vec_is_empty) )
 		return (1);
 
 	// Second test where size is not zero
-	std::cout << COL_BLUE_B << "\n______ TEST2: size not zero\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B << "\n_ TEST2: size not zero\n\n" << COL_RESET;
 
 	// Create two vectors of size 10
 	std::vector<int>	vec2(10);
@@ -81,16 +82,16 @@ int	cmpVecEmpty( void ) {
 
 	// Display std::vector infos + is empty
 	displayVecInfos(vec2, "std::vector 2");
-	std::cout << COL_BLUE << "Is std::vector 2 empty? " << COL_RESET
-			  << std::boolalpha << vec_is_empty << "\n\n";
+	std::cout << "Is std::vector 2 empty? " << std::boolalpha
+			  << COL_WHITE_B << vec_is_empty << COL_RESET << "\n\n";
 
 	// Display ft::vector infos + is empty
 	displayVecInfos(ft_vec2, "ft::vector 2");
-	std::cout << COL_BLUE << "Is ft::vector 2 empty? " << COL_RESET
-			  << std::boolalpha << ft_vec_is_empty << "\n\n";
+	std::cout << "Is ft::vector 2 empty? " << std::boolalpha
+			  << COL_WHITE_B << ft_vec_is_empty << COL_RESET << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	return ( cmpResults(vec_is_empty == ft_vec_is_empty) );
+	return ( displayTestResult(vec_is_empty == ft_vec_is_empty) );
 }
 
 /*
@@ -102,9 +103,10 @@ int	cmpVecEmpty( void ) {
 int	cmpVecSize( void ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______________ Capacity methods: size()\n\n" << COL_RESET;
+			  << "\n___________ Capacity method: size __________\n\n"
+			  << COL_RESET;
 
-	showTestInfos("This member function returns the number of elements in the vector.");
+	explainUnit("This member function returns the number of elements in the vector.");
 
 	// Create two vectors of size 42
 	std::vector<int>	vec(42);
@@ -117,13 +119,13 @@ int	cmpVecSize( void ) {
 	std::size_t	ft_vec_size = ft_vec.size();
 
 	// Display sizes
-	std::cout << COL_BLUE << "std::vector size is: " << COL_RESET
-			  << vec_size << '\n'
-			  << COL_BLUE << "ft::vector size is:  " << COL_RESET
-			  << ft_vec_size << "\n\n";
+	std::cout << "std::vector size is: "
+			  << COL_WHITE_B << vec_size << COL_RESET << '\n'
+			  << "ft::vector size is:  "
+			  << COL_WHITE_B << ft_vec_size << COL_RESET << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	return ( cmpResults(vec_size == ft_vec_size) );
+	return ( displayTestResult(vec_size == ft_vec_size) );
 }
 
 /*
@@ -143,12 +145,13 @@ int	cmpVecSize( void ) {
 int	cmpVecMaxSize( void ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______________ Capacity methods: max_size()\n\n" << COL_RESET;
+			  << "\n_________ Capacity method: max_size ________\n\n"
+			  << COL_RESET;
 
-	showTestInfos("This member function returns the maximum number of elements that the vector can hold.");
+	explainUnit("This member function returns the maximum number of elements that the vector can hold.");
 
 	// First test
-	std::cout << COL_BLUE_B << "\n______ TEST1: Vectors of int\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B << "\n_ TEST1: Vectors of int\n\n" << COL_RESET;
 
 	// Create two vectors of size 42
 	std::vector<int>	vec1(42);
@@ -161,17 +164,17 @@ int	cmpVecMaxSize( void ) {
 	std::size_t	ft_vec_max_size = ft_vec1.max_size();
 
 	// Display sizes
-	std::cout << COL_BLUE << "std::vector max size is: " << COL_RESET
-			  << vec_max_size << '\n'
-			  << COL_BLUE << "ft::vector max size is:  " << COL_RESET
-			  << ft_vec_max_size << "\n\n";
+	std::cout <<  "std::vector max size is: "
+			  << COL_WHITE_B << vec_max_size << COL_RESET << '\n'
+			  << "ft::vector max size is:  "
+			  << COL_WHITE_B << ft_vec_max_size << COL_RESET << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(vec_max_size == ft_vec_max_size) )
+	if ( displayTestResult(vec_max_size == ft_vec_max_size) )
 		return (1);
 
 	// Second test with vectors of char
-	std::cout << COL_BLUE_B << "\n______ TEST2: Vectors of chars\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B << "\n_ TEST2: Vectors of chars\n\n" << COL_RESET;
 
 	// Create two vectors of size 42
 	std::vector<char>	vec2(42);
@@ -184,13 +187,13 @@ int	cmpVecMaxSize( void ) {
 	ft_vec_max_size = ft_vec2.max_size();
 
 	// Display sizes
-	std::cout << COL_BLUE << "std::vector max size is: " << COL_RESET
-			  << vec_max_size << '\n'
-			  << COL_BLUE << "ft::vector max size is:  " << COL_RESET
-			  << ft_vec_max_size << "\n\n";
+	std::cout << "std::vector max size is: "
+			  << COL_WHITE_B << vec_max_size << COL_RESET << '\n'
+			  << "ft::vector max size is:  "
+			  << COL_WHITE_B << ft_vec_max_size << COL_RESET << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	return ( cmpResults(vec_max_size == ft_vec_max_size) );
+	return ( displayTestResult(vec_max_size == ft_vec_max_size) );
 }
 
 /*
@@ -202,12 +205,13 @@ int	cmpVecMaxSize( void ) {
 int	cmpVecCapacity( void ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______________ Capacity methods: capacity()\n\n" << COL_RESET;
+			  << "\n_________ Capacity method: capacity ________\n\n"
+			  << COL_RESET;
 
-	showTestInfos("This member function returns the size of allocated storage capacity.");
+	explainUnit("This member function returns the size of allocated storage capacity.");
 
 	// First test
-	std::cout << COL_BLUE_B << "\n______ TEST1: Vectors of int\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B << "\n_ TEST1: Vectors of int\n\n" << COL_RESET;
 
 	// Create two vectors of size 42
 	std::vector<int>	vec1(42);
@@ -220,17 +224,17 @@ int	cmpVecCapacity( void ) {
 	std::size_t	ft_vec_capacity = ft_vec1.capacity();
 
 	// Display sizes
-	std::cout << COL_BLUE << "std::vector capacity is: " << COL_RESET
-			  << vec_capacity << '\n'
-			  << COL_BLUE << "ft::vector capacity is:  " << COL_RESET
-			  << ft_vec_capacity << "\n\n";
+	std::cout << "std::vector capacity is: "
+			  << COL_WHITE_B << vec_capacity << COL_RESET << '\n'
+			  << "ft::vector capacity is:  "
+			  << COL_WHITE_B << ft_vec_capacity << COL_RESET << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	if ( cmpResults(vec_capacity == ft_vec_capacity) )
+	if ( displayTestResult(vec_capacity == ft_vec_capacity) )
 		return (1);
 
 	// Second test with vectors of char
-	std::cout << COL_BLUE_B << "\n______ TEST2: Vectors of chars\n\n" << COL_RESET;
+	std::cout << COL_BLUE_B << "\n_ TEST2: Vectors of chars\n\n" << COL_RESET;
 
 	// Create two vectors of size 42
 	std::vector<char>	vec2(42);
@@ -243,13 +247,13 @@ int	cmpVecCapacity( void ) {
 	ft_vec_capacity = ft_vec2.capacity();
 
 	// Display sizes
-	std::cout << COL_BLUE << "std::vector capacity is: " << COL_RESET
-			  << vec_capacity << '\n'
-			  << COL_BLUE << "ft::vector capacity is:  " << COL_RESET
-			  << ft_vec_capacity << "\n\n";
+	std::cout << "std::vector capacity is: "
+			  << COL_WHITE_B << vec_capacity << COL_RESET << '\n'
+			  << "ft::vector capacity is:  "
+			  << COL_WHITE_B << ft_vec_capacity << COL_RESET << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	return ( cmpResults(vec_capacity == ft_vec_capacity) );
+	return ( displayTestResult(vec_capacity == ft_vec_capacity) );
 }
 
 /*
@@ -262,9 +266,10 @@ int	cmpVecCapacity( void ) {
 int	cmpVecReserve( void ) {
 
 	std::cout << COL_BLUE_B
-			  << "\n______________ Capacity methods: reserve()\n\n" << COL_RESET;
+			  << "\n_________ Capacity method: reserve _________\n\n"
+			  << COL_RESET;
 
-	showTestInfos("This member function requests that the vector capacity be at least enough to contain n elements.");
+	explainUnit("This member function requests that the vector capacity be at least enough to contain n elements.");
 
 	// Create two vectors of size 1
 	std::vector<int>	vec(1);
@@ -272,27 +277,36 @@ int	cmpVecReserve( void ) {
 
 	std::cout << std::endl;
 
+	// Retrieve their capacity
+	std::size_t	vec_capacity = vec.capacity();
+	std::size_t	ft_vec_capacity = ft_vec.capacity();
+
 	// Display their informations
 	displayVecInfos(vec, "std::vector");
 	displayVecInfos(ft_vec, "ft::vector");
-	std::cout << COL_BLUE << "std::vector capacity is: " << COL_RESET
-			  << vec.capacity() << '\n'
-			  << COL_BLUE << "ft::vector capacity is:  " << COL_RESET
-			  << ft_vec.capacity() << "\n\n";
+	std::cout << "std::vector capacity is: "
+			  << COL_WHITE_B << vec_capacity << COL_RESET << '\n'
+			  << "ft::vector capacity is:  "
+			  << COL_WHITE_B << ft_vec_capacity << COL_RESET << "\n\n";
 
 	std::cout << COL_BLUE_B << "AFTER\n\n" << COL_RESET;
 
+	// reserve
 	vec.reserve(42);
 	ft_vec.reserve(42);
+
+	// Retrieve new capacity
+	vec_capacity = vec.capacity();
+	ft_vec_capacity = ft_vec.capacity();
 
 	// Display their informations after calling reserve()
 	displayVecInfos(vec, "std::vector");
 	displayVecInfos(ft_vec, "ft::vector");
-	std::cout << COL_BLUE << "std::vector capacity is: " << COL_RESET
-			  << vec.capacity() << '\n'
-			  << COL_BLUE << "ft::vector capacity is:  " << COL_RESET
-			  << ft_vec.capacity() << "\n\n";
+	std::cout << "std::vector capacity is: "
+			  << COL_WHITE_B << vec_capacity << COL_RESET << '\n'
+			  << "ft::vector capacity is:  "
+			  << COL_WHITE_B << ft_vec_capacity << COL_RESET << "\n\n";
 
 	// Check if the results are the same or not between original and ft
-	return ( cmpResults(vec.capacity() == ft_vec.capacity()) );
+	return ( displayTestResult(vec_capacity == ft_vec_capacity) );
 }
