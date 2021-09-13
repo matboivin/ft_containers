@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 15:10:51 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 16:23:34 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 16:29:10 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ void	cmpRevItDefaultConstructor( void ) {
 	explainUnit("Constructs a reverse iterator that points to no object.");
 
 	// Original
-	std::reverse_iterator<int*>	std_it;
+	std::reverse_iterator<int*>	std_rev_it;
 
 	// ft
-	ft::reverse_iterator<int*>	ft_it;
+	ft::reverse_iterator<int*>	ft_rev_it;
 	std::cout << std::endl;
 }
 

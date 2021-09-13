@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:33:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 16:01:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 16:30:14 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,31 +24,28 @@ int	testReverseIterator( void ) {
 				 "::::::::::::::::::::::::::::::::::::::::::::\n"
 			  << COL_RESET << std::endl;
 
-	//int	has_failed = 0;
+	int	has_failed = 0;
 
 	// constructors
 	cmpRevItDefaultConstructor();
 	cmpRevItInitConstructor();
 	cmpRevItCopyConstructor();
 
-	// if ( !continueTests("assignment operator") )
-	// 	return (0);
+	if ( !continueTests("advance/decrease operators") )
+		return (0);
 
-	// if ( !continueTests("advance/decrease operators") )
-	// 	return (0);
-
-	// // advance/decrease
-	// has_failed = cmpRevItAdvDecr();
-	// if ( has_failed )
-	// 	return (1);
+	// advance/decrease
+	has_failed = cmpRevItAdvDecr();
+	if ( has_failed )
+		return (1);
 	
-	// if ( !continueTests("relational operators") )
-	// 	return (0);
+	if ( !continueTests("relational operators") )
+		return (0);
 
-	// // Relational operators
-	// has_failed = cmpRevItRelationalOps();
-	// if ( has_failed )
-	// 	return (1);
+	// Relational operators
+	has_failed = cmpRevItRelationalOps();
+	if ( has_failed )
+		return (1);
 
 	return (0);
 }

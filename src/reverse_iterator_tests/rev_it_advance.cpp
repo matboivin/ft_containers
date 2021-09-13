@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:30:49 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 15:27:41 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 16:27:48 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,29 +43,35 @@ int	cmpRevItIncrement( void ) {
 		arr[i] = i;
 
 	// iterators
-	std::reverse_iterator<int*>	std_it(arr + 1);
-	ft::reverse_iterator<int*>	ft_it(arr + 1);
+	std::reverse_iterator<int*>	std_rev_it(arr + 1);
+	ft::reverse_iterator<int*>	ft_rev_it(arr + 1);
 
 	std::cout << COL_BLUE_B << "\n_ pre-decrement version\n\n" << COL_RESET;
 
-	std::cout << "std::it   = " << *std_it << "\tft::it   = " << *ft_it
-			  << "\n++std::it = " << *(++std_it) << "\t++ft::it = " << *(++ft_it)
-			  << "\nstd::it   = " << *std_it << "\tft::it   = " << *ft_it << "\n\n";
+	std::cout << "std::rev_it   = " << *std_rev_it
+			  << "\tft::rev_it   = " << *ft_rev_it
+			  << "\n++std::rev_it = " << *(++std_rev_it)
+			  << "\t++ft::rev_it = " << *(++ft_rev_it)
+			  << "\nstd::rev_it   = " << *std_rev_it
+			  << "\tft::rev_it   = " << *ft_rev_it << "\n\n";
 
-	if ( displayTestResult(*std_it == *ft_it) )
+	if ( displayTestResult(*std_rev_it == *ft_rev_it) )
 		return (1);
 
 	// restore
-	std_it--;
-	ft_it--;
+	std_rev_it--;
+	ft_rev_it--;
 
 	std::cout << COL_BLUE_B << "_ post-decrement version\n\n" << COL_RESET;
 
-	std::cout << "std::it   = " << *std_it << "\tft::it   = " << *ft_it
-			  << "\nstd::it++ = " << *(std_it++) << "\tft::it++ = " << *(ft_it++)
-			  << "\nstd::it   = " << *std_it << "\tft::it   = " << *ft_it << "\n\n";
+	std::cout << "std::rev_it   = " << *std_rev_it
+			  << "\tft::rev_it   = " << *ft_rev_it
+			  << "\nstd::rev_it++ = " << *(std_rev_it++)
+			  << "\tft::rev_it++ = " << *(ft_rev_it++)
+			  << "\nstd::rev_it   = " << *std_rev_it
+			  << "\tft::rev_it   = " << *ft_rev_it << "\n\n";
 
-	return ( displayTestResult(*std_it == *ft_it) );
+	return ( displayTestResult(*std_rev_it == *ft_rev_it) );
 }
 
 /*
@@ -88,21 +94,21 @@ int	cmpRevItAdvanceOp( void ) {
 		arr[i] = i;
 
 	// set iterators
-	std::reverse_iterator<int*>	std_it(arr + 10);
-	ft::reverse_iterator<int*>	ft_it(arr + 10);
+	std::reverse_iterator<int*>	std_rev_it(arr + 10);
+	ft::reverse_iterator<int*>	ft_rev_it(arr + 10);
 	std::cout << std::endl;
 
-	std::cout << "std::it =  " << *std_it
-			  << "\tft::it  =  " << *ft_it << std::endl;
+	std::cout << "std::rev_it =  " << *std_rev_it
+			  << "\tft::rev_it  =  " << *ft_rev_it << std::endl;
 
-	std_it += n;
-	ft_it += n;
+	std_rev_it += n;
+	ft_rev_it += n;
 
-	std::cout << "std::it += 7;\tft::it  += 7;"
-			  << "\nstd::it  = " << *std_it
-			  << "\tft::it   = " <<  *ft_it << "\n\n";
+	std::cout << "std::rev_it += 7;\tft::rev_it  += 7;"
+			  << "\nstd::rev_it  = " << *std_rev_it
+			  << "\tft::rev_it   = " <<  *ft_rev_it << "\n\n";
 
-	return ( displayTestResult(*std_it == *ft_it) );
+	return ( displayTestResult(*std_rev_it == *ft_rev_it) );
 }
 
 /*
@@ -124,19 +130,19 @@ int	cmpRevItAdditionOp( void ) {
 		arr[i] = i;
 
 	// set iterators
-	std::reverse_iterator<int*>	std_it(arr + 10);
-	ft::reverse_iterator<int*>	ft_it(arr + 10);
+	std::reverse_iterator<int*>	std_rev_it(arr + 10);
+	ft::reverse_iterator<int*>	ft_rev_it(arr + 10);
 	std::cout << std::endl;
 
-	std::cout << "std::it = " << *std_it
-			  << "\nft::it  = " << *ft_it << "\n\n";
+	std::cout << "std::rev_it = " << *std_rev_it
+			  << "\nft::rev_it  = " << *ft_rev_it << "\n\n";
 
 	// storing results
-	std::reverse_iterator<int*>	std_res = (std_it + 5);
-	ft::reverse_iterator<int*>	ft_res = (ft_it + 5);
+	std::reverse_iterator<int*>	std_res = (std_rev_it + 5);
+	ft::reverse_iterator<int*>	ft_res = (ft_rev_it + 5);
 
-	std::cout << "\n(std::it + 5) = " << *std_res
-			  << "\n(ft::it + 5)  = " << *ft_res << "\n\n";
+	std::cout << "\n(std::rev_it + 5) = " << *std_res
+			  << "\n(ft::rev_it + 5)  = " << *ft_res << "\n\n";
 
 	return ( displayTestResult(*std_res == *ft_res) );
 }
