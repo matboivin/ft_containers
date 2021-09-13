@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:33:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 16:30:14 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 17:06:21 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,26 +26,41 @@ int	testReverseIterator( void ) {
 
 	int	has_failed = 0;
 
-	// constructors
-	cmpRevItDefaultConstructor();
-	cmpRevItInitConstructor();
-	cmpRevItCopyConstructor();
+	// // constructors
+	// cmpRevItDefaultConstructor();
 
-	if ( !continueTests("advance/decrease operators") )
-		return (0);
+	// if ( !continueTests("Initialization constructor") )
+	// 	return (0);
 
-	// advance/decrease
-	has_failed = cmpRevItAdvDecr();
+	// cmpRevItInitConstructor();
+
+	// if ( !continueTests("Copy constructor") )
+	// 	return (0);
+
+	// cmpRevItCopyConstructor();
+
+	// if ( !continueTests("operator[]") )
+	// 	return (0);
+
+	has_failed = cmpRevItSubscriptingOp();
 	if ( has_failed )
-		return (1);
+		return ( exitFailedTest("reverse_iterator: operator[]") );
+
+	// if ( !continueTests("advance/decrease operators") )
+	// 	return (0);
+
+	// // advance/decrease
+	// has_failed = cmpRevItAdvDecr();
+	// if ( has_failed )
+	// 	return (1);
 	
-	if ( !continueTests("relational operators") )
-		return (0);
+	// if ( !continueTests("relational operators") )
+	// 	return (0);
 
-	// Relational operators
-	has_failed = cmpRevItRelationalOps();
-	if ( has_failed )
-		return (1);
+	// // Relational operators
+	// has_failed = cmpRevItRelationalOps();
+	// if ( has_failed )
+	// 	return (1);
 
 	return (0);
 }
