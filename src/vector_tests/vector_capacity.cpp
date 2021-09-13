@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:05:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 15:03:20 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 17:55:54 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ int	cmpVecEmpty( void ) {
 			  << "\n__________ Capacity method: empty __________\n\n"
 			  << COL_RESET;
 
-	explainUnit("This member function returns true if the vector is empty. False otherwise.");
+	explainUnit("This member function returns true if the vector is empty.\n"
+				"False otherwise.");
 
 	std::cout << COL_BLUE_B << "_ TEST 1: size equal to zero\n\n" << COL_RESET;
 
@@ -106,7 +107,8 @@ int	cmpVecSize( void ) {
 			  << "\n___________ Capacity method: size __________\n\n"
 			  << COL_RESET;
 
-	explainUnit("This member function returns the number of elements in the vector.");
+	explainUnit("This member function returns the number of elements\n"
+				"in the vector.");
 
 	// Create two vectors of size 42
 	std::vector<int>	vec(42);
@@ -148,7 +150,8 @@ int	cmpVecMaxSize( void ) {
 			  << "\n_________ Capacity method: max_size ________\n\n"
 			  << COL_RESET;
 
-	explainUnit("This member function returns the maximum number of elements that the vector can hold.");
+	explainUnit("This member function returns the maximum number of elements\n"
+				"that the vector can hold.");
 
 	// First test
 	std::cout << COL_BLUE_B << "\n_ TEST1: Vectors of int\n\n" << COL_RESET;
@@ -208,7 +211,8 @@ int	cmpVecCapacity( void ) {
 			  << "\n_________ Capacity method: capacity ________\n\n"
 			  << COL_RESET;
 
-	explainUnit("This member function returns the size of allocated storage capacity.");
+	explainUnit("This member function returns the size of allocated\n"
+				"storage capacity.");
 
 	// First test
 	std::cout << COL_BLUE_B << "\n_ TEST1: Vectors of int\n\n" << COL_RESET;
@@ -269,7 +273,8 @@ int	cmpVecReserve( void ) {
 			  << "\n_________ Capacity method: reserve _________\n\n"
 			  << COL_RESET;
 
-	explainUnit("This member function requests that the vector capacity be at least enough to contain n elements.");
+	explainUnit("This member function requests that the vector capacity\n"
+				"be at least enough to contain n elements.");
 
 	// Create two vectors of size 1
 	std::vector<int>	vec(1);

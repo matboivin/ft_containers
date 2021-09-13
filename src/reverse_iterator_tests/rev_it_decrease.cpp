@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:30:49 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 16:26:35 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 17:54:50 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,8 @@ int	cmpRevItSubtractOp( void ) {
 			  << "\n__________ operator- (subtraction) _________\n\n"
 			  << COL_RESET;
 
-	explainUnit("Returns an iterator pointing to the element n positions before the currently pointed one.");
+	explainUnit("Returns an iterator pointing to the element\n"
+				"n positions before the currently pointed one.");
 
 	int	arr[10];
 
