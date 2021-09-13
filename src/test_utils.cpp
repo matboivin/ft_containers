@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:22:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 15:03:20 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:10:38 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,8 @@ int	displayTestResult( bool condition ) {
 
 int	exitFailedTest( const std::string& test_name ) {
 
-	std::cout << COL_RED_B << "\n______ FAILED TEST"
-			  << COL_RED << "\n       " << test_name
-			  << COL_RESET << "\n\n";
+	std::cout << COL_RED_B << "________________ FAILED TEST _______________\n\n"
+			  << COL_RED << test_name << COL_RESET << "\n\n";
 
 	return (1);
 }

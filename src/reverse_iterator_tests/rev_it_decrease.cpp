@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:30:49 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 15:06:25 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:27:37 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ int	cmpRevItDecrement( void ) {
 
 	std::cout << COL_BLUE_B << "\n_ pre-decrement version\n\n" << COL_RESET;
 
-	std::cout << "std::it   " << *std_it << "\tft::it    " << *ft_it
-			  << "\n--std::it " << *(--std_it) << "\t--ft::it  " << *(--ft_it)
-			  << "\nstd::it   " << *std_it << "\tft::it    " << *ft_it << "\n\n";
+	std::cout << "std::it   = " << *std_it << "\tft::it   = " << *ft_it
+			  << "\n--std::it = " << *(--std_it) << "\t--ft::it = " << *(--ft_it)
+			  << "\nstd::it   = " << *std_it << "\tft::it   = " << *ft_it << "\n\n";
 
 	if ( displayTestResult(*std_it == *ft_it) )
 		return (1);
@@ -61,9 +61,9 @@ int	cmpRevItDecrement( void ) {
 
 	std::cout << COL_BLUE_B << "_ post-decrement version\n\n" << COL_RESET;
 
-	std::cout << "std::it   " << *std_it << "\tft::it    " << *ft_it
-			  << "\nstd::it-- " << *(std_it--) << "\tft::it--  " << *(ft_it--)
-			  << "\nstd::it   " << *std_it << "\tft::it    " << *ft_it << "\n\n";
+	std::cout << "std::it   = " << *std_it << "\tft::it   = " << *ft_it
+			  << "\nstd::it-- = " << *(std_it--) << "\tft::it-- = " << *(ft_it--)
+			  << "\nstd::it   = " << *std_it << "\tft::it   = " << *ft_it << "\n\n";
 
 	return ( displayTestResult(*std_it == *ft_it) );
 }
@@ -92,17 +92,14 @@ int	cmpRevItRetrocedeOp( void ) {
 	ft::reverse_iterator<int*>	ft_it(arr + 1);
 	std::cout << std::endl;
 
-	std::cout << COL_WHITE_B
-			  << "Decrease the reverse_iterator by " << n << " positions."
-			  << COL_RESET << std::endl;
+	std::cout << "std::it  = " << *std_it << "\tft::it   = " << *ft_it;
 
-	std::cout << "\nstd::it = " << *std_it << "\tft::it  = " << *ft_it;
 	std_it -= n;
 	ft_it -= n;
 
 	std::cout << "\nstd::it -= 4;\tft::it  -= 4;\n"
-			  << "std::it = " << *std_it
-			  << "\tft::it  = " << *ft_it << "\n\n";
+			  << "std::it  = " << *std_it
+			  << "\tft::it   = " << *ft_it << "\n\n";
 
 	return ( displayTestResult(*std_it == *ft_it) );
 }

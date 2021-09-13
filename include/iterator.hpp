@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 17:42:31 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:37:10 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,10 +191,6 @@ namespace ft {
 		template< typename Iter >
 			reverse_iterator( const reverse_iterator<Iter>& rev_it );
 
-		// assignment operator
-		template< typename Iter >
-			reverse_iterator&	operator=( const reverse_iterator<Iter>& other );
-
 		// return copy of the original iterator
 		iterator_type	base( void ) const;
 
@@ -236,7 +232,9 @@ namespace ft {
 
 	/*
 	 * Initalization constructor
-	 * Constructs a reverse iterator from some original iterator it
+	 * Constructs a reverse iterator from some original iterator it.
+	 * The behavior of the constructed object replicates the original,
+	 * except that it iterates through its pointed elements in the reverse order.
 	 *
 	 * @param it  An iterator
 	 */
@@ -263,29 +261,6 @@ namespace ft {
 				  << "ft::reverse_iterator copy constructor called" << COL_RESET
 				  << std::endl;
 	}
-
-	/*
-	 * Assignment operator
-	 *
-	 * @param other  An iterator of a reverse_iterator type
-	 *
-	 * @return  *this
-	 */
-	template< typename Iterator >
-	template< typename Iter >
-	reverse_iterator<Iterator>&
-	reverse_iterator<Iterator>::operator=( const reverse_iterator<Iter>& other ) {
-
-		std::cout << COL_GREEN
-				  << "ft::reverse_iterator assignment operator called" << COL_RESET
-				  << std::endl;
-
-		if ( this != &other )
-			current = other.base();
-
-		return ( *this );
-	}
-
 
 	/* getter *************************************************************** */
 
