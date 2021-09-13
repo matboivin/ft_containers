@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:30:49 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 18:33:04 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 18:55:54 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	cmpRevItIncrement( void ) {
 
 	explainUnit("Increments iterator position.");
 
+	int	errors = 0;
 	int	arr[5];
 
 	// fill test array
@@ -43,19 +44,30 @@ int	cmpRevItIncrement( void ) {
 		arr[i] = i;
 
 	// iterators
-	std::reverse_iterator<int*>	std_rev_it(arr + 1);
-	ft::reverse_iterator<int*>	ft_rev_it(arr + 1);
+	std::reverse_iterator<int*>	std_rev_it(arr + 5);
+	ft::reverse_iterator<int*>	ft_rev_it(arr + 5);
 
 	std::cout << COL_BLUE_B << "\n_ pre-decrement version\n\n" << COL_RESET;
 
-	std::cout << "*std::rev_it   = " << *std_rev_it
-			  << "\t*ft::rev_it   = " << *ft_rev_it
-			  << "\n*++std::rev_it = " << *(++std_rev_it)
-			  << "\t*++ft::rev_it = " << *(++ft_rev_it)
-			  << "\n*std::rev_it   = " << *std_rev_it
-			  << "\t*ft::rev_it   = " << *ft_rev_it << "\n\n";
+	std::cout << "*std::rev_it     = " << *std_rev_it
+			  << "\t*ft::rev_it     = " << *ft_rev_it;
 
-	if ( displayTestResult(*std_rev_it == *ft_rev_it) )
+	errors += (*std_rev_it != *ft_rev_it);
+
+	int	std_res = *(++std_rev_it);
+	int	ft_res = *(++ft_rev_it);
+
+	std::cout << "\n*(++std::rev_it) = " << std_res
+			  << "\t*(++ft::rev_it) = " << ft_res;
+
+	errors += (std_res != ft_res);
+
+	std::cout  << "\n*std::rev_it     = " << *std_rev_it
+			  << "\t*ft::rev_it     = " << *ft_rev_it << "\n\n";
+
+	errors += (*std_rev_it != *ft_rev_it);
+
+	if ( displayTestResult(!errors) )
 		return (1);
 
 	// restore
@@ -64,14 +76,25 @@ int	cmpRevItIncrement( void ) {
 
 	std::cout << COL_BLUE_B << "_ post-decrement version\n\n" << COL_RESET;
 
-	std::cout << "*std::rev_it   = " << *std_rev_it
-			  << "\t*ft::rev_it   = " << *ft_rev_it
-			  << "\n*std::rev_it++ = " << *(std_rev_it++)
-			  << "\t*ft::rev_it++ = " << *(ft_rev_it++)
-			  << "\n*std::rev_it   = " << *std_rev_it
-			  << "\t*ft::rev_it   = " << *ft_rev_it << "\n\n";
+	std::cout << "*std::rev_it     = " << *std_rev_it
+			  << "\t*ft::rev_it     = " << *ft_rev_it;
 
-	return ( displayTestResult(*std_rev_it == *ft_rev_it) );
+	errors += (*std_rev_it != *ft_rev_it);
+
+	std_res = *(std_rev_it++);
+	ft_res = *(ft_rev_it++);
+
+	std::cout << "\n*(std::rev_it++) = " << std_res
+			  << "\t*(ft::rev_it++) = " << ft_res;
+
+	errors += (std_res != ft_res);
+
+	std::cout  << "\n*std::rev_it     = " << *std_rev_it
+			  << "\t*ft::rev_it     = " << *ft_rev_it << "\n\n";
+
+	errors += (*std_rev_it != *ft_rev_it);
+
+	return ( displayTestResult(!errors) );
 }
 
 /*
