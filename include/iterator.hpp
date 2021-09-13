@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 15:54:48 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 17:43:41 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,7 +196,7 @@ namespace ft {
 
 		// accesses the pointed-to element
 		reference	operator*( void ) const;
-		reference	operator->( void ) const;
+		pointer		operator->( void ) const;
 
 		// accesses an element by index
 		reference	operator[]( difference_type n ) const;
@@ -303,7 +303,7 @@ namespace ft {
 	 * @return  A pointer to the element pointed to by the iterator
 	 */
 	template< typename Iterator >
-	typename reverse_iterator<Iterator>::reference
+	typename reverse_iterator<Iterator>::pointer
 	reverse_iterator<Iterator>::operator->( void ) const {
 
 		return ( &(operator*()) );

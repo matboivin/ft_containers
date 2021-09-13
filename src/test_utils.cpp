@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:22:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 15:10:38 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 17:34:02 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	explainUnit( const std::string& msg ) {
  * Display the test results between original behavior and project's
  */
 
-int	displayTestResult( bool condition ) {
+int	displayTestResult( bool succeeded ) {
 
-	if ( condition ) {
+	if ( succeeded ) {
 
 		std::cout << COL_GREEN_B << "[OK] Same results\n\n" << COL_RESET;
 	}
