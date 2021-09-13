@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:32:00 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 17:59:47 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 18:20:14 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,19 @@ void	cmpRevItInitConstructor( void );
 void	cmpRevItCopyConstructor( void );
 
 /*
- * element access
+ * Getter
+ */
+int	cmpRevItBase( void );
+
+/*
+ * Element access
  */
 int	cmpRevItIndirectionOp( void );
 int	cmpRevItPointerOp( void );
 int	cmpRevItSubscriptingOp( void );
 
 /*
- * advance/decrease
+ * Advance/decrease
  */
 
 int	cmpRevItAdvDecr( void );

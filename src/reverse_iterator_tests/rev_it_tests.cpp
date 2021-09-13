@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:33:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 18:17:34 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 18:45:56 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ int	testReverseIterator( void ) {
 		return (0);
 
 	cmpRevItCopyConstructor();
+
+	if ( !continueTests("member function: base()") )
+		return (0);
+
+	// getter
+	has_failed = cmpRevItBase();
+	if ( has_failed )
+		return ( exitFailedTest("reverse_iterator: member function: base()") );
 
 	if ( !continueTests("operator*") )
 		return (0);

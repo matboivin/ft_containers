@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 17:58:21 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 18:17:10 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 18:32:19 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ static int	cmpRevItAdditionOp2( void ) {
 	std_rev_it = n + ite;
 	ft_rev_it = n + ft_ite;
 
-	std::cout << "\nstd::rev_it = " << *std_rev_it
-			  << "\nft::rev_it  = " << *ft_rev_it << "\n\n";
+	std::cout << "\n*std::rev_it = " << *std_rev_it
+			  << "\n*ft::rev_it  = " << *ft_rev_it << "\n\n";
 
 	return ( displayTestResult(*std_rev_it == *ft_rev_it) );
 }

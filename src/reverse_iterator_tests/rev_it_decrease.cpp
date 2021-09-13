@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 17:30:49 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 17:54:50 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 18:34:34 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,12 @@ int	cmpRevItDecrement( void ) {
 
 	std::cout << COL_BLUE_B << "\n_ pre-decrement version\n\n" << COL_RESET;
 
-	std::cout << "std::rev_it   = " << *std_rev_it
-			  << "\tft::rev_it   = " << *ft_rev_it
-			  << "\n--std::rev_it = " << *(--std_rev_it)
-			  << "\t--ft::rev_it = " << *(--ft_rev_it)
-			  << "\nstd::rev_it   = " << *std_rev_it
-			  << "\tft::rev_it   = " << *ft_rev_it << "\n\n";
+	std::cout << "*std::rev_it   = " << *std_rev_it
+			  << "\t*ft::rev_it   = " << *ft_rev_it
+			  << "\n*--std::rev_it = " << *(--std_rev_it)
+			  << "\t*--ft::rev_it = " << *(--ft_rev_it)
+			  << "\n*std::rev_it   = " << *std_rev_it
+			  << "\t*ft::rev_it   = " << *ft_rev_it << "\n\n";
 
 	if ( displayTestResult(*std_rev_it == *ft_rev_it) )
 		return (1);
@@ -64,12 +64,12 @@ int	cmpRevItDecrement( void ) {
 
 	std::cout << COL_BLUE_B << "_ post-decrement version\n\n" << COL_RESET;
 
-	std::cout << "std::rev_it   = " << *std_rev_it
-			  << "\tft::rev_it   = " << *ft_rev_it
-			  << "\nstd::rev_it-- = " << *(std_rev_it--)
-			  << "\tft::rev_it-- = " << *(ft_rev_it--)
-			  << "\nstd::rev_it   = " << *std_rev_it
-			  << "\tft::rev_it   = " << *ft_rev_it << "\n\n";
+	std::cout << "*std::rev_it   = " << *std_rev_it
+			  << "\t*ft::rev_it   = " << *ft_rev_it
+			  << "\n*std::rev_it-- = " << *(std_rev_it--)
+			  << "\t*ft::rev_it-- = " << *(ft_rev_it--)
+			  << "\n*std::rev_it   = " << *std_rev_it
+			  << "\t*ft::rev_it   = " << *ft_rev_it << "\n\n";
 
 	return ( displayTestResult(*std_rev_it == *ft_rev_it) );
 }
@@ -98,15 +98,15 @@ int	cmpRevItRetrocedeOp( void ) {
 	ft::reverse_iterator<int*>	ft_rev_it(arr + 1);
 	std::cout << std::endl;
 
-	std::cout << "std::rev_it  = " << *std_rev_it
-			  << "\tft::rev_it   = " << *ft_rev_it;
+	std::cout << "*std::rev_it  = " << *std_rev_it
+			  << "\t*ft::rev_it   = " << *ft_rev_it;
 
 	std_rev_it -= n;
 	ft_rev_it -= n;
 
-	std::cout << "\nstd::rev_it -= 4;\tft::rev_it  -= 4;\n"
-			  << "std::rev_it  = " << *std_rev_it
-			  << "\tft::rev_it   = " << *ft_rev_it << "\n\n";
+	std::cout << "\n*std::rev_it -= 4;\t*ft::rev_it  -= 4;\n"
+			  << "*std::rev_it  = " << *std_rev_it
+			  << "\t*ft::rev_it   = " << *ft_rev_it << "\n\n";
 
 	return ( displayTestResult(*std_rev_it == *ft_rev_it) );
 }
@@ -135,16 +135,16 @@ int	cmpRevItSubtractOp( void ) {
 	ft::reverse_iterator<int*>	ft_rev_it(arr + 1);
 	std::cout << std::endl;
 
-	std::cout << "std::rev_it = " << *std_rev_it
-			  << "\nft::rev_it  = " << *ft_rev_it << "\n\n";
+	std::cout << "*std::rev_it = " << *std_rev_it
+			  << "\n*ft::rev_it  = " << *ft_rev_it << "\n\n";
 
 	// storing results
 	std::reverse_iterator<int*>	std_res = (std_rev_it - 5);
 	ft::reverse_iterator<int*>	ft_res = (ft_rev_it - 5);
 	std::cout << std::endl;
 
-	std::cout << "(std::rev_it - 5) = " << *std_res
-			  << "\n(ft::rev_it - 5)  = " << *ft_res << "\n\n";
+	std::cout << "*(std::rev_it - 5) = " << *std_res
+			  << "\n*(ft::rev_it - 5)  = " << *ft_res << "\n\n";
 
 	return ( displayTestResult(*std_res == *ft_res) );
 }

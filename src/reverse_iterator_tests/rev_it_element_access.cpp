@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 16:49:32 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 17:53:15 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 18:34:57 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,12 +175,12 @@ int	cmpRevItSubscriptingOp( void ) {
 	// create a reverse iterator pointing on array's elements
 	std::reverse_iterator<int*>	std_rev_it(arr + 10);
 
-	std::cout << "std::rev_it    = " << *std_rev_it << "\n\n";
+	std::cout << "*std::rev_it    = " << *std_rev_it << "\n\n";
 
 	for ( int i = 0; i < len; i++ )
 		std::cout << "std::rev_it[" << i << "] = " << std_rev_it[i] << '\n';
 
-	std::cout << "\nstd::rev_it    = " << *std_rev_it << std::endl;
+	std::cout << "\n*std::rev_it    = " << *std_rev_it << std::endl;
 
 	// ft::reverse_iterator
 	std::cout << COL_BLUE_B << "\n_ ft::reverse_iterator\n\n" << COL_RESET;
@@ -189,12 +189,12 @@ int	cmpRevItSubscriptingOp( void ) {
 	ft::reverse_iterator<int*>	ft_rev_it(arr + 10);
 	std::cout << std::endl;
 
-	std::cout << "ft::rev_it    = " << *ft_rev_it << "\n\n";
+	std::cout << "*ft::rev_it    = " << *ft_rev_it << "\n\n";
 
 	for ( int i = 0; i < len; i++ )
 		std::cout << "ft::rev_it[" << i << "] = " << ft_rev_it[i] << '\n';
 
-	std::cout << "\nft::rev_it    = " << *ft_rev_it << std::endl;
+	std::cout << "\n*ft::rev_it    = " << *ft_rev_it << std::endl;
 
 	return (0);
 }

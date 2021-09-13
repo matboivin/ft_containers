@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 15:10:51 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 16:29:10 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 18:33:28 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,15 +68,15 @@ void	cmpRevItInitConstructor( void ) {
 	// create a copy of it
 	std::reverse_iterator<iter_type>	rev_it(it);
 
-	std::cout << "std::it       = " << *it
-			  << "\nstd::rev_it   = " << *rev_it << "\n\n";
+	std::cout << "*std::it       = " << *it
+			  << "\n*std::rev_it   = " << *rev_it << "\n\n";
 
 	// Ensure the copy sense of iteration is inverted
 	it--;
 	rev_it--;
 
-	std::cout << "std::it--     = " << *it
-			  << "\nstd::rev_it-- = " << *rev_it << "\n\n";
+	std::cout << "*std::it--     = " << *it
+			  << "\n*std::rev_it-- = " << *rev_it << "\n\n";
 
 	// restore
 	it++;
@@ -88,15 +88,15 @@ void	cmpRevItInitConstructor( void ) {
 	ft::reverse_iterator<iter_type>	ft_rev_it(it);
 	std::cout << std::endl;
 
-	std::cout << "std::it      = " << *it
-			  << "\nft::rev_it   = " << *ft_rev_it << "\n";
+	std::cout << "*std::it      = " << *it
+			  << "\n*ft::rev_it   = " << *ft_rev_it << "\n";
 
 	// Ensure the copy sense of iteration is inverted
 	it--;
 	ft_rev_it--;
 
-	std::cout << "\nstd::it--    = " << *it
-			  << "\nft::rev_it-- = " << *ft_rev_it << std::endl;
+	std::cout << "\n*std::it--    = " << *it
+			  << "\n*ft::rev_it-- = " << *ft_rev_it << std::endl;
 }
 
 /*
@@ -128,8 +128,8 @@ void	cmpRevItCopyConstructor( void ) {
 	// create copy
 	std::reverse_iterator<iter_type>	std_rev_it_copy(std_rev_it);
 
-	std::cout << "std::rev_it      = " << *std_rev_it
-			  << "\nstd::rev_it copy = " << *std_rev_it_copy << "\n\n";
+	std::cout << "*std::rev_it      = " << *std_rev_it
+			  << "\n*std::rev_it copy = " << *std_rev_it_copy << "\n\n";
 
 	// ft::reverse_iterator
 	std::cout << COL_BLUE_B << "_ ft::reverse_iterator\n\n" << COL_RESET;
@@ -140,6 +140,6 @@ void	cmpRevItCopyConstructor( void ) {
 	ft::reverse_iterator<iter_type>		ft_rev_it_copy(ft_rev_it);
 	std::cout << std::endl;
 
-	std::cout << "ft::rev_it       = " << *ft_rev_it
-			  << "\nft::rev_it copy  = " << *ft_rev_it_copy << "\n\n";
+	std::cout << "*ft::rev_it       = " << *ft_rev_it
+			  << "\n*ft::rev_it copy  = " << *ft_rev_it_copy << "\n\n";
 }
