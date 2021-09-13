@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:33:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 17:50:03 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 18:17:34 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,15 @@ int	testReverseIterator( void ) {
 	if ( has_failed )
 		return (1);
 	
-	if ( !continueTests("relational operators") )
+	if ( !continueTests("non-member functions") )
 		return (0);
 
 	// Relational operators
 	has_failed = cmpRevItRelationalOps();
+	if ( has_failed )
+		return (1);
+
+	has_failed = cmpRevItNonMemberOps();
 	if ( has_failed )
 		return (1);
 

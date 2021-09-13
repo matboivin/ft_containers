@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:32:00 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 17:26:03 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 17:59:47 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,11 @@ int	cmpRevItAdditionOp( void );
 int	cmpRevItSubtractOp( void );
 
 /*
- * Relational operators
+ * Non-member operator overloads
  */
 
 int	cmpRevItRelationalOps( void );
+int	cmpRevItNonMemberOps( void );
 
 /*
  * Run all reverse iterator tests

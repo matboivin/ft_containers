@@ -29,6 +29,7 @@ SRC_FILES += rev_it_advance.cpp \
 			 rev_it_construct.cpp \
 			 rev_it_decrease.cpp \
 			 rev_it_element_access.cpp \
+			 rev_it_nonmember_ops.cpp \
 			 rev_it_relational_ops.cpp \
 			 rev_it_tests.cpp
 
