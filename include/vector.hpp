@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/12 13:38:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 19:11:51 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,9 +70,11 @@ namespace ft {
 
 		typedef ft::iterator<ft::random_access_iterator_tag,value_type>			iterator;
 		typedef ft::iterator<ft::random_access_iterator_tag,const value_type>	const_iterator;
-		// typedef ft::reverse_iterator<iterator>				reverse_iterator;
-		// typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
-		typedef typename ft::iterator_traits<iterator>::difference_type		difference_type;
+
+		typedef ft::reverse_iterator<iterator>				reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
+
+		typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 
 	private:
 
@@ -122,7 +124,7 @@ namespace ft {
 		// capacity
 		bool		empty( void ) const;
 		size_type	size( void ) const;
-		void		resize( size_type n, value_type val = value_type() );
+		// void		resize( size_type n, value_type val = value_type() );
 		size_type	max_size( void ) const;
 		size_type	capacity( void ) const;
 		void		reserve( size_type n );
