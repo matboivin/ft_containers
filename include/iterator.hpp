@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 15:37:10 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 15:54:48 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,7 +255,7 @@ namespace ft {
 	template< typename Iterator >
 	template< typename Iter >
 	reverse_iterator<Iterator>::reverse_iterator( const reverse_iterator<Iter>& rev_it )
-			: current( rev_it.current ) {
+			: current( rev_it.base() ) {
 
 		std::cout << COL_GREEN
 				  << "ft::reverse_iterator copy constructor called" << COL_RESET

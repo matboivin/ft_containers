@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/12 14:33:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 15:43:19 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/13 16:01:51 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ int	testReverseIterator( void ) {
 	// constructors
 	cmpRevItDefaultConstructor();
 	cmpRevItInitConstructor();
+	cmpRevItCopyConstructor();
 
 	// if ( !continueTests("assignment operator") )
 	// 	return (0);
