@@ -30,8 +30,4 @@
 *.exe
 *.out
 *.app
-
-# 42's main
-tests/main.cpp
-
 ft_containers
