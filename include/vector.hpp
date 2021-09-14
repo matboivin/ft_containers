@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/14 19:06:41 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/14 19:26:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,17 +58,17 @@ namespace ft {
 	public:
 
 		// types
-		typedef T											value_type;
-		typedef Alloc										allocator_type;
-		typedef typename allocator_type::reference			reference;
-		typedef typename allocator_type::const_reference	const_reference;
-		typedef typename allocator_type::pointer			pointer;
-		typedef typename allocator_type::const_pointer		const_pointer;
-		typedef std::size_t									size_type;
-		typedef ft::base_iterator<pointer, vector>			iterator;
-		typedef ft::base_iterator<const_pointer, vector>	const_iterator;
-		typedef ft::reverse_iterator<iterator>				reverse_iterator;
-		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
+		typedef T														value_type;
+		typedef Alloc													allocator_type;
+		typedef typename allocator_type::reference						reference;
+		typedef typename allocator_type::const_reference				const_reference;
+		typedef typename allocator_type::pointer						pointer;
+		typedef typename allocator_type::const_pointer					const_pointer;
+		typedef std::size_t												size_type;
+		typedef ft::base_iterator<pointer, vector>						iterator;
+		typedef ft::base_iterator<const_pointer, vector>				const_iterator;
+		typedef ft::reverse_iterator<iterator>							reverse_iterator;
+		typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 		typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 
 	private:
@@ -79,8 +79,8 @@ namespace ft {
 		size_type		_capacity;
 		value_type*		_elements;
 
-		// pointer			_begin;
-		// pointer			_end;
+		pointer			_begin;
+		pointer			_end;
 
 		// calculate capacity growth
 		size_type		calculateGrowth( const size_type newSize) const;
@@ -171,7 +171,9 @@ namespace ft {
 			: _alloc(alloc),
 			  _size(0),
 			  _capacity(0),
-			  _elements() {
+			  _elements(),
+			  _begin(),
+			  _end() {
 
 		std::cout << COL_GREEN
 				  << "ft::vector default constructor called" << COL_RESET
@@ -202,6 +204,9 @@ namespace ft {
 
 		for ( size_type i = 0; i < n; i++ )
 			_alloc.construct( _elements + i, val );
+
+		_begin = &(_elements[0]);
+		_end = &(_elements[_size]);
 
 	}
 
@@ -244,6 +249,9 @@ namespace ft {
 
 		for ( size_type i = 0; i < _size; i++ )
 			_alloc.construct( _elements + i, x[i]);
+		
+		_begin = &(_elements[0]);
+		_end = &(_elements[_size]);
 	}
 
 	/*
@@ -300,6 +308,9 @@ namespace ft {
 
 			for ( size_type i = 0; i < _size; i++ )
 				_alloc.construct( _elements + i, rhs[i]);
+
+			_begin = &(_elements[0]);
+			_end = &(_elements[_size]);
 		}
 
 		return ( *this );
@@ -450,6 +461,8 @@ namespace ft {
 		_alloc.deallocate( _elements, _capacity );
 		_elements = newElements;
 		_capacity = newCapacity;
+		_begin = &(_elements[0]);
+		_end = &(_elements[_size]);
 	}
 
 
@@ -595,6 +608,9 @@ namespace ft {
 		_size = n;
 		for ( size_type i = 0; i < n; i++ )
 			_alloc.construct( _elements + i, val );
+
+		_begin = &(_elements[0]);
+		_end = &(_elements[_size]);
 	}
 
 	/*
@@ -615,6 +631,8 @@ namespace ft {
 
 		_elements[_size] = val;
 		_size = newSize;
+		_begin = &(_elements[0]);
+		_end = &(_elements[_size]);
 	}
 
 	/*
@@ -699,6 +717,8 @@ namespace ft {
 			_alloc.destroy( _elements + i );
 
 		_size = 0;
+		_begin = &(_elements[0]); // to check
+		_end = &(_elements[_size]);
 	}
 
 
