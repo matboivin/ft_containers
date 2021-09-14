@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/14 19:07:48 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/14 19:14:26 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ namespace ft {
 	 *   iterator_traits: Partial specialization for pointers to const
 	 *
 	 * Predefined iterators
-	 *   reverse_iterator definition
 	 *
+	 *   reverse_iterator definition
 	 *   reverse_iterator implementation
 	 *     construct/copy/destroy
 	 *     getter
@@ -48,6 +48,10 @@ namespace ft {
 	 *
 	 *   base_iterator definition
 	 *   base_iterator implementation
+	 *     non-member function overloads
+	 *       relational operators
+	 *       operator+
+	 *       operator-
 	 */
 
 
@@ -814,6 +818,86 @@ namespace ft {
 	base_iterator<Iterator, Container>::operator-( difference_type n ) const {
 
 		return ( base_iterator( base() + n ) );
+	}
+
+
+	/* non-member function overloads **************************************** */
+
+	/*
+	 * relational operators
+	 */
+
+	template< typename Iterator, typename Container >
+	bool	operator==( const base_iterator<Iterator, Container>& lhs,
+						const base_iterator<Iterator, Container>& rhs ) {
+
+		return ( lhs.base() == rhs.base() );
+	}
+
+	template< typename Iterator, typename Container >
+	bool	operator!=( const base_iterator<Iterator, Container>& lhs,
+						const base_iterator<Iterator, Container>& rhs ) {
+
+		return ( lhs.base() != rhs.base() );
+	}
+
+	template< typename Iterator, typename Container >
+	bool	operator<( const base_iterator<Iterator, Container>& lhs,
+					   const base_iterator<Iterator, Container>& rhs ) {
+		return ( lhs.base() > rhs.base() );
+	}
+
+	template< typename Iterator, typename Container >
+	bool	operator<=( const base_iterator<Iterator, Container>& lhs,
+						const base_iterator<Iterator, Container>& rhs ) {
+		return ( lhs.base() >= rhs.base() );
+	}
+
+	template< typename Iterator, typename Container >
+	bool	operator>( const base_iterator<Iterator, Container>& lhs,
+					   const base_iterator<Iterator, Container>& rhs ) {
+		return ( lhs.base() < rhs.base() );
+	}
+
+	template< typename Iterator, typename Container >
+	bool	operator>=( const base_iterator<Iterator, Container>& lhs,
+						const base_iterator<Iterator, Container>& rhs ) {
+		return ( lhs.base() <= rhs.base() );
+	}
+
+	/*
+	 * Addition operator
+	 * Returns a base iterator pointing to the element located n positions
+	 * away from the element pointed to by it
+	 *
+	 * @param n   Number of elements to offset
+	 * @param it  Base iterator
+	 *
+	 * @return  An iterator pointing to the element n positions away from it
+	 */
+	template< typename Iterator, typename Container >
+	base_iterator<Iterator, Container>
+	operator+( typename base_iterator<Iterator, Container>::difference_type n,
+			   const base_iterator<Iterator, Container>& it ) {
+
+		return ( base_iterator<Iterator, Container>( it.base() - n ) );
+	}
+
+	/*
+	 * Subtraction operator
+	 * Computes the distance between two base iterators
+	 * The function returns the same as subtracting lhs's base iterator from rhs's base iterator
+	 *
+	 * @param lhs, rhs  base_iterator objects having both the same template parameter
+	 *
+	 * @return  The number of elements between lhs and rhs
+	 */
+	template< typename Iterator, typename Container >
+	typename base_iterator<Iterator, Container>::difference_type
+	operator-( const base_iterator<Iterator, Container>& lhs,
+			   const base_iterator<Iterator, Container>& rhs) {
+
+		return ( rhs.base() - lhs.base() );
 	}
 
 }
