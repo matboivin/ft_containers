@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/14 18:09:38 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/14 19:06:41 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ namespace ft {
 		typedef typename allocator_type::pointer			pointer;
 		typedef typename allocator_type::const_pointer		const_pointer;
 		typedef std::size_t									size_type;
-		typedef ft::vector_iterator<T>						iterator;
-		typedef ft::const_vector_iterator<T>				const_iterator;
+		typedef ft::base_iterator<pointer, vector>			iterator;
+		typedef ft::base_iterator<const_pointer, vector>	const_iterator;
 		typedef ft::reverse_iterator<iterator>				reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>		const_reverse_iterator;
 		typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
@@ -78,6 +78,9 @@ namespace ft {
 		size_type		_size;     // number of elements
 		size_type		_capacity;
 		value_type*		_elements;
+
+		// pointer			_begin;
+		// pointer			_end;
 
 		// calculate capacity growth
 		size_type		calculateGrowth( const size_type newSize) const;
@@ -199,6 +202,7 @@ namespace ft {
 
 		for ( size_type i = 0; i < n; i++ )
 			_alloc.construct( _elements + i, val );
+
 	}
 
 	/*
