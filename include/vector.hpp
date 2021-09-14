@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 19:45:43 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/14 18:09:38 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 
 #include <iostream>
 #include <memory>
-#include <vector>
 #include "iterator.hpp"
-#include "vector_iterator.hpp"
 #include "utils.hpp"
 
 /*
@@ -42,13 +40,6 @@ namespace ft {
 	 *   relational operators
 	 *   swap
 	 */
-
-	// See vector_iterator.hpp
-	template< typename T >
-	class vector_iterator;
-
-	template< typename T >
-	class const_vector_iterator;
 
 
 	/* Vector definition **************************************************** */

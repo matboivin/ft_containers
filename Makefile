@@ -10,7 +10,6 @@ RM = /bin/rm
 
 INC_FILES = iterator.hpp \
 			vector.hpp \
-			vector_iterator.hpp \
 			utils.hpp
 
 INC_TEST_FILES = test_utils.hpp \
