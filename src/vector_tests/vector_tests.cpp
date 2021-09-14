@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 19:12:34 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/14 19:38:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ int	testVector( void ) {
 				 "::::::::::::::::::::::::::::::::::::::::::::\n"
 			  << COL_RESET << std::endl;
 
-	// int	has_failed = 0;
+	int	has_failed = 0;
 
 	// // constructors
 	// cmpVecDefaultConstructor();
@@ -85,6 +85,10 @@ int	testVector( void ) {
 	// has_failed = cmpVecReserve();
 	// if ( has_failed )
 	// 	return ( exitFailedTest("vector: capacity: reserve()") );
+
+	has_failed = cmpVecIterator();
+	if ( has_failed )
+		return ( exitFailedTest("vector: iterator") );
 
 	return (0);
 }

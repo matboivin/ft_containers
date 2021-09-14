@@ -22,6 +22,7 @@ SRC_FILES = main.cpp \
 SRC_FILES += vector_assignment_op.cpp \
 			 vector_capacity.cpp \
 			 vector_construct.cpp \
+			 vector_iterators.cpp \
 			 vector_tests.cpp
 
 SRC_FILES += rev_it_advance.cpp \

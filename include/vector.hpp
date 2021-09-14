@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/14 19:26:20 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/14 19:31:21 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,8 +114,10 @@ namespace ft {
 		allocator_type	get_alloc( void ) const;
 
 		// iterators
-		// iterator				begin( void );
-		// iterator				end( void );
+		iterator				begin( void );
+		// const_iterator			begin( void ) const;
+		iterator				end( void );
+		// const_iterator			end( void ) const;
 		// reverse_iterator		rbegin( void );
 		// reverse_iterator		rend( void );
 
@@ -326,6 +328,39 @@ namespace ft {
 
 		return ( static_cast<allocator_type>(_alloc) );
 	}
+
+
+	/* iterators ************************************************************ */
+
+
+	/*
+	 * Returns an iterator pointing to the first element in the vector
+	 *
+	 * @return  An iterator to the beginning of the sequence container
+	 */
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::iterator	vector<T,Alloc>::begin( void ) {
+
+		return ( iterator(_begin) );
+	}
+
+	/*
+	 * Returns an iterator referring to the past-the-end element
+	 * in the vector container
+	 *
+	 * @return  An iterator to the element past the end of the sequence
+	 */
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::iterator	vector<T,Alloc>::end( void ) {
+
+		return ( iterator(_end) );
+	}
+
+	// template< typename T, typename Alloc >
+	// typename vector<T,Alloc>::reverse_iterator	vector<T,Alloc>::rbegin( void )
+
+	// template< typename T, typename Alloc >
+	// typename vector<T,Alloc>::reverse_iterator	vector<T,Alloc>::rend( void )
 
 
 	/* capacity ************************************************************* */
