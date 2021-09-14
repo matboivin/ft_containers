@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/14 19:38:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/14 19:59:14 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,16 +54,16 @@ int	testVector( void ) {
 	// 	return (0);
 
 	// // capacity member functions
-	// has_failed = cmpVecEmpty();
-	// if ( has_failed )
-	// 	return ( exitFailedTest("vector: capacity: empty()") );
+	has_failed = cmpVecEmpty();
+	if ( has_failed )
+		return ( exitFailedTest("vector: capacity: empty()") );
 
 	// if ( !continueTests("Capacity member function: size()") )
 	// 	return (0);
 
-	// has_failed = cmpVecSize();
-	// if ( has_failed )
-	// 	return ( exitFailedTest("vector: capacity: size(") );
+	has_failed = cmpVecSize();
+	if ( has_failed )
+		return ( exitFailedTest("vector: capacity: size(") );
 	
 	// if ( !continueTests("Capacity member function: max_size()") )
 	// 	return (0);
@@ -86,9 +86,9 @@ int	testVector( void ) {
 	// if ( has_failed )
 	// 	return ( exitFailedTest("vector: capacity: reserve()") );
 
-	has_failed = cmpVecIterator();
-	if ( has_failed )
-		return ( exitFailedTest("vector: iterator") );
+	// has_failed = cmpVecIterator();
+	// if ( has_failed )
+	// 	return ( exitFailedTest("vector: iterator") );
 
 	return (0);
 }

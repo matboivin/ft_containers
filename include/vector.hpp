@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/14 19:51:36 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/14 20:02:07 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ namespace ft {
 
 		// attributes
 		allocator_type	_alloc;    // The container keeps and uses an internal copy of the allocator
-		size_type		_size;     // number of elements
+		size_type		_size;     // TODO: remove
 		size_type		_capacity;
 		value_type*		_elements;
 
@@ -393,7 +393,7 @@ namespace ft {
 	template< typename T, typename Alloc >
 	bool	vector<T,Alloc>::empty( void ) const {
 
-		return ( _size == 0 );
+		return ( begin() == end() );
 	}
 
 	/*
@@ -404,7 +404,7 @@ namespace ft {
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::size_type	vector<T,Alloc>::size( void ) const {
 
-		return ( _size );
+		return ( size_type( _end - _begin ) );
 	}
 
 	/*
