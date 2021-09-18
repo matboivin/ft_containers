@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/18 21:03:45 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/18 21:23:52 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ namespace ft {
 
 		// attributes
 		allocator_type	_alloc;    // The container keeps and uses an internal copy of the allocator
-		size_type		_size;     // TODO: remove
 		size_type		_capacity;
 		value_type*		_elements;
 
@@ -171,7 +170,6 @@ namespace ft {
 	template< typename T, typename Alloc >
 	vector<T,Alloc>::vector( const allocator_type& alloc )
 			: _alloc(alloc),
-			  _size(0),
 			  _capacity(0),
 			  _elements(),
 			  _begin(),
@@ -195,7 +193,6 @@ namespace ft {
 								 const value_type& val,
 								 const allocator_type& alloc )
 			: _alloc(alloc),
-			  _size(n),
 			  _capacity(n) {
 
 		std::cout << COL_GREEN
@@ -240,20 +237,20 @@ namespace ft {
 	template< typename T, typename Alloc >
 	vector<T,Alloc>::vector( const vector& x )
 			: _alloc( x._alloc ),
-			  _size( x.size() ),
 			  _capacity( x.capacity() ) {
 
 		std::cout << COL_GREEN
 				  << "ft::vector copy constructor called" << COL_RESET
 				  << std::endl;
 
-		_elements = _alloc.allocate( x.size() );
+		size_type	newSize = x.size();
+		_elements = _alloc.allocate(newSize);
 
-		for ( size_type i = 0; i < _size; i++ )
+		for ( size_type i = 0; i < newSize; i++ )
 			_alloc.construct( _elements + i, x[i]);
 		
-		_begin = &(_elements[0]);
-		_end = _begin + _size;
+		_begin = _elements;
+		_end = _begin + newSize;
 	}
 
 	/*
@@ -269,7 +266,7 @@ namespace ft {
 				  << "ft::vector destructor called" << COL_RESET
 				  << std::endl;
 
-		for ( size_type i = 0; i < _size; i++ )
+		for ( size_type i = 0; i < size(); i++ )
 			_alloc.destroy( _elements + i );
 
 		_alloc.deallocate( _elements, _capacity );
@@ -297,22 +294,23 @@ namespace ft {
 
 		if ( this != &rhs ) {
 
-			for ( size_type i = 0; i < _size; i++ )
+			for ( size_type i = 0; i < size(); i++ )
 				_alloc.destroy( _elements + i );
 
 			_alloc.deallocate( _elements, _capacity );
 
-			_size = rhs.size();
-			if ( _size > _capacity )
-				_capacity = _size;
+			size_type	newSize = rhs.size();
 
-			_elements = _alloc.allocate( _size );
+			if ( newSize > _capacity )
+				_capacity = newSize;
 
-			for ( size_type i = 0; i < _size; i++ )
+			_elements = _alloc.allocate(newSize);
+
+			for ( size_type i = 0; i < newSize; i++ )
 				_alloc.construct( _elements + i, rhs[i]);
 
-			_begin = &(_elements[0]);
-			_end = _begin + _size;
+			_begin = _elements;
+			_end = _begin + newSize;
 		}
 
 		return ( *this );
@@ -515,10 +513,11 @@ namespace ft {
 		if ( n <= capacity() )
 			return ;
 
+		size_type	oldSize = size();
 		size_type	newCapacity = calculateGrowth(n);
 		value_type*	newElements = _alloc.allocate(newCapacity);
 
-		for ( size_type i = 0; i < _size; i++ ) {
+		for ( size_type i = 0; i < oldSize; i++ ) {
 
 			_alloc.construct( newElements + i, _elements[i]);
 			_alloc.destroy( _elements + i );
@@ -527,8 +526,8 @@ namespace ft {
 		_alloc.deallocate( _elements, _capacity );
 		_elements = newElements;
 		_capacity = newCapacity;
-		_begin = &(_elements[0]);
-		_end = _begin + _size;
+		_begin = _elements;
+		_end = _begin + oldSize;
 	}
 
 
@@ -654,7 +653,7 @@ namespace ft {
 	template< typename T, typename Alloc >
 	void	vector<T,Alloc>::assign( size_type n, const value_type& val ) {
 
-		size_type	oldSize = _size;
+		size_type	oldSize = size();
 
 		this->clear();
 
@@ -667,12 +666,11 @@ namespace ft {
 		if ( n > _capacity )
 			_capacity = calculateGrowth(n);
 
-		_size = n;
 		for ( size_type i = 0; i < n; i++ )
 			_alloc.construct( _elements + i, val );
 
-		_begin = &(_elements[0]);
-		_end = _begin + _size;
+		_begin = _elements;
+		_end = _begin + n;
 	}
 
 	/*
@@ -686,15 +684,14 @@ namespace ft {
 	template< typename T, typename Alloc >
 	void	vector<T,Alloc>::push_back( const value_type& val ) {
 
-		size_type	newSize = _size + 1;
+		size_type	newSize = size() + 1;
 
 		if ( newSize > _capacity )
 			reserve(newSize);
 
-		_elements[_size] = val;
-		_size = newSize;
-		_begin = &(_elements[0]);
-		_end = _begin + _size;
+		_alloc.construct( _end, val );
+		_begin = _elements;
+		_end = _begin + newSize;
 	}
 
 	/*
@@ -775,12 +772,11 @@ namespace ft {
 	template< typename T, typename Alloc >
 	void	vector<T,Alloc>::clear( void ) {
 
-		for ( size_type i = 0; i < _size; i++ )
-			_alloc.destroy( _elements + i );
+		for ( iterator it = begin(); it != end(); ++it )
+			_alloc.destroy(it);
 
-		_size = 0;
-		_begin = &(_elements[0]); // to check
-		_end = _begin + _size;
+		_begin = _elements; // to check
+		_end = _begin;
 	}
 
 
