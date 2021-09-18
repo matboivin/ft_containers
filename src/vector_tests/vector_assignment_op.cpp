@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 15:03:20 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/18 21:01:22 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	cmpVecAssignmentOperator( void ) {
 	std::cout << COL_BLUE_B << "_ std::vector\n\n" << COL_RESET;
 
 	// Create 3 different vectors
-	std::vector<int>	vec1(5);
+	std::vector<int>	vec1;
 	std::vector<int>	vec2(10, 2);
 	std::vector<int>	vec3(8,  3);
 
@@ -62,7 +62,7 @@ void	cmpVecAssignmentOperator( void ) {
 	std::cout << COL_BLUE_B << "_ ft::vector\n\n" << COL_RESET;
 
 	// Create 3 different vectors
-	ft::vector<int>	ft_vec1(5);
+	ft::vector<int>	ft_vec1;
 	ft::vector<int>	ft_vec2(10, 2);
 	ft::vector<int>	ft_vec3(8,  3);
 

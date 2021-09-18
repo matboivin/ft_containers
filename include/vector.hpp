@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/14 20:02:07 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/18 21:03:45 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,12 +114,12 @@ namespace ft {
 		allocator_type	get_alloc( void ) const;
 
 		// iterators
-		iterator				begin( void );
-		// const_iterator			begin( void ) const;
-		iterator				end( void );
-		// const_iterator			end( void ) const;
-		reverse_iterator		rbegin( void );
-		reverse_iterator		rend( void );
+		iterator			begin( void );
+		const_iterator		begin( void ) const;
+		iterator			end( void );
+		const_iterator		end( void ) const;
+		reverse_iterator	rbegin( void );
+		reverse_iterator	rend( void );
 
 		// capacity
 		bool		empty( void ) const;
@@ -207,8 +207,8 @@ namespace ft {
 		for ( size_type i = 0; i < n; i++ )
 			_alloc.construct( _elements + i, val );
 
-		_begin = &(_elements[0]);
-		_end = &(_elements[_size]);
+		_begin = _elements;
+		_end = _begin + n;
 
 	}
 
@@ -253,7 +253,7 @@ namespace ft {
 			_alloc.construct( _elements + i, x[i]);
 		
 		_begin = &(_elements[0]);
-		_end = &(_elements[_size]);
+		_end = _begin + _size;
 	}
 
 	/*
@@ -312,7 +312,7 @@ namespace ft {
 				_alloc.construct( _elements + i, rhs[i]);
 
 			_begin = &(_elements[0]);
-			_end = &(_elements[_size]);
+			_end = _begin + _size;
 		}
 
 		return ( *this );
@@ -346,6 +346,12 @@ namespace ft {
 		return ( iterator(_begin) );
 	}
 
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::const_iterator	vector<T,Alloc>::begin( void ) const {
+
+		return ( const_iterator(_begin) );
+	}
+
 	/*
 	 * Returns an iterator referring to the past-the-end element
 	 * in the vector container
@@ -356,6 +362,12 @@ namespace ft {
 	typename vector<T,Alloc>::iterator	vector<T,Alloc>::end( void ) {
 
 		return ( iterator(_end) );
+	}
+
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::const_iterator	vector<T,Alloc>::end( void ) const {
+
+		return ( const_iterator(_end) );
 	}
 
 	/*
@@ -516,7 +528,7 @@ namespace ft {
 		_elements = newElements;
 		_capacity = newCapacity;
 		_begin = &(_elements[0]);
-		_end = &(_elements[_size]);
+		_end = _begin + _size;
 	}
 
 
@@ -581,13 +593,13 @@ namespace ft {
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::reference	vector<T,Alloc>::front( void ) {
 
-		return ( _elements[0] );
+		return ( *(begin()) );
 	}
 
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::const_reference	vector<T,Alloc>::front( void ) const {
 
-		return ( _elements[0] );
+		return ( *(begin()) );
 	}
 
 	/*
@@ -598,17 +610,13 @@ namespace ft {
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::reference	vector<T,Alloc>::back( void ) {
 
-		size_type	idx = size() - 1;
-
-		return ( _elements[idx] );
+		return ( *(end() - 1) );
 	}
 
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::const_reference	vector<T,Alloc>::back( void ) const {
 
-		size_type	idx = size() - 1;
-
-		return ( _elements[idx] );
+		return ( *(end() - 1) );
 	}
 
 
@@ -664,7 +672,7 @@ namespace ft {
 			_alloc.construct( _elements + i, val );
 
 		_begin = &(_elements[0]);
-		_end = &(_elements[_size]);
+		_end = _begin + _size;
 	}
 
 	/*
@@ -686,7 +694,7 @@ namespace ft {
 		_elements[_size] = val;
 		_size = newSize;
 		_begin = &(_elements[0]);
-		_end = &(_elements[_size]);
+		_end = _begin + _size;
 	}
 
 	/*
@@ -772,7 +780,7 @@ namespace ft {
 
 		_size = 0;
 		_begin = &(_elements[0]); // to check
-		_end = &(_elements[_size]);
+		_end = _begin + _size;
 	}
 
 

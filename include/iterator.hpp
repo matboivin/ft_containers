@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/14 19:14:26 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/18 21:08:23 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -231,9 +231,7 @@ namespace ft {
 	template< typename Iterator >
 	reverse_iterator<Iterator>::reverse_iterator( void ) : current(0) {
 
-		std::cout << COL_GREEN
-				  << "ft::reverse_iterator default constructor called" << COL_RESET
-				  << std::endl;
+		return ;
 	}
 
 	/*
@@ -247,9 +245,7 @@ namespace ft {
 	template< typename Iterator >
 	reverse_iterator<Iterator>::reverse_iterator( iterator_type it ) : current(it) {
 
-		std::cout << COL_GREEN
-				  << "ft::reverse_iterator initalization constructor called" << COL_RESET
-				  << std::endl;
+		return ;
 	}
 
 	/*
@@ -263,9 +259,7 @@ namespace ft {
 	reverse_iterator<Iterator>::reverse_iterator( const reverse_iterator<Iter>& rev_it )
 			: current( rev_it.base() ) {
 
-		std::cout << COL_GREEN
-				  << "ft::reverse_iterator copy constructor called" << COL_RESET
-				  << std::endl;
+		return ;
 	}
 
 	/* getter *************************************************************** */
@@ -613,9 +607,7 @@ namespace ft {
 	template< typename Iterator, typename Container >
 	base_iterator<Iterator, Container>::base_iterator( void ) : current(0) {
 
-		std::cout << COL_GREEN
-				  << "ft::base_iterator default constructor called" << COL_RESET
-				  << std::endl;
+		return ;
 	}
 
 	/*
@@ -627,9 +619,7 @@ namespace ft {
 	template< typename Iterator, typename Container >
 	base_iterator<Iterator, Container>::base_iterator( iterator_type it ) : current(it) {
 
-		std::cout << COL_GREEN
-				  << "ft::base_iterator initalization constructor called" << COL_RESET
-				  << std::endl;
+		return ;
 	}
 
 	/*
@@ -643,9 +633,7 @@ namespace ft {
 	base_iterator<Iterator, Container>::base_iterator( const base_iterator<Iter, Container>& it )
 			: current( it.base() ) {
 
-		std::cout << COL_GREEN
-				  << "ft::base_iterator copy constructor called" << COL_RESET
-				  << std::endl;
+		return ;
 	}
 
 	/* getter *************************************************************** */
@@ -760,7 +748,7 @@ namespace ft {
 	base_iterator<Iterator, Container>
 	base_iterator<Iterator, Container>::operator+( difference_type n ) const {
 
-		return ( base_iterator( base() - n ) );
+		return ( base_iterator( base() + n ) );
 	}
 
 	/*
@@ -817,7 +805,7 @@ namespace ft {
 	base_iterator<Iterator, Container>
 	base_iterator<Iterator, Container>::operator-( difference_type n ) const {
 
-		return ( base_iterator( base() + n ) );
+		return ( base_iterator( base() - n ) );
 	}
 
 
@@ -880,7 +868,7 @@ namespace ft {
 	operator+( typename base_iterator<Iterator, Container>::difference_type n,
 			   const base_iterator<Iterator, Container>& it ) {
 
-		return ( base_iterator<Iterator, Container>( it.base() - n ) );
+		return ( base_iterator<Iterator, Container>( it.base() + n ) );
 	}
 
 	/*

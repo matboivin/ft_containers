@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/14 19:34:06 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/18 21:07:11 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,14 @@ static void	displayVecInfos( const Vec& v, const std::string& title="vector" ) {
 	}
 
 	std::cout << "[ ";
-	for ( std::size_t i = 0; i < v.size(); i++ ) {
+	for ( typename Vec::const_iterator it = v.begin();
+		  it != v.end();
+		  ++it ) {
 
-		std::cout << v[i];
-		if ( i < v.size() - 1 )
+		std::cout << *it;
+		if ( it != (v.end() - 1) )
 			std::cout << ", ";
 	}
-
 	std::cout << " ]\n\n";
 }
 

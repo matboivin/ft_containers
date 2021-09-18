@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 15:03:20 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/18 21:00:37 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	cmpVecCopyConstructor( void ) {
 	std::cout << COL_BLUE_B << "_ std::vector\n\n" << COL_RESET;
 
 	// create a vector
-	std::vector<int>	vec1(5);
+	std::vector<int>	vec1;
 	// add some numbers to it
 	vec1.push_back(12);
 	vec1.push_back(5);
@@ -115,7 +115,7 @@ void	cmpVecCopyConstructor( void ) {
 	std::cout << COL_BLUE_B << "_ ft::vector\n\n" << COL_RESET;
 
 	// create a vector
-	ft::vector<int>	ft_vec1(5);
+	ft::vector<int>	ft_vec1;
 	std::cout << std::endl;
 	// add some numbers to it
 	ft_vec1.push_back(12);
