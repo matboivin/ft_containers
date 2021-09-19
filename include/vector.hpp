@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/19 19:35:55 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/19 19:37:54 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,7 @@ namespace ft {
 	 * vector definition
 	 *
 	 * vector implementation
+	 *   helpers
 	 *   construct/copy/destroy
 	 *   capacity
 	 *   element access
@@ -81,6 +82,7 @@ namespace ft {
 
 	protected:
 
+		// helpers
 		pointer		_M_allocate( size_t n );
 		void		_M_create_storage( size_t n );
 		void		_M_deallocate( pointer p, size_t n );
