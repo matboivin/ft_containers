@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/19 20:19:02 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/19 23:29:21 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,9 @@
 
 #include <iostream>
 #include <memory>
-#include "iterator.hpp"
 #include "utils.hpp"
+#include "algorithm.hpp"
+#include "iterator.hpp"
 
 /*
  * Credits:

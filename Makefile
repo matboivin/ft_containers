@@ -8,12 +8,14 @@ RM = /bin/rm
 
 # FILES
 
-INC_FILES = iterator.hpp \
+INC_FILES = algorithm.hpp \
+			iterator.hpp \
 			vector.hpp \
+			type_traits.hpp \
 			utils.hpp
 
-INC_TEST_FILES = test_utils.hpp \
-				 reverse_iterator_tests.hpp \
+INC_TEST_FILES = reverse_iterator_tests.hpp \
+				 tests.hpp \
 				 vector_tests.hpp
 
 SRC_FILES = main.cpp \
@@ -35,6 +37,10 @@ SRC_FILES += rev_it_advance.cpp \
 			 rev_it_relational_ops.cpp \
 			 rev_it_tests.cpp
 
+SRC_FILES += equal_tests.cpp \
+			 lex_cmp_tests.cpp \
+			 other_tests.cpp
+
 OBJ_FILES = $(SRC_FILES:%.cpp=%.o)
 
 # DIRS AND PATHS
@@ -43,7 +49,7 @@ INC_DIR = include
 SRC_DIR = src
 OBJ_DIR = obj
 
-SUB_DIRS = vector_tests reverse_iterator_tests
+SUB_DIRS = vector_tests reverse_iterator_tests other_tests
 SRC_SUBDIRS = $(addprefix $(SRC_DIR)/, $(SUB_DIRS))
 
 INC_SUBDIRS = $(addprefix $(INC_DIR)/, tests)

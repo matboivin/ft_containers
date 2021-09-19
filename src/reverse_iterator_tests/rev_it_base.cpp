@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 18:19:10 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 18:44:54 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/20 00:01:46 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <iterator>
 #include <vector>
 #include "iterator.hpp"
-#include "test_utils.hpp"
+#include "tests.hpp"
 #include "reverse_iterator_tests.hpp"
 
 /*

@@ -6,13 +6,13 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/18 21:01:22 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/20 00:01:46 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iostream>
 #include <vector>
-#include "test_utils.hpp"
+#include "tests.hpp"
 #include "vector.hpp"
 #include "vector_tests.hpp"
 

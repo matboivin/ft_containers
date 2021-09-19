@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/11 18:18:16 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/19 20:13:15 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/19 23:28:56 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,5 @@
 #define COL_GREEN_B  "\033[1;32m"
 #define COL_YELLOW   "\033[0;33m"
 #define COL_YELLOW_B "\033[1;33m"
-
-/*
- * Utility functions
- */
-
-namespace ft {
-
-	template< typename InputIt1, typename InputIt2 >
-	bool	equal( InputIt1 first1, InputIt1 last1, InputIt2 first2 ) {
-
-		for ( ; first1 != last1; ++first1, ++first2 ) {
-
-			if ( !(*first1 == *first2) ) {
-				return (false);
-			}
-		}
-		return (true);
-	}
-}
 
 #endif
