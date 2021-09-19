@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/19 15:13:09 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/19 16:57:52 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,13 @@ namespace ft {
 		pointer			_end;
 		pointer			_endOfStorage;
 
-		size_type		_calculateGrowth( const size_type newSize) const;
-		void			_eraseFrom( pointer from );
+	protected:
+
+		size_type	_calculateGrowth( const size_type newSize) const;
+		void		_M_range_check( size_type n ) const;
+		size_type	_M_len_check( size_type n, const char* s ) const;
+		void		_M_erase_at_end( pointer from );
+		void		_M_fill_insert( iterator pos, size_type n, const value_type& val );
 
 	public:
 
@@ -123,7 +128,7 @@ namespace ft {
 		// capacity
 		bool		empty( void ) const;
 		size_type	size( void ) const;
-		// void		resize( size_type n, value_type val = value_type() );
+		void		resize( size_type n, value_type val = value_type() );
 		size_type	max_size( void ) const;
 		size_type	capacity( void ) const;
 		void		reserve( size_type n );
@@ -204,7 +209,6 @@ namespace ft {
 		_begin = _elements;
 		_end = _begin + n;
 		_endOfStorage = _begin + n;
-
 	}
 
 	/*
@@ -263,7 +267,7 @@ namespace ft {
 				  << "ft::vector destructor called" << COL_RESET
 				  << std::endl;
 
-		_eraseFrom(_begin);
+		_M_erase_at_end(_begin);
 		_alloc.deallocate( _elements, capacity() );
 	}
 
@@ -409,12 +413,11 @@ namespace ft {
 		return ( newCapacity );
 	}
 
-
 	/*
 	 * Destroy elements from a given position
 	 */
 	template< typename T, typename Alloc >
-	void	vector<T,Alloc>::_eraseFrom( pointer from ) {
+	void	vector<T,Alloc>::_M_erase_at_end( pointer from ) {
 
 		size_type	len = _end - from;
 
@@ -424,6 +427,45 @@ namespace ft {
 				_alloc.destroy( from + i);
 			
 			_end = from;
+		}
+	}
+
+	/*
+	 * Safety check for storage length
+	 */
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::size_type
+	vector<T,Alloc>::_M_len_check( size_type n, const char* s ) const {
+
+		size_type	sizeLeft = max_size() - size();
+		size_type	len = size() + n;
+
+		if ( sizeLeft < n )
+			throw std::length_error(s);
+
+		return ( (len > max_size()) ? max_size() : len );
+	}
+
+	/*
+	 * Safety check for storage length
+	 */
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::_M_fill_insert( iterator pos, size_type n, const value_type& val ) {
+
+		if ( n > 0) {
+
+			if ( capacity() < n ) {
+
+				size_type	len = _M_len_check(n, "ft::vector::_M_fill_insert");
+				reserve(len);
+			}
+
+			for ( size_type i = size(); i < n; i++ ) {
+
+				*pos = val;
+				pos++;
+			}
+			_end = _begin + n;
 		}
 	}
 
@@ -487,18 +529,14 @@ namespace ft {
 	 *             is greater than the current container size.
 	 *             If not specified, the default constructor is used instead.
 	 */
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::resize( size_type n, value_type val ) {
 
-	// TODO
-	// insert, erase
-	// template< typename T, typename Alloc >
-	// void	vector<T,Alloc>::resize( size_type n, value_type val = value_type() ) {
-
-	// 	if ( n < size() )
-			
-
-	// 	else if ( n > size() )
-			
-	// }
+		if ( n > size() )
+			_M_fill_insert( end(), n, val );
+		else if ( n < size() )
+			_M_erase_at_end(_begin + n);
+	}
 
 	/*
 	 * Gets the size of allocated storage capacity
@@ -573,6 +611,16 @@ namespace ft {
 	}
 
 	/*
+	 * Safety check for at()
+	 */
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::_M_range_check( size_type n ) const {
+
+		if ( n > size() )
+			throw std::out_of_range("ft::vector::_M_range_check");
+	}
+
+	/*
 	 * Access an element of the vector
 	 *
 	 * @param n  Position of an element in the container
@@ -584,18 +632,14 @@ namespace ft {
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::reference	vector<T,Alloc>::at( size_type n ) {
 
-		if ( n > size() )
-			throw std::out_of_range("ft::vector::_M_range_check");
-
+		_M_range_check(n);
 		return ( _elements[n] );
 	}
 
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::const_reference	vector<T,Alloc>::at( size_type n ) const {
 
-		if ( n > size() )
-			throw std::out_of_range("ft::vector::_M_range_check");
-
+		_M_range_check(n);
 		return ( _elements[n] );
 	}
 
@@ -787,7 +831,7 @@ namespace ft {
 	template< typename T, typename Alloc >
 	void	vector<T,Alloc>::clear( void ) {
 
-		_eraseFrom(_begin);
+		_M_erase_at_end(_begin);
 	}
 
 

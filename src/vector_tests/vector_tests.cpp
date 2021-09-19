@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/18 21:24:31 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/19 16:58:02 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,27 +58,34 @@ int	testVector( void ) {
 	if ( has_failed )
 		return ( exitFailedTest("vector: capacity: empty()") );
 
-	// if ( !continueTests("Capacity member function: size()") )
-	// 	return (0);
+	if ( !continueTests("Capacity member function: size()") )
+		return (0);
 
 	has_failed = cmpVecSize();
 	if ( has_failed )
 		return ( exitFailedTest("vector: capacity: size(") );
-	
+
+	if ( !continueTests("Capacity member function: resize()") )
+		return (0);
+
+	has_failed = cmpVecResize();
+	if ( has_failed )
+		return ( exitFailedTest("vector: capacity: resize(") );
+
 	if ( !continueTests("Capacity member function: max_size()") )
 		return (0);
-	
+
 	has_failed = cmpVecMaxSize();
 	if ( has_failed )
 		return ( exitFailedTest("vector: capacity: max_size()") );
-	
+
 	if ( !continueTests("Capacity member function: capacity()") )
 		return (0);
-	
+
 	has_failed = cmpVecCapacity();
 	if ( has_failed )
 		return ( exitFailedTest("vector: capacity: capacity()") );
-	
+
 	if ( !continueTests("Capacity member function: reserve()") )
 		return (0);
 

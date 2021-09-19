@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:05:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/13 17:55:54 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/19 16:58:32 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,50 @@ int	cmpVecSize( void ) {
  * This member function resizes the container so that it contains n elements.
  */
 
-// TODO
+int	cmpVecResize( void ) {
+
+	std::cout << COL_BLUE_B
+			  << "\n___________ Capacity method: resize ________\n\n"
+			  << COL_RESET;
+
+	explainUnit("This member function resizes the container so that\n"
+				"it contains n elements.");
+
+	int	errors = 0;
+
+	// Create two vectors
+	std::vector<int>	vec;
+	ft::vector<int>		ft_vec;
+	std::cout << std::endl;
+
+	for ( int i = 1; i < 10 ; i++ )
+		vec.push_back(i);
+
+	vec.resize(5);
+	vec.resize(8,100);
+	vec.resize(12);
+
+	for ( int i = 1; i < 10 ; i++ )
+		ft_vec.push_back(i);
+
+	ft_vec.resize(5);
+	ft_vec.resize(8,100);
+	ft_vec.resize(12);
+
+	// Display results
+	displayVecInfos(vec, "std::vector");
+	displayVecInfos(ft_vec, "ft::vector");
+
+	// Compare results
+	for ( int i = 1; i < 12 ; i++ ) {
+
+		if ( vec[i] != ft_vec[i] )
+			errors += 1;
+	}
+
+	// Check if the results are the same or not between original and ft
+	return ( displayTestResult(!errors) );
+}
 
 /*
  * Compare max_size

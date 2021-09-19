@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/18 21:07:11 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/19 16:27:54 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int		cmpVecIterator( void );
 
 int		cmpVecEmpty( void );
 int		cmpVecSize( void );
-// int		cmpVecResize( void );
+int		cmpVecResize( void );
 int		cmpVecMaxSize( void );
 int		cmpVecCapacity( void );
 int		cmpVecReserve( void );
