@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/19 15:03:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/19 15:13:09 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ namespace ft {
 		pointer			_end;
 		pointer			_endOfStorage;
 
-		// calculate capacity growth
 		size_type		_calculateGrowth( const size_type newSize) const;
+		void			_eraseFrom( pointer from );
 
 	public:
 
@@ -263,9 +263,7 @@ namespace ft {
 				  << "ft::vector destructor called" << COL_RESET
 				  << std::endl;
 
-		for ( size_type i = 0; i < size(); i++ )
-			_alloc.destroy( _elements + i );
-
+		_eraseFrom(_begin);
 		_alloc.deallocate( _elements, capacity() );
 	}
 
@@ -311,7 +309,6 @@ namespace ft {
 
 		return ( *this );
 	}
-
 
 	/* allocator ************************************************************ */
 
@@ -388,6 +385,49 @@ namespace ft {
 	}
 
 
+	/* helpers ************************************************************** */
+
+	/*
+	 * Calculates capacity growth (private member function to help)
+	 */
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::size_type
+	vector<T,Alloc>::_calculateGrowth( const size_type newSize) const {
+
+		const size_type	currCapacity = capacity();
+		size_type		capacityLeft = max_size() - currCapacity;
+
+		// handle overflow
+		if ( currCapacity > capacityLeft )
+			return ( max_size() );
+
+		const size_type	newCapacity = currCapacity + currCapacity;
+
+		if ( newSize > newCapacity )
+			return ( newSize );
+
+		return ( newCapacity );
+	}
+
+
+	/*
+	 * Destroy elements from a given position
+	 */
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::_eraseFrom( pointer from ) {
+
+		size_type	len = _end - from;
+
+		if (len > 0) {
+
+			for ( size_type i = 0; i < len; i++ )
+				_alloc.destroy( from + i);
+			
+			_end = from;
+		}
+	}
+
+
 	/* capacity ************************************************************* */
 
 
@@ -459,27 +499,6 @@ namespace ft {
 	// 	else if ( n > size() )
 			
 	// }
-
-	/*
-	 * Calculates capacity growth (private member function to help)
-	 */
-	template< typename T, typename Alloc >
-	typename vector<T,Alloc>::size_type	vector<T,Alloc>::_calculateGrowth( const size_type newSize) const {
-
-		const size_type	currCapacity = capacity();
-		size_type		capacityLeft = max_size() - currCapacity;
-
-		// handle overflow
-		if ( currCapacity > capacityLeft )
-			return ( max_size() );
-
-		const size_type	newCapacity = currCapacity + currCapacity;
-
-		if ( newSize > newCapacity )
-			return ( newSize );
-
-		return ( newCapacity );
-	}
 
 	/*
 	 * Gets the size of allocated storage capacity
@@ -768,10 +787,7 @@ namespace ft {
 	template< typename T, typename Alloc >
 	void	vector<T,Alloc>::clear( void ) {
 
-		for ( iterator it = begin(); it != end(); ++it )
-			_alloc.destroy(it);
-
-		_end = _begin;
+		_eraseFrom(_begin);
 	}
 
 
