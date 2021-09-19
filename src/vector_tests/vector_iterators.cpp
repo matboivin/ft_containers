@@ -6,10 +6,11 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 19:32:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 00:01:46 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/20 00:35:55 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <assert.h>
 #include <iostream>
 #include <vector>
 #include "tests.hpp"
@@ -29,8 +30,6 @@ int	cmpVecIterator( void ) {
 
 	explainUnit("Create two identical vectors (1 std::vector + 1 ft::vector),\n"
 				"and compare their iterators begin and end.");
-
-	int	errors = 0;
 
 	// iterator type pointing on vector of int
 	typedef std::vector<int>::iterator	iter_type;
@@ -74,8 +73,8 @@ int	cmpVecIterator( void ) {
 	std::cout << "*ft::it       = " << *ft_it
 			  << "\n*(--ft::ite)  = " << *(--ft_ite) << "\n\n";
 
-	errors += (*std_it != *ft_it);
-	errors += (*std_ite != *ft_ite);
+	assert(*std_it == *ft_it);
+	assert(*std_ite == *ft_ite);
 
-	return ( displayTestResult(!errors) );
+	return ( displayTestResult(1) );
 }

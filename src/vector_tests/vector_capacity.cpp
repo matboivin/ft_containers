@@ -6,10 +6,11 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:05:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 00:01:46 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/20 00:35:12 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <assert.h>
 #include <iostream>
 #include <vector>
 #include "tests.hpp"
@@ -145,8 +146,6 @@ int	cmpVecResize( void ) {
 	explainUnit("This member function resizes the container so that\n"
 				"it contains n elements.");
 
-	int	errors = 0;
-
 	// Create two vectors
 	std::vector<int>	vec;
 	ft::vector<int>		ft_vec;
@@ -171,29 +170,11 @@ int	cmpVecResize( void ) {
 	displayVecInfos(ft_vec, "ft::vector");
 
 	// Compare results
-	for ( int i = 1; i < 12 ; i++ ) {
-
-		if ( vec[i] != ft_vec[i] )
-			errors += 1;
-	}
-
-	// Same size doesn't set any values
-	// vec.resize(12, 42);
-	// ft_vec.resize(12, 42);
-
-	// // Display results
-	// displayVecInfos(vec, "std::vector");
-	// displayVecInfos(ft_vec, "ft::vector");
-
-	// // Compare results
-	// for ( int i = 1; i < 12 ; i++ ) {
-
-	// 	if ( vec[i] != ft_vec[i] )
-	// 		errors += 1;
-	// }
+	for ( int i = 1; i < 12 ; i++ )
+		assert( vec[i] == ft_vec[i] );
 
 	// Check if the results are the same or not between original and ft
-	return ( displayTestResult(!errors) );
+	return ( displayTestResult(1) );
 }
 
 /*

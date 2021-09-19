@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/20 00:19:50 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 00:29:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/20 00:33:57 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include <iostream>
 #include <vector>
 #include "tests.hpp"
-#include "iterator.hpp"
 #include "vector.hpp"
 #include "vector_tests.hpp"
 
@@ -44,5 +43,5 @@ int	cmpVecRelationalOps( void ) {
 	assert( (vec1 <= vec2) == (ft_vec1 <= ft_vec2) );
 	assert( (vec1 >= vec2) == (ft_vec1 >= ft_vec2) );
 
-	return (0);
+	return (displayTestResult(1));
 }
