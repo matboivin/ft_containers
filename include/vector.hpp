@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/19 23:29:21 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/20 00:25:57 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -909,10 +909,6 @@ namespace ft {
 
 	/* relational operators ************************************************* */
 
-	/*
-	 * Compares the elements in the range [first1,last1) with those in the range
-	 * beginning at first2, and returns true if all of the elements in both ranges match
-	 */
 	template< typename T, typename Alloc >
 	bool	operator==( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
 
@@ -922,19 +918,34 @@ namespace ft {
 	}
 
 	template< typename T, typename Alloc >
-		bool	operator!=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
+	bool	operator!=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
+
+		return ( !(lhs == rhs) );
+	}
 
 	template< typename T, typename Alloc >
-		bool	operator<( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
+	bool	operator<( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
+
+		return ( ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()) );
+	}
 
 	template< typename T, typename Alloc >
-		bool	operator<=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
+	bool	operator<=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
+
+		return ( !(rhs < lhs) );
+	}
 
 	template< typename T, typename Alloc >
-		bool	operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
+	bool	operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
+
+		return ( rhs < lhs );
+	}
 
 	template< typename T, typename Alloc >
-		bool	operator>=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
+	bool	operator>=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
+
+		return ( !(lhs < rhs) );
+	}
 
 
 	/*

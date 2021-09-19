@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 00:01:35 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/20 00:20:52 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,12 @@ int		cmpVecResize( void );
 int		cmpVecMaxSize( void );
 int		cmpVecCapacity( void );
 int		cmpVecReserve( void );
+
+/*
+ * Non-member operator overloads
+ */
+
+int		cmpVecRelationalOps( void );
 
 /*
  * Run all vector tests
