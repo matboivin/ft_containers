@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 18:05:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/19 16:58:32 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/19 19:37:24 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,21 @@ int	cmpVecResize( void ) {
 		if ( vec[i] != ft_vec[i] )
 			errors += 1;
 	}
+
+	// Same size doesn't set any values
+	// vec.resize(12, 42);
+	// ft_vec.resize(12, 42);
+
+	// // Display results
+	// displayVecInfos(vec, "std::vector");
+	// displayVecInfos(ft_vec, "ft::vector");
+
+	// // Compare results
+	// for ( int i = 1; i < 12 ; i++ ) {
+
+	// 	if ( vec[i] != ft_vec[i] )
+	// 		errors += 1;
+	// }
 
 	// Check if the results are the same or not between original and ft
 	return ( displayTestResult(!errors) );

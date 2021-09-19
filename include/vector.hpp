@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/19 16:57:52 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/19 19:35:55 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,17 @@ namespace ft {
 	private:
 
 		// attributes
-		allocator_type	_alloc;    // The container keeps and uses an internal copy of the allocator
-		value_type*		_elements;
-
+		allocator_type	_alloc; // The container keeps and uses an internal copy of the allocator
 		pointer			_begin;
 		pointer			_end;
 		pointer			_endOfStorage;
 
 	protected:
 
+		pointer		_M_allocate( size_t n );
+		void		_M_create_storage( size_t n );
+		void		_M_deallocate( pointer p, size_t n );
+		void		_M_initialize( size_type n, const value_type& val );
 		size_type	_calculateGrowth( const size_type newSize) const;
 		void		_M_range_check( size_type n ) const;
 		size_type	_M_len_check( size_type n, const char* s ) const;
@@ -163,8 +165,136 @@ namespace ft {
 	/* Vector implementation ************************************************ */
 
 
-	/* construct/copy/destroy *********************************************** */
+	/* helpers ************************************************************** */
 
+	/*
+	 * Allocate a storage space of size n
+	 */
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::pointer
+	vector<T,Alloc>::_M_allocate( size_t n ) {
+
+		if (n > 0)
+			return (_alloc.allocate(n));
+
+		return (pointer());
+	}
+
+	/*
+	 * Allocate storage and move pointers to end of size and end of storage
+	 */
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::_M_create_storage( size_t n ) {
+
+		_begin = _M_allocate(n);
+		_end = _begin;
+		_endOfStorage = _begin + n;
+	}
+
+	/*
+	 * Deallocate a storage space of size n pointed to by pointer p
+	 */
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::_M_deallocate( pointer p, size_t n ) {
+
+		if (p)
+			_alloc.deallocate(p, n);
+	}
+
+	/*
+	 * Construct with n elements of value val
+	 */
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::_M_initialize( size_type n, const value_type& val ) {
+
+		if (n > 0) {
+
+			for ( size_type i = 0; i < n; i++ )
+				_alloc.construct( _begin + i, val );
+			_end = _begin + n;
+		}
+	}
+
+	/*
+	 * Calculates capacity growth (private member function to help)
+	 */
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::size_type
+	vector<T,Alloc>::_calculateGrowth( const size_type newSize) const {
+
+		const size_type	currCapacity = capacity();
+		size_type		capacityLeft = max_size() - currCapacity;
+
+		// handle overflow
+		if ( currCapacity > capacityLeft )
+			return ( max_size() );
+
+		const size_type	newCapacity = currCapacity + currCapacity;
+
+		if ( newSize > newCapacity )
+			return ( newSize );
+
+		return ( newCapacity );
+	}
+
+	/*
+	 * Destroy elements from a given position
+	 */
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::_M_erase_at_end( pointer from ) {
+
+		size_type	len = _end - from;
+
+		if (len > 0) {
+
+			for ( size_type i = 0; i < len; i++ )
+				_alloc.destroy( from + i);
+			
+			_end = from;
+		}
+	}
+
+	/*
+	 * Safety check for storage length
+	 */
+	template< typename T, typename Alloc >
+	typename vector<T,Alloc>::size_type
+	vector<T,Alloc>::_M_len_check( size_type n, const char* s ) const {
+
+		size_type	sizeLeft = max_size() - size();
+		size_type	len = size() + n;
+
+		if ( sizeLeft < n )
+			throw std::length_error(s);
+
+		return ( (len > max_size()) ? max_size() : len );
+	}
+
+	/*
+	 * Safety check for storage length
+	 */
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::_M_fill_insert( iterator pos, size_type n, const value_type& val ) {
+
+		if ( n > 0) {
+
+			if ( capacity() < n ) {
+
+				size_type	len = _M_len_check(n, "ft::vector::_M_fill_insert");
+				reserve(len);
+			}
+
+			for ( size_type i = size(); i < n; i++ ) {
+
+				*pos = val;
+				pos++;
+			}
+			_end = _begin + n;
+		}
+	}
+
+
+	/* construct/copy/destroy *********************************************** */
 
 	/*
 	 * Default constructor
@@ -175,7 +305,6 @@ namespace ft {
 	template< typename T, typename Alloc >
 	vector<T,Alloc>::vector( const allocator_type& alloc )
 			: _alloc(alloc),
-			  _elements(),
 			  _begin(),
 			  _end(),
 			  _endOfStorage() {
@@ -201,14 +330,8 @@ namespace ft {
 				  << "ft::vector fill constructor called" << COL_RESET
 				  << std::endl;
 
-		_elements = _alloc.allocate(n);
-
-		for ( size_type i = 0; i < n; i++ )
-			_alloc.construct( _elements + i, val );
-
-		_begin = _elements;
-		_end = _begin + n;
-		_endOfStorage = _begin + n;
+		_M_create_storage(n);
+		_M_initialize(n, val);
 	}
 
 	/*
@@ -243,15 +366,11 @@ namespace ft {
 				  << "ft::vector copy constructor called" << COL_RESET
 				  << std::endl;
 
-		size_type	newSize = x.size();
-		_elements = _alloc.allocate(x.capacity());
+		_M_create_storage(x.capacity());
 
-		for ( size_type i = 0; i < newSize; i++ )
-			_alloc.construct( _elements + i, x[i]);
-		
-		_begin = _elements;
-		_end = _begin + newSize;
-		_endOfStorage = _begin + x.capacity();
+		for ( size_type i = 0; i < x.size(); i++ )
+			_alloc.construct( _begin + i, x[i]);
+		_end = _begin + x.size();
 	}
 
 	/*
@@ -268,7 +387,7 @@ namespace ft {
 				  << std::endl;
 
 		_M_erase_at_end(_begin);
-		_alloc.deallocate( _elements, capacity() );
+		_M_deallocate(_begin, capacity());
 	}
 
 	/*
@@ -295,18 +414,15 @@ namespace ft {
 
 			size_type	newSize = rhs.size();
 			size_type	newCapacity = (newSize > capacity()) ? newSize : capacity();
-			value_type*	newElements = _alloc.allocate(newCapacity);
+			pointer		newElements = _M_allocate(newCapacity);
 
 			for ( size_type i = 0; i < newSize; i++ )
-				_alloc.construct( newElements+ i, rhs[i]);
+				_alloc.construct( newElements + i, rhs[i]);
 
-			for ( size_type i = 0; i < size(); i++ )
-				_alloc.destroy( _elements + i );
+			_M_erase_at_end(_begin);
+			_M_deallocate(_begin, capacity());
 
-			_alloc.deallocate( _elements, capacity() );
-
-			_elements = newElements;
-			_begin = _elements;
+			_begin = pointer(newElements);
 			_end = _begin + newSize;
 			_endOfStorage = _begin + newCapacity;
 		}
@@ -386,87 +502,6 @@ namespace ft {
 	typename vector<T,Alloc>::reverse_iterator	vector<T,Alloc>::rend( void ) {
 
 		return ( reverse_iterator(begin()) );
-	}
-
-
-	/* helpers ************************************************************** */
-
-	/*
-	 * Calculates capacity growth (private member function to help)
-	 */
-	template< typename T, typename Alloc >
-	typename vector<T,Alloc>::size_type
-	vector<T,Alloc>::_calculateGrowth( const size_type newSize) const {
-
-		const size_type	currCapacity = capacity();
-		size_type		capacityLeft = max_size() - currCapacity;
-
-		// handle overflow
-		if ( currCapacity > capacityLeft )
-			return ( max_size() );
-
-		const size_type	newCapacity = currCapacity + currCapacity;
-
-		if ( newSize > newCapacity )
-			return ( newSize );
-
-		return ( newCapacity );
-	}
-
-	/*
-	 * Destroy elements from a given position
-	 */
-	template< typename T, typename Alloc >
-	void	vector<T,Alloc>::_M_erase_at_end( pointer from ) {
-
-		size_type	len = _end - from;
-
-		if (len > 0) {
-
-			for ( size_type i = 0; i < len; i++ )
-				_alloc.destroy( from + i);
-			
-			_end = from;
-		}
-	}
-
-	/*
-	 * Safety check for storage length
-	 */
-	template< typename T, typename Alloc >
-	typename vector<T,Alloc>::size_type
-	vector<T,Alloc>::_M_len_check( size_type n, const char* s ) const {
-
-		size_type	sizeLeft = max_size() - size();
-		size_type	len = size() + n;
-
-		if ( sizeLeft < n )
-			throw std::length_error(s);
-
-		return ( (len > max_size()) ? max_size() : len );
-	}
-
-	/*
-	 * Safety check for storage length
-	 */
-	template< typename T, typename Alloc >
-	void	vector<T,Alloc>::_M_fill_insert( iterator pos, size_type n, const value_type& val ) {
-
-		if ( n > 0) {
-
-			if ( capacity() < n ) {
-
-				size_type	len = _M_len_check(n, "ft::vector::_M_fill_insert");
-				reserve(len);
-			}
-
-			for ( size_type i = size(); i < n; i++ ) {
-
-				*pos = val;
-				pos++;
-			}
-			_end = _begin + n;
-		}
 	}
 
 
@@ -568,24 +603,21 @@ namespace ft {
 
 		size_type	oldSize = size();
 		size_type	newCapacity = _calculateGrowth(n);
-		value_type*	newElements = _alloc.allocate(newCapacity);
+		pointer		newElements = _M_allocate(newCapacity);
 
-		for ( size_type i = 0; i < oldSize; i++ ) {
+		for ( size_type i = 0; i < oldSize; i++ )
+			_alloc.construct( newElements + i, _begin[i]);
 
-			_alloc.construct( newElements + i, _elements[i]);
-			_alloc.destroy( _elements + i );
-		}
+		_M_erase_at_end(_begin);
+		_M_deallocate(_begin, capacity());
 
-		_alloc.deallocate( _elements, capacity() );
-		_elements = newElements;
-		_begin = _elements;
+		_begin = pointer(newElements);
 		_end = _begin + oldSize;
 		_endOfStorage = _begin + newCapacity;
 	}
 
 
 	/* element access ******************************************************* */
-
 
 	/*
 	 * Access an element of the vector
@@ -601,13 +633,13 @@ namespace ft {
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::reference	vector<T,Alloc>::operator[]( size_type n ) {
 
-		return ( _elements[n] );
+		return ( _begin[n] );
 	}
 
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::const_reference	vector<T,Alloc>::operator[]( size_type n ) const {
 
-		return ( _elements[n] );
+		return ( _begin[n] );
 	}
 
 	/*
@@ -633,14 +665,14 @@ namespace ft {
 	typename vector<T,Alloc>::reference	vector<T,Alloc>::at( size_type n ) {
 
 		_M_range_check(n);
-		return ( _elements[n] );
+		return ( _begin[n] );
 	}
 
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::const_reference	vector<T,Alloc>::at( size_type n ) const {
 
 		_M_range_check(n);
-		return ( _elements[n] );
+		return ( _begin[n] );
 	}
 
 	/*
@@ -712,24 +744,9 @@ namespace ft {
 	template< typename T, typename Alloc >
 	void	vector<T,Alloc>::assign( size_type n, const value_type& val ) {
 
-		size_type	oldSize = size();
-		size_type	oldCapacity = capacity();
-		size_type	newCapacity = (n > oldCapacity) ? _calculateGrowth(n) : oldCapacity;
-
+		resize(n);
 		this->clear();
-
-		if ( ( n != oldSize ) || ( oldCapacity != newCapacity ) ) {
-
-			_alloc.deallocate( _elements, oldCapacity );
-			_elements = _alloc.allocate(newCapacity);
-		}
-
-		for ( size_type i = 0; i < n; i++ )
-			_alloc.construct( _elements + i, val );
-
-		_begin = _elements;
-		_end = _begin + n;
-		_endOfStorage = _begin + newCapacity;
+		_M_initialize(n, val);
 	}
 
 	/*
@@ -749,7 +766,6 @@ namespace ft {
 			reserve(newSize);
 
 		_alloc.construct( _end, val );
-		_begin = _elements;
 		_end = _begin + newSize;
 	}
 
@@ -757,14 +773,12 @@ namespace ft {
 	 * Removes the last element in the vector, effectively reducing the container size by one.
 	 * This destroys the removed element.
 	 */
-	// template< typename T, typename Alloc >
-	// void	vector<T,Alloc>::pop_back( void ) {
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::pop_back( void ) {
 
-	// 	pointer&	last = _elements[_size - 1];
-
-	// 	_alloc.destroy(last);
-	// 	_size -= 1;
-	// }
+		_alloc.destroy(_end() - 1);
+		_end -= 1;
+	}
 
 	/*
 	 * Insert elements
