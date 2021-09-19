@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/19 14:55:53 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/19 15:03:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ namespace ft {
 		pointer			_endOfStorage;
 
 		// calculate capacity growth
-		size_type		calculateGrowth( const size_type newSize) const;
+		size_type		_calculateGrowth( const size_type newSize) const;
 
 	public:
 
@@ -464,7 +464,7 @@ namespace ft {
 	 * Calculates capacity growth (private member function to help)
 	 */
 	template< typename T, typename Alloc >
-	typename vector<T,Alloc>::size_type	vector<T,Alloc>::calculateGrowth( const size_type newSize) const {
+	typename vector<T,Alloc>::size_type	vector<T,Alloc>::_calculateGrowth( const size_type newSize) const {
 
 		const size_type	currCapacity = capacity();
 		size_type		capacityLeft = max_size() - currCapacity;
@@ -510,7 +510,7 @@ namespace ft {
 			return ;
 
 		size_type	oldSize = size();
-		size_type	newCapacity = calculateGrowth(n);
+		size_type	newCapacity = _calculateGrowth(n);
 		value_type*	newElements = _alloc.allocate(newCapacity);
 
 		for ( size_type i = 0; i < oldSize; i++ ) {
@@ -651,7 +651,7 @@ namespace ft {
 
 		size_type	oldSize = size();
 		size_type	oldCapacity = capacity();
-		size_type	newCapacity = (n > oldCapacity) ? calculateGrowth(n) : oldCapacity;
+		size_type	newCapacity = (n > oldCapacity) ? _calculateGrowth(n) : oldCapacity;
 
 		this->clear();
 
