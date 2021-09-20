@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 00:25:57 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/20 13:52:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,9 @@ namespace ft {
 	 *   capacity
 	 *   element access
 	 *   modifiers
+	 *   non-member function overloads
 	 *
-	 * non-member function overloads
+	 * non-member function overloads implementation
 	 *   relational operators
 	 *   swap
 	 */
@@ -76,7 +77,7 @@ namespace ft {
 	private:
 
 		// attributes
-		allocator_type	_alloc; // The container keeps and uses an internal copy of the allocator
+		allocator_type	_alloc; // internal copy of the allocator
 		pointer			_begin;
 		pointer			_end;
 		pointer			_endOfStorage;
@@ -161,9 +162,29 @@ namespace ft {
 		// 	void	insert( iterator position, InputIterator first, InputIterator last );
 		// iterator	erase( iterator position );
 		// iterator	erase( iterator first, iterator last );
-		// void		swap( vector& x );
+		void		swap( vector& x );
 		void		clear( void );
 	};
+
+	/* non-member function overloads **************************************** */
+
+	// relational operators
+	template< typename T, typename Alloc >
+		bool	operator==( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
+	template< typename T, typename Alloc >
+		bool	operator!=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
+	template< typename T, typename Alloc >
+		bool	operator<( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
+	template< typename T, typename Alloc >
+		bool	operator<=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
+	template< typename T, typename Alloc >
+		bool	operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) ;
+	template< typename T, typename Alloc >
+		bool	operator>=( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs );
+
+	// swap
+	template< typename T, typename Alloc >
+		void	swap( vector<T,Alloc>& x, vector<T,Alloc>& y );
 
 
 	/* Vector implementation ************************************************ */
@@ -890,8 +911,16 @@ namespace ft {
 	// typename vector<T,Alloc>::iterator
 	// iterator	vector<T,Alloc>::erase( iterator first, iterator last )
 
-	// template< typename T, typename Alloc >
-	// void	vector<T,Alloc>::swap( vector& x )
+	/*
+	 * Exchanges the content of the container by the content of x
+	 *
+	 * @param x  Another vector container of the same type
+	 */
+	template< typename T, typename Alloc >
+	void	vector<T,Alloc>::swap( vector& x ) {
+
+		ft::swap(this, x);
+	}
 
 	/*
 	 * Removes all elements from the vector (which are destroyed),
@@ -904,10 +933,13 @@ namespace ft {
 	}
 
 
-	/* non-member function overloads **************************************** */
+	/* non-member function overloads implementation ************************* */
 
 
-	/* relational operators ************************************************* */
+	/*
+	 * Relational operators
+	 * Make comparison between two vectors
+	 */
 
 	template< typename T, typename Alloc >
 	bool	operator==( const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs ) {
@@ -955,7 +987,12 @@ namespace ft {
 	 *             (i.e., having both the same template parameters, T and Allocator)
 	 */
 	template< typename T, typename Alloc >
-		void	swap( vector<T,Alloc>& x, vector<T,Alloc>& y );
+	void	swap( vector<T,Alloc>& x, vector<T,Alloc>& y ) {
+
+		vector<T,Alloc>	tmp(x);
+		x = y;
+		y = tmp;
+	}
 
 }
 
