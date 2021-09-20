@@ -6,10 +6,11 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 00:01:46 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/20 14:02:06 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <assert.h>
 #include <iostream>
 #include <vector>
 #include "tests.hpp"
@@ -51,6 +52,9 @@ void	cmpVecAssignmentOperator( void ) {
 	vec2 = vec1;
 	vec3 = vec1;
 
+	// assert they're identical
+	assert((vec1 == vec2) && (vec1 == vec3));
+
 	std::cout << COL_WHITE_B << "vec2 and vec3 become both copies of vec1\n"
 			  << COL_BLUE_B << "\nAFTER COPY\n\n" << COL_RESET;
 
@@ -90,6 +94,9 @@ void	cmpVecAssignmentOperator( void ) {
 	// Display vec2 and vec3 informations after copy
 	displayVecInfos(ft_vec2, "ft::vector 2");
 	displayVecInfos(ft_vec3, "ft::vector 3");
+
+	// assert they're identical
+	assert((ft_vec1 == ft_vec2) && (ft_vec1 == ft_vec3));
 
 	std::cout << std::endl;
 }

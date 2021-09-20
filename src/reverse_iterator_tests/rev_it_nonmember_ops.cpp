@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/13 17:58:21 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 00:01:46 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/20 14:13:10 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ static int	cmpRevItAdditionOp2( void ) {
 	std_rev_it = n + ite;
 	ft_rev_it = n + ft_ite;
 
-	std::cout << "\n*std::rev_it = " << *std_rev_it
+	std::cout << "*std::rev_it = " << *std_rev_it
 			  << "\n*ft::rev_it  = " << *ft_rev_it << "\n\n";
 
 	return ( displayTestResult(*std_rev_it == *ft_rev_it) );
@@ -105,7 +105,6 @@ static int	cmpRevItSubtractOp2( void ) {
 
 	ft::reverse_iterator<iter_type>		ft_rev_end(it);
 	ft::reverse_iterator<iter_type>		ft_rev_start(ite);
-	std::cout << std::endl;
 
 	std::size_t	ft_res = ft_rev_end - ft_rev_start;
 

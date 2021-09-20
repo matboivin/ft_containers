@@ -6,10 +6,11 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:49:17 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 00:01:46 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/20 14:02:50 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <assert.h>
 #include <iostream>
 #include <vector>
 #include "tests.hpp"
@@ -111,6 +112,9 @@ void	cmpVecCopyConstructor( void ) {
 	// display copy
 	displayVecInfos(vec2, "std::vector 2");
 
+	// assert they're identical
+	assert(vec1 == vec2);
+
 	// ft::vector
 	std::cout << COL_BLUE_B << "_ ft::vector\n\n" << COL_RESET;
 
@@ -132,6 +136,9 @@ void	cmpVecCopyConstructor( void ) {
 	std::cout << std::endl;
 	// display copy
 	displayVecInfos(ft_vec2, "ft::vector 2");
+
+	// assert they're identical
+	assert(ft_vec1 == ft_vec2);
 
 	std::cout << std::endl;
 }

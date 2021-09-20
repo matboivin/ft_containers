@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 19:32:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 00:35:55 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/20 14:04:04 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,13 @@ int	cmpVecIterator( void ) {
 	ft_iter_type	ft_ite = ft_vec.end();
 	std::cout << std::endl;
 
-	std::cout << "*std::it      = " << *std_it
-			  << "\n*(--std::ite) = " << *(--std_ite) << "\n\n";
+	std::cout << "*std::it      = " << COL_WHITE_B << *std_it << COL_RESET
+			  << "\n*(--std::ite) = " << COL_WHITE_B << *(--std_ite) << COL_RESET
+			  << "\n\n";
 
-	std::cout << "*ft::it       = " << *ft_it
-			  << "\n*(--ft::ite)  = " << *(--ft_ite) << "\n\n";
+	std::cout << "*ft::it       = " << COL_WHITE_B << *ft_it << COL_RESET
+			  << "\n*(--ft::ite)  = " << COL_WHITE_B << *(--ft_ite) << COL_RESET
+			  << "\n\n";
 
 	assert(*std_it == *ft_it);
 	assert(*std_ite == *ft_ite);
