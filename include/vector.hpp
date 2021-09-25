@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 13:59:48 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/25 17:50:41 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,10 @@ namespace ft {
 	private:
 
 		// attributes
-		allocator_type	_alloc; // internal copy of the allocator
-		pointer			_begin;
-		pointer			_end;
-		pointer			_endOfStorage;
+		allocator_type	_M_alloc; // internal copy of the allocator
+		pointer			_M_begin;
+		pointer			_M_end;
+		pointer			_M_endOfStorage;
 
 	protected:
 
@@ -200,7 +200,7 @@ namespace ft {
 	vector<T,Alloc>::_M_allocate( size_type n ) {
 
 		if (n > 0)
-			return (_alloc.allocate(n));
+			return (_M_alloc.allocate(n));
 
 		return (pointer());
 	}
@@ -212,9 +212,9 @@ namespace ft {
 	void
 	vector<T,Alloc>::_M_create_storage( size_type n ) {
 
-		_begin = _M_allocate(n);
-		_end = _begin;
-		_endOfStorage = _begin + n;
+		_M_begin = _M_allocate(n);
+		_M_end = _M_begin;
+		_M_endOfStorage = _M_begin + n;
 	}
 
 	/*
@@ -225,7 +225,7 @@ namespace ft {
 	vector<T,Alloc>::_M_deallocate( pointer p, size_type n ) {
 
 		if (p)
-			_alloc.deallocate(p, n);
+			_M_alloc.deallocate(p, n);
 	}
 
 	/*
@@ -238,8 +238,8 @@ namespace ft {
 		if (n > 0) {
 
 			for ( size_type i = 0; i < n; i++ )
-				_alloc.construct( _begin + i, val );
-			_end = _begin + n;
+				_M_alloc.construct( _M_begin + i, val );
+			_M_end = _M_begin + n;
 		}
 	}
 
@@ -259,10 +259,10 @@ namespace ft {
 
 		for ( ; first != last; ++first ) {
 
-			_alloc.construct( _begin + i , first);
+			_M_alloc.construct( _M_begin + i , first);
 			i++;
 		}
-		_end = _begin + i;
+		_M_end = _M_begin + i;
 	}
 
 	/*
@@ -294,14 +294,14 @@ namespace ft {
 	void
 	vector<T,Alloc>::_M_erase_at_end( pointer from ) {
 
-		size_type	len = _end - from;
+		size_type	len = _M_end - from;
 
 		if (len > 0) {
 
 			for ( size_type i = 0; i < len; i++ )
-				_alloc.destroy( from + i);
+				_M_alloc.destroy( from + i);
 			
-			_end = from;
+			_M_end = from;
 		}
 	}
 
@@ -341,7 +341,7 @@ namespace ft {
 				*pos = val;
 				pos++;
 			}
-			_end = _begin + n;
+			_M_end = _M_begin + n;
 		}
 	}
 
@@ -356,10 +356,10 @@ namespace ft {
 	 */
 	template< typename T, typename Alloc >
 	vector<T,Alloc>::vector( const allocator_type& alloc )
-			: _alloc(alloc),
-			  _begin(),
-			  _end(),
-			  _endOfStorage() {
+			: _M_alloc(alloc),
+			  _M_begin(),
+			  _M_end(),
+			  _M_endOfStorage() {
 
 		std::cout << COL_GREEN
 				  << "ft::vector default constructor called" << COL_RESET
@@ -376,7 +376,7 @@ namespace ft {
 	 */
 	template< typename T, typename Alloc >
 	vector<T,Alloc>::vector( size_type n, const value_type& val, const allocator_type& alloc )
-			: _alloc(alloc) {
+			: _M_alloc(alloc) {
 
 		std::cout << COL_GREEN
 				  << "ft::vector fill constructor called" << COL_RESET
@@ -398,7 +398,7 @@ namespace ft {
 	// template< typename T, typename Alloc >
 	// template< typename InputIterator >
 	// vector<T,Alloc>::vector( InputIterator first, InputIterator last, const allocator_type& alloc )
-	// 		: _alloc(alloc) {
+	// 		: _M_alloc(alloc) {
 
 	// 	std::cout << "ft::vector range constructor called" << std::endl;
 
@@ -413,7 +413,7 @@ namespace ft {
 	 *           (with the same class template arguments T and Allocator)
 	 */
 	template< typename T, typename Alloc >
-	vector<T,Alloc>::vector( const vector& x ) : _alloc( x._alloc ) {
+	vector<T,Alloc>::vector( const vector& x ) : _M_alloc( x._M_alloc ) {
 
 		std::cout << COL_GREEN
 				  << "ft::vector copy constructor called" << COL_RESET
@@ -422,8 +422,8 @@ namespace ft {
 		_M_create_storage(x.capacity());
 
 		for ( size_type i = 0; i < x.size(); i++ )
-			_alloc.construct( _begin + i, x[i]);
-		_end = _begin + x.size();
+			_M_alloc.construct( _M_begin + i, x[i]);
+		_M_end = _M_begin + x.size();
 	}
 
 	/*
@@ -439,8 +439,8 @@ namespace ft {
 				  << "ft::vector destructor called" << COL_RESET
 				  << std::endl;
 
-		_M_erase_at_end(_begin);
-		_M_deallocate(_begin, capacity());
+		_M_erase_at_end(_M_begin);
+		_M_deallocate(_M_begin, capacity());
 	}
 
 	/*
@@ -470,14 +470,14 @@ namespace ft {
 			pointer		newElements = _M_allocate(newCapacity);
 
 			for ( size_type i = 0; i < newSize; i++ )
-				_alloc.construct( newElements + i, rhs[i]);
+				_M_alloc.construct( newElements + i, rhs[i]);
 
-			_M_erase_at_end(_begin);
-			_M_deallocate(_begin, capacity());
+			_M_erase_at_end(_M_begin);
+			_M_deallocate(_M_begin, capacity());
 
-			_begin = pointer(newElements);
-			_end = _begin + newSize;
-			_endOfStorage = _begin + newCapacity;
+			_M_begin = pointer(newElements);
+			_M_end = _M_begin + newSize;
+			_M_endOfStorage = _M_begin + newCapacity;
 		}
 
 		return ( *this );
@@ -494,7 +494,7 @@ namespace ft {
 	typename vector<T,Alloc>::allocator_type
 	vector<T,Alloc>::get_alloc( void ) const {
 
-		return ( static_cast<allocator_type>(_alloc) );
+		return ( static_cast<allocator_type>(_M_alloc) );
 	}
 
 
@@ -509,14 +509,14 @@ namespace ft {
 	typename vector<T,Alloc>::iterator
 	vector<T,Alloc>::begin( void ) {
 
-		return ( iterator(_begin) );
+		return ( iterator(_M_begin) );
 	}
 
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::const_iterator
 	vector<T,Alloc>::begin( void ) const {
 
-		return ( const_iterator(_begin) );
+		return ( const_iterator(_M_begin) );
 	}
 
 	/*
@@ -529,14 +529,14 @@ namespace ft {
 	typename vector<T,Alloc>::iterator
 	vector<T,Alloc>::end( void ) {
 
-		return ( iterator(_end) );
+		return ( iterator(_M_end) );
 	}
 
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::const_iterator
 	vector<T,Alloc>::end( void ) const {
 
-		return ( const_iterator(_end) );
+		return ( const_iterator(_M_end) );
 	}
 
 	/*
@@ -589,7 +589,7 @@ namespace ft {
 	typename vector<T,Alloc>::size_type
 	vector<T,Alloc>::size( void ) const {
 
-		return ( size_type( _end - _begin ) );
+		return ( size_type( _M_end - _M_begin ) );
 	}
 
 	/*
@@ -604,7 +604,7 @@ namespace ft {
 	typename vector<T,Alloc>::size_type
 	vector<T,Alloc>::max_size( void ) const {
 
-		return ( _alloc.max_size() );
+		return ( _M_alloc.max_size() );
 	}
 
 	/*
@@ -634,7 +634,7 @@ namespace ft {
 		if ( n > size() )
 			_M_fill_insert( end(), n, val );
 		else if ( n < size() )
-			_M_erase_at_end(_begin + n);
+			_M_erase_at_end(_M_begin + n);
 	}
 
 	/*
@@ -648,7 +648,7 @@ namespace ft {
 	typename vector<T,Alloc>::size_type
 	vector<T,Alloc>::capacity( void ) const {
 
-		return ( size_type( _endOfStorage - _begin ) );
+		return ( size_type( _M_endOfStorage - _M_begin ) );
 	}
 
 	/*
@@ -672,14 +672,14 @@ namespace ft {
 		pointer		newElements = _M_allocate(newCapacity);
 
 		for ( size_type i = 0; i < oldSize; i++ )
-			_alloc.construct( newElements + i, _begin[i]);
+			_M_alloc.construct( newElements + i, _M_begin[i]);
 
-		_M_erase_at_end(_begin);
-		_M_deallocate(_begin, capacity());
+		_M_erase_at_end(_M_begin);
+		_M_deallocate(_M_begin, capacity());
 
-		_begin = pointer(newElements);
-		_end = _begin + oldSize;
-		_endOfStorage = _begin + newCapacity;
+		_M_begin = pointer(newElements);
+		_M_end = _M_begin + oldSize;
+		_M_endOfStorage = _M_begin + newCapacity;
 	}
 
 
@@ -700,14 +700,14 @@ namespace ft {
 	typename vector<T,Alloc>::reference
 	vector<T,Alloc>::operator[]( size_type n ) {
 
-		return ( _begin[n] );
+		return ( _M_begin[n] );
 	}
 
 	template< typename T, typename Alloc >
 	typename vector<T,Alloc>::const_reference
 	vector<T,Alloc>::operator[]( size_type n ) const {
 
-		return ( _begin[n] );
+		return ( _M_begin[n] );
 	}
 
 	/*
@@ -735,7 +735,7 @@ namespace ft {
 	vector<T,Alloc>::at( size_type n ) {
 
 		_M_range_check(n);
-		return ( _begin[n] );
+		return ( _M_begin[n] );
 	}
 
 	template< typename T, typename Alloc >
@@ -743,7 +743,7 @@ namespace ft {
 	vector<T,Alloc>::at( size_type n ) const {
 
 		_M_range_check(n);
-		return ( _begin[n] );
+		return ( _M_begin[n] );
 	}
 
 	/*
@@ -801,8 +801,8 @@ namespace ft {
 	// template< typename InputIterator >
 	// void	vector<T,Alloc>::assign( InputIterator first, InputIterator last ) {
 
-	// 	_M_erase_at_end(_begin);
-	// 	_M_deallocate(_begin, capacity());
+	// 	_M_erase_at_end(_M_begin);
+	// 	_M_deallocate(_M_begin, capacity());
 	// 	_M_range_initialize( InputIterator first, InputIterator last );
 	// }
 
@@ -840,8 +840,8 @@ namespace ft {
 		if ( newSize > capacity() )
 			reserve(newSize);
 
-		_alloc.construct( _end, val );
-		_end = _begin + newSize;
+		_M_alloc.construct( _M_end, val );
+		_M_end = _M_begin + newSize;
 	}
 
 	/*
@@ -852,8 +852,8 @@ namespace ft {
 	void
 	vector<T,Alloc>::pop_back( void ) {
 
-		_alloc.destroy(_end() - 1);
-		_end -= 1;
+		_M_alloc.destroy(end() - 1);
+		_M_end -= 1;
 	}
 
 	/*
@@ -879,7 +879,7 @@ namespace ft {
 	// 		reserve(newSize);
 
 	// 	*(position - 1) = val;
-	// 	_end = _begin + newSize;
+	// 	_M_end = _M_begin + newSize;
 
 	// 	return (position);
 	// }
@@ -909,7 +909,7 @@ namespace ft {
 	// 	for ( typename T::iterator it = position; it != ite; ++it )
 	// 		*it = val;
 
-	// 	_end = _begin + newSize;
+	// 	_M_end = _M_begin + newSize;
 	// }
 
 	/*
@@ -964,7 +964,7 @@ namespace ft {
 	void
 	vector<T,Alloc>::clear( void ) {
 
-		_M_erase_at_end(_begin);
+		_M_erase_at_end(_M_begin);
 	}
 
 
