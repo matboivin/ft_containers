@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:29:54 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/25 19:22:56 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/25 19:31:55 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,10 +99,18 @@ namespace ft {
 	struct is_integral : public base_is_integral<T> {};
 
 	/*
-	 * If B is true, enable_if has a public member typedef type, equal to T;
-	 * otherwise, there is no member typedef
+	 * The type T is defined only if Cond is true
+	 *
+	 * @param Cond  A compile-time constant of type bool
+	 * @param T     A type
 	 */
-	template< bool B, typename T = void > struct enable_if;
+	template< bool Cond, typename T = void >
+	struct enable_if {};
+
+	template< typename T >
+	struct enable_if<true, T> {
+		typedef T	type;
+	};
 
 }
 
