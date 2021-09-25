@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:45:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 00:02:37 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/25 18:57:36 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,5 +27,6 @@ int	exitFailedTest( const std::string& test_name );
 int	otherTests( void );
 int	equalTests( void );
 int	lexCmpTests( void );
+int	isIntegralTests( void );
 
 #endif

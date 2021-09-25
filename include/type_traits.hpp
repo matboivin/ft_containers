@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:29:54 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/25 18:22:19 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/25 19:22:56 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,55 @@ namespace ft {
 
 	// Helpers to represent true and false values
 	typedef integral_constant<bool,true>	true_type;
-	typedef integral_constant<bool,true>	false_type;
+	typedef integral_constant<bool,false>	false_type;
+
+	/*
+	 * Helpers for is_integral
+	 */
+
+	// false by default
+	template< typename T >
+	struct base_is_integral : public false_type {};
+
+	// specializations to return true for integral types
+	template<>
+	struct base_is_integral<bool> : public true_type {};
+
+	template<>
+	struct base_is_integral<char> : public true_type {};
+
+	template<>
+	struct base_is_integral<wchar_t> : public true_type {};
+
+	template<>
+	struct base_is_integral<signed char> : public true_type {};
+
+	template<>
+	struct base_is_integral<short int> : public true_type {};
+
+	template<>
+	struct base_is_integral<int> : public true_type {};
+
+	template<>
+	struct base_is_integral<long int> : public true_type {};
+
+	template<>
+	struct base_is_integral<long long int> : public true_type {};
+
+	template<>
+	struct base_is_integral<unsigned char> : public true_type {};
+
+	template<>
+	struct base_is_integral<unsigned short int> : public true_type {};
+
+	template<>
+	struct base_is_integral<unsigned int> : public true_type {};
+
+	template<>
+	struct base_is_integral<unsigned long int> : public true_type {};
+
+	template<>
+	struct base_is_integral<unsigned long long int> : public true_type {};
 
 	/*
 	 * Trait class that identifies whether T is an integral type
@@ -48,7 +96,7 @@ namespace ft {
 	 * @param T  A type
 	 */
 	template< typename T >
-	struct is_integral : public false_type {};
+	struct is_integral : public base_is_integral<T> {};
 
 	/*
 	 * If B is true, enable_if has a public member typedef type, equal to T;

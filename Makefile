@@ -40,7 +40,8 @@ SRC_FILES += rev_it_advance.cpp \
 
 SRC_FILES += equal_tests.cpp \
 			 lex_cmp_tests.cpp \
-			 other_tests.cpp
+			 other_tests.cpp \
+			 type_traits_tests.cpp
 
 OBJ_FILES = $(SRC_FILES:%.cpp=%.o)
 
@@ -65,7 +66,7 @@ VPATH = $(SRC_DIR) $(SRC_SUBDIRS)
 
 CPPFLAGS = -I$(INC_DIR) -I$(INC_SUBDIRS)
 CXX = clang++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror #-std=c++98
 
 # COLORS
 
