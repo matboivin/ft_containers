@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/25 17:50:41 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/25 17:58:34 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "utils.hpp"
 #include "algorithm.hpp"
 #include "iterator.hpp"
+#include "type_traits.hpp"
 
 /*
  * Credits:
@@ -77,7 +78,7 @@ namespace ft {
 	private:
 
 		// attributes
-		allocator_type	_M_alloc; // internal copy of the allocator
+		allocator_type	_M_alloc;
 		pointer			_M_begin;
 		pointer			_M_end;
 		pointer			_M_endOfStorage;

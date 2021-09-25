@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:28:28 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/19 23:58:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/25 17:57:39 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 /*
  * This header defines a collection of functions especially designed to be used
  * on ranges of elements
+ *
+ * Credits:
+ * Detailed comments mostly from www.cplusplus.com
  */
 
 namespace ft {
