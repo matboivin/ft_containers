@@ -37,6 +37,7 @@
 - [cplusplus.com: header <iterator>](https://www.cplusplus.com/reference/iterator/)
 - [How to implement an STL-style iterator and avoid common pitfalls?](https://stackoverflow.com/a/8054856)
 - [std::iterator is deprecated: Why, What It Was, and What to Use Instead](https://www.fluentcpp.com/2018/05/08/std-iterator-deprecated/)
+- [How to check if a template parameter is an iterator type or not? SFINAE](https://www.cplusplus.com/forum/beginner/270488/)
 
 #### Vector
 

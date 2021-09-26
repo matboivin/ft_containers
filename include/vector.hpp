@@ -6,19 +6,21 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/25 17:58:34 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/26 20:27:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
+#include <typeinfo> // typeid
 #include <iostream>
 #include <memory>
 #include "utils.hpp"
 #include "algorithm.hpp"
 #include "iterator.hpp"
 #include "type_traits.hpp"
+#include <type_traits>
 
 /*
  * Credits:
@@ -109,9 +111,11 @@ namespace ft {
 				const allocator_type& alloc = allocator_type() );
 		
 		// range constructor
-		// template< typename InputIterator >
-		// 	vector( InputIterator first, InputIterator last,
-		// 			const allocator_type& alloc = allocator_type() );
+		template< typename InputIterator >
+			vector(
+				typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type first,
+				InputIterator last,
+				const allocator_type& alloc = allocator_type() );
 
 		// copy constructor
 		vector( const vector& x );
@@ -252,7 +256,7 @@ namespace ft {
 	void
 	vector<T,Alloc>::_M_range_initialize( InputIterator first, InputIterator last ) {
 
-		size_type	n = std::distance(first, last);
+		size_type	n = last - first;
 
 		_M_create_storage(n);
 
@@ -346,7 +350,6 @@ namespace ft {
 		}
 	}
 
-
 	/* construct/copy/destroy *********************************************** */
 
 	/*
@@ -396,15 +399,17 @@ namespace ft {
 	 * @param alloc        Allocator object
 	 * @param first, last  Input iterators to the initial and final positions in a range
 	 */
-	// template< typename T, typename Alloc >
-	// template< typename InputIterator >
-	// vector<T,Alloc>::vector( InputIterator first, InputIterator last, const allocator_type& alloc )
-	// 		: _M_alloc(alloc) {
+	template< typename T, typename Alloc >
+	template< typename InputIterator >
+	vector<T,Alloc>::vector(
+		typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type first,
+		InputIterator last,
+		const allocator_type& alloc )
+			: _M_alloc(alloc) {
 
-	// 	std::cout << "ft::vector range constructor called" << std::endl;
-
-	// 	_M_range_initialize(first, last);
-	// }
+		std::cout << "ft::vector range constructor called" << std::endl;
+		_M_range_initialize(first, last);
+	}
 
 	/*
 	 * Copy constructor
