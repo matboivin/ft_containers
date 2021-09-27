@@ -24,6 +24,7 @@ SRC_FILES = main.cpp \
 SRC_FILES += vector_assignment_op.cpp \
 			 vector_capacity.cpp \
 			 vector_construct.cpp \
+			 vector_element_access.cpp \
 			 vector_iterators.cpp \
 			 vector_relational_ops.cpp \
 			 vector_tests.cpp
@@ -66,7 +67,7 @@ VPATH = $(SRC_DIR) $(SRC_SUBDIRS)
 
 CPPFLAGS = -I$(INC_DIR) -I$(INC_SUBDIRS)
 CXX = clang++
-CXXFLAGS = -Wall -Wextra -Werror #-std=c++98
+CXXFLAGS = -Wall -Wextra -Werror# -std=c++98
 
 # COLORS
 

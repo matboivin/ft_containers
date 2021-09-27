@@ -6,15 +6,15 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/26 20:27:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/27 14:57:00 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include <typeinfo> // typeid
 #include <iostream>
+#include <sstream>
 #include <memory>
 #include "utils.hpp"
 #include "algorithm.hpp"
@@ -337,7 +337,7 @@ namespace ft {
 
 			if ( capacity() < n ) {
 
-				size_type	len = _M_len_check(n, "ft::vector::_M_fill_insert");
+				size_type	len = _M_len_check(n, "vector::_M_fill_insert");
 				reserve(len);
 			}
 
@@ -724,7 +724,13 @@ namespace ft {
 	vector<T,Alloc>::_M_range_check( size_type n ) const {
 
 		if ( n > size() )
-			throw std::out_of_range("ft::vector::_M_range_check");
+		{
+			std::stringstream	err_msg;
+	
+			err_msg << "vector::_M_range_check: n (which is " << n
+					<< ") >= this->size() (which is " << size() << ")";
+			throw std::out_of_range(err_msg.str());
+		}
 	}
 
 	/*

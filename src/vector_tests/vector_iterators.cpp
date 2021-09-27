@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/14 19:32:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 14:04:04 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/27 14:14:15 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	cmpVecIterator( void ) {
 	typedef ft::vector<int>::iterator	ft_iter_type;
 
 	// create vector
-	std::vector<int>	vec(5);
+	std::vector<int>	vec;
 
 	vec.push_back(12);
 	vec.push_back(5);
@@ -51,7 +51,7 @@ int	cmpVecIterator( void ) {
 	iter_type	std_ite = vec.end();
 
 	// create ft::vector
-	ft::vector<int>	ft_vec(5);
+	ft::vector<int>	ft_vec;
 	std::cout << std::endl;
 
 	ft_vec.push_back(12);

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/20 00:20:52 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/27 14:13:07 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,29 +62,35 @@ void	cmpVecAssignmentOperator( void );
 /*
  * Iterator
  */
-int		cmpVecIterator( void );
+int	cmpVecIterator( void );
 
 /*
  * Capacity
  */
 
-int		cmpVecEmpty( void );
-int		cmpVecSize( void );
-int		cmpVecResize( void );
-int		cmpVecMaxSize( void );
-int		cmpVecCapacity( void );
-int		cmpVecReserve( void );
+int	cmpVecEmpty( void );
+int	cmpVecSize( void );
+int	cmpVecResize( void );
+int	cmpVecMaxSize( void );
+int	cmpVecCapacity( void );
+int	cmpVecReserve( void );
+
+/*
+ * Element access
+ */
+
+int	cmpVecAt( void );
 
 /*
  * Non-member operator overloads
  */
 
-int		cmpVecRelationalOps( void );
+int	cmpVecRelationalOps( void );
 
 /*
  * Run all vector tests
  */
 
-int		testVector( void );
+int	testVector( void );
 
 #endif
