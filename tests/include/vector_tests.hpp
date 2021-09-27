@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/27 23:00:08 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/28 00:34:16 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,20 @@
 #include <string>
 #include "tests.hpp"
 
+#if defined(TEST_FT)
+# include "vector.hpp"
+
+namespace ft
+#else
+# include <vector>
+
+namespace std
+#endif
+{
+	void	test_vector( void );
+	void	test_vec_fill_ctor( void );
+}
+
 /*
  * Display the vector size, capacity and content
  */
@@ -24,7 +38,7 @@
 template<typename Vec>
 static void	displayVecInfos( const Vec& v, const std::string& title="vector" )
 {
-	std::cout << COL_WHITE_B << title << COL_RESET
+	std::cout << title
 			  << "\n- size:      " << v.size()
 			  << "\n- capacity:  " << v.capacity()
 			  << "\n- contents:  ";

@@ -30,6 +30,9 @@
 *.exe
 *.out
 *.app
+
 ft_containers
+original
 
 test_backup
+tests/outputs/

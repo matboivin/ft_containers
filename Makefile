@@ -1,4 +1,5 @@
 NAME := ft_containers
+NAME_STD := original
 
 SHELL = /bin/sh
 RM = /bin/rm
@@ -6,39 +7,44 @@ RM = /bin/rm
 .SUFFIXES:
 .SUFFIXES: .cpp .hpp .o
 
+COL_WHITE_B = \033[1;37m
+COL_RESET = \033[0m
+
 # STL IMPLEMENTATION
 
 IMPL_FILES = algorithm.hpp \
 			 iterator.hpp \
 			 type_traits.hpp \
-			 vector.hpp \
-			 utils.hpp
+			 vector.hpp
+
+IMPL_DIR = ft_stl
 
 # TESTS
 
 TEST_INC_FILES = tests.hpp \
 				 vector_tests.hpp
 
-TEST_SRC_FILES = main.cpp
+TEST_SRC_FILES = main.cpp \
+				 vector_tests.cpp
+
+INC_DIR = tests/include
+SRC_DIR = tests/src
+TEST_OUT_DIR = tests/outputs
 
 # OBJ
 
 OBJ_FILES = $(TEST_SRC_FILES:%.cpp=%.o)
-
-# DIRS AND PATHS
-
-IMPL_DIR = ft_stl
-INC_DIR = tests/include
-SRC_DIR = tests/src
 OBJ_DIR = obj
 
-SUB_DIRS = vector
-SRC_SUBDIRS = $(addprefix $(SRC_DIR)/, $(SUB_DIRS))
+OBJ = $(addprefix $(OBJ_DIR)/ft/, $(OBJ_FILES))
+OBJ_STD = $(addprefix $(OBJ_DIR)/original/, $(OBJ_FILES))
 
-INC = $(addprefix $(IMPL_DIR)/, $(IMPL_FILES)) $(addprefix $(INC_DIR)/, $(TEST_INC_FILES))
-OBJ = $(addprefix $(OBJ_DIR)/, $(OBJ_FILES))
+# INC AND PATHS
 
-VPATH = $(SRC_DIR) $(SRC_SUBDIRS)
+INC = $(addprefix $(IMPL_DIR)/, $(IMPL_FILES)) \
+	  $(addprefix $(INC_DIR)/, $(TEST_INC_FILES))
+
+VPATH = $(SRC_DIR)
 
 # COMPIL AND FLAGS
 
@@ -46,33 +52,42 @@ CPPFLAGS = -I$(IMPL_DIR) -I$(INC_DIR)
 CXX = clang++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
-# COLORS
-
-COL_WHITE_B = \033[1;37m
-COL_RESET = \033[0m
-
 # RULES
 
-all: $(NAME)
+all: $(NAME) $(NAME_STD)
 
 # OBJ DIR
 
 $(OBJ_DIR):
+	mkdir -p obj/ft obj/original
+
+# TEST OUTPUTS DIR
+$(TEST_OUT_DIR):
 	mkdir -p $@
 
 # COMPILING
 
-$(OBJ_DIR)/%.o : %.cpp
+$(OBJ_DIR)/ft/%.o : %.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -D TEST_FT -o $@ -c $<
+
+$(OBJ_DIR)/original/%.o : %.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ -c $<
 
 # LINKING
-
-$(NAME): $(OBJ_DIR) $(OBJ) $(INC)
+$(NAME): $(TEST_OUT_DIR) $(OBJ_DIR) $(OBJ) $(INC)
 	$(CXX) $(OBJ) -o $@
 	@echo "$(COL_WHITE_B)$@ $(COL_RESET)created in working directory"
 
+$(NAME_STD): $(TEST_OUT_DIR) $(OBJ_DIR) $(OBJ_STD) $(INC)
+	$(CXX) $(OBJ_STD) -o $@
+	@echo "$(COL_WHITE_B)$@ $(COL_RESET)created in working directory"
+
 # DEBUG
-debug: $(NAME)
+debug:
+	./$(NAME) > $(TEST_OUT_DIR)/std_vec.out 2>&1
+	./$(NAME_STD) > $(TEST_OUT_DIR)/ft_vec.out 2>&1
+
+check_leaks: $(NAME)
 	valgrind --leak-check=full ./$(NAME)
 
 show:
@@ -83,10 +98,10 @@ show:
 # CLEAN
 
 clean:
-	$(RM) -rf $(OBJ_DIR)
+	$(RM) -rf $(OBJ_DIR) $(TEST_OUT_DIR)
 
 fclean: clean
-	$(RM) -f $(NAME)
+	$(RM) -f $(NAME) $(NAME_STD)
 
 re: fclean all
 

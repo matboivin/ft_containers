@@ -6,14 +6,13 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/27 16:14:02 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/28 00:29:07 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ITERATOR_HPP
 #define ITERATOR_HPP
 
-#include "utils.hpp"
 #include "algorithm.hpp"
 #include "type_traits.hpp"
 

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/27 16:37:06 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/28 00:30:25 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,9 @@
 #include <iostream>
 #include <sstream>
 #include <memory>
-#include "utils.hpp"
 #include "algorithm.hpp"
 #include "iterator.hpp"
 #include "type_traits.hpp"
-#include <type_traits>
 
 /*
  * Credits:
@@ -58,7 +56,7 @@ namespace ft
 	 * @param Alloc  Type of the allocator object used to define the storage
 	 *               allocation model
 	 */
-	template<typename T, typename Alloc = std::allocator<T>>
+	template< typename T, typename Alloc = std::allocator<T> >
 	class vector
 	{
 	public:
@@ -356,9 +354,6 @@ namespace ft
 	vector<T,Alloc>::vector( const allocator_type& alloc )
 	: _M_alloc(alloc), _M_begin(), _M_end(), _M_endOfStorage()
 	{
-		std::cout << COL_GREEN
-				  << "ft::vector default constructor called" << COL_RESET
-				  << std::endl;
 	}
 
 	/*
@@ -373,10 +368,6 @@ namespace ft
 	vector<T,Alloc>::vector( size_type n, const value_type& val, const allocator_type& alloc )
 	: _M_alloc(alloc)
 	{
-		std::cout << COL_GREEN
-				  << "ft::vector fill constructor called" << COL_RESET
-				  << std::endl;
-
 		_M_create_storage(n);
 		_M_fill_initialize(n, val);
 	}
@@ -413,9 +404,7 @@ namespace ft
 	vector<T,Alloc>::vector( const vector& x )
 	: _M_alloc( x._M_alloc )
 	{
-		std::cout << COL_GREEN
-				  << "ft::vector copy constructor called" << COL_RESET
-				  << std::endl;
+		std::cout << "ft::vector copy constructor called" << std::endl;
 
 		_M_create_storage(x.capacity());
 
@@ -433,10 +422,6 @@ namespace ft
 	template<typename T, typename Alloc>
 	vector<T,Alloc>::~vector( void )
 	{
-		std::cout << COL_YELLOW
-				  << "ft::vector destructor called" << COL_RESET
-				  << std::endl;
-
 		_M_erase_at_end(this->_M_begin);
 		_M_deallocate(this->_M_begin, capacity());
 	}
@@ -458,10 +443,6 @@ namespace ft
 	vector<T,Alloc>&
 	vector<T,Alloc>::operator=( const vector& rhs )
 	{
-		std::cout << COL_GREEN
-				  << "ft::vector assignment operator called" << COL_RESET
-				  << std::endl;
-
 		if ( this != &rhs )
 		{
 			size_type	newSize = rhs.size();
@@ -721,7 +702,7 @@ namespace ft
 		{
 			std::stringstream	err_msg;
 	
-			err_msg << "vector::_M_range_check: __n (which is " << n
+			err_msg << "vector::_M_range_check: __n (which is " << __n
 					<< ") >= size() (which is " << size() << ")";
 			throw std::out_of_range(err_msg.str());
 		}

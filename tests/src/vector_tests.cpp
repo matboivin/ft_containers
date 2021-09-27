@@ -1,35 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   vector_tests.cpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/27 23:58:05 by mboivin          ###   ########.fr       */
+/*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
+/*   Updated: 2021/09/28 00:33:42 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <fstream>
 #include <iostream>
-#include <iomanip>
-#include <vector>
 #include "tests.hpp"
 #include "vector_tests.hpp"
 
-void	displayElapsedTime( clock_t start, clock_t end)
+#if defined(TEST_FT)
+namespace ft
+#else
+namespace std
+#endif
 {
-	double	elapsed = static_cast<double>(end - start) / CLOCKS_PER_SEC;
+	void	test_vec_fill_ctor( void )
+	{
+		clock_t	start = clock();
 
-	std::cout << std::fixed << elapsed << " seconds\n\n";
-}
+		vector<int>	vec1(14, 1);
+		vector<int>	vec2(5,  2);
 
-int	main( void )
-{
-	#if defined(TEST_FT)
-	ft::test_vector();
-	#else
-	std::test_vector();
-	#endif
+		displayElapsedTime(start, clock());
 
-	return (0);
+		displayVecInfos(vec1, "vector 1 (14, 1)");
+		displayVecInfos(vec2, "vector 2 (5,  2)");
+	}
+
+	void	test_vector( void )
+	{
+		test_vec_fill_ctor();
+	}
 }
