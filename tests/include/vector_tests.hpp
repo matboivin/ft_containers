@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/27 14:13:07 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/27 15:25:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,7 @@
 
 #include <iostream>
 #include <string>
-#include <vector>
-#include "vector.hpp"
 #include "tests.hpp"
-#include "utils.hpp"
 
 /*
  * Display the vector size, capacity and content
@@ -49,48 +46,5 @@ static void	displayVecInfos( const Vec& v, const std::string& title="vector" ) {
 	}
 	std::cout << " ]\n\n";
 }
-
-/*
- * Construct/Destroy/Assign
- */
-
-void	cmpVecDefaultConstructor( void );
-void	cmpVecFillConstructor( void );
-void	cmpVecCopyConstructor( void );
-void	cmpVecAssignmentOperator( void );
-
-/*
- * Iterator
- */
-int	cmpVecIterator( void );
-
-/*
- * Capacity
- */
-
-int	cmpVecEmpty( void );
-int	cmpVecSize( void );
-int	cmpVecResize( void );
-int	cmpVecMaxSize( void );
-int	cmpVecCapacity( void );
-int	cmpVecReserve( void );
-
-/*
- * Element access
- */
-
-int	cmpVecAt( void );
-
-/*
- * Non-member operator overloads
- */
-
-int	cmpVecRelationalOps( void );
-
-/*
- * Run all vector tests
- */
-
-int	testVector( void );
 
 #endif

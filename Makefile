@@ -1,4 +1,4 @@
-BIN_NAME := ft_containers
+NAME := ft_containers
 
 SHELL = /bin/sh
 RM = /bin/rm
@@ -6,70 +6,43 @@ RM = /bin/rm
 .SUFFIXES:
 .SUFFIXES: .cpp .hpp .o
 
-# FILES
+# STL IMPLEMENTATION
 
-# FT_STL
-
-INC_FILES = algorithm.hpp \
-			iterator.hpp \
-			type_traits.hpp \
-			utils.hpp \
-			vector.hpp
+IMPL_FILES = algorithm.hpp \
+			 iterator.hpp \
+			 type_traits.hpp \
+			 vector.hpp \
+			 utils.hpp
 
 # TESTS
 
-INC_TEST_FILES = reverse_iterator_tests.hpp \
-				 tests.hpp \
+TEST_INC_FILES = tests.hpp \
 				 vector_tests.hpp
 
-SRC_FILES = main.cpp \
-			test_utils.cpp
+TEST_SRC_FILES = main.cpp
 
-SRC_FILES += vector_assignment_op.cpp \
-			 vector_capacity.cpp \
-			 vector_construct.cpp \
-			 vector_element_access.cpp \
-			 vector_iterators.cpp \
-			 vector_relational_ops.cpp \
-			 vector_tests.cpp
+# OBJ
 
-SRC_FILES += rev_it_advance.cpp \
-			 rev_it_advdecr.cpp \
-			 rev_it_base.cpp \
-			 rev_it_construct.cpp \
-			 rev_it_decrease.cpp \
-			 rev_it_element_access.cpp \
-			 rev_it_nonmember_ops.cpp \
-			 rev_it_relational_ops.cpp \
-			 rev_it_tests.cpp
-
-SRC_FILES += equal_tests.cpp \
-			 lex_cmp_tests.cpp \
-			 other_tests.cpp \
-			 type_traits_tests.cpp
-
-OBJ_FILES = $(SRC_FILES:%.cpp=%.o)
+OBJ_FILES = $(TEST_SRC_FILES:%.cpp=%.o)
 
 # DIRS AND PATHS
 
-INC_DIR = include
-SRC_DIR = src
+IMPL_DIR = ft_stl
+INC_DIR = tests/include
+SRC_DIR = tests/src
 OBJ_DIR = obj
 
-SUB_DIRS = vector_tests reverse_iterator_tests other_tests
+SUB_DIRS = vector
 SRC_SUBDIRS = $(addprefix $(SRC_DIR)/, $(SUB_DIRS))
 
-INC_SUBDIRS = $(addprefix $(INC_DIR)/, tests)
-
-INC = $(addprefix $(INC_DIR)/, $(INC_FILES))
-INC_TEST = $(addprefix $(INC_SUBDIRS)/, $(INC_TEST_FILES))
+INC = $(addprefix $(IMPL_DIR)/, $(IMPL_FILES)) $(addprefix $(INC_DIR)/, $(TEST_INC_FILES))
 OBJ = $(addprefix $(OBJ_DIR)/, $(OBJ_FILES))
 
 VPATH = $(SRC_DIR) $(SRC_SUBDIRS)
 
 # COMPIL AND FLAGS
 
-CPPFLAGS = -I$(INC_DIR) -I$(INC_SUBDIRS)
+CPPFLAGS = -I$(IMPL_DIR) -I$(INC_DIR)
 CXX = clang++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
@@ -80,7 +53,7 @@ COL_RESET = \033[0m
 
 # RULES
 
-all: $(BIN_NAME)
+all: $(NAME)
 
 # OBJ DIR
 
@@ -94,17 +67,18 @@ $(OBJ_DIR)/%.o : %.cpp
 
 # LINKING
 
-$(BIN_NAME): $(OBJ_DIR) $(OBJ) $(INC) $(INC_TEST)
+$(NAME): $(OBJ_DIR) $(OBJ) $(INC)
 	$(CXX) $(OBJ) -o $@
 	@echo "$(COL_WHITE_B)$@ $(COL_RESET)created in working directory"
 
 # DEBUG
-debug: $(BIN_NAME)
-	valgrind --leak-check=full ./$(BIN_NAME)
+debug: $(NAME)
+	valgrind --leak-check=full ./$(NAME)
 
 show:
-	@echo "VPATH: $(VPATH)"
-	@echo "SRC_SUBDIRS: $(SRC_SUBDIRS)"
+	@echo "VPATH\n$(VPATH)\n"
+	@echo "INC\n$(INC)\n"
+	@echo "SRC_SUBDIRS\n$(SRC_SUBDIRS)"
 
 # CLEAN
 
@@ -112,8 +86,8 @@ clean:
 	$(RM) -rf $(OBJ_DIR)
 
 fclean: clean
-	$(RM) -f $(BIN_NAME)
+	$(RM) -f $(NAME)
 
 re: fclean all
 
-.PHONY: all debug clean fclean re
+.PHONY: all debug show clean fclean re
