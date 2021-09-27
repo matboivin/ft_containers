@@ -8,11 +8,15 @@ RM = /bin/rm
 
 # FILES
 
+# FT_STL
+
 INC_FILES = algorithm.hpp \
 			iterator.hpp \
-			vector.hpp \
 			type_traits.hpp \
-			utils.hpp
+			utils.hpp \
+			vector.hpp
+
+# TESTS
 
 INC_TEST_FILES = reverse_iterator_tests.hpp \
 				 tests.hpp \
@@ -67,7 +71,7 @@ VPATH = $(SRC_DIR) $(SRC_SUBDIRS)
 
 CPPFLAGS = -I$(INC_DIR) -I$(INC_SUBDIRS)
 CXX = clang++
-CXXFLAGS = -Wall -Wextra -Werror# -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # COLORS
 

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/19 23:29:13 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/27 15:02:04 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "utils.hpp"
 #include "algorithm.hpp"
+#include "type_traits.hpp"
 
 /*
  * Credits:
