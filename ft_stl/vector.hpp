@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/28 00:30:25 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/28 00:44:28 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,7 +333,7 @@ namespace ft
 				size_type	len = this->_M_len_check(__n, "vector::_M_fill_insert");
 				this->reserve(len);
 			}
-			for ( size_type i = size(); i < __n; i++ )
+			for ( size_type i = size(); i < __n; ++i )
 			{
 				*__pos = __val;
 				__pos++;
@@ -404,8 +404,6 @@ namespace ft
 	vector<T,Alloc>::vector( const vector& x )
 	: _M_alloc( x._M_alloc )
 	{
-		std::cout << "ft::vector copy constructor called" << std::endl;
-
 		_M_create_storage(x.capacity());
 
 		for ( size_type i = 0; i < x.size(); i++ )
@@ -652,7 +650,7 @@ namespace ft
 		size_type	newCapacity = _M_calculateGrowth(n);
 		pointer		newElements = _M_allocate(newCapacity);
 
-		for ( size_type i = 0; i < oldSize; i++ )
+		for ( size_type i = 0; i < oldSize; ++i )
 			this->_M_alloc.construct( newElements + i, this->_M_begin[i]);
 
 		_M_erase_at_end(this->_M_begin);
