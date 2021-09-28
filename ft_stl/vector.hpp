@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/28 16:49:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/28 17:07:55 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,13 +237,10 @@ namespace ft
 	void
 	vector<T,Alloc>::_M_fill_initialize( size_type __n, const value_type& __val )
 	{
-		if (__n > 0)
+		while (__n--)
 		{
-			while (__n--)
-			{
-				this->_M_alloc.construct(this->_M_end, __val );
-				++this->_M_end;
-			}
+			this->_M_alloc.construct(this->_M_end, __val );
+			++this->_M_end;
 		}
 	}
 

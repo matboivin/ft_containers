@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/28 16:09:21 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/28 17:06:50 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,21 @@ namespace std
 {
 	void	test_vec_fill_ctor( void )
 	{
+		std::cout << "_____________ Fill Constructor _____________\n\n";
+
 		clock_t	start = clock();
 
-		vector<int>	vec1(14, 1);
-		vector<int>	vec2(5,  2);
+		vector<int>	vec1(1000, 1);
 
 		displayElapsedTime(start, clock());
 
-		displayVecInfos(vec1, "vector 1 (14, 1)");
-		displayVecInfos(vec2, "vector 2 (5,  2)");
+		//displayVecInfos(vec1, "vector 1 (14, 1)");
 	}
 
 	void	test_vec_copy_ctor( void )
 	{
+		std::cout << "_____________ Copy constructor _____________\n\n";
+
 		clock_t	start = clock();
 
 		// create a vector
@@ -63,6 +65,8 @@ namespace std
 
 	void	test_vec_copy_assign( void )
 	{
+		std::cout << "_________ Copy assignment operator _________\n\n";
+
 		clock_t	start = clock();
 
 		// create two vectors
@@ -91,6 +95,8 @@ namespace std
 
 	void	test_vector( void )
 	{
+		std::cout << ":::::::::::::::::: VECTOR ::::::::::::::::::\n\n";
+
 		test_vec_fill_ctor();
 		test_vec_copy_ctor();
 		test_vec_copy_assign();
