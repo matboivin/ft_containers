@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/28 16:15:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/28 16:30:24 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,7 +207,8 @@ namespace ft
 	}
 
 	/*
-	 * Allocate storage and move pointers to end of size and end of storage
+	 * Allocate a new storage space and set the pointers to the end
+	 * (it's empty, so it points to the beginning) and to the end of storage
 	 */
 	template<typename T, typename Alloc>
 	void
@@ -255,11 +256,14 @@ namespace ft
 	{
 		if ( __n > 0)
 		{
+			// check capacity left
 			if ( capacity() - size() < __n )
 			{
+				// need to expand capacity
 				size_type	len = this->_M_len_check(__n, "vector::_M_fill_insert");
-				this->reserve(len);
+				reserve(len);
 			}
+			// insert the elements
 			for ( size_type i = size(); i < __n; ++i )
 			{
 				*__pos = __val;
@@ -277,11 +281,11 @@ namespace ft
 	void
 	vector<T,Alloc>::_M_range_initialize( InputIterator __first, InputIterator __last )
 	{
-		difference_type	n = __first - __last;
+		difference_type	range_len = __first - __last;
 
-		if (n > 0)
+		if (range_len > 0)
 		{
-			_M_create_storage(n);
+			_M_create_storage(range_len);
 			for ( ; __first != __last; ++__first )
 			{
 				this->_M_alloc.construct(this->_M_end, *__first);
@@ -298,13 +302,13 @@ namespace ft
 	void
 	vector<T,Alloc>::_M_range_insert( iterator __pos, InputIterator __first, InputIterator __last )
 	{
-		difference_type	n = __first - __last;
+		difference_type	range_len = __first - __last;
 
-		if (n > 0)
+		if (range_len > 0)
 		{
 			for ( ; __first != __last; ++__first )
 				*__pos = *__first;
-			this->_M_end += n;
+			this->_M_end += range_len;
 		}
 	}
 
@@ -316,9 +320,9 @@ namespace ft
 	vector<T,Alloc>::_M_allocate_and_copy( size_type __n, const_iterator __first, const_iterator __last )
 	{
 		pointer			result = _M_allocate(__n);
-		difference_type	len = __first - __last;
+		difference_type	range_len = __first - __last;
 
-		if (len > 0)
+		if (range_len > 0)
 		{
 			pointer	cursor = result;
 
@@ -360,9 +364,9 @@ namespace ft
 	void
 	vector<T,Alloc>::_M_erase_at_end( pointer __pos )
 	{
-		size_type	len = this->_M_end - __pos;
+		size_type	range_len = this->_M_end - __pos;
 
-		if (len > 0)
+		if (range_len > 0)
 		{
 			while (--this->_M_end >= __pos)
 				this->_M_alloc.destroy(this->_M_end);
@@ -471,6 +475,7 @@ namespace ft
 	 * and modifying its size accordingly.
 	 * The container preserves its current allocator, which is used to allocate storage
 	 * in case of reallocation.
+	 * Capacity of the vector is equal to the size of rhs to avoid unused capacity.
 	 *
 	 * @param x  Another vector object of the same type
 	 *           (with the same class template arguments T and Allocator)
@@ -483,10 +488,13 @@ namespace ft
 	{
 		if ( this != &rhs )
 		{
-			pointer		new_begin = _M_allocate_and_copy(rhs.size(), rhs.begin(), rhs.end());
+			// create new array of elements
+			pointer	new_begin = _M_allocate_and_copy(rhs.size(), rhs.begin(), rhs.end());
 
+			// erase current instance's array
 			_M_erase_at_end(this->_M_begin);
 			_M_deallocate(this->_M_begin, capacity());
+			// set to new array
 			this->_M_begin = pointer(new_begin);
 			this->_M_end = new_begin + rhs.size();
 			this->_M_endOfStorage = new_begin + rhs.size();
@@ -682,10 +690,13 @@ namespace ft
 
 		size_type	old_size = size();
 		size_type	new_capacity = _M_calculateGrowth(n);
+		// create new array of elements
 		pointer		new_begin = _M_allocate_and_copy(new_capacity, begin(), end());
 
+		// erase current instance's array
 		_M_erase_at_end(this->_M_begin);
 		_M_deallocate(this->_M_begin, capacity());
+		//set to new array
 		this->_M_begin = pointer(new_begin);
 		this->_M_end = new_begin + old_size;
 		this->_M_endOfStorage = new_begin + new_capacity;
@@ -841,9 +852,6 @@ namespace ft
 	/*
 	 * Adds a new element at the end of the vector, after its current last element.
 	 *
-	 * If the new vector size surpasses the current vector capacity,
-	 * it causes an automatic reallocation of the allocated storage space.
-	 *
 	 * @param val  Value to be copied (or moved) to the new element
 	 */
 	template<typename T, typename Alloc>
@@ -852,9 +860,12 @@ namespace ft
 	{
 		size_type	newSize = size() + 1;
 
+		// If the new vector size surpasses the current vector capacity,
+		// it causes an automatic reallocation of the allocated storage space.
 		if ( newSize > capacity() )
 			reserve(newSize);
 
+		// add the new element
 		this->_M_alloc.construct( this->_M_end, val );
 		this->_M_end = this->_M_begin + newSize;
 	}
