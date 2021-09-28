@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/28 16:11:08 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/28 16:15:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ namespace ft
 			void	_M_range_initialize( InputIterator __first, InputIterator __last );
 		template<typename InputIterator>
 			void	_M_range_insert( iterator __pos, InputIterator __first, InputIterator __last );
-		template<typename ForwardIterator>
-			pointer	_M_allocate_and_copy( size_type __n,
-										  ForwardIterator __first, ForwardIterator __last );
+		pointer		_M_allocate_and_copy( size_type __n, const_iterator __first, const_iterator __last );
 		size_type	_M_calculateGrowth( const size_type __newSize) const;
 		void		_M_range_check( size_type __n ) const;
 		size_type	_M_len_check( size_type __n, const char* __s ) const;
@@ -314,10 +312,8 @@ namespace ft
 	 * Allocate a space that can contains n elements and copies the given range into it.
 	 */
 	template<typename T, typename Alloc>
-	template<typename ForwardIterator>
 	typename vector<T,Alloc>::pointer
-	vector<T,Alloc>::_M_allocate_and_copy( size_type __n,
-										   ForwardIterator __first, ForwardIterator __last )
+	vector<T,Alloc>::_M_allocate_and_copy( size_type __n, const_iterator __first, const_iterator __last )
 	{
 		pointer			result = _M_allocate(__n);
 		difference_type	len = __first - __last;
