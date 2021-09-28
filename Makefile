@@ -84,8 +84,8 @@ $(NAME_STD): $(TEST_OUT_DIR) $(OBJ_DIR) $(OBJ_STD) $(INC)
 
 # DEBUG
 debug:
-	./$(NAME) > $(TEST_OUT_DIR)/std_vec.out 2>&1
-	./$(NAME_STD) > $(TEST_OUT_DIR)/ft_vec.out 2>&1
+	./$(NAME) > $(TEST_OUT_DIR)/ft_vec.out 2>&1
+	./$(NAME_STD) > $(TEST_OUT_DIR)/std_vec.out 2>&1
 
 check_leaks: $(NAME)
 	valgrind --leak-check=full ./$(NAME)

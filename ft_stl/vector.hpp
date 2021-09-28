@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/28 00:44:28 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/28 14:58:11 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,9 +235,11 @@ namespace ft
 	{
 		if (__n > 0)
 		{
-			for ( size_type i = 0; i < __n; i++ )
-				this->_M_alloc.construct( this->_M_begin + i, __val );
-			this->_M_end = this->_M_begin + __n;
+			for ( size_type i = 0; i < __n; ++i )
+			{
+				this->_M_alloc.construct(this->_M_end, __val );
+				++this->_M_end;
+			}
 		}
 	}
 
@@ -253,14 +255,11 @@ namespace ft
 
 		_M_create_storage(n);
 
-		size_type	i = 0;
-
 		for ( ; __first != __last; ++__first )
 		{
-			this->_M_alloc.construct( this->_M_begin + i , __first);
-			i++;
+			this->_M_alloc.construct(this->_M_end, __first);
+			++this->_M_end;
 		}
-		this->_M_end = this->_M_begin + i;
 	}
 
 	/*
@@ -296,10 +295,8 @@ namespace ft
 
 		if (len > 0)
 		{
-			for ( size_type i = 0; i < len; i++ )
-				this->_M_alloc.destroy( __from + i);
-			
-			this->_M_end = __from;
+			while (--this->_M_end >= __from)
+				this->_M_alloc.destroy(this->_M_end);
 		}
 	}
 
@@ -320,7 +317,7 @@ namespace ft
 	}
 
 	/*
-	 * Safety check for storage length
+	 * Inserts n elements of value val at a given position
 	 */
 	template<typename T, typename Alloc>
 	void
@@ -328,7 +325,7 @@ namespace ft
 	{
 		if ( __n > 0)
 		{
-			if ( capacity() < __n )
+			if ( capacity() - size() < __n )
 			{
 				size_type	len = this->_M_len_check(__n, "vector::_M_fill_insert");
 				this->reserve(len);
@@ -338,7 +335,7 @@ namespace ft
 				*__pos = __val;
 				__pos++;
 			}
-			this->_M_end = this->_M_begin + __n;
+			this->_M_end += __n;
 		}
 	}
 
@@ -396,6 +393,7 @@ namespace ft
 	/*
 	 * Copy constructor
 	 * Constructs a container with a copy of each of the elements in x, in the same order.
+	 * Capacity of the new vector is equal to the size of x to avoid unused capacity.
 	 *
 	 * @param x  Another vector object of the same type
 	 *           (with the same class template arguments T and Allocator)
@@ -404,11 +402,13 @@ namespace ft
 	vector<T,Alloc>::vector( const vector& x )
 	: _M_alloc( x._M_alloc )
 	{
-		_M_create_storage(x.capacity());
+		_M_create_storage(x.size());
 
-		for ( size_type i = 0; i < x.size(); i++ )
-			this->_M_alloc.construct( this->_M_begin + i, x[i]);
-		this->_M_end = this->_M_begin + x.size();
+		for ( size_type i = 0; i < x.size(); ++i )
+		{
+			this->_M_alloc.construct(this->_M_end, x[i]);
+			++this->_M_end;
+		}
 	}
 
 	/*
@@ -443,19 +443,20 @@ namespace ft
 	{
 		if ( this != &rhs )
 		{
-			size_type	newSize = rhs.size();
-			size_type	newCapacity = (newSize > capacity()) ? newSize : capacity();
-			pointer		newElements = _M_allocate(newCapacity);
+			pointer	new_begin = _M_allocate(rhs.capacity());
+			pointer	new_end = new_begin;
 
-			for ( size_type i = 0; i < newSize; i++ )
-				this->_M_alloc.construct( newElements + i, rhs[i]);
-
+			for ( size_type i = 0; i < rhs.size(); ++i )
+			{
+				this->_M_alloc.construct( new_end, rhs[i]);
+				++new_end;
+			}
 			_M_erase_at_end(this->_M_begin);
 			_M_deallocate(this->_M_begin, capacity());
 
-			this->_M_begin = pointer(newElements);
-			this->_M_end = this->_M_begin + newSize;
-			this->_M_endOfStorage = this->_M_begin + newCapacity;
+			this->_M_begin = pointer(new_begin);
+			this->_M_end = new_end;
+			this->_M_endOfStorage = new_begin + rhs.capacity();
 		}
 		return ( *this );
 	}
