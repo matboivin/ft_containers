@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/28 16:30:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/28 16:49:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ namespace ft
 		template<typename InputIterator>
 			void	_M_range_insert( iterator __pos, InputIterator __first, InputIterator __last );
 		pointer		_M_allocate_and_copy( size_type __n, const_iterator __first, const_iterator __last );
-		size_type	_M_calculateGrowth( const size_type __newSize) const;
+		size_type	_M_calculateGrowth( const size_type __new_size);
 		void		_M_range_check( size_type __n ) const;
 		size_type	_M_len_check( size_type __n, const char* __s ) const;
 		void		_M_erase_at_end( pointer __pos );
@@ -239,7 +239,7 @@ namespace ft
 	{
 		if (__n > 0)
 		{
-			for ( size_type i = 0; i < __n; ++i )
+			while (__n--)
 			{
 				this->_M_alloc.construct(this->_M_end, __val );
 				++this->_M_end;
@@ -264,7 +264,7 @@ namespace ft
 				reserve(len);
 			}
 			// insert the elements
-			for ( size_type i = size(); i < __n; ++i )
+			while (__n--)
 			{
 				*__pos = __val;
 				__pos++;
@@ -340,19 +340,19 @@ namespace ft
 	 */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::size_type
-	vector<T,Alloc>::_M_calculateGrowth( const size_type __newSize) const
+	vector<T,Alloc>::_M_calculateGrowth( const size_type __new_size)
 	{
-		const size_type	currCapacity = capacity();
-		size_type		capacityLeft = max_size() - currCapacity;
+		size_type	curr_capacity = capacity();
+		size_type	capacity_left = max_size() - curr_capacity;
 
 		// handle overflow
-		if ( currCapacity > capacityLeft )
+		if ( curr_capacity > capacity_left )
 			return ( max_size() );
 
-		const size_type	newCapacity = currCapacity + currCapacity;
+		size_type	newCapacity = curr_capacity + curr_capacity;
 
-		if ( __newSize > newCapacity )
-			return ( __newSize );
+		if ( __new_size > newCapacity )
+			return ( __new_size );
 
 		return ( newCapacity );
 	}
@@ -380,12 +380,12 @@ namespace ft
 	typename vector<T,Alloc>::size_type
 	vector<T,Alloc>::_M_len_check( size_type __n, const char* __s ) const
 	{
-		size_type	sizeLeft = max_size() - size();
-		size_type	len = size() + __n;
+		size_type	size_left = max_size() - size();
 
-		if ( sizeLeft < __n )
+		if ( size_left < __n )
 			throw std::length_error(__s);
 
+		size_type	len = size() + __n;
 		return ( (len > max_size()) ? max_size() : len );
 	}
 
@@ -486,6 +486,7 @@ namespace ft
 	vector<T,Alloc>&
 	vector<T,Alloc>::operator=( const vector& rhs )
 	{
+		// avoid self-assignment
 		if ( this != &rhs )
 		{
 			// create new array of elements
@@ -858,16 +859,16 @@ namespace ft
 	void
 	vector<T,Alloc>::push_back( const value_type& val )
 	{
-		size_type	newSize = size() + 1;
+		size_type	new_size = size() + 1;
 
 		// If the new vector size surpasses the current vector capacity,
 		// it causes an automatic reallocation of the allocated storage space.
-		if ( newSize > capacity() )
-			reserve(newSize);
+		if ( new_size > capacity() )
+			reserve(new_size);
 
 		// add the new element
 		this->_M_alloc.construct( this->_M_end, val );
-		this->_M_end = this->_M_begin + newSize;
+		this->_M_end = this->_M_begin + new_size;
 	}
 
 	/*
