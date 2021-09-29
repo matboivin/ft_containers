@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/29 15:44:43 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/29 17:58:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ namespace std
 
 		// create two vectors
 		vector<int>	vec1(1000, 1);
-		vector<int>	vec2;
+		vector<int>	vec2(5);
 
 		clock_t	start = clock();
 
@@ -86,18 +86,8 @@ namespace std
 		vector<int>	vec;
 
 		// call push_back()
-		vec.push_back(12);
-		vec.push_back(5);
-		vec.push_back(42);
-		vec.push_back(100);
-		vec.push_back(25);
-		vec.push_back(9);
-		vec.push_back(13);
-		vec.push_back(12);
-		vec.push_back(500);
-		vec.push_back(4);
-		vec.push_back(95);
-		vec.push_back(5);
+		for ( int i = 0; i < 1000; ++i )
+			vec.push_back(i);
 
 		displayElapsedTime(start, clock());
 

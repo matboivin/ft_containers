@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/29 15:35:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/29 18:06:39 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ namespace ft
 		pointer		_M_allocate(size_type __n);
 		void		_M_create_storage(size_type __n);
 		void		_M_deallocate(pointer __p, size_type __n);
+		void		_M_swap_data(vector& __x);
 		void		_M_fill_initialize(size_type __n, const value_type& __val);
 		void		_M_fill_insert(iterator __pos, size_type __n, const value_type& __val);
 		template<typename InputIterator>
 			void	_M_range_initialize(InputIterator __first, InputIterator __last);
 		template<typename InputIterator>
 			void	_M_range_insert(iterator __pos, InputIterator __first, InputIterator __last);
-		pointer		_M_allocate_and_copy(size_type __n, const_iterator __first, const_iterator __last);
 		size_type	_M_calculateGrowth(const size_type __n);
 		void		_M_range_check(size_type __n) const;
 		size_type	_M_len_check(size_type __n, const char* __s) const;
@@ -230,6 +230,26 @@ namespace ft
 	}
 
 	/*
+	 * Swap vector's data with x
+	 */
+	template<typename T, typename Alloc>
+	void
+	vector<T,Alloc>::_M_swap_data(vector& __x)
+	{
+		pointer	tmp_begin(__x._M_begin);
+		pointer	tmp_end(__x._M_end);
+		pointer	tmp_endOfStorage(__x._M_endOfStorage);
+
+		__x._M_begin = this->_M_begin;
+		__x._M_end = this->_M_end;
+		__x._M_endOfStorage = this->_M_endOfStorage;
+
+		this->_M_begin = tmp_begin;
+		this->_M_end = tmp_end;
+		this->_M_endOfStorage = tmp_endOfStorage;
+	}
+
+	/*
 	 * Construct with n elements of value val
 	 */
 	template<typename T, typename Alloc>
@@ -304,42 +324,19 @@ namespace ft
 	}
 
 	/*
-	 * Allocate a space that can contains n elements and copies the given range into it.
-	 */
-	template<typename T, typename Alloc>
-	typename vector<T,Alloc>::pointer
-	vector<T,Alloc>::_M_allocate_and_copy(size_type __n, const_iterator __first, const_iterator __last)
-	{
-		pointer			result = _M_allocate(__n);
-		difference_type	range_len = __first - __last;
-
-		if (range_len > 0)
-		{
-			pointer	cursor = result;
-
-			for ( ; __first != __last; ++cursor, ++__first )
-				this->_M_alloc.construct(cursor, *__first);
-		}
-		return (result);
-	}
-
-	/*
 	 * Calculates capacity growth (private member function to help)
 	 */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::size_type
 	vector<T,Alloc>::_M_calculateGrowth(const size_type __n)
 	{
-		size_type	curr_capacity = capacity();
-		size_type	capacity_left = max_size() - curr_capacity;
+		size_type	double_capacity = capacity() + capacity();
 
 		// handle overflow
-		if (curr_capacity > capacity_left)
+		if (double_capacity >= max_size())
 			return (max_size());
-
-		size_type	newCapacity = curr_capacity + curr_capacity;
-
-		return ( (__n > newCapacity) ? __n : newCapacity );
+		
+		return ( (__n > double_capacity) ? __n : double_capacity );
 	}
 
 	/*
@@ -439,7 +436,7 @@ namespace ft
 	 */
 	template<typename T, typename Alloc>
 	vector<T,Alloc>::vector(const vector& x)
-	: _M_alloc(x._M_alloc)
+	: _M_alloc(x.get_alloc())
 	{
 		_M_range_initialize(x.begin(), x.end());
 	}
@@ -478,16 +475,19 @@ namespace ft
 		// avoid self-assignment
 		if (this != &rhs)
 		{
-			// create new array of elements
-			pointer	new_begin = _M_allocate_and_copy(rhs.size(), rhs.begin(), rhs.end());
-
-			// erase current instance's array
 			_M_erase_at_end(this->_M_begin);
-			_M_deallocate(this->_M_begin, capacity());
-			// set to new array
-			this->_M_begin = pointer(new_begin);
-			this->_M_end = new_begin + rhs.size();
-			this->_M_endOfStorage = new_begin + rhs.size();
+			if (capacity() < rhs.size())
+			{
+				// need to expand capacity
+				_M_deallocate(this->_M_begin, capacity());
+				_M_create_storage(rhs.size());
+			}
+			size_type	len = rhs.size();
+			for ( size_type i = 0; i < len; i++ )
+			{
+				this->_M_alloc.construct(this->_M_end, rhs[i]);
+				++this->_M_end;
+			}
 		}
 		return (*this);
 	}
@@ -679,17 +679,18 @@ namespace ft
 			throw std::length_error("vector::reserve");
 
 		size_type	old_size = size();
-		size_type	new_capacity = _M_calculateGrowth(n);
-		// create new array of elements
-		pointer		new_begin = _M_allocate_and_copy(new_capacity, begin(), end());
+		size_type	old_capacity = capacity();
+		pointer		tmp = this->_M_begin;
 
-		// erase current instance's array
-		_M_erase_at_end(this->_M_begin);
-		_M_deallocate(this->_M_begin, capacity());
-		//set to new array
-		this->_M_begin = pointer(new_begin);
-		this->_M_end = new_begin + old_size;
-		this->_M_endOfStorage = new_begin + new_capacity;
+		_M_create_storage(_M_calculateGrowth(n));
+
+		for ( size_type i = 0; i < old_size; i++ )
+		{
+			this->_M_alloc.construct(this->_M_end, tmp[i]);
+			this->_M_alloc.destroy(&tmp[i]);
+			++this->_M_end;
+		}
+		_M_deallocate(tmp, old_capacity);
 	}
 
 
@@ -1002,7 +1003,7 @@ namespace ft
 	void
 	vector<T,Alloc>::swap(vector& x)
 	{
-		ft::swap(this, x);
+		this->_M_swap_data(x);
 	}
 
 	/*
@@ -1078,10 +1079,7 @@ namespace ft
 	void
 	swap(vector<T,Alloc>& x, vector<T,Alloc>& y)
 	{
-		vector<T,Alloc>	tmp(x);
-
-		x = y;
-		y = tmp;
+		x.swap(y);
 	}
 } // namespace ft
 
