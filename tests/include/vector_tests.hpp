@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/28 16:05:30 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/29 15:43:07 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,11 @@ namespace ft
 namespace std
 #endif
 {
-	void	test_vector( void );
-	void	test_vec_fill_ctor( void );
-	void	test_vec_copy_ctor( void );
-	void	test_vec_copy_assign( void );
+	void	test_vector(void);
+	void	test_vec_fill_ctor(void);
+	void	test_vec_copy_ctor(void);
+	void	test_vec_copy_assign(void);
+	void	test_vec_push_back(void);
 }
 
 /*
@@ -38,7 +39,7 @@ namespace std
  */
 
 template<typename Vec>
-static void	displayVecInfos( const Vec& v, const std::string& title="vector" )
+static void	displayVecInfos(const Vec& v, const std::string& title="vector")
 {
 	std::cout << title
 			  << "\n- size:      " << v.size()

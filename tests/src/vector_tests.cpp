@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/28 17:06:50 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/29 15:44:43 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace ft
 namespace std
 #endif
 {
-	void	test_vec_fill_ctor( void )
+	void	test_vec_fill_ctor(void)
 	{
 		std::cout << "_____________ Fill Constructor _____________\n\n";
 
@@ -31,24 +31,16 @@ namespace std
 		vector<int>	vec1(1000, 1);
 
 		displayElapsedTime(start, clock());
-
-		//displayVecInfos(vec1, "vector 1 (14, 1)");
 	}
 
-	void	test_vec_copy_ctor( void )
+	void	test_vec_copy_ctor(void)
 	{
 		std::cout << "_____________ Copy constructor _____________\n\n";
 
-		clock_t	start = clock();
-
 		// create a vector
-		vector<int>	vec1;
-		// add some numbers to it
-		vec1.push_back(12);
-		vec1.push_back(5);
-		vec1.push_back(42);
-		vec1.push_back(100);
-		vec1.push_back(25);
+		vector<int>	vec1(1000, 1);
+
+		clock_t	start = clock();
 
 		// create a copy from vec1
 		vector<int>	vec2(vec1);
@@ -58,27 +50,19 @@ namespace std
 		// assert they're identical
 		assert(vec1 == vec2);
 
-		// display
-		displayVecInfos(vec1, "vector 1");
-		displayVecInfos(vec2, "vector 2");
+		// displayVecInfos(vec1, "vector 1");
+		// displayVecInfos(vec2, "vector 2");
 	}
 
-	void	test_vec_copy_assign( void )
+	void	test_vec_copy_assign(void)
 	{
 		std::cout << "_________ Copy assignment operator _________\n\n";
 
-		clock_t	start = clock();
-
 		// create two vectors
-		vector<int>	vec1;
+		vector<int>	vec1(1000, 1);
 		vector<int>	vec2;
 
-		// add some numbers to vec1
-		vec1.push_back(12);
-		vec1.push_back(5);
-		vec1.push_back(42);
-		vec1.push_back(100);
-		vec1.push_back(25);
+		clock_t	start = clock();
 
 		// create a copy from vec1
 		vec2 = vec1;
@@ -88,17 +72,45 @@ namespace std
 		// assert they're identical
 		assert(vec1 == vec2);
 
-		// display
-		displayVecInfos(vec1, "vector 1");
-		displayVecInfos(vec2, "vector 2");
+		// displayVecInfos(vec1, "vector 1");
+		// displayVecInfos(vec2, "vector 2");
 	}
 
-	void	test_vector( void )
+	void	test_vec_push_back(void)
+	{
+		std::cout << "_______ capacity method: push_back() _______\n\n";
+
+		clock_t	start = clock();
+
+		// create a vector
+		vector<int>	vec;
+
+		// call push_back()
+		vec.push_back(12);
+		vec.push_back(5);
+		vec.push_back(42);
+		vec.push_back(100);
+		vec.push_back(25);
+		vec.push_back(9);
+		vec.push_back(13);
+		vec.push_back(12);
+		vec.push_back(500);
+		vec.push_back(4);
+		vec.push_back(95);
+		vec.push_back(5);
+
+		displayElapsedTime(start, clock());
+
+		displayVecInfos(vec);
+	}
+
+	void	test_vector(void)
 	{
 		std::cout << ":::::::::::::::::: VECTOR ::::::::::::::::::\n\n";
 
 		test_vec_fill_ctor();
 		test_vec_copy_ctor();
 		test_vec_copy_assign();
+		test_vec_push_back();
 	}
 }

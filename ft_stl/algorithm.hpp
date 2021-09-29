@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:28:28 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/27 15:48:37 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/09/29 15:46:12 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ namespace ft
 	 */
 	template<typename InputIterator1, typename InputIterator2>
 	bool
-	equal( InputIterator1 first1, InputIterator1 last1, InputIterator2 first2 )
+	equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
 	{
 		for ( ; first1 != last1; ++first1, ++first2 )
 		{
@@ -61,8 +61,8 @@ namespace ft
 	 */
 	template<typename InputIterator1, typename InputIterator2, typename BinaryPredicate>
 	bool
-	equal( InputIterator1 first1, InputIterator1 last1, InputIterator2 first2,
-		   BinaryPredicate pred )
+	equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2,
+		  BinaryPredicate pred)
 	{
 		for ( ; first1 != last1; ++first1, ++first2 )
 		{
@@ -85,14 +85,14 @@ namespace ft
 	 */
 	template<typename InputIterator1, typename InputIterator2>
 	bool
-	lexicographical_compare( InputIterator1 first1, InputIterator1 last1,
-							 InputIterator2 first2, InputIterator2 last2 )
+	lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
+							InputIterator2 first2, InputIterator2 last2)
 	{
 		for ( ; (first1 != last1) && (first2 != last2); ++first1, ++first2 )
 		{
-			if ( *first1 < *first2 )
+			if (*first1 < *first2)
 				return (true);
-			if ( *first1 > *first2 )
+			if (*first1 > *first2)
 				return (false);
 		}
 		return ( (first1 == last1) && (first2 != last2) );
@@ -113,9 +113,9 @@ namespace ft
 	 */
 	template<typename InputIterator1, typename InputIterator2, typename Compare>
 	bool
-	lexicographical_compare( InputIterator1 first1, InputIterator1 last1,
-							 InputIterator2 first2, InputIterator2 last2,
-							 Compare comp )
+	lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
+							InputIterator2 first2, InputIterator2 last2,
+							Compare comp)
 	{
 		for ( ; (first1 != last1) && (first2 != last2); ++first1, ++first2 )
 		{
