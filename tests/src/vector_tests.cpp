@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/04 18:53:13 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/04 18:59:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,8 @@ namespace std
 		vec.push_back(100);
 		vec.push_back(25);
 
+		clock_t	start = clock();
+
 		// create iterators
 		vector<int>::iterator	it = vec.begin();
 		vector<int>::iterator	ite = vec.end();
@@ -117,8 +119,48 @@ namespace std
 				<< "\n*(--ite) = " << *(--ite)
 				<< "\n\n";
 
+		displayElapsedTime(start, clock());
+
 		assert(*it == 12);
 		assert(*ite == 25);
+	}
+
+	// elements access
+	void	test_vec_at(void)
+	{
+		std::cout << "_________ Element access method: at ________\n\n";
+
+		int	n = 2;
+		int	out = 15;
+
+		// create vector
+		vector<int>	vec;
+
+		vec.push_back(12);
+		vec.push_back(5);
+		vec.push_back(42);
+		vec.push_back(100);
+		vec.push_back(25);
+
+		try
+		{
+			clock_t	start = clock();
+			std::cout << "vector.at(" << n << ") " << vec.at(n) << std::endl;
+			displayElapsedTime(start, clock());
+		}
+		catch (std::out_of_range& oor)
+		{
+			std::cout << "\nCatched 'out_of_range': " << oor.what() << std::endl;
+		}
+
+		try
+		{
+			std::cout << "vector.at(" << out << ") " << vec.at(out) << std::endl;
+		}
+		catch (std::out_of_range& oor)
+		{
+			std::cout << "Catched 'out_of_range':\n" << COL_RESET << oor.what() << "\n\n";
+		}
 	}
 
 	void	test_vector(void)
@@ -133,5 +175,8 @@ namespace std
 
 		// iterator
 		test_vec_iterator();
+
+		// elements access
+		test_vec_at();
 	}
 }

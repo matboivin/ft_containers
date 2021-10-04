@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/04 18:51:36 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/04 18:58:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@ namespace std
 
 	// iterators
 	void	test_vec_iterator(void);
+
+	// elements access
+	void	test_vec_at(void);
 }
 
 /*
