@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/29 17:58:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/04 17:19:38 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ namespace std
 
 		clock_t	start = clock();
 
-		vector<int>	vec1(1000, 1);
+		vector<int>	vec1(1000000, 1);
 
 		displayElapsedTime(start, clock());
 	}
@@ -38,7 +38,7 @@ namespace std
 		std::cout << "_____________ Copy constructor _____________\n\n";
 
 		// create a vector
-		vector<int>	vec1(1000, 1);
+		vector<int>	vec1(1000000, 1);
 
 		clock_t	start = clock();
 
@@ -59,7 +59,7 @@ namespace std
 		std::cout << "_________ Copy assignment operator _________\n\n";
 
 		// create two vectors
-		vector<int>	vec1(1000, 1);
+		vector<int>	vec1(1000000, 1);
 		vector<int>	vec2(5);
 
 		clock_t	start = clock();
@@ -86,12 +86,12 @@ namespace std
 		vector<int>	vec;
 
 		// call push_back()
-		for ( int i = 0; i < 1000; ++i )
+		for ( int i = 0; i < 1000000; ++i )
 			vec.push_back(i);
 
 		displayElapsedTime(start, clock());
 
-		displayVecInfos(vec);
+		// displayVecInfos(vec);
 	}
 
 	void	test_vector(void)

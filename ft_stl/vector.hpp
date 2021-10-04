@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/29 18:06:39 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/04 17:44:36 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ namespace ft
 		void		_M_fill_insert(iterator __pos, size_type __n, const value_type& __val);
 		template<typename InputIterator>
 			void	_M_range_initialize(InputIterator __first, InputIterator __last);
-		template<typename InputIterator>
-			void	_M_range_insert(iterator __pos, InputIterator __first, InputIterator __last);
 		size_type	_M_calculateGrowth(const size_type __n);
 		void		_M_range_check(size_type __n) const;
 		size_type	_M_len_check(size_type __n, const char* __s) const;
@@ -307,23 +305,6 @@ namespace ft
 	}
 
 	/*
-	 * Inserts a range of elements at a given position
-	 */
-	template<typename T, typename Alloc>
-	template<typename InputIterator>
-	void
-	vector<T,Alloc>::_M_range_insert(iterator __pos, InputIterator __first, InputIterator __last)
-	{
-		difference_type	range_len = __first - __last;
-
-		if (range_len > 0)
-		{
-			for ( ; __first != __last; ++this->_M_end , ++__first )
-				*__pos = *__first;
-		}
-	}
-
-	/*
 	 * Calculates capacity growth (private member function to help)
 	 */
 	template<typename T, typename Alloc>
@@ -438,7 +419,14 @@ namespace ft
 	vector<T,Alloc>::vector(const vector& x)
 	: _M_alloc(x.get_alloc())
 	{
-		_M_range_initialize(x.begin(), x.end());
+		size_type	len = x.size();
+
+		_M_create_storage(len);
+		for ( size_type i = 0; i < len; ++i )
+		{
+			this->_M_alloc.construct(this->_M_end, x[i]);
+			++this->_M_end;
+		}
 	}
 
 	/*
@@ -483,7 +471,7 @@ namespace ft
 				_M_create_storage(rhs.size());
 			}
 			size_type	len = rhs.size();
-			for ( size_type i = 0; i < len; i++ )
+			for ( size_type i = 0; i < len; ++i )
 			{
 				this->_M_alloc.construct(this->_M_end, rhs[i]);
 				++this->_M_end;
@@ -684,7 +672,7 @@ namespace ft
 
 		_M_create_storage(_M_calculateGrowth(n));
 
-		for ( size_type i = 0; i < old_size; i++ )
+		for ( size_type i = 0; i < old_size; ++i )
 		{
 			this->_M_alloc.construct(this->_M_end, tmp[i]);
 			this->_M_alloc.destroy(&tmp[i]);
