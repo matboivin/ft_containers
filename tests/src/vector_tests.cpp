@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/04 17:19:38 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/04 18:53:13 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,13 +94,44 @@ namespace std
 		// displayVecInfos(vec);
 	}
 
+	void	test_vec_iterator(void)
+	{
+		std::cout << "_________________ Iterator _________________\n\n";
+
+		vector<int>::iterator	iter_type;
+
+		// create vector
+		vector<int>	vec;
+
+		vec.push_back(12);
+		vec.push_back(5);
+		vec.push_back(42);
+		vec.push_back(100);
+		vec.push_back(25);
+
+		// create iterators
+		vector<int>::iterator	it = vec.begin();
+		vector<int>::iterator	ite = vec.end();
+
+		std::cout << "*it      = " << *it
+				<< "\n*(--ite) = " << *(--ite)
+				<< "\n\n";
+
+		assert(*it == 12);
+		assert(*ite == 25);
+	}
+
 	void	test_vector(void)
 	{
 		std::cout << ":::::::::::::::::: VECTOR ::::::::::::::::::\n\n";
 
+		// construct/assign/destroy
 		test_vec_fill_ctor();
 		test_vec_copy_ctor();
 		test_vec_copy_assign();
 		test_vec_push_back();
+
+		// iterator
+		test_vec_iterator();
 	}
 }

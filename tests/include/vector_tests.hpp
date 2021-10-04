@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/29 15:43:07 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/04 18:51:36 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,16 @@ namespace ft
 namespace std
 #endif
 {
+	// construct/assign/destroy
 	void	test_vector(void);
 	void	test_vec_fill_ctor(void);
 	void	test_vec_copy_ctor(void);
+	//void	test_vec_fill_ctor(void);
 	void	test_vec_copy_assign(void);
 	void	test_vec_push_back(void);
+
+	// iterators
+	void	test_vec_iterator(void);
 }
 
 /*
