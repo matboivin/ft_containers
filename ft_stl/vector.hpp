@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/04 17:44:36 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/04 18:21:58 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ namespace ft
 		void		_M_create_storage(size_type __n);
 		void		_M_deallocate(pointer __p, size_type __n);
 		void		_M_swap_data(vector& __x);
-		void		_M_fill_initialize(size_type __n, const value_type& __val);
 		void		_M_fill_insert(iterator __pos, size_type __n, const value_type& __val);
 		template<typename InputIterator>
 			void	_M_range_initialize(InputIterator __first, InputIterator __last);
@@ -248,17 +247,6 @@ namespace ft
 	}
 
 	/*
-	 * Construct with n elements of value val
-	 */
-	template<typename T, typename Alloc>
-	void
-	vector<T,Alloc>::_M_fill_initialize(size_type __n, const value_type& __val)
-	{
-		for ( ; __n > 0; ++this->_M_end, --__n )
-			this->_M_alloc.construct(this->_M_end, __val);
-	}
-
-	/*
 	 * Inserts n elements of value val at a given position
 	 */
 	template<typename T, typename Alloc>
@@ -383,7 +371,8 @@ namespace ft
 	: _M_alloc(alloc)
 	{
 		_M_create_storage(n);
-		_M_fill_initialize(n, val);
+		for ( ; n > 0; ++this->_M_end, --n )
+			this->_M_alloc.construct(this->_M_end, val);
 	}
 
 	/*
@@ -463,15 +452,16 @@ namespace ft
 		// avoid self-assignment
 		if (this != &rhs)
 		{
+			size_type	new_size = rhs.size();
+
 			_M_erase_at_end(this->_M_begin);
-			if (capacity() < rhs.size())
+			if (capacity() < new_size)
 			{
 				// need to expand capacity
 				_M_deallocate(this->_M_begin, capacity());
-				_M_create_storage(rhs.size());
+				_M_create_storage(new_size);
 			}
-			size_type	len = rhs.size();
-			for ( size_type i = 0; i < len; ++i )
+			for ( size_type i = 0; i < new_size; ++i )
 			{
 				this->_M_alloc.construct(this->_M_end, rhs[i]);
 				++this->_M_end;
@@ -827,7 +817,8 @@ namespace ft
 	{
 		resize(n);
 		clear();
-		_M_fill_initialize(n, val);
+		for ( ; n > 0; ++this->_M_end, --n )
+			this->_M_alloc.construct(this->_M_end, val);
 	}
 
 	/*
