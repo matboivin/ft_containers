@@ -1,5 +1,6 @@
-NAME := ft_containers
-NAME_STD := original
+NAME = ft_containers
+NAME_STD = original
+NAME_CMP = test_containers
 
 SHELL = /bin/sh
 RM = /bin/rm
@@ -25,6 +26,7 @@ TEST_INC_FILES = tests.hpp \
 				 vector_tests.hpp
 
 TEST_SRC_FILES = main.cpp \
+				 generate_output.cpp \
 				 vector_tests.cpp
 
 INC_DIR = tests/include
@@ -38,6 +40,7 @@ OBJ_DIR = obj
 
 OBJ = $(addprefix $(OBJ_DIR)/ft/, $(OBJ_FILES))
 OBJ_STD = $(addprefix $(OBJ_DIR)/original/, $(OBJ_FILES))
+OBJ_CMP = $(OBJ_DIR)/cmp/main.o $(OBJ_DIR)/cmp/generate_output.o
 
 # INC AND PATHS
 
@@ -54,12 +57,12 @@ CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # RULES
 
-all: $(NAME) $(NAME_STD)
+all: $(NAME) $(NAME_STD) $(NAME_CMP)
 
 # OBJ DIR
 
 $(OBJ_DIR):
-	mkdir -p obj/ft obj/original
+	mkdir -p obj/ft obj/original obj/cmp
 
 # TEST OUTPUTS DIR
 $(TEST_OUT_DIR):
@@ -67,11 +70,14 @@ $(TEST_OUT_DIR):
 
 # COMPILING
 
+$(OBJ_DIR)/cmp/%.o : %.cpp
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ -c $<
+
 $(OBJ_DIR)/ft/%.o : %.cpp
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -D TEST_FT -o $@ -c $<
 
 $(OBJ_DIR)/original/%.o : %.cpp
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -o $@ -c $<
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -D TEST_STD -o $@ -c $<
 
 # LINKING
 $(NAME): $(TEST_OUT_DIR) $(OBJ_DIR) $(OBJ) $(INC)
@@ -82,10 +88,15 @@ $(NAME_STD): $(TEST_OUT_DIR) $(OBJ_DIR) $(OBJ_STD) $(INC)
 	$(CXX) $(OBJ_STD) -o $@
 	@echo "$(COL_WHITE_B)$@ $(COL_RESET)created in working directory"
 
+$(NAME_CMP): $(OBJ_DIR) $(OBJ_CMP)
+	$(CXX) $(OBJ_CMP) -o $@
+	@echo "$(COL_WHITE_B)$@ $(COL_RESET)created in working directory"
+
 # DEBUG
 debug:
 	./$(NAME) > $(TEST_OUT_DIR)/ft_vec.out 2>&1
 	./$(NAME_STD) > $(TEST_OUT_DIR)/std_vec.out 2>&1
+	./$(NAME_CMP)
 
 check_leaks: $(NAME)
 	valgrind --leak-check=full ./$(NAME)
