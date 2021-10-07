@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:45:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/05 18:27:36 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/07 18:14:41 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,6 @@
 
 void	displayElapsedTime(clock_t start, clock_t end);
 void	generate_output(void);
+void	explainTest(const std::string& msg);
 
 #endif

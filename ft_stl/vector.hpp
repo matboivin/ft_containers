@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/04 18:21:58 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/07 17:58:35 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -711,7 +711,7 @@ namespace ft
 			std::stringstream	err_msg;
 	
 			err_msg << "vector::_M_range_check: __n (which is " << __n
-					<< ") >= size() (which is " << size() << ")";
+					<< ") >= this->size() (which is " << size() << ")";
 
 			throw std::out_of_range(err_msg.str());
 		}

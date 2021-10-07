@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 18:32:34 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/05 19:07:28 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/07 18:23:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,24 @@
  * Output formatters
  */
 
-static void	put_test_title(const std::string& title)
+static void	put_test_title(const std::string& ft_title, const std::string& std_title)
 {
-	std::cout << COL_BLUE_B << title << COL_RESET << std::endl;
+	std::cout << '\n' << COL_BLUE_B << ft_title << std::setw(30)
+			  << std_title << std::setw(30) << COL_RESET
+			  << std::endl;
 }
 
 static void	put_test_time(const std::string& ft_time, const std::string& std_time)
 {
-	std::cout << "ft: " << ft_time << "\tstd: " << std_time << std::endl;
+	std::cout << "ft: " << COL_WHITE_B << ft_time << COL_RESET
+			  << std::setw(57)
+			  << "ori: " << COL_WHITE_B << std_time << COL_RESET
+			  << std::endl;
+}
+
+static void	put_test_description(const std::string& descr)
+{
+	std::cout << COL_BLUE << descr << COL_RESET << std::endl;
 }
 
 /*
@@ -42,12 +52,14 @@ static void	read_files(std::ifstream& ft_file, std::ifstream& std_file)
 
 	while (std::getline(ft_file, ft_res) && std::getline(std_file, std_res))
 	{
-		if ((ft_res[0] == ':' ) || (ft_res[0] == '_'))
-			put_test_title(ft_res);
-		else if (ft_res.find("time:") != std::string::npos)
+		if ((ft_res[0] == '_') || (ft_res[0] == '.'))
+			put_test_title(ft_res, std_res);
+		else if (ft_res.find("seconds") != std::string::npos)
 			put_test_time(ft_res, std_res);
+		else if (ft_res.find("Test description") != std::string::npos)
+			put_test_description(ft_res);
 		else
-			std::cout << ft_res << ' ' << std_res << std::endl;
+			std::cout << ft_res << std::setw(72) << std_res << std::endl;
 	}
 
 	ft_file.close();

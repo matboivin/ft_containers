@@ -6,12 +6,13 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/04 18:59:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/07 18:22:13 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <assert.h>
 #include <fstream>
+#include <iomanip>
 #include <iostream>
 #include "tests.hpp"
 #include "vector_tests.hpp"
@@ -24,7 +25,10 @@ namespace std
 {
 	void	test_vec_fill_ctor(void)
 	{
-		std::cout << "_____________ Fill Constructor _____________\n\n";
+		std::cout << std::setfill('.') << std::setw(42) << " Fill Constructor \n\n";
+
+		explainTest("Constructs a container with n elements. "
+					"Each element is a copy of value passed as parameter.");
 
 		clock_t	start = clock();
 
@@ -35,7 +39,9 @@ namespace std
 
 	void	test_vec_copy_ctor(void)
 	{
-		std::cout << "_____________ Copy constructor _____________\n\n";
+		std::cout << std::setfill('.') << std::setw(42) << " Copy constructor \n\n";
+
+		explainTest("Creates a new object from existing one passed as parameter.");
 
 		// create a vector
 		vector<int>	vec1(1000000, 1);
@@ -56,7 +62,9 @@ namespace std
 
 	void	test_vec_copy_assign(void)
 	{
-		std::cout << "_________ Copy assignment operator _________\n\n";
+		std::cout << std::setfill('.') << std::setw(42) << " Copy assignment operator \n\n";
+
+		explainTest("Copies a vector from an existing one.");
 
 		// create two vectors
 		vector<int>	vec1(1000000, 1);
@@ -78,7 +86,9 @@ namespace std
 
 	void	test_vec_push_back(void)
 	{
-		std::cout << "_______ capacity method: push_back() _______\n\n";
+		std::cout << std::setfill('.') << std::setw(42) << " capacity method: push_back() \n\n";
+
+		explainTest("Add a new elements at the end of the vector.");
 
 		clock_t	start = clock();
 
@@ -96,7 +106,9 @@ namespace std
 
 	void	test_vec_iterator(void)
 	{
-		std::cout << "_________________ Iterator _________________\n\n";
+		std::cout << std::setfill('.') << std::setw(42) << " Iterator \n\n";
+
+		explainTest("Move through the elements of the container like pointers do.");
 
 		vector<int>::iterator	iter_type;
 
@@ -128,7 +140,10 @@ namespace std
 	// elements access
 	void	test_vec_at(void)
 	{
-		std::cout << "_________ Element access method: at ________\n\n";
+		std::cout << std::setfill('.') << std::setw(42) << " Element access: at \n\n";
+
+		explainTest("This member function accesses the element at "
+					"the specified position in the container.");
 
 		int	n = 2;
 		int	out = 15;
@@ -145,27 +160,31 @@ namespace std
 		try
 		{
 			clock_t	start = clock();
-			std::cout << "vector.at(" << n << ") " << vec.at(n) << std::endl;
+			std::cout << "vector.at(" << n << ") " << vec.at(n) << "\n\n";
 			displayElapsedTime(start, clock());
 		}
 		catch (std::out_of_range& oor)
 		{
-			std::cout << "\nCatched 'out_of_range': " << oor.what() << std::endl;
+			std::cout << "Catched 'out_of_range':\n" << oor.what() << "\n\n";
 		}
 
 		try
 		{
-			std::cout << "vector.at(" << out << ") " << vec.at(out) << std::endl;
+			std::cout << "vector.at(" << out << ") " << vec.at(out) << "\n\n";
 		}
 		catch (std::out_of_range& oor)
 		{
-			std::cout << "Catched 'out_of_range':\n" << COL_RESET << oor.what() << "\n\n";
+			std::cout << "Catched 'out_of_range':\n" << oor.what() << "\n\n";
 		}
 	}
 
 	void	test_vector(void)
 	{
-		std::cout << ":::::::::::::::::: VECTOR ::::::::::::::::::\n\n";
+		#if defined(TEST_FT)
+		std::cout << std::setfill('_') << std::setw(42) << " MY VECTOR \n\n";
+		#else
+		std::cout << std::setfill('_') << std::setw(42) << " ORIGINAL VECTOR \n\n";
+		#endif
 
 		// construct/assign/destroy
 		test_vec_fill_ctor();
