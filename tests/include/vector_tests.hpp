@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/07 18:43:37 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/07 19:20:01 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ namespace std
 	void	test_vec_empty(void);
 	void	test_vec_size(void);
 	void	test_vec_resize(void);
-	void	test_vec_max_ize(void);
+	void	test_vec_max_size(void);
 	void	test_vec_capacity(void);
 	void	test_vec_reserve(void);
 
