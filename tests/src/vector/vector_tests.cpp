@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/07 19:22:50 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/07 20:04:02 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ namespace std
 		std::cout << std::setw(42) << " ORIGINAL VECTOR \n\n";
 		#endif
 
-		// // construct/assign
-		// test_vec_default_ctor();
-		// test_vec_fill_ctor();
-		// test_vec_copy_ctor();
-		// test_vec_copy_assign();
+		// construct/assign
+		test_vec_default_ctor();
+		test_vec_fill_ctor();
+		test_vec_copy_ctor();
+		test_vec_copy_assign();
 
-		// // iterator
-		// test_vec_iterator();
+		// iterator
+		test_vec_iterator();
 
 		// capacity
 		test_vec_empty();

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/07 17:58:35 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/07 20:01:41 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -263,10 +263,11 @@ namespace ft
 				reserve(len);
 			}
 			// insert the elements
-			for ( ; __n > 0; ++this->_M_end, __n-- )
+			for ( ; __n > 0; --__n)
 			{
 				*__pos = __val;
-				__pos++;
+				++__pos;
+				++this->_M_end;
 			}
 		}
 	}
@@ -619,7 +620,7 @@ namespace ft
 	vector<T,Alloc>::resize(size_type n, value_type val)
 	{
 		if (n > size())
-			_M_fill_insert(this->end(), n, val);
+			_M_fill_insert(this->end(), n - size(), val);
 		else if (n < size())
 			_M_erase_at_end(this->_M_begin + n);
 	}

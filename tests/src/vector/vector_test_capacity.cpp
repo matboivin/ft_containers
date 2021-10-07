@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/07 19:36:58 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/07 20:07:25 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,17 @@ namespace std
 		// create an empty vector
 		vector<int>	vec1;
 
-		assert(vec1.empty() == true);
+		bool	is_empty = vec1.empty();
+
+		std::cout << std::boolalpha << "vec.empty()? " << is_empty << std::endl;
+		assert(is_empty == true);
 
 		// create a vector of size 10
 		vector<int>	vec2(10);
 
-		assert(vec2.empty() == false);
+		is_empty = vec2.empty();
+		std::cout << std::boolalpha << "vec.empty()? " << is_empty << std::endl;
+		assert(is_empty == false);
 	}
 
 	void	test_vec_size(void)
@@ -47,12 +52,18 @@ namespace std
 		// create a vector
 		vector<int>	vec(42);
 
-		assert(vec.size() == 42);
+		std::size_t	vec_size = vec.size();
+
+		std::cout << "vec.size() = " << vec_size << std::endl;
+		assert(vec_size == 42);
 
 		for (int i = 0; i < 8; ++i)
 			vec.push_back(i);
 
-		assert(vec.size() == 50);
+		vec_size = vec.size();
+
+		std::cout << "vec.size() = " << vec_size << std::endl;
+		assert(vec_size == 50);
 	}
 
 	void	test_vec_resize(void)
@@ -83,16 +94,20 @@ namespace std
 		for ( int i = 1; i < 10 ; ++i )
 			vec.push_back(i);
 
+		std::cout << "vec.resize(5);\n\n";
 		vec.resize(5); // [ 1, 2, 3, 4, 5 ]
 		assert(vec == res1);
+		displayVecInfos(vec);
 
+		std::cout << "\nvec.resize(8,100);\n\n";
 		vec.resize(8,100); // [ 1, 2, 3, 4, 5, 100, 100, 100 ]
-		//assert(vec == res2);
-		displayVecInfos(vec, "std::vector");
+		assert(vec == res2);
+		displayVecInfos(vec);
 
+		std::cout << "\nvec.resize(12);\n\n";
 		vec.resize(12); // [ 1, 2, 3, 4, 5, 100, 100, 100, 0, 0, 0, 0 ]
-		//assert(vec == res3);
-		displayVecInfos(vec, "std::vector");
+		assert(vec == res3);
+		displayVecInfos(vec);
 	}
 
 	void	test_vec_max_size(void)
