@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 18:32:34 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/07 18:23:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/07 18:32:06 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,21 @@ static int	open_file(std::ifstream& infile, const char* filename)
  * Generate an output on stdout using the two output files
  */
 
-void	generate_output(void)
+static int	generate_vec_output(void)
 {
 	std::ifstream	ft_file;
 	std::ifstream	std_file;
 
 	if (open_file(ft_file, "tests/outputs/ft_vec.out")
 		|| open_file(std_file, "tests/outputs/std_vec.out"))
-		return ;
+		return (1);
 
 	read_files(ft_file, std_file);
+	return (0);
+}
+
+void	generate_output(void)
+{
+	if (generate_vec_output())
+		return ;
 }
