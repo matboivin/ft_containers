@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 18:32:34 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/07 18:32:06 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/07 19:02:24 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,17 @@
  * Output formatters
  */
 
+static void	put_container_title(const std::string& ft_title, const std::string& std_title)
+{
+	std::cout << '\n' << COL_BLUE_B << ft_title << std::setw(48)
+			  << std_title << COL_RESET
+			  << std::endl;
+}
+
 static void	put_test_title(const std::string& ft_title, const std::string& std_title)
 {
-	std::cout << '\n' << COL_BLUE_B << ft_title << std::setw(30)
-			  << std_title << std::setw(30) << COL_RESET
+	std::cout << '\n' << COL_BLUE_B << ft_title << std::setw(72)
+			  << std_title << COL_RESET
 			  << std::endl;
 }
 
@@ -34,11 +41,6 @@ static void	put_test_time(const std::string& ft_time, const std::string& std_tim
 			  << std::setw(57)
 			  << "ori: " << COL_WHITE_B << std_time << COL_RESET
 			  << std::endl;
-}
-
-static void	put_test_description(const std::string& descr)
-{
-	std::cout << COL_BLUE << descr << COL_RESET << std::endl;
 }
 
 /*
@@ -52,13 +54,13 @@ static void	read_files(std::ifstream& ft_file, std::ifstream& std_file)
 
 	while (std::getline(ft_file, ft_res) && std::getline(std_file, std_res))
 	{
-		if ((ft_res[0] == '_') || (ft_res[0] == '.'))
+		if (ft_res.find("MY ") != std::string::npos)
+			put_container_title(ft_res, std_res);
+		else if (ft_res.find("TEST: ") != std::string::npos)
 			put_test_title(ft_res, std_res);
 		else if (ft_res.find("seconds") != std::string::npos)
 			put_test_time(ft_res, std_res);
-		else if (ft_res.find("Test description") != std::string::npos)
-			put_test_description(ft_res);
-		else
+		else if (ft_res.find("Test description") == std::string::npos)
 			std::cout << ft_res << std::setw(72) << std_res << std::endl;
 	}
 

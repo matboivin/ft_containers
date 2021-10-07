@@ -27,11 +27,19 @@ TEST_INC_FILES = tests.hpp \
 
 TEST_SRC_FILES = main.cpp \
 				 generate_output.cpp \
+				 vector_test_capacity.cpp \
+				 vector_test_construct.cpp \
+				 vector_test_elements.cpp \
+				 vector_test_iterator.cpp \
+				 vector_test_modifiers.cpp \
 				 vector_tests.cpp
 
 INC_DIR = tests/include
 SRC_DIR = tests/src
 TEST_OUT_DIR = tests/outputs
+
+SUBDIRS = vector
+SRC_SUBDIRS = $(addprefix $(SRC_DIR)/, $(SUBDIRS))
 
 # OBJ
 
@@ -47,7 +55,7 @@ OBJ_CMP = $(OBJ_DIR)/cmp/main.o $(OBJ_DIR)/cmp/generate_output.o
 INC = $(addprefix $(IMPL_DIR)/, $(IMPL_FILES)) \
 	  $(addprefix $(INC_DIR)/, $(TEST_INC_FILES))
 
-VPATH = $(SRC_DIR)
+VPATH = $(SRC_DIR) $(SRC_SUBDIRS)
 
 # COMPIL AND FLAGS
 

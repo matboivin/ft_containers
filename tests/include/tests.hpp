@@ -6,16 +6,17 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:45:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/07 18:14:41 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/07 18:43:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TESTS_HPP
 #define TESTS_HPP
 
+#include <assert.h>
 #include <fstream>
 #include <string>
-#include <time.h> // clock
+#include <time.h>
 
 /*
  * Colors for a more readable output
