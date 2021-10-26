@@ -46,6 +46,7 @@
 
 ### Traits
 
+- [Introduction aux traits](https://h-deb.clg.qc.ca/Sujets/Divers--cplusplus/Traits.html)
 - [Comprendre enable_if](https://h-deb.clg.qc.ca/Sujets/TrucsScouts/Comprendre_enable_if.html)
 - [SFINAE (Substitution Failure is not an Error)](https://h-deb.clg.qc.ca/Sujets/Divers--cplusplus/SFINAE.html)
 

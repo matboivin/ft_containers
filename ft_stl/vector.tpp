@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/26 18:07:12 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/26 19:01:31 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,11 +229,9 @@ namespace ft
 	 * @param first, last  Input iterators to the initial and final positions in a range
 	 */
 	template<typename T, typename Alloc>
-	template<typename InputIterator>
-	vector<T,Alloc>::vector(
-		typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type first,
-		InputIterator last,
-		const allocator_type& alloc)
+	template<typename InputIterator,
+			 typename ft::enable_if<ft::is_integral<InputIterator>::value>::type>
+	vector<T,Alloc>::vector(InputIterator first, InputIterator last, const allocator_type& alloc)
 	: _M_alloc(alloc)
 	{
 		std::cout << "ft::vector range constructor called" << std::endl;
