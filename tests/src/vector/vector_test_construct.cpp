@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/07 18:54:30 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/26 19:30:24 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,31 @@ namespace std
 
 		// displayVecInfos(vec1, "vector 1");
 		// displayVecInfos(vec2, "vector 2");
+	}
+
+	void	test_vec_range_ctor(void)
+	{
+		std::cout << "TEST: Range constructor \n\n";
+
+		explainTest("Creates a new object using a range of elements.");
+
+		// create a vector
+		vector<int>	test;
+
+		// call push_back()
+		for ( int i = 0; i < 100; ++i )
+			test.push_back(i);
+
+		vector<int>::iterator	it = test.begin();
+
+		it += 10;
+
+		// create vectors using ranges of elements
+		vector<int>	vec1(test.begin(), test.end());
+		vector<int>	vec2(test.begin(), it);
+
+		displayVecInfos(vec1, "vector 1");
+		displayVecInfos(vec2, "vector 2");
 	}
 
 	void	test_vec_copy_assign(void)

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/26 19:01:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/26 19:37:21 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,9 @@ namespace ft
 			   const allocator_type& alloc = allocator_type());
 		
 		// range constructor
-		template<typename InputIterator,
-				 typename ft::enable_if<ft::is_integral<InputIterator>::value>::type>
-			vector(InputIterator first, InputIterator last,
+		template<typename InputIterator>
+			vector(typename ft::enable_if<!ft::is_integral<InputIterator>::value, InputIterator>::type first,
+				   InputIterator last,
 				   const allocator_type& alloc = allocator_type());
 
 		// copy constructor

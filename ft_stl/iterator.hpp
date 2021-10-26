@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/09/29 15:48:54 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/26 19:29:50 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -574,7 +574,7 @@ namespace ft
 		// advances or decrements the iterator
 		base_iterator&	operator++(void);
 		base_iterator	operator++(int);
-		base_iterator&	operator+= (difference_type n);
+		base_iterator&	operator+=(difference_type n);
 		base_iterator	operator+(difference_type n) const;
 		base_iterator&	operator--(void);
 		base_iterator	operator--(int);
@@ -721,7 +721,7 @@ namespace ft
 	base_iterator<Iterator,Container>&
 	base_iterator<Iterator,Container>::operator+=(difference_type n)
 	{
-		current -= n;
+		current += n;
 		return (*this);
 	}
 
@@ -779,7 +779,7 @@ namespace ft
 	base_iterator<Iterator,Container>&
 	base_iterator<Iterator,Container>::operator-=(difference_type n)
 	{
-		current += n;
+		current -= n;
 		return (*this);
 	}
 

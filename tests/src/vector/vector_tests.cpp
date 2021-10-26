@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/07 20:04:02 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/26 19:03:06 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ namespace std
 		test_vec_default_ctor();
 		test_vec_fill_ctor();
 		test_vec_copy_ctor();
+		test_vec_range_ctor();
 		test_vec_copy_assign();
 
 		// iterator
