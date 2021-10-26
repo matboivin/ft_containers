@@ -16,7 +16,8 @@ COL_RESET = \033[0m
 IMPL_FILES = algorithm.hpp \
 			 iterator.hpp \
 			 type_traits.hpp \
-			 vector.hpp
+			 vector.hpp \
+			 vector.tpp
 
 IMPL_DIR = ft_stl
 
