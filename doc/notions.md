@@ -44,6 +44,11 @@
 - [cppreference.com: Standard library header <vector>](https://en.cppreference.com/w/cpp/header/vector)
 - [cplusplus.com: std::vector](https://www.cplusplus.com/reference/vector/vector/)
 
+### Traits
+
+- [Comprendre enable_if](https://h-deb.clg.qc.ca/Sujets/TrucsScouts/Comprendre_enable_if.html)
+- [SFINAE (Substitution Failure is not an Error)](https://h-deb.clg.qc.ca/Sujets/Divers--cplusplus/SFINAE.html)
+
 ### Style guidelines
 
 - [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
