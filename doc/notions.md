@@ -49,6 +49,8 @@
 - [Introduction aux traits](https://h-deb.clg.qc.ca/Sujets/Divers--cplusplus/Traits.html)
 - [Comprendre enable_if](https://h-deb.clg.qc.ca/Sujets/TrucsScouts/Comprendre_enable_if.html)
 - [SFINAE (Substitution Failure is not an Error)](https://h-deb.clg.qc.ca/Sujets/Divers--cplusplus/SFINAE.html)
+- [SFINAE](https://www.enseignement.polytechnique.fr/informatique/INF478/docs/Cpp/en/cpp/language/sfinae.html)
+- [How does std::enabled_if work when enabling via a parameter](https://stackoverflow.com/questions/51785354/how-does-stdenabled-if-work-when-enabling-via-a-parameter)
 
 ### Style guidelines
 

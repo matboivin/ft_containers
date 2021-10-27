@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/26 19:30:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/27 15:11:57 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,24 @@ namespace std
 		vector<int>	test;
 
 		// call push_back()
-		for ( int i = 0; i < 100; ++i )
+		for ( int i = 0; i < 30; ++i )
 			test.push_back(i);
 
 		vector<int>::iterator	it = test.begin();
-
 		it += 10;
+
+		clock_t	start = clock();
 
 		// create vectors using ranges of elements
 		vector<int>	vec1(test.begin(), test.end());
+
+		displayElapsedTime(start, clock());
+
+		start = clock();
+
 		vector<int>	vec2(test.begin(), it);
+
+		displayElapsedTime(start, clock());
 
 		displayVecInfos(vec1, "vector 1");
 		displayVecInfos(vec2, "vector 2");
