@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/27 15:13:30 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/27 19:07:01 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,8 @@ namespace ft
 		template<typename InputIterator>
 			vector(InputIterator first, InputIterator last,
 				   const allocator_type& alloc = allocator_type(),
-				   typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type* = 0);
+				   typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0
+				   );
 
 		// copy constructor
 		vector(const vector& x);
@@ -371,7 +372,7 @@ namespace ft
 	template<typename InputIterator>
 	vector<T,Alloc>::vector(InputIterator first, InputIterator last,
 							const allocator_type& alloc,
-							typename ft::enable_if<!ft::is_integral<InputIterator>::value>::type*)
+							typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type*)
 	: _M_alloc(alloc)
 	{
 		_M_range_initialize(first, last);

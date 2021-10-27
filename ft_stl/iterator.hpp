@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/26 19:29:50 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/27 17:42:55 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #define ITERATOR_HPP
 
 #include "algorithm.hpp"
-#include "type_traits.hpp"
 
 /*
  * Credits:
@@ -82,9 +81,8 @@ namespace ft
 	 */
 	template<typename Category, typename T, typename Distance = std::ptrdiff_t,
 			 typename Pointer = T*, typename Reference = T&>
-	class iterator
+	struct iterator
 	{
-	public:
 		// types
 		typedef Category	iterator_category;
 		typedef T			value_type;
@@ -99,9 +97,8 @@ namespace ft
 	 * @param Iterator  The iterator type to retrieve properties for iterators
 	 */
 	template<typename Iterator>
-	class iterator_traits
+	struct iterator_traits
 	{
-	public:
 		// types
 		typedef typename Iterator::iterator_category	iterator_category;
 		typedef typename Iterator::value_type			value_type;
@@ -114,7 +111,7 @@ namespace ft
 	 * Partial specialization for pointers
 	 */
 	template<typename T>
-	class iterator_traits<T*>
+	struct iterator_traits<T*>
 	{
 	public:
 		// types
@@ -129,9 +126,8 @@ namespace ft
 	 * Partial specialization for pointers to const
 	 */
 	template<typename T>
-	class iterator_traits<const T*>
+	struct iterator_traits<const T*>
 	{
-	public:
 		// types
 		typedef ft::random_access_iterator_tag	iterator_category;
 		typedef T								value_type;
