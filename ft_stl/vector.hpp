@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 19:00:44 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 19:19:10 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ namespace ft
 		// template<typename InputIterator>
 		// 	void		insert(iterator position, InputIterator first, InputIterator last);
 		iterator		erase(iterator position);
-		// iterator		erase(iterator first, iterator last);
+		iterator		erase(iterator first, iterator last);
 		void			swap(vector& x);
 		void			clear(void);
 	};
@@ -946,12 +946,18 @@ namespace ft
 	 * @return  An iterator pointing to the new location of the element
 	 *          that followed the last element erased by the function call
 	 */
-	// template<typename T, typename Alloc>
-	// typename vector<T,Alloc>::iterator
-	// vector<T,Alloc>::erase(iterator first, iterator last)
-	// {
-	// 	return (__first);
-	// }
+	template<typename T, typename Alloc>
+	typename vector<T,Alloc>::iterator
+	vector<T,Alloc>::erase(iterator first, iterator last)
+	{
+		if (first != last)
+		{
+			while (last != end())
+				*(first++) = *(last++);
+			_M_erase_at_end(first.base());
+		}
+		return (first);
+	}
 
 	/*
 	 * Exchanges the content of the container by the content of x
