@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 19:22:56 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 19:40:01 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ namespace std
 	void	test_vec_assign_it(void);
 	void	test_vec_assign_val(void);
 	void	test_vec_push_back(void);
+	void	test_vec_insert_val(void);
 	void	test_vec_pop_back(void);
 	void	test_vec_erase_pos(void);
 	void	test_vec_erase_it(void);

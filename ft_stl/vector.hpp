@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 19:32:57 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/29 00:25:16 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,10 +135,11 @@ namespace ft
 		void			assign(size_type n, const value_type& val);
 		void			push_back(const value_type& val);
 		void			pop_back(void);
-		// iterator		insert(iterator position, const value_type& val);
+		iterator		insert(iterator position, const value_type& val);
 		// void			insert(iterator position, size_type n, const value_type& val);
 		// template<typename InputIterator>
-		// 	void		insert(iterator position, InputIterator first, InputIterator last);
+		// 	void		insert(iterator position, InputIterator first, InputIterator last,
+							//    typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0);
 		iterator		erase(iterator position);
 		iterator		erase(iterator first, iterator last);
 		void			swap(vector& x);
@@ -849,20 +850,38 @@ namespace ft
 	 *
 	 * @return  An iterator that points to the first of the newly inserted elements
 	 */
-	// template<typename T, typename Alloc>
-	// typename vector<T,Alloc>::iterator
-	// vector<T,Alloc>::insert(iterator position, const value_type& val)
-	// {
-	// 	size_type	newSize = _size + 1;
+	template<typename T, typename Alloc>
+	typename vector<T,Alloc>::iterator
+	vector<T,Alloc>::insert(iterator position, const value_type& val)
+	{
+		size_type	n = begin() - position;
 
-	// 	if (newSize > _capacity)
-	// 		reserve(newSize);
+		if (this->_M_end == this->_M_endOfStorage)
+			reserve(size() + 1);
 
-	// 	*(position - 1) = val;
-	// 	_M_end = _M_begin + newSize;
+		position = begin() + n;
 
-	// 	return (position);
-	// }
+		if (position == end())
+		{
+			this->_M_alloc.construct(this->_M_end, val);
+			++this->_M_end;
+		}
+		else
+		{
+			this->_M_alloc.construct(this->_M_end, 0);
+			++this->_M_end;
+
+			iterator	it = end();
+
+			while (position != it)
+			{
+				*it = *(it - 1);
+				--it;
+			}
+			*position = val;
+		}
+		return (position);
+	}
 
 	/*
 	 * Insert elements
@@ -906,7 +925,8 @@ namespace ft
 	// template<typename T, typename Alloc>
 	// template<typename InputIterator>
 	// void
-	// vector<T,Alloc>::insert(iterator position, InputIterator first, InputIterator last)
+	// vector<T,Alloc>::insert(iterator position, InputIterator first, InputIterator last,
+	//							typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type*)
 	// {
 	// 	size_type	newSize = size() + std::distance(first, last);
 
