@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/26 19:02:45 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 16:45:04 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ namespace std
 
 	// modifiers
 	void	test_vec_push_back(void);
+
+	// non-member functions
+	void	test_vec_comp_ops(void);
 }
 
 /*

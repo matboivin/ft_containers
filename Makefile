@@ -36,6 +36,7 @@ TEST_SRC_FILES = main.cpp \
 				 revit_test_math_ops.cpp \
 				 revit_tests.cpp \
 				 vector_test_capacity.cpp \
+				 vector_test_comp_ops.cpp \
 				 vector_test_construct.cpp \
 				 vector_test_elements.cpp \
 				 vector_test_iterator.cpp \
