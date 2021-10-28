@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:48:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 15:43:45 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 18:29:39 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ namespace std
 	void	test_revit_subtract(void);
 
 	// non-member functions
-	void	test_revit_comp_ops(void);
-	void	test_revit_non_add(void);
-	void	test_revit_non_sub(void);
+	void	test_revit_non_mb_comp_ops(void);
+	void	test_revit_non_mb_add(void);
+	void	test_revit_non_mb_sub(void);
 }
 
 #endif

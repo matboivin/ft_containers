@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 16:45:35 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 16:50:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 18:30:42 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ namespace ft
 namespace std
 #endif
 {
-	void	test_vec_comp_ops(void)
+	void	test_vec_non_mb_comp_ops(void)
 	{
 		std::cout << "TEST: Non-member comparison operators \n\n";
 

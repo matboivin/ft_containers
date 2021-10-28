@@ -22,7 +22,7 @@ namespace ft
 namespace std
 #endif
 {
-	void	test_revit_comp_ops(void)
+	void	test_revit_non_mb_comp_ops(void)
 	{
 		std::cout << "TEST: Comparison operators \n\n";
 

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:13 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 16:14:12 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 18:30:19 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace ft
 namespace std
 #endif
 {
-	void	test_revit_non_add(void)
+	void	test_revit_non_mb_add(void)
 	{
 		std::cout << "TEST: Non-member operator+ \n\n";
 
@@ -49,7 +49,7 @@ namespace std
 		std::cout << "*rev_it = " << *rev_it << "\n\n";
 	}
 
-	void	test_revit_non_sub(void)
+	void	test_revit_non_mb_sub(void)
 	{
 		std::cout << "TEST: Non-member operator- \n\n";
 

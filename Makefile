@@ -41,6 +41,7 @@ TEST_SRC_FILES = main.cpp \
 				 vector_test_elements.cpp \
 				 vector_test_iterator.cpp \
 				 vector_test_modifiers.cpp \
+				 vector_test_swap.cpp \
 				 vector_tests.cpp
 
 INC_DIR = tests/include

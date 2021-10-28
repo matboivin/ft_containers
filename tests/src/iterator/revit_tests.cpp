@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:49:29 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 15:44:31 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 18:30:25 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ namespace std
 		test_revit_subtract();
 
 		// non-member functions
-		test_revit_comp_ops();
-		test_revit_non_add();
-		test_revit_non_sub();
+		test_revit_non_mb_comp_ops();
+		test_revit_non_mb_add();
+		test_revit_non_mb_sub();
 	}
 }
