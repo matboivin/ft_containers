@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/27 17:42:55 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 14:45:38 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -821,7 +821,7 @@ namespace ft
 	operator<(const base_iterator<Iterator,Container>& lhs,
 			  const base_iterator<Iterator,Container>& rhs)
 	{
-		return (lhs.base() > rhs.base());
+		return (lhs.base() < rhs.base());
 	}
 
 	template<typename Iterator, typename Container>
@@ -829,7 +829,7 @@ namespace ft
 	operator<=(const base_iterator<Iterator,Container>& lhs,
 			   const base_iterator<Iterator,Container>& rhs)
 	{
-		return (lhs.base() >= rhs.base());
+		return (lhs.base() <= rhs.base());
 	}
 
 	template<typename Iterator, typename Container>
@@ -837,7 +837,7 @@ namespace ft
 	operator>(const base_iterator<Iterator,Container>& lhs,
 			  const base_iterator<Iterator,Container>& rhs)
 	{
-		return (lhs.base() < rhs.base());
+		return (lhs.base() > rhs.base());
 	}
 
 	template<typename Iterator, typename Container>
@@ -845,7 +845,7 @@ namespace ft
 	operator>=(const base_iterator<Iterator,Container>& lhs,
 			   const base_iterator<Iterator,Container>& rhs)
 	{
-		return (lhs.base() <= rhs.base());
+		return (lhs.base() >= rhs.base());
 	}
 
 	/*
