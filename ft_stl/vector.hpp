@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 00:25:16 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/29 00:40:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -873,7 +873,7 @@ namespace ft
 
 			iterator	it = end();
 
-			while (position != it)
+			while (it != position)
 			{
 				*it = *(it - 1);
 				--it;
@@ -895,21 +895,36 @@ namespace ft
 	 * @param n         Number of elements to insert. Each element is initialized to a copy of val
 	 * @param val       Value to be copied (or moved) to the inserted elements
 	 */
-	// template<typename T, typename Alloc>
-	// void
-	// vector<T,Alloc>::insert(iterator position, size_type n, const value_type& val)
-	// {
-	// 	size_type	newSize = size() + n;
-	// 	typename T::iterator	ite = position + n;
+	template<typename T, typename Alloc>
+	void
+	vector<T,Alloc>::insert(iterator position, size_type n, const value_type& val)
+	{
+		size_type	n = begin() - position;
 
-	// 	if (newSize > _capacity)
-	// 		reserve(newSize);
+		if (capacity() - size() < n)
+			reserve(size() + n);
 
-	// 	for (typename T::iterator it = position; it != ite; ++it)
-	// 		*it = val;
+		position = begin() + n;
 
-	// 	_M_end = _M_begin + newSize;
-	// }
+		if (position == end())
+			_M_fill_insert(position, n, val);
+		else
+		{
+			iterator	from = end();
+			_M_fill_insert(pos, n, value_type());
+			this->_M_end += n;
+
+			iterator	it = end();
+
+			while (from != position)
+			{
+				*it = *(from);
+				--it;
+				--from;
+			}
+			_M_fill_insert(pos, n, value_type());
+		}
+	}
 
 	/*
 	 * Insert elements
