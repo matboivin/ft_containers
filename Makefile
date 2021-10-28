@@ -23,10 +23,17 @@ IMPL_DIR = ft_stl
 # TESTS
 
 TEST_INC_FILES = tests.hpp \
+				 revit_tests.hpp \
 				 vector_tests.hpp
 
 TEST_SRC_FILES = main.cpp \
 				 generate_output.cpp \
+				 revit_test_comp_ops.cpp \
+				 revit_test_construct.cpp \
+				 revit_test_elem_access.cpp \
+				 revit_test_inc_decr.cpp \
+				 revit_test_math_ops.cpp \
+				 revit_tests.cpp \
 				 vector_test_capacity.cpp \
 				 vector_test_construct.cpp \
 				 vector_test_elements.cpp \
@@ -38,7 +45,7 @@ INC_DIR = tests/include
 SRC_DIR = tests/src
 TEST_OUT_DIR = tests/outputs
 
-SUBDIRS = vector
+SUBDIRS = vector iterator
 SRC_SUBDIRS = $(addprefix $(SRC_DIR)/, $(SUBDIRS))
 
 # OBJ
@@ -102,8 +109,8 @@ $(NAME_CMP): $(OBJ_DIR) $(OBJ_CMP)
 
 # DEBUG
 debug:
-	./$(NAME) > $(TEST_OUT_DIR)/ft_vec.out 2>&1
-	./$(NAME_STD) > $(TEST_OUT_DIR)/std_vec.out 2>&1
+	./$(NAME) > $(TEST_OUT_DIR)/mine.out 2>&1
+	./$(NAME_STD) > $(TEST_OUT_DIR)/original.out 2>&1
 	./$(NAME_CMP)
 
 check_leaks: $(NAME)

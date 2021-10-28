@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 18:32:34 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/07 19:02:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 16:19:51 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 
 static void	put_container_title(const std::string& ft_title, const std::string& std_title)
 {
-	std::cout << '\n' << COL_BLUE_B << ft_title << std::setw(48)
+	std::cout << '\n' << COL_GREEN_B << ft_title << std::setw(48)
 			  << std_title << COL_RESET
 			  << std::endl;
 }
@@ -88,21 +88,15 @@ static int	open_file(std::ifstream& infile, const char* filename)
  * Generate an output on stdout using the two output files
  */
 
-static int	generate_vec_output(void)
+int	generate_output(void)
 {
 	std::ifstream	ft_file;
 	std::ifstream	std_file;
 
-	if (open_file(ft_file, "tests/outputs/ft_vec.out")
-		|| open_file(std_file, "tests/outputs/std_vec.out"))
+	if (open_file(ft_file, "tests/outputs/mine.out")
+		|| open_file(std_file, "tests/outputs/original.out"))
 		return (1);
 
 	read_files(ft_file, std_file);
 	return (0);
-}
-
-void	generate_output(void)
-{
-	if (generate_vec_output())
-		return ;
 }
