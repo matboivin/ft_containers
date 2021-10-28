@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/27 19:07:01 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 18:09:25 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,17 +62,17 @@ namespace ft
 
 	protected:
 		// helpers
-		pointer		_M_allocate(size_type __n);
-		void		_M_create_storage(size_type __n);
-		void		_M_deallocate(pointer __p, size_type __n);
-		void		_M_swap_data(vector& __x);
-		void		_M_fill_insert(iterator __pos, size_type __n, const value_type& __val);
+		pointer			_M_allocate(size_type __n);
+		void			_M_create_storage(size_type __n);
+		void			_M_deallocate(pointer __p, size_type __n);
+		void			_M_swap_data(vector& __x);
+		void			_M_fill_insert(iterator __pos, size_type __n, const value_type& __val);
 		template<typename InputIterator>
-			void	_M_range_initialize(InputIterator __first, InputIterator __last);
-		size_type	_M_calculateGrowth(const size_type __n);
-		void		_M_range_check(size_type __n) const;
-		size_type	_M_len_check(size_type __n, const char* __s) const;
-		void		_M_erase_at_end(pointer __pos);
+			void		_M_range_initialize(InputIterator __first, InputIterator __last);
+		size_type		_M_calculateGrowth(const size_type __n);
+		void			_M_range_check(size_type __n) const;
+		size_type		_M_len_check(size_type __n, const char* __s) const;
+		void			_M_erase_at_end(pointer __pos);
 
 	public:
 		// default constructor
@@ -110,12 +110,12 @@ namespace ft
 		reverse_iterator	rend(void);
 
 		// capacity
-		bool		empty(void) const;
-		size_type	size(void) const;
-		void		resize(size_type n, value_type val = value_type());
-		size_type	max_size(void) const;
-		size_type	capacity(void) const;
-		void		reserve(size_type n);
+		bool			empty(void) const;
+		size_type		size(void) const;
+		void			resize(size_type n, value_type val = value_type());
+		size_type		max_size(void) const;
+		size_type		capacity(void) const;
+		void			reserve(size_type n);
 
 		// element access
 		reference		operator[](size_type n);
@@ -129,18 +129,18 @@ namespace ft
 
 		// modifiers
 		template<typename InputIterator>
-			void	assign(InputIterator first, InputIterator last);
-		void		assign(size_type n, const value_type& val);
-		void		push_back(const value_type& val);
-		void		pop_back(void);
-		// iterator	insert(iterator position, const value_type& val);
-		// void		insert(iterator position, size_type n, const value_type& val);
+			void		assign(InputIterator first, InputIterator last);
+		void			assign(size_type n, const value_type& val);
+		void			push_back(const value_type& val);
+		void			pop_back(void);
+		// iterator		insert(iterator position, const value_type& val);
+		// void			insert(iterator position, size_type n, const value_type& val);
 		// template<typename InputIterator>
-		// 	void	insert(iterator position, InputIterator first, InputIterator last);
-		iterator	erase(iterator position);
-		// iterator	erase(iterator first, iterator last);
-		void		swap(vector& x);
-		void		clear(void);
+		// 	void		insert(iterator position, InputIterator first, InputIterator last);
+		iterator		erase(iterator position);
+		// iterator		erase(iterator first, iterator last);
+		void			swap(vector& x);
+		void			clear(void);
 	};
 
 	/* non-member function overloads **************************************** */
@@ -299,9 +299,7 @@ namespace ft
 	void
 	vector<T,Alloc>::_M_erase_at_end(pointer __pos)
 	{
-		difference_type	range_len = this->_M_end - __pos;
-
-		if (range_len > 0)
+		if (size_type range_len = this->_M_end - __pos)
 		{
 			while (range_len--)
 			{
@@ -830,8 +828,8 @@ namespace ft
 	void
 	vector<T,Alloc>::pop_back(void)
 	{
-		this->_M_alloc.destroy(end() - 1);
 		--this->_M_end;
+		this->_M_alloc.destroy(this->_M_end);
 	}
 
 	/*

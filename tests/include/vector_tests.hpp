@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 16:55:10 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 18:21:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,10 @@ namespace std
 
 	// modifiers
 	void	test_vec_push_back(void);
+	void	test_vec_pop_back(void);
+	void	test_vec_erase(void);
+	void	test_vec_swap(void);
+	void	test_vec_clear(void);
 
 	// non-member functions
 	void	test_vec_comp_ops(void);
@@ -78,14 +82,16 @@ static void	displayVecInfos(const Vec& v, const std::string& title="vector")
 		return ;
 	}
 
+	typename Vec::const_iterator it = v.begin();
+
 	std::cout << "[ ";
-	for ( typename Vec::const_iterator it = v.begin();
-		  it != v.end();
-		  ++it )
+	for ( int i = 0; it != v.end(); ++i, ++it )
 	{
 		std::cout << *it;
 		if ( it != (v.end() - 1) )
 			std::cout << ", ";
+		if ((i != 0) && (i % 10 == 0))
+			std::cout << "\n               ";
 	}
 	std::cout << " ]\n\n";
 }

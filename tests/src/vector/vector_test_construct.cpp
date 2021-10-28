@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/27 15:11:57 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 18:22:57 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,6 @@ namespace std
 
 		// assert they're identical
 		assert(vec1 == vec2);
-
-		// displayVecInfos(vec1, "vector 1");
-		// displayVecInfos(vec2, "vector 2");
 	}
 
 	void	test_vec_range_ctor(void)
@@ -123,8 +120,5 @@ namespace std
 
 		// assert they're identical
 		assert(vec1 == vec2);
-
-		// displayVecInfos(vec1, "vector 1");
-		// displayVecInfos(vec2, "vector 2");
 	}
 }
