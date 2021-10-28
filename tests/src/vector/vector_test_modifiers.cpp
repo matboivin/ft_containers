@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 19:18:44 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 19:35:25 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,58 @@ namespace ft
 namespace std
 #endif
 {
+	void	test_vec_assign_it(void)
+	{
+		std::cout << "TEST: Modifiers: assign(first, last) \n\n";
+
+		explainTest("Assigns new contents to the vector using a range of iterators.");
+
+		// create vectors
+		vector<int>	vec1;
+		vector<int>	vec2;
+
+		// fill them
+		for ( int i = 0; i < 60; ++i )
+			vec1.push_back(i);
+
+		vector<int>::iterator	first = vec1.begin();
+		vector<int>::iterator	last = vec1.begin();
+		first += 2;
+		last += 42;
+
+		displayVecInfos(vec2, "before");
+
+		clock_t	time_start = clock();
+		vec2.assign(first, last);
+		clock_t	time_end = clock();
+
+		displayVecInfos(vec2, "after");
+		displayElapsedTime(time_start, time_end);
+	}
+
+	void	test_vec_assign_val(void)
+	{
+		std::cout << "TEST: Modifiers: assign(n, val) \n\n";
+
+		explainTest("Assigns new contents to the vector using a fill value.");
+
+		// create vectors
+		vector<int>	vec;
+
+		// fill them
+		for ( int i = 0; i < 60; ++i )
+			vec.push_back(i);
+
+		displayVecInfos(vec, "before");
+
+		clock_t	time_start = clock();
+		vec.assign(42, 42);
+		clock_t	time_end = clock();
+
+		displayVecInfos(vec, "after");
+		displayElapsedTime(time_start, time_end);
+	}
+
 	void	test_vec_push_back(void)
 	{
 		std::cout << "TEST: Modifiers: push_back() \n\n";
@@ -91,7 +143,10 @@ namespace std
 		std::cout << "vector size:      " << vec.size()
 				  << "\nvector.at(50)   = " << vec.at(50)
 				  << "\n*it             = " << *it << "\n\n";
+
 		displayElapsedTime(time_start, time_end);
+
+		assert(*it == 51);
 	}
 
 	void	test_vec_erase_it(void)

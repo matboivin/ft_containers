@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 19:19:10 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 19:32:57 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,9 @@ namespace ft
 
 		// modifiers
 		template<typename InputIterator>
-			void		assign(InputIterator first, InputIterator last);
+			void		assign(InputIterator first, InputIterator last,
+							   typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0
+							   );
 		void			assign(size_type n, const value_type& val);
 		void			push_back(const value_type& val);
 		void			pop_back(void);
@@ -776,7 +778,9 @@ namespace ft
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
 	void
-	vector<T,Alloc>::assign(InputIterator first, InputIterator last)
+	vector<T,Alloc>::assign(InputIterator first, InputIterator last,
+							typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type*
+							)
 	{
 		_M_erase_at_end(_M_begin);
 		_M_deallocate(_M_begin, capacity());
