@@ -28,6 +28,7 @@ TEST_INC_FILES = tests.hpp \
 
 TEST_SRC_FILES = main.cpp \
 				 generate_output.cpp \
+				 test_utils.cpp \
 				 revit_test_comp_ops.cpp \
 				 revit_test_construct.cpp \
 				 revit_test_elem_access.cpp \
@@ -55,7 +56,7 @@ OBJ_DIR = obj
 
 OBJ = $(addprefix $(OBJ_DIR)/ft/, $(OBJ_FILES))
 OBJ_STD = $(addprefix $(OBJ_DIR)/original/, $(OBJ_FILES))
-OBJ_CMP = $(OBJ_DIR)/cmp/main.o $(OBJ_DIR)/cmp/generate_output.o
+OBJ_CMP = $(OBJ_DIR)/cmp/main.o $(OBJ_DIR)/cmp/generate_output.o $(OBJ_DIR)/cmp/test_utils.o
 
 # INC AND PATHS
 

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:45:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 16:18:37 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 16:35:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@
 #define COL_YELLOW   "\033[0;33m"
 #define COL_YELLOW_B "\033[1;33m"
 
-void	displayElapsedTime(clock_t start, clock_t end);
-void	explainTest(const std::string& msg);
-int		generate_output(void);
+void		displayElapsedTime(clock_t start, clock_t end);
+void		explainTest(const std::string& msg);
+int			continue_tests(const std::string& next_test);
+int			generate_output(void);
+std::string	str_to_lower(std::string str);
 
 #endif

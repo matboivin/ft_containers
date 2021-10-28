@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/05 18:32:34 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 16:19:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 16:37:32 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,11 @@ static void	read_files(std::ifstream& ft_file, std::ifstream& std_file)
 	while (std::getline(ft_file, ft_res) && std::getline(std_file, std_res))
 	{
 		if (ft_res.find("MY ") != std::string::npos)
+		{
+			if (!continue_tests( ft_res.substr(ft_res.find("MY ") + 3) ))
+				break ;
 			put_container_title(ft_res, std_res);
+		}
 		else if (ft_res.find("TEST: ") != std::string::npos)
 			put_test_title(ft_res, std_res);
 		else if (ft_res.find("seconds") != std::string::npos)
@@ -63,7 +67,6 @@ static void	read_files(std::ifstream& ft_file, std::ifstream& std_file)
 		else if (ft_res.find("Test description") == std::string::npos)
 			std::cout << ft_res << std::setw(72) << std_res << std::endl;
 	}
-
 	ft_file.close();
 	std_file.close();
 }
