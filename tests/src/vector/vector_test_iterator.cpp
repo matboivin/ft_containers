@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/07 18:54:30 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 18:38:21 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,6 @@ namespace std
 		std::cout << "TEST: Iterator \n\n";
 
 		explainTest("Move through the elements of the container like pointers do.");
-
-		vector<int>::iterator	iter_type;
 
 		// create vector
 		vector<int>	vec;

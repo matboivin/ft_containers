@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 18:26:01 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 19:04:14 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,37 @@ namespace std
 		clock_t	time_end = clock();
 
 		std::cout << "vector size: " << vec.size() << "\n\n";
+		displayElapsedTime(time_start, time_end);
+	}
+
+	void	test_vec_erase(void)
+	{
+		std::cout << "TEST: Modifiers: erase() \n\n";
+
+		explainTest("Removes from the vector the element at the given position.");
+
+		// create a vector
+		vector<int>	vec;
+
+		// fill it
+		for ( int i = 0; i < 1000; ++i )
+			vec.push_back(i);
+
+		vector<int>::iterator	pos = vec.begin();
+		pos += 50;
+
+		std::cout << "vector size:      " << vec.size()
+				  << "\nvector.at(50)   = " << vec.at(50)
+				  << "\n\nit = vector.erase(50);\n\n";
+
+		vector<int>::iterator	it;
+		clock_t	time_start = clock();
+		it = vec.erase(pos);
+		clock_t	time_end = clock();
+
+		std::cout << "vector size:      " << vec.size()
+				  << "\nvector.at(50)   = " << vec.at(50)
+				  << "\n*it             = " << *it << "\n\n";
 		displayElapsedTime(time_start, time_end);
 	}
 

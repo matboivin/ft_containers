@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 18:09:25 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/28 19:00:44 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -925,15 +925,15 @@ namespace ft
 	typename vector<T,Alloc>::iterator
 	vector<T,Alloc>::erase(iterator position)
 	{
-		if ( position != end() )
-		{
-			iterator next = position + 1;
+		iterator	it(position);
 
-			while ( next != end() )
-				*position = next++;
-			*position = next;
-			--this->_M_end;
+		while ( (it + 1) != end() )
+		{
+			*it = *(it + 1);
+			++it;
 		}
+		--this->_M_end;
+		this->_M_alloc.destroy(this->_M_end);
 		return (position);
 	}
 
