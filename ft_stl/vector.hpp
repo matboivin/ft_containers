@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 23:30:56 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/29 23:44:01 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,9 +159,9 @@ namespace ft
 	template<typename T, typename Alloc>
 		bool	operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
 	template<typename T, typename Alloc>
-		bool	operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-	template<typename T, typename Alloc>
 		bool	operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
+	template<typename T, typename Alloc>
+		bool	operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
 	template<typename T, typename Alloc>
 		bool	operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
 
@@ -1149,16 +1149,16 @@ namespace ft
 
 	template<typename T, typename Alloc>
 	bool
-	operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
-		return ( !(rhs < lhs) );
+		return (rhs < lhs);
 	}
 
 	template<typename T, typename Alloc>
 	bool
-	operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+	operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
 	{
-		return (rhs < lhs);
+		return ( !(lhs > rhs) );
 	}
 
 	template<typename T, typename Alloc>
