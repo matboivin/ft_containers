@@ -6,18 +6,15 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 23:28:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/29 23:37:38 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STACK_HPP
 #define STACK_HPP
 
-#include <sstream>
 #include <memory>
 #include "algorithm.hpp"
-#include "iterator.hpp"
-#include "type_traits.hpp"
 
 /*
  * Credits:
@@ -69,6 +66,19 @@ namespace ft
 
 	/* non-member function overloads **************************************** */
 
+	// relational operators
+	template<typename T, typename Container = vector<T> >
+		bool	operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
+	template<typename T, typename Container = vector<T> >
+		bool	operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
+	template<typename T, typename Container = vector<T> >
+		bool	operator<(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
+	template<typename T, typename Container = vector<T> >
+		bool	operator>(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
+	template<typename T, typename Container = vector<T> >
+		bool	operator<=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
+	template<typename T, typename Container = vector<T> >
+		bool	operator>=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
 
 	/* ********************************************************************** */
 	/*                                                                        */
@@ -162,6 +172,55 @@ namespace ft
 		c.pop_back();
 	}
 
+
+	/* non-member function overloads **************************************** */
+
+	/*
+	 * Relational operators
+	 * Make comparison between two stacks
+	 */
+
+	template<typename T, typename Container = vector<T> >
+	bool
+	operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
+	{
+		return (lhs.c == rhs.c);
+	}
+
+	template<typename T, typename Container = vector<T> >
+	bool
+	operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
+	{
+		return ( !(lhs == rhs) );
+	}
+
+	template<typename T, typename Container = vector<T> >
+	bool
+	operator<(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
+	{
+		return (lhs.c < rhs.c);
+	}
+
+	template<typename T, typename Container = vector<T> >
+	bool
+	operator>(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
+	{
+		return (lhs.c > rhs.c);
+	}
+
+	template<typename T, typename Container = vector<T> >
+	bool
+	operator<=(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
+	{
+		return ( !(lhs > rhs) );
+	}
+
+	template<typename T, typename Container = vector<T> >
+	bool
+	operator>=(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
+	{
+		return ( !(lhs < rhs) );
+	}
 } // namespace ft
 
 #endif
