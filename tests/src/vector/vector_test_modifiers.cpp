@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 17:24:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/29 17:56:32 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -283,12 +283,12 @@ namespace std
 		vector<int>	original;
 
 		// fill them
-		for ( int i = 0; i < 60; ++i )
+		for ( int i = 0; i < 1000; ++i )
 			vec.push_back(i);
 
 		for ( int i = 0; i < 10; ++i )
 			original.push_back(i);
-		for ( int i = 50; i < 60; ++i )
+		for ( int i = 50; i < 1000; ++i )
 			original.push_back(i);
 
 		vector<int>::iterator	first = vec.begin();
@@ -296,14 +296,14 @@ namespace std
 		first += 10;
 		last += 50;
 
-		displayVecInfos(vec, "before");
+		//displayVecInfos(vec, "before");
 
 		vector<int>::iterator	it;
 		clock_t	time_start = clock();
 		it = vec.erase(first, last);
 		clock_t	time_end = clock();
 
-		displayVecInfos(vec, "after");
+		//displayVecInfos(vec, "after");
 		displayElapsedTime(time_start, time_end);
 
 		assert(vec == original);
