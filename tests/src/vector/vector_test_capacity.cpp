@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/07 20:07:25 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/29 17:23:00 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ namespace std
 	{
 		std::cout << "TEST: Capacity: resize() \n\n";
 
-		explainTest("Returns true the number of element in the vector.");
+		explainTest("Resizes the container so that it contains n elements.");
 
 		// create expected results
 		vector<int>	res1;

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 15:52:37 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/29 17:22:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ namespace ft
 		void			_M_default_initialize(size_type __n);
 		template<typename InputIterator>
 			void		_M_range_initialize(InputIterator __first, InputIterator __last);
+		template<typename InputIterator>
+			void		_M_range_insert(iterator __pos, InputIterator __first, InputIterator __last);
 		void			_M_fill_insert(iterator __pos, size_type __n, const value_type& __val);
 		size_type		_M_calculateGrowth(const size_type __n);
 		void			_M_range_check(size_type __n) const;
@@ -138,9 +140,10 @@ namespace ft
 		void			pop_back(void);
 		iterator		insert(iterator position, const value_type& val);
 		void			insert(iterator position, size_type n, const value_type& val);
-		// template<typename InputIterator>
-		// 	void		insert(iterator position, InputIterator first, InputIterator last,
-							//    typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0);
+		template<typename InputIterator>
+			void		insert(iterator position, InputIterator first, InputIterator last,
+							   typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0
+							   );
 		iterator		erase(iterator position);
 		iterator		erase(iterator first, iterator last);
 		void			swap(vector& x);
@@ -272,12 +275,87 @@ namespace ft
 	}
 
 	/*
+	 * Insert a range of elements at a given position
+	 */
+	template<typename T, typename Alloc>
+	template<typename InputIterator>
+	void
+	vector<T, Alloc>::_M_range_insert(iterator __pos, InputIterator __first, InputIterator __last)
+	{
+		difference_type	__len = __first - __last;
+
+		if (__len > 0)
+		{
+			if (capacity() - size() >= size_type(__len)) // enough capacity left
+			{
+				iterator	__backup_end = end();
+
+				_M_default_initialize(__len);
+				// if need to move element after filled range
+				if (size_type(end() - __pos) > 0)
+				{
+					iterator	it = end();
+
+					while (__pos != __backup_end)
+						*(--it) = *(--__backup_end);
+				}
+				// fill with the given range
+				for ( ; __first != __last; ++__first)
+				{
+					*__pos = *__first;
+					++__pos;
+				}
+			}
+			else // not enough capacity
+			{
+				size_type		__nb_elem_before = begin() - __pos;
+				size_type		__nb_elem_after = __pos - end();
+
+				// alloc new elements
+				const size_type	__new_size = _M_len_check(__len, "vector::_M_range_insert");
+				pointer			__new_start = this->_M_allocate(__new_size);
+				pointer			__new_end = __new_start;
+				iterator		__it = begin();
+
+				// if need to copy elements before the range
+				if (__nb_elem_before)
+				{
+					for ( ; __nb_elem_before > 0; --__nb_elem_before, ++__it)
+					{
+						this->_M_alloc.construct(__new_end, *(__it));
+						++__new_end;
+					}
+				}
+				// fill the range with n values
+				for ( ; __first != __last; ++__first)
+				{
+					this->_M_alloc.construct(__new_end, *__first);
+					++__new_end;
+				}
+				// if need to move element after filled range
+				if (__nb_elem_after)
+				{
+					for ( ; __nb_elem_after > 0; --__nb_elem_after, ++__it)
+					{
+						this->_M_alloc.construct(__new_end, *(__it));
+						++__new_end;
+					}
+				}
+				_M_erase_at_end(this->_M_begin);
+				_M_deallocate(this->_M_begin, capacity());
+				this->_M_begin = pointer(__new_start);
+				this->_M_end = pointer(__new_end);
+				this->_M_endOfStorage = this->_M_begin + __new_size;
+			}
+		}
+	}
+
+	/*
 	 * Insert n elements of value val at a given position
 	 */
 	template<typename T, typename Alloc>
 	void
-	vector<T, Alloc>::
-	_M_fill_insert(iterator __pos, size_type __n, const value_type& __val)
+	vector<T, Alloc>::_M_fill_insert(iterator __pos, size_type __n, const value_type& __val)
 	{
 		if (__n > 0)
 		{
@@ -303,42 +381,43 @@ namespace ft
 			else // not enough capacity
 			{
 				size_type		__nb_elem_before = begin() - __pos;
-				size_type		__nb_elem_after = end() - __pos;
+				size_type		__nb_elem_after = __pos - end();
 
 				// alloc new elements
 				const size_type	__new_size = _M_len_check(__n, "vector::_M_fill_insert");
 				pointer			__new_start = this->_M_allocate(__new_size);
-				pointer			__new_end(__new_start);
+				pointer			__new_end = __new_start;
+				iterator		__it = begin();
 
 				// if need to copy elements before the range
 				if (__nb_elem_before)
 				{
-					for ( iterator it = begin(); __nb_elem_before > 0; --__nb_elem_before, ++it)
+					for ( ; __nb_elem_before > 0; --__nb_elem_before, ++__it)
 					{
-						this->_M_alloc.construct(__new_end, *it);
+						this->_M_alloc.construct(__new_end, *(__it));
 						++__new_end;
 					}
 				}
 				// fill the range with n values
 				for ( ; __n > 0; --__n)
 				{
-					*__new_end = __val;
+					this->_M_alloc.construct(__new_end, __val);
 					++__new_end;
 				}
 				// if need to move element after filled range
 				if (__nb_elem_after)
 				{
-					for ( iterator it = begin() + __n; __nb_elem_after > 0; --__nb_elem_after, ++it)
+					for ( ; __nb_elem_after > 0; --__nb_elem_after, ++__it)
 					{
-						this->_M_alloc.construct(__new_end, *it);
+						this->_M_alloc.construct(__new_end, *(__it));
 						++__new_end;
 					}
 				}
 				_M_erase_at_end(this->_M_begin);
 				_M_deallocate(this->_M_begin, capacity());
-				this->_M_begin = __new_start;
-				this->_M_end = __new_end;
-				this->_M_endOfStorage = __new_start + __new_size;
+				this->_M_begin = pointer(__new_start);
+				this->_M_end = pointer(__new_end);
+				this->_M_endOfStorage = this->_M_begin + __new_size;
 			}
 		}
 	}
@@ -368,7 +447,7 @@ namespace ft
 	{
 		if (size_type __len = this->_M_end - __pos)
 		{
-			while (--__len)
+			while (__len--)
 			{
 				--this->_M_end;
 				this->_M_alloc.destroy(this->_M_end);
@@ -388,7 +467,12 @@ namespace ft
 		if (__size_left < __n)
 			throw std::length_error(__s);
 
-		size_type	__len = size() + __n;
+		size_type	__len;
+
+		if (size() > __n)
+			__len = size() + size();
+		else
+			__len = size() + __n;
 
 		return ( (__len > max_size()) ? max_size() : __len );
 	}
@@ -952,19 +1036,16 @@ namespace ft
 	 * @param position     Position in the vector where the new elements are inserted
 	 * @param first, last  Iterators specifying a range of elements
 	 */
-	// template<typename T, typename Alloc>
-	// template<typename InputIterator>
-	// void
-	// vector<T,Alloc>::insert(iterator position, InputIterator first, InputIterator last,
-	//							typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type*)
-	// {
-	// 	size_type	newSize = size() + std::distance(first, last);
-
-	// 	if (newSize > _capacity)
-	// 		reserve(newSize);
-
-	// 	_M_range_initialize(InputIterator __first, InputIterator __last);
-	// }
+	template<typename T, typename Alloc>
+	template<typename InputIterator>
+	void
+	vector<T,Alloc>::insert(iterator position, InputIterator first, InputIterator last,
+							typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type*
+							)
+	{
+		if (first != last)
+			_M_range_insert(position, first, last);
+	}
 
 	/*
 	 * Removes from the vector the element at the given position

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 15:55:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/29 17:24:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,9 @@ namespace std
 		for ( int i = 0; i < 2; ++i )
 			result.push_back(i);
 
+		result.push_back(500);
+		result.push_back(500);
+		result.push_back(300);
 		result.push_back(100);
 		result.push_back(100);
 		result.push_back(100);
@@ -183,6 +186,50 @@ namespace std
 
 		clock_t	time_start = clock();
 		vec.insert(vec.begin() + 2, 3, 100);
+		vec.insert(vec.begin() + 2, 1, 300);
+		vec.insert(vec.begin() + 2, 2, 500);
+		clock_t	time_end = clock();
+
+		displayVecInfos(vec, "after");
+		displayElapsedTime(time_start, time_end);
+
+		assert(vec == result);
+	}
+
+	void	test_vec_insert_it(void)
+	{
+		std::cout << "TEST: Modifiers: insert(pos, first, last) \n\n";
+
+		explainTest("Insert a range of elements at the position pos.");
+
+		// create vectors
+		vector<int>	vec;
+		vector<int>	vec2;
+		vector<int>	result;
+
+		// fill them
+		for ( int i = 0; i < 10; ++i )
+			vec.push_back(i);
+
+		for ( int i = 250; i < 300; i += 10 )
+			vec2.push_back(i);
+
+		for ( int i = 0; i < 5; ++i )
+			result.push_back(i);
+		for ( int i = 250; i < 300; i += 10 )
+			result.push_back(i);
+		for ( int i = 5; i < 10; ++i )
+			result.push_back(i);
+		for ( int i = 250; i < 300; i += 10 )
+			result.push_back(i);
+
+		vector<int>::iterator	it;
+
+		displayVecInfos(vec, "before");
+
+		clock_t	time_start = clock();
+		vec.insert(vec.begin() + 5, vec2.begin(), vec2.end());
+		vec.insert(vec.end(), vec2.begin(), vec2.end());
 		clock_t	time_end = clock();
 
 		displayVecInfos(vec, "after");

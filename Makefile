@@ -112,8 +112,8 @@ $(NAME_CMP): $(OBJ_DIR) $(OBJ_CMP)
 
 # DEBUG
 debug:
-	./$(NAME) > $(TEST_OUT_DIR)/mine.out 2>&1
 	./$(NAME_STD) > $(TEST_OUT_DIR)/original.out 2>&1
+	./$(NAME) > $(TEST_OUT_DIR)/mine.out 2>&1
 	./$(NAME_CMP)
 
 check_leaks: $(NAME)
