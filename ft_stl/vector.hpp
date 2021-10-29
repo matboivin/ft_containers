@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 18:29:44 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/29 23:24:31 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -562,7 +562,7 @@ namespace ft
 	}
 
 	/*
-	 * Assignment operator
+	 * Copy assignment operator
 	 *
 	 * Assigns new contents to the container, replacing its current contents,
 	 * and modifying its size accordingly.
