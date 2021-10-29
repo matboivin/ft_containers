@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 00:31:43 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/29 15:55:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,44 @@ namespace std
 		displayElapsedTime(time_start, time_end);
 
 		assert(*it == 100);
+		assert(vec == result);
+	}
+
+	void	test_vec_insert_nval(void)
+	{
+		std::cout << "TEST: Modifiers: insert(pos, n, val) \n\n";
+
+		explainTest("Insert n elements at the position pos.");
+
+		// create vectors
+		vector<int>	vec;
+		vector<int>	result;
+
+		// fill it
+		for ( int i = 0; i < 10; ++i )
+			vec.push_back(i);
+
+		for ( int i = 0; i < 2; ++i )
+			result.push_back(i);
+
+		result.push_back(100);
+		result.push_back(100);
+		result.push_back(100);
+
+		for ( int i = 2; i < 10; ++i )
+			result.push_back(i);
+
+		vector<int>::iterator	it;
+
+		displayVecInfos(vec, "before");
+
+		clock_t	time_start = clock();
+		vec.insert(vec.begin() + 2, 3, 100);
+		clock_t	time_end = clock();
+
+		displayVecInfos(vec, "after");
+		displayElapsedTime(time_start, time_end);
+
 		assert(vec == result);
 	}
 
