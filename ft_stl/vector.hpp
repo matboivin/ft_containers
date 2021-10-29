@@ -6,14 +6,13 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 17:55:27 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/29 18:29:44 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include <iostream>
 #include <sstream>
 #include <memory>
 #include "algorithm.hpp"
@@ -35,7 +34,7 @@ namespace ft
 	 * @param Alloc  Type of the allocator object used to define the storage
 	 *               allocation model
 	 */
-	template< typename T, typename Alloc = std::allocator<T> >
+	template<typename T, typename Alloc = std::allocator<T> >
 	class vector
 	{
 	public:

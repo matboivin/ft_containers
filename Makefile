@@ -15,6 +15,7 @@ COL_RESET = \033[0m
 
 IMPL_FILES = algorithm.hpp \
 			 iterator.hpp \
+			 stack.hpp \
 			 type_traits.hpp \
 			 vector.hpp
 
