@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 23:37:38 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/29 23:45:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,13 @@ namespace ft
 	template<typename T, typename Container = vector<T> >
 		bool	operator>=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
 
+
 	/* ********************************************************************** */
 	/*                                                                        */
 	/*                             Implementation                             */
 	/*                                                                        */
 	/* ********************************************************************** */
+
 
 	/* construct/copy/destroy *********************************************** */
 
