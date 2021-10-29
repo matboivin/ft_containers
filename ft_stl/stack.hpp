@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 23:45:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/30 00:14:05 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include <memory>
 #include "algorithm.hpp"
+#include "vector.hpp"
 
 /*
  * Credits:
@@ -62,22 +63,26 @@ namespace ft
 		// modifiers
 		void		push(const value_type& val);
 		void		pop(void);
+
+		friend bool	operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
+		friend bool	operator<(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
+		friend bool	operator>(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
 	};
 
 	/* non-member function overloads **************************************** */
 
 	// relational operators
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 		bool	operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 		bool	operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 		bool	operator<(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 		bool	operator>(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 		bool	operator<=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 		bool	operator>=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
 
 
@@ -96,8 +101,8 @@ namespace ft
 	 *
 	 * @param ctnr  The type of the underlying container type
 	 */
-	template<typename T, typename Container = vector<T> >
-	stack<T, Container>::stack(const container_type& ctnr = container_type())
+	template<typename T, typename Container>
+	stack<T, Container>::stack(const container_type& ctnr)
 	: c(ctnr)
 	{
 	}
@@ -105,6 +110,7 @@ namespace ft
 	/*
 	 * Destructor
 	 */
+	template<typename T, typename Container>
 	stack<T, Container>::~stack(void)
 	{
 	}
@@ -114,12 +120,12 @@ namespace ft
 	 * Replaces the contents with a copy of the contents of other.
 	 * Calls the assignment operator of the underlying container object.
 	 */
-	template<typename T, typename Container = vector<T> >
-	stack&
+	template<typename T, typename Container>
+	stack<T, Container>&
 	stack<T, Container>::operator=(const stack& other)
 	{
 		// avoid self-assignment
-		if (this != &rhs)
+		if (this != &other)
 			c = other.c;
 
 		return (*this);
@@ -131,7 +137,7 @@ namespace ft
 	 * Test whether container is empty.
 	 * Calls the member function empty of the underlying container object.
 	 */
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 	bool
 	stack<T, Container>::empty(void) const
 	{
@@ -142,8 +148,8 @@ namespace ft
 	 * Returns the number of elements in the stack.
 	 * Calls the member function size of the underlying container object.
 	 */
-	template<typename T, typename Container = vector<T> >
-	size_type
+	template<typename T, typename Container>
+	typename stack<T, Container>::size_type
 	stack<T, Container>::size(void) const
 	{
 		return (c.size());
@@ -156,7 +162,7 @@ namespace ft
 	 * Inserts a new element at the top of the stack, above its current top element.
 	 * Calls the member function push_back of the underlying container object.
 	 */
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 	void
 	stack<T, Container>::push(const value_type& val)
 	{
@@ -167,7 +173,7 @@ namespace ft
 	 * Remove top element.
 	 * Calls the member function pop_back of the underlying container object.
 	 */
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 	void
 	stack<T, Container>::pop(void)
 	{
@@ -182,42 +188,42 @@ namespace ft
 	 * Make comparison between two stacks
 	 */
 
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 	bool
 	operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 	{
 		return (lhs.c == rhs.c);
 	}
 
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 	bool
 	operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 	{
 		return ( !(lhs == rhs) );
 	}
 
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 	bool
 	operator<(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 	{
 		return (lhs.c < rhs.c);
 	}
 
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 	bool
 	operator>(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 	{
 		return (lhs.c > rhs.c);
 	}
 
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 	bool
 	operator<=(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 	{
 		return ( !(lhs > rhs) );
 	}
 
-	template<typename T, typename Container = vector<T> >
+	template<typename T, typename Container>
 	bool
 	operator>=(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 	{

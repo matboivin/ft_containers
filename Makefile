@@ -25,6 +25,7 @@ IMPL_DIR = ft_stl
 
 TEST_INC_FILES = tests.hpp \
 				 revit_tests.hpp \
+				 stack_tests.hpp \
 				 vector_tests.hpp
 
 TEST_SRC_FILES = main.cpp \
@@ -36,6 +37,11 @@ TEST_SRC_FILES = main.cpp \
 				 revit_test_inc_decr.cpp \
 				 revit_test_math_ops.cpp \
 				 revit_tests.cpp \
+				 stack_test_capacity.cpp \
+				 stack_test_comp_ops.cpp \
+				 stack_test_construct.cpp \
+				 stack_test_modifiers.cpp \
+				 stack_tests.cpp \
 				 vector_test_capacity.cpp \
 				 vector_test_comp_ops.cpp \
 				 vector_test_construct.cpp \
@@ -49,7 +55,7 @@ INC_DIR = tests/include
 SRC_DIR = tests/src
 TEST_OUT_DIR = tests/outputs
 
-SUBDIRS = vector iterator
+SUBDIRS = iterator stack vector
 SRC_SUBDIRS = $(addprefix $(SRC_DIR)/, $(SUBDIRS))
 
 # OBJ
