@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:57:18 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/30 00:00:35 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/30 16:32:27 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,18 @@ namespace std
 
 		vector<int>	vec2;
 
-		stack<int>	stack1(vec1);
-		stack<int>	stack2(vec2);
+		stack<int, vector<int> >	stack1(vec1);
+		stack<int, vector<int> >	stack2(vec2);
+		stack<int, vector<int> >	stack3;
+
+		std::cout << std::boolalpha
+				  << "stack1.empty()? " << stack1.empty()
+				  << "\nstack2.empty()? " << stack2.empty()
+				  << "\nstack3.empty()? " << stack3.empty() << "\n\n";
 
 		assert(!stack1.empty());
 		assert(stack2.empty());
+		assert(stack3.empty());
 	}
 
 	void	test_stack_size(void)
@@ -52,16 +59,15 @@ namespace std
 		// create a vector
 		vector<int>	vec(42);
 
-		stack<int>	stack1(vec);
+		stack<int, vector<int> >	stack1(vec);
 
 		std::cout << "stack.size() = " << stack1.size() << std::endl;
-
 		assert(stack1.size() == 42);
 
 		for (int i = 0; i < 8; ++i)
-			vec.push_back(i);
+			stack1.push(i);
 
-		std::cout << "stack.size() = " << stack1.size() << std::endl;
+		std::cout << "stack.size() = " << stack1.size() << "\n\n";
 		assert(stack1.size() == 50);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:50:10 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/30 00:14:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/30 16:25:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ namespace ft
 namespace std
 #endif
 {
-	void	test_stack_comp_ops(void)
+	void	test_stack_non_mb_comp_ops(void)
 	{
 		std::cout << "TEST: Non-member comparison operators \n\n";
 
@@ -41,9 +41,9 @@ namespace std
 		vec1.push_back(25);
 		vec1.push_back(120);
 
-		stack<int>	stack1(vec1);
-		stack<int>	stack2(vec2);
-		stack<int>	stack3(vec2);
+		stack<int, vector<int> >	stack1(vec1);
+		stack<int, vector<int> >	stack2(vec2);
+		stack<int, vector<int> >	stack3(vec2);
 
 		assert(stack1 > stack2);
 		assert(stack3 < stack1);

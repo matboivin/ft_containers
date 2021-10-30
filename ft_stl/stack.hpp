@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/30 00:14:05 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/30 16:22:43 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,20 @@ namespace ft
 		void		push(const value_type& val);
 		void		pop(void);
 
-		friend bool	operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-		friend bool	operator<(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-		friend bool	operator>(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
+		// friend relational operators
+		template<typename _T, typename _Container>
+			friend bool	operator==(const stack<_T, _Container>& lhs, const stack<_T, _Container>& rhs);
+		template<typename _T, typename _Container>
+			friend bool	operator<(const stack<_T, _Container>& lhs, const stack<_T, _Container>& rhs);
+		template<typename _T, typename _Container>
+			friend bool	operator>(const stack<_T, _Container>& lhs, const stack<_T, _Container>& rhs);
 	};
 
 	/* non-member function overloads **************************************** */
 
 	// relational operators
 	template<typename T, typename Container>
-		bool	operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-	template<typename T, typename Container>
 		bool	operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-	template<typename T, typename Container>
-		bool	operator<(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
-	template<typename T, typename Container>
-		bool	operator>(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
 	template<typename T, typename Container>
 		bool	operator<=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
 	template<typename T, typename Container>
