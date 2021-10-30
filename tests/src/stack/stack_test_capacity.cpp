@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:57:18 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/30 16:32:27 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/30 16:42:45 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,19 @@ namespace std
 
 		explainTest("Test whether container is empty.");
 
-		// create vectors
-		vector<int>	vec1;
+		// create stacks
+		stack<int, vector<int> >	stack1;
+		stack<int, vector<int> >	stack2;
 
-		vec1.push_back(12);
-		vec1.push_back(5);
-		vec1.push_back(42);
-
-		vector<int>	vec2;
-
-		stack<int, vector<int> >	stack1(vec1);
-		stack<int, vector<int> >	stack2(vec2);
-		stack<int, vector<int> >	stack3;
+		for (int i = 0; i < 42; ++i)
+			stack1.push(i);
 
 		std::cout << std::boolalpha
 				  << "stack1.empty()? " << stack1.empty()
-				  << "\nstack2.empty()? " << stack2.empty()
-				  << "\nstack3.empty()? " << stack3.empty() << "\n\n";
+				  << "\nstack2.empty()? " << stack2.empty() << "\n\n";
 
 		assert(!stack1.empty());
 		assert(stack2.empty());
-		assert(stack3.empty());
 	}
 
 	void	test_stack_size(void)
