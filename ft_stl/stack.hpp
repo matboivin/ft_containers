@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/30 16:22:43 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/30 16:34:24 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,7 @@ namespace ft
 			friend bool	operator==(const stack<_T, _Container>& lhs, const stack<_T, _Container>& rhs);
 		template<typename _T, typename _Container>
 			friend bool	operator<(const stack<_T, _Container>& lhs, const stack<_T, _Container>& rhs);
-		template<typename _T, typename _Container>
-			friend bool	operator>(const stack<_T, _Container>& lhs, const stack<_T, _Container>& rhs);
+		
 	};
 
 	/* non-member function overloads **************************************** */
@@ -78,6 +77,8 @@ namespace ft
 	// relational operators
 	template<typename T, typename Container>
 		bool	operator!=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
+	template<typename T, typename Container>
+		bool	operator>(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
 	template<typename T, typename Container>
 		bool	operator<=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
 	template<typename T, typename Container>
@@ -211,7 +212,7 @@ namespace ft
 	bool
 	operator>(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
 	{
-		return (lhs.c > rhs.c);
+		return (rhs < lhs);
 	}
 
 	template<typename T, typename Container>
