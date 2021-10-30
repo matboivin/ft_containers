@@ -40,6 +40,7 @@ TEST_SRC_FILES = main.cpp \
 				 stack_test_capacity.cpp \
 				 stack_test_comp_ops.cpp \
 				 stack_test_construct.cpp \
+				 stack_test_elements.cpp \
 				 stack_test_modifiers.cpp \
 				 stack_tests.cpp \
 				 vector_test_capacity.cpp \

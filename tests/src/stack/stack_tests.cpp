@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/30 00:01:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/30 16:59:26 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,9 @@ namespace std
 		// capacity
 		test_stack_empty();
 		test_stack_size();
+
+		// element access
+		test_stack_top();
 
 		// modifiers
 		test_stack_push();

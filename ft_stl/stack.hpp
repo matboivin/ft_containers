@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/30 16:34:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/10/30 17:00:26 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,16 @@ namespace ft
 		stack&	operator=(const stack& other);
 
 		// capacity
-		bool		empty(void) const;
-		size_type	size(void) const;
+		bool				empty(void) const;
+		size_type			size(void) const;
+
+		// element access
+		value_type&			top(void);
+		const value_type&	top(void) const;
 
 		// modifiers
-		void		push(const value_type& val);
-		void		pop(void);
+		void				push(const value_type& val);
+		void				pop(void);
 
 		// friend relational operators
 		template<typename _T, typename _Container>
@@ -152,6 +156,29 @@ namespace ft
 	stack<T, Container>::size(void) const
 	{
 		return (c.size());
+	}
+
+
+	/* element access ******************************************************* */
+
+	/*
+	 * Returns a reference to the top element (last element inserted) in the stack.
+	 */
+	template<typename T, typename Container>
+	typename stack<T, Container>::value_type&
+	stack<T, Container>::top(void)
+	{
+		return (c.back());
+	}
+
+	/*
+	 * Returns a const reference to the top element (last element inserted) in the stack.
+	 */
+	template<typename T, typename Container>
+	const typename stack<T, Container>::value_type&
+	stack<T, Container>::top(void) const
+	{
+		return (c.back());
 	}
 
 
