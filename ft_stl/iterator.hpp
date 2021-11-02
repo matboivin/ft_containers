@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 14:45:38 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 11:44:52 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,7 +165,7 @@ namespace ft
 	{
 	public:
 		// types
-		typedef Iterator	iterator_type;
+		typedef Iterator													iterator_type;
 		typedef typename ft::iterator_traits<Iterator>::iterator_category	iterator_category;
 		typedef typename ft::iterator_traits<Iterator>::value_type			value_type;
 		typedef typename ft::iterator_traits<Iterator>::difference_type		difference_type;
@@ -173,7 +173,7 @@ namespace ft
 		typedef typename ft::iterator_traits<Iterator>::reference			reference;
 
 	protected:
-		iterator_type	current; // copy of the original iterator
+		Iterator	current; // copy of the original iterator
 
 	public:
 		// default constructor
@@ -534,11 +534,11 @@ namespace ft
 	{
 	private:
 		// More readable private alias
-		typedef typename ft::iterator_traits<Iterator>	_iter_traits;
+		typedef typename ft::iterator_traits<Iterator>		_iter_traits;
 
 	public:
 		// types
-		typedef Iterator	iterator_type;
+		typedef Iterator									iterator_type;
 		typedef typename _iter_traits::iterator_category	iterator_category;
 		typedef typename _iter_traits::value_type			value_type;
 		typedef typename _iter_traits::difference_type		difference_type;
@@ -546,7 +546,7 @@ namespace ft
 		typedef typename _iter_traits::reference			reference;
 
 	protected:
-		iterator_type	current; // copy of the original iterator
+		Iterator	current; // copy of the original iterator
 
 	public:
 		// default constructor
