@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 11:44:52 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 14:40:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,14 +185,14 @@ namespace ft
 			reverse_iterator(const reverse_iterator<Iter>& rev_it);
 
 		// return copy of the original iterator
-		iterator_type	base(void) const;
+		iterator_type		base(void) const;
 
 		// accesses the pointed-to element
-		reference	operator*(void) const;
-		pointer		operator->(void) const;
+		reference			operator*(void) const;
+		pointer				operator->(void) const;
 
 		// accesses an element by index
-		reference	operator[](difference_type n) const;
+		reference			operator[](difference_type n) const;
 
 		// advances or decrements the iterator
 		reverse_iterator&	operator++(void);
@@ -561,11 +561,11 @@ namespace ft
 		iterator_type	base(void) const;
 
 		// accesses the pointed-to element
-		reference	operator*(void) const;
-		pointer		operator->(void) const;
+		reference		operator*(void) const;
+		pointer			operator->(void) const;
 
 		// accesses an element by index
-		reference	operator[](difference_type n) const;
+		reference		operator[](difference_type n) const;
 
 		// advances or decrements the iterator
 		base_iterator&	operator++(void);

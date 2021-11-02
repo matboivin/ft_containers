@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 11:51:50 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 14:47:21 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,11 @@ namespace ft
 
 	public:
 		// default constructor
-		vector(const allocator_type& alloc = allocator_type());
+		explicit vector(const allocator_type& alloc = allocator_type());
 
 		// fill constructor
-		vector(size_type n, const value_type& val = value_type(),
-			   const allocator_type& alloc = allocator_type());
+		explicit vector(size_type n, const value_type& val = value_type(),
+						const allocator_type& alloc = allocator_type());
 		
 		// range constructor
 		template<typename InputIterator>
