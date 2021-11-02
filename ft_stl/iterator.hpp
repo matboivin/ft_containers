@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 15:13:55 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 16:00:44 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define ITERATOR_HPP
 
 #include "algorithm.hpp"
+#include "type_traits.hpp"
 
 /*
  * Credits:
@@ -459,44 +460,44 @@ namespace ft
 	 * relational operators
 	 */
 
-	template<typename Iterator>
+	template<typename Iterator1, typename Iterator2>
 	bool
-	operator==(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+	operator==(const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs)
 	{
 		return (lhs.base() == rhs.base());
 	}
 
-	template<typename Iterator>
+	template<typename Iterator1, typename Iterator2>
 	bool
-	operator!=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+	operator!=(const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs)
 	{
 		return (lhs.base() != rhs.base());
 	}
 
-	template<typename Iterator>
+	template<typename Iterator1, typename Iterator2>
 	bool
-	operator<(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+	operator<(const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs)
 	{
 		return (lhs.base() > rhs.base());
 	}
 
-	template<typename Iterator>
+	template<typename Iterator1, typename Iterator2>
 	bool
-	operator<=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+	operator<=(const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs)
 	{
 		return (lhs.base() >= rhs.base());
 	}
 
-	template<typename Iterator>
+	template<typename Iterator1, typename Iterator2>
 	bool
-	operator>(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+	operator>(const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs)
 	{
 		return (lhs.base() < rhs.base());
 	}
 
-	template<typename Iterator>
+	template<typename Iterator1, typename Iterator2>
 	bool
-	operator>=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+	operator>=(const reverse_iterator<Iterator1>& lhs, const reverse_iterator<Iterator2>& rhs)
 	{
 		return (lhs.base() <= rhs.base());
 	}
@@ -579,8 +580,10 @@ namespace ft
 		explicit base_iterator(iterator_type x);
 
 		// copy constructor
-		template<typename Iter >
-			base_iterator(const base_iterator<Iter,Container>& other);
+		template<typename Iter>
+			base_iterator(const base_iterator<Iter,typename ft::enable_if<(ft::is_same<Iter, typename Container::pointer>::value), Container>::type>& other);
+
+		// const base_iterator<_Iter,typename ft::enable_if<(std::is_same<_Iter, typename Container::pointer>::value), Container>::type>& other
 
 		// copy assignment operator
 		template<typename Iter>
@@ -643,7 +646,7 @@ namespace ft
 	 */
 	template<typename Iterator, typename Container>
 	template<typename Iter>
-	base_iterator<Iterator,Container>::base_iterator(const base_iterator<Iter,Container>& other)
+	base_iterator<Iterator,Container>::base_iterator(const base_iterator<Iter,typename ft::enable_if<(ft::is_same<Iter, typename Container::pointer>::value), Container>::type>& other)
 	: current(other.base())
 	{
 	}
@@ -846,50 +849,50 @@ namespace ft
 	 * relational operators
 	 */
 
-	template<typename Iterator, typename Container>
+	template<typename Iterator1, typename Iterator2, typename Container>
 	bool
-	operator==(const base_iterator<Iterator,Container>& lhs,
-			   const base_iterator<Iterator,Container>& rhs)
+	operator==(const base_iterator<Iterator1,Container>& lhs,
+			   const base_iterator<Iterator2,Container>& rhs)
 	{
 		return (lhs.base() == rhs.base());
 	}
 
-	template<typename Iterator, typename Container>
+	template<typename Iterator1, typename Iterator2, typename Container>
 	bool
-	operator!=(const base_iterator<Iterator,Container>& lhs,
-			   const base_iterator<Iterator,Container>& rhs)
+	operator!=(const base_iterator<Iterator1,Container>& lhs,
+			   const base_iterator<Iterator2,Container>& rhs)
 	{
 		return (lhs.base() != rhs.base());
 	}
 
-	template<typename Iterator, typename Container>
+	template<typename Iterator1, typename Iterator2, typename Container>
 	bool
-	operator<(const base_iterator<Iterator,Container>& lhs,
-			  const base_iterator<Iterator,Container>& rhs)
+	operator<(const base_iterator<Iterator1,Container>& lhs,
+			  const base_iterator<Iterator2,Container>& rhs)
 	{
 		return (lhs.base() < rhs.base());
 	}
 
-	template<typename Iterator, typename Container>
+	template<typename Iterator1, typename Iterator2, typename Container>
 	bool
-	operator<=(const base_iterator<Iterator,Container>& lhs,
-			   const base_iterator<Iterator,Container>& rhs)
+	operator<=(const base_iterator<Iterator1,Container>& lhs,
+			   const base_iterator<Iterator2,Container>& rhs)
 	{
 		return (lhs.base() <= rhs.base());
 	}
 
-	template<typename Iterator, typename Container>
+	template<typename Iterator1, typename Iterator2, typename Container>
 	bool
-	operator>(const base_iterator<Iterator,Container>& lhs,
-			  const base_iterator<Iterator,Container>& rhs)
+	operator>(const base_iterator<Iterator1,Container>& lhs,
+			  const base_iterator<Iterator2,Container>& rhs)
 	{
 		return (lhs.base() > rhs.base());
 	}
 
-	template<typename Iterator, typename Container>
+	template<typename Iterator1, typename Iterator2, typename Container>
 	bool
-	operator>=(const base_iterator<Iterator,Container>& lhs,
-			   const base_iterator<Iterator,Container>& rhs)
+	operator>=(const base_iterator<Iterator1,Container>& lhs,
+			   const base_iterator<Iterator2,Container>& rhs)
 	{
 		return (lhs.base() >= rhs.base());
 	}
@@ -928,6 +931,46 @@ namespace ft
 	{
 		return (rhs.base() - lhs.base());
 	}
+
+	/* iterator types ******************************************************* */
+
+	/*
+	 * Helpers for iter_is_input
+	 */
+
+	// false by default
+	template<typename Iter>
+	struct iter_is_input : public false_type {};
+
+	// specializations to return true for iterators that can be cast to input iterator
+	template<>
+	struct iter_is_input<ft::input_iterator_tag> : public true_type {};
+
+	template<>
+	struct iter_is_input<ft::forward_iterator_tag> : public true_type {};
+
+	template<>
+	struct iter_is_input<ft::bidirectional_iterator_tag> : public true_type {};
+
+	template<>
+	struct iter_is_input<ft::random_access_iterator_tag> : public true_type {};
+
+	/*
+	 * The type T is defined only if Cond (T is not an integral type) is true
+	 *
+	 * @param Cond  A compile-time constant of type bool
+	 * @param T     A type
+	 */
+
+	template<bool Cond, typename T = void>
+	struct requires_input_iter {};
+
+	template<typename T>
+	struct requires_input_iter<true, T>
+	: public iter_is_input<typename ft::iterator_traits<T>::iterator_category>
+	{
+		typedef T	type;
+	};
 } // namespace ft
 
 #endif

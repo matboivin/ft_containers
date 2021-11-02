@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 17:56:32 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 16:01:10 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,8 +180,6 @@ namespace std
 		for ( int i = 2; i < 10; ++i )
 			result.push_back(i);
 
-		vector<int>::iterator	it;
-
 		displayVecInfos(vec, "before");
 
 		clock_t	time_start = clock();
@@ -222,8 +220,6 @@ namespace std
 			result.push_back(i);
 		for ( int i = 250; i < 300; i += 10 )
 			result.push_back(i);
-
-		vector<int>::iterator	it;
 
 		displayVecInfos(vec, "before");
 

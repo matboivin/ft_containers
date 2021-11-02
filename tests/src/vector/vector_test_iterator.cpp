@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 18:38:21 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 16:11:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,35 @@ namespace std
 
 		assert(*it == 12);
 		assert(*ite == 25);
+
+		// create const iterators
+		vector<int>::const_iterator	const_it = vec.begin();
+		vector<int>::const_iterator	const_ite = vec.end();
+
+		std::cout << std::boolalpha
+				  << "(it == const_it)   ? " << (it == const_it)
+				  << "\n(ite == const_ite) ? " << (ite == const_ite)
+				  << "\n\n";
+
+		// compare
+		assert(it == const_it);
+		assert((ite == const_ite) == false);
+
+		// move iterators
+		const_it += 3;
+		const_ite -= 1;
+
+		std::cout << std::boolalpha
+				  << "(it == const_it)   ? " << (it == const_it)
+				  << "\n(it < const_it)    ? " << (it < const_it)
+				  << "\n(it > const_it)    ? " << (it > const_it)
+				  << "\n(ite == const_ite) ? " << (ite == const_ite)
+				  << "\n\n";
+
+		// compare
+		assert((it == const_it) == false);
+		assert(it < const_it);
+		assert((it > const_it) == false);
+		assert(ite == const_ite);
 	}
 }
