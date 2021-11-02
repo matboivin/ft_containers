@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 17:32:14 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:01:01 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -749,12 +749,12 @@ namespace ft
 	void
 	vector<T,Alloc>::_M_range_check(size_type __n) const
 	{
-		if (__n > size())
+		if (__n >= size())
 		{
 			std::stringstream	err_msg;
 	
 			err_msg << "vector::_M_range_check: __n (which is " << __n
-					<< ") >= this->size() (which is " << size() << ")";
+					<< ") >= this->size() (which is " << this->size() << ")";
 
 			throw std::out_of_range(err_msg.str());
 		}
@@ -766,7 +766,7 @@ namespace ft
 	vector<T,Alloc>::at(size_type n)
 	{
 		_M_range_check(n);
-		return (this->_M_begin[n]);
+		return ((*this)[n]);
 	}
 
 	template<typename T, typename Alloc>
@@ -774,7 +774,7 @@ namespace ft
 	vector<T,Alloc>::at(size_type n) const
 	{
 		_M_range_check(n);
-		return (this->_M_begin[n]);
+		return ((*this)[n]);
 	}
 
 	/* Returns the first element in the vector */

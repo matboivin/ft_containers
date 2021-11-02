@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 15:53:53 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:03:51 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ namespace std
 
 		try
 		{
-			int	n = 2;
+			int	n = vec.size() / 2;
 			clock_t	start = clock();
 			std::cout << "vector.at(" << n << ") " << vec.at(n) << "\n\n";
 			displayElapsedTime(start, clock());
@@ -78,8 +78,7 @@ namespace std
 
 		try
 		{
-			int	out = 15;
-			std::cout << "vector.at(" << out << ") " << vec.at(out) << "\n\n";
+			std::cout << "vector.at(" << vec.size() << ") " << vec.at(vec.size()) << "\n\n";
 		}
 		catch (std::out_of_range& oor)
 		{
