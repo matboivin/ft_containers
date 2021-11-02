@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:29:54 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 16:00:00 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:16:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ namespace ft
 		static const T					value = v;
 		typedef T						value_type;
 		typedef integral_constant<T,v>	type;
-		// integral_constant<T, v>() == integral_constant<T, v>::value
 		operator value_type() const { return value; }
 	};
 
@@ -42,9 +41,7 @@ namespace ft
 	typedef integral_constant<bool,true>	true_type;
 	typedef integral_constant<bool,false>	false_type;
 
-	/*
-	 * Helpers for is_integral
-	 */
+	/* Helpers for is_integral */
 
 	// false by default
 	template<typename T>
@@ -90,31 +87,18 @@ namespace ft
 	template<>
 	struct type_is_integral<unsigned long long int> : public true_type {};
 
-	/*
-	 * Trait class that identifies whether T is an integral type
-	 *
-	 * @param T  A type
-	 */
+	/* Trait class that identifies whether T is an integral type */
 	template<typename T>
 	struct is_integral : public type_is_integral<T> {};
 
-	/*
-	 * Trait class that identifies whether T is the same type as U
-	 *
-	 * @param T, U  Types
-	 */
+	/* Trait class that identifies whether T is the same type as U */
 	template<typename T, typename U>
 	struct is_same : false_type {};
 
 	template<typename T>
 	struct is_same<T,T> : true_type {};
 
-	/*
-	 * The type T is defined only if Cond is true
-	 *
-	 * @param Cond  A compile-time constant of type bool
-	 * @param T     A type
-	 */
+	/* The type T is defined only if Cond is true */
 	template<bool Cond, typename T = void>
 	struct enable_if {};
 

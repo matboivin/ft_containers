@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 16:40:14 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:13:53 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,6 @@ namespace ft
 	 *
 	 * This class reverses the direction in which a bidirectional or
 	 * random-access iterator iterates through a range.
-	 *
-	 * A copy of the original iterator (the base iterator) is kept internally and used
-	 * to reflect the operations performed on the reverse_iterator:
-	 * whenever the reverse_iterator is incremented, its base iterator is decreased,
-	 * and vice versa.
-	 * A copy of the base iterator with the current state can be obtained at any time
-	 * by calling member base.
-	 *
-	 * @param Iterator  A bidirectional iterator type
-	 *                  Or a random-access iterator
 	 */
 	template<typename Iterator>
 	class reverse_iterator
@@ -183,6 +173,7 @@ namespace ft
 
 	/* non-member function overloads **************************************** */
 
+	// relational operators
 	template<typename Iter1, typename Iter2>
 		bool	operator==(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs);
 	template<typename Iter1, typename Iter2>
@@ -196,11 +187,13 @@ namespace ft
 	template<typename Iter1, typename Iter2>
 		bool	operator>=(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs);
 
+	// addition operator
 	template<typename Iterator>
 		reverse_iterator<Iterator>
 		operator+(typename reverse_iterator<Iterator>::difference_type n,
 				  const reverse_iterator<Iterator>& rev_it);
 
+	// subtraction operator
 	template<typename Iterator>
 		typename reverse_iterator<Iterator>::difference_type
 		operator-(const reverse_iterator<Iterator>& lhs,
@@ -223,11 +216,7 @@ namespace ft
 
 	/*
 	 * Initalization constructor
-	 * Constructs a reverse iterator from some original iterator it.
-	 * The behavior of the constructed object replicates the original,
-	 * except that it iterates through its pointed elements in the reverse order.
-	 *
-	 * @param x  An iterator
+	 * Constructs a reverse iterator from some original iterator x.
 	 */
 	template<typename Iterator>
 	reverse_iterator<Iterator>::reverse_iterator(iterator_type x)
@@ -238,8 +227,6 @@ namespace ft
 	/*
 	 * Copy constructor
 	 * Constructs a reverse iterator from some other reverse iterator
-	 *
-	 * @param other  An iterator of a reverse_iterator type
 	 */
 	template<typename Iterator>
 	template<typename Iter>
@@ -250,15 +237,12 @@ namespace ft
 
 	/*
 	 * Copy assignment operator
-	 *
-	 * @param other  An iterator of a reverse_iterator type
 	 */
 	template<typename Iterator>
 	template<typename Iter>
 	reverse_iterator<Iterator>&
 	reverse_iterator<Iterator>::operator=(const reverse_iterator<Iter>& other)
 	{
-		// avoid self-assignment
 		if (this != &other)
 			this->current = other.base();
 
@@ -267,11 +251,7 @@ namespace ft
 
 	/* getter *************************************************************** */
 
-	/*
-	 * Returns a copy of the base iterator
-	 *
-	 * @return  A copy of the base iterator, which iterates in the opposite direction
-	 */
+	/* Returns a copy of the base iterator */
 	template<typename Iterator>
 	typename reverse_iterator<Iterator>::iterator_type
 	reverse_iterator<Iterator>::base(void) const
@@ -286,8 +266,6 @@ namespace ft
 	 * Dereference iterator
 	 * Internally, the function decreases a copy of its base iterator and returns
 	 * the result of dereferencing it
-	 *
-	 * @return  A reference to the element pointed by the iterator
 	 */
 	template<typename Iterator>
 	typename reverse_iterator<Iterator>::reference
@@ -302,8 +280,6 @@ namespace ft
 	/*
 	 * Dereference iterator
 	 * Internally, the function calls operator* and returns its address
-	 *
-	 * @return  A pointer to the element pointed to by the iterator
 	 */
 	template<typename Iterator>
 	typename reverse_iterator<Iterator>::pointer
@@ -316,10 +292,6 @@ namespace ft
 	 * Dereference iterator with offset
 	 * Accesses the element located n positions away from the element
 	 * currently pointed to by the iterator.
-	 *
-	 * @param n  Number of elements to offset
-	 *
-	 * @return  A reference to the element
 	 */
 	template<typename Iterator>
 	typename reverse_iterator<Iterator>::reference
@@ -331,11 +303,7 @@ namespace ft
 
 	/* advance/decrease ***************************************************** */
 
-	/*
-	 * Increment iterator position: pre-increment version
-	 *
-	 * @return  *this
-	 */
+	/* Increment iterator position: pre-increment version */
 	template<typename Iterator>
 	reverse_iterator<Iterator>&
 	reverse_iterator<Iterator>::operator++(void)
@@ -344,11 +312,7 @@ namespace ft
 		return (*this);
 	}
 
-	/*
-	 * Increment iterator position: post-increment version
-	 *
-	 * @return  A copy of *this that was made before the change
-	 */
+	/* Increment iterator position: post-increment version */
 	template<typename Iterator>
 	reverse_iterator<Iterator>
 	reverse_iterator<Iterator>::operator++(int)
@@ -362,10 +326,6 @@ namespace ft
 	/*
 	 * Advance iterator
 	 * Advances the reverse_iterator by n element positions
-	 *
-	 * @param n  Number of elements to offset
-	 *
-	 * @return  *this
 	 */
 	template<typename Iterator>
 	reverse_iterator<Iterator>&
@@ -375,13 +335,7 @@ namespace ft
 		return (*this);
 	}
 
-	/*
-	 * Addition operator
-	 *
-	 * @param n  Number of elements to offset
-	 *
-	 * @return  An iterator pointing to the element n positions away
-	 */
+	/* Addition operator */
 	template<typename Iterator>
 	reverse_iterator<Iterator>
 	reverse_iterator<Iterator>::operator+(difference_type n) const
@@ -389,11 +343,7 @@ namespace ft
 		return ( reverse_iterator(base() - n) );
 	}
 
-	/*
-	 * Decrease iterator position: pre-decrement version
-	 *
-	 * @return  *this
-	 */
+	/* Decrease iterator position: pre-decrement version */
 	template<typename Iterator>
 	reverse_iterator<Iterator>&
 	reverse_iterator<Iterator>::operator--(void)
@@ -402,11 +352,7 @@ namespace ft
 		return (*this);
 	}
 
-	/*
-	 * Decrease iterator position: post-decrement version
-	 *
-	 * @return  A copy of *this that was made before the change
-	 */
+	/* Decrease iterator position: post-decrement version */
 	template<typename Iterator>
 	reverse_iterator<Iterator>
 	reverse_iterator<Iterator>::operator--(int)
@@ -420,10 +366,6 @@ namespace ft
 	/*
 	 * Retrocede iterator
 	 * Decreases the reverse_iterator by n element positions
-	 *
-	 * @param n  Number of elements to offset
-	 *
-	 * @return  *this
 	 */
 	template<typename Iterator>
 	reverse_iterator<Iterator>&
@@ -433,13 +375,7 @@ namespace ft
 		return (*this);
 	}
 
-	/*
-	 * Subtraction operator
-	 *
-	 * @param n  Number of elements to offset
-	 *
-	 * @return  An iterator pointing to the element n positions before the currently pointed one
-	 */
+	/* Subtraction operator */
 	template<typename Iterator>
 	reverse_iterator<Iterator>
 	reverse_iterator<Iterator>::operator-(difference_type n) const
@@ -450,9 +386,7 @@ namespace ft
 
 	/* non-member function overloads **************************************** */
 
-	/*
-	 * relational operators
-	 */
+	/* Relational operators */
 
 	template<typename Iter1, typename Iter2>
 	bool
@@ -500,11 +434,6 @@ namespace ft
 	 * Addition operator
 	 * Returns a reverse iterator pointing to the element located n positions
 	 * away from the element pointed to by rev_it
-	 *
-	 * @param n       Number of elements to offset
-	 * @param rev_it  Reverse iterator
-	 *
-	 * @return  An iterator pointing to the element n positions away from rev_it
 	 */
 	template<typename Iterator>
 	reverse_iterator<Iterator>
@@ -518,10 +447,6 @@ namespace ft
 	 * Subtraction operator
 	 * Computes the distance between two reverse iterators
 	 * The function returns the same as subtracting lhs's base iterator from rhs's base iterator
-	 *
-	 * @param lhs, rhs  reverse_iterator objects having both the same template parameter
-	 *
-	 * @return  The number of elements between lhs and rhs
 	 */
 	template<typename Iterator>
 	typename reverse_iterator<Iterator>::difference_type
@@ -536,11 +461,7 @@ namespace ft
 
 	/*
 	 * Base iterator
-	 *
 	 * This class provides a base for custom iterators
-	 *
-	 * @param Iterator   The iterator type
-	 * @param Container  The container
 	 */
 
 	template<typename Iterator, typename Container>
@@ -577,8 +498,6 @@ namespace ft
 		// copy constructor
 		template<typename Iter>
 			base_iterator(const base_iterator<Iter,typename ft::enable_if<(ft::is_same<Iter, typename Container::pointer>::value), Container>::type>& other);
-
-		// const base_iterator<_Iter,typename ft::enable_if<(std::is_same<_Iter, typename Container::pointer>::value), Container>::type>& other
 
 		// copy assignment operator
 		template<typename Iter>
@@ -653,9 +572,7 @@ namespace ft
 
 	/*
 	 * Initalization constructor
-	 * Constructs an iterator from some original iterator it.
-	 *
-	 * @param it  An iterator
+	 * Constructs an iterator from some original iterator x
 	 */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>::base_iterator(iterator_type x)
@@ -666,8 +583,6 @@ namespace ft
 	/*
 	 * Copy constructor
 	 * Constructs an iterator from some other iterator
-	 *
-	 * @param it  An iterator of a base_iterator type
 	 */
 	template<typename Iterator, typename Container>
 	template<typename Iter>
@@ -676,17 +591,12 @@ namespace ft
 	{
 	}
 
-	/*
-	 * Copy assignment operator
-	 *
-	 * @param other  An iterator of a base_iterator type
-	 */
+	/* Copy assignment operator */
 	template<typename Iterator, typename Container>
 	template<typename Iter>
 	base_iterator<Iterator,Container>&
 	base_iterator<Iterator,Container>::operator=(const base_iterator<Iter,Container>& other)
 	{
-		// avoid self-assignment
 		if (this != &other)
 			this->current = other.base();
 
@@ -695,11 +605,7 @@ namespace ft
 
 	/* getter *************************************************************** */
 
-	/*
-	 * Returns a copy of the base iterator
-	 *
-	 * @return  A copy of the base iterator
-	 */
+	/* Returns a copy of the base iterator */
 	template<typename Iterator, typename Container>
 	typename base_iterator<Iterator,Container>::iterator_type
 	base_iterator<Iterator,Container>::base(void) const
@@ -710,11 +616,7 @@ namespace ft
 
 	/* element access ******************************************************* */
 
-	/*
-	 * Dereference iterator
-	 *
-	 * @return  A reference to the element pointed by the iterator
-	 */
+	/* Dereference iterator and returns a reference to the element pointed by the iterator */
 	template<typename Iterator, typename Container>
 	typename base_iterator<Iterator,Container>::reference
 	base_iterator<Iterator,Container>::operator*(void) const
@@ -722,11 +624,7 @@ namespace ft
 		return (*current);
 	}
 
-	/*
-	 * Dereference iterator
-	 *
-	 * @return  A pointer to the element pointed to by the iterator
-	 */
+	/* Dereference iterator and returns a pointer to the element pointed to by the iterator */
 	template<typename Iterator, typename Container>
 	typename base_iterator<Iterator,Container>::pointer
 	base_iterator<Iterator,Container>::operator->(void) const
@@ -734,13 +632,7 @@ namespace ft
 		return (current);
 	}
 
-	/*
-	 * Dereference iterator with offset
-	 *
-	 * @param n  Number of elements to offset
-	 *
-	 * @return  A reference to the element
-	 */
+	/* Dereference iterator with offset */
 	template<typename Iterator, typename Container>
 	typename base_iterator<Iterator,Container>::reference
 	base_iterator<Iterator,Container>::operator[](difference_type n) const
@@ -751,11 +643,7 @@ namespace ft
 
 	/* advance/decrease ***************************************************** */
 
-	/*
-	 * Increment iterator position: pre-increment version
-	 *
-	 * @return  *this
-	 */
+	/* Increment iterator position: pre-increment version */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>&
 	base_iterator<Iterator,Container>::operator++(void)
@@ -764,11 +652,7 @@ namespace ft
 		return (*this);
 	}
 
-	/*
-	 * Increment iterator position: post-increment version
-	 *
-	 * @return  A copy of *this that was made before the change
-	 */
+	/* Increment iterator position: post-increment version */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>
 	base_iterator<Iterator,Container>::operator++(int)
@@ -782,10 +666,6 @@ namespace ft
 	/*
 	 * Advance iterator
 	 * Advances the base_iterator by n element positions
-	 *
-	 * @param n  Number of elements to offset
-	 *
-	 * @return  *this
 	 */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>&
@@ -795,13 +675,7 @@ namespace ft
 		return (*this);
 	}
 
-	/*
-	 * Addition operator
-	 *
-	 * @param n  Number of elements to offset
-	 *
-	 * @return  An iterator pointing to the element n positions away
-	 */
+	/* Addition operator */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>
 	base_iterator<Iterator,Container>::operator+(difference_type n) const
@@ -809,11 +683,7 @@ namespace ft
 		return ( base_iterator(base() + n) );
 	}
 
-	/*
-	 * Decrease iterator position: pre-decrement version
-	 *
-	 * @return  *this
-	 */
+	/* Decrease iterator position: pre-decrement version */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>&
 	base_iterator<Iterator,Container>::operator--(void)
@@ -822,11 +692,7 @@ namespace ft
 		return (*this);
 	}
 
-	/*
-	 * Decrease iterator position: post-decrement version
-	 *
-	 * @return  A copy of *this that was made before the change
-	 */
+	/* Decrease iterator position: post-decrement version */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>
 	base_iterator<Iterator,Container>::operator--(int)
@@ -840,10 +706,6 @@ namespace ft
 	/*
 	 * Retrocede iterator
 	 * Decreases the base_iterator by n element positions
-	 *
-	 * @param n  Number of elements to offset
-	 *
-	 * @return  *this
 	 */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>&
@@ -853,13 +715,7 @@ namespace ft
 		return (*this);
 	}
 
-	/*
-	 * Subtraction operator
-	 *
-	 * @param n  Number of elements to offset
-	 *
-	 * @return  An iterator pointing to the element n positions before the currently pointed one
-	 */
+	/* Subtraction operator */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>
 	base_iterator<Iterator,Container>::operator-(difference_type n) const
@@ -870,9 +726,7 @@ namespace ft
 
 	/* non-member function overloads **************************************** */
 
-	/*
-	 * relational operators
-	 */
+	/* Relational operators */
 
 	template<typename Iter1, typename Iter2, typename Container>
 	bool
@@ -926,11 +780,6 @@ namespace ft
 	 * Addition operator
 	 * Returns a base iterator pointing to the element located n positions
 	 * away from the element pointed to by it
-	 *
-	 * @param n   Number of elements to offset
-	 * @param it  Base iterator
-	 *
-	 * @return  An iterator pointing to the element n positions away from it
 	 */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>
@@ -944,10 +793,6 @@ namespace ft
 	 * Subtraction operator
 	 * Computes the distance between two base iterators
 	 * The function returns the same as subtracting lhs's base iterator from rhs's base iterator
-	 *
-	 * @param lhs, rhs  base_iterator objects having both the same template parameter
-	 *
-	 * @return  The number of elements between lhs and rhs
 	 */
 	template<typename Iterator, typename Container>
 	typename base_iterator<Iterator,Container>::difference_type
@@ -959,9 +804,7 @@ namespace ft
 
 	/* iterator types ******************************************************* */
 
-	/*
-	 * Helpers for iter_is_input
-	 */
+	/* Helpers for iter_is_input */
 
 	// false by default
 	template<typename Iter>

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 15:07:09 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:18:26 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,11 @@
 
 namespace ft
 {
+	/* Stack definition ***************************************************** */
+
 	/*
 	 * Stack template class
-	 * Encapsulates another container and provides a LIFO way to access to its 
-	 * elements
-	 *
-	 * @param T          Type of the elements
-	 * @param Container  Type of the internal underlying container object where 
-	 *                   the elements are stored.
+	 * Encapsulates another container and provides a LIFO way to access to its elements
 	 */
 	template<typename T, typename Container = ft::vector<T> >
 	class stack
@@ -79,7 +76,7 @@ namespace ft
 		
 	};
 
-	/* non-member function overloads **************************************** */
+	// non-member function overloads
 
 	// relational operators
 	template<typename T, typename Container>
@@ -92,20 +89,13 @@ namespace ft
 		bool	operator>=(const stack<T, Container>& lhs, const stack<T, Container>& rhs);
 
 
-	/* ********************************************************************** */
-	/*                                                                        */
-	/*                             Implementation                             */
-	/*                                                                        */
-	/* ********************************************************************** */
-
+	/* Stack implementation ************************************************* */
 
 	/* construct/copy/destroy *********************************************** */
 
 	/*
 	 * Constructor
 	 * Constructs a stack container adaptor object
-	 *
-	 * @param ctnr  The type of the underlying container type
 	 */
 	template<typename T, typename Container>
 	stack<T, Container>::stack(const container_type& ctnr)
@@ -116,8 +106,6 @@ namespace ft
 	/*
 	 * Copy constructor
 	 * Constructs a stack container adaptor object from another stack object
-	 *
-	 * @param other  Another stack object of the same type
 	 */
 	template<typename T, typename Container>
 	stack<T, Container>::stack(const stack& other)
@@ -176,9 +164,7 @@ namespace ft
 
 	/* element access ******************************************************* */
 
-	/*
-	 * Returns a reference to the top element (last element inserted) in the stack.
-	 */
+	/* Returns a reference to the top element (last element inserted) in the stack */
 	template<typename T, typename Container>
 	typename stack<T, Container>::value_type&
 	stack<T, Container>::top(void)
@@ -186,9 +172,7 @@ namespace ft
 		return (c.back());
 	}
 
-	/*
-	 * Returns a const reference to the top element (last element inserted) in the stack.
-	 */
+	/* Returns a const reference to the top element (last element inserted) in the stack */
 	template<typename T, typename Container>
 	const typename stack<T, Container>::value_type&
 	stack<T, Container>::top(void) const
