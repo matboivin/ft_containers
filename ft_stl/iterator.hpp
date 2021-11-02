@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 16:00:44 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 16:19:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,7 @@ namespace ft
 	template<typename Iterator>
 	template<typename Iter>
 	reverse_iterator<Iterator>::reverse_iterator(const reverse_iterator<Iter>& other)
-	: current(other.current)
+	: current(other.base())
 	{
 	}
 

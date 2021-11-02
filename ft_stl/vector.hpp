@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 15:06:49 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 16:16:28 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,12 +104,14 @@ namespace ft
 		allocator_type	get_alloc(void) const;
 
 		// iterators
-		iterator			begin(void);
-		const_iterator		begin(void) const;
-		iterator			end(void);
-		const_iterator		end(void) const;
-		reverse_iterator	rbegin(void);
-		reverse_iterator	rend(void);
+		iterator				begin(void);
+		const_iterator			begin(void) const;
+		iterator				end(void);
+		const_iterator			end(void) const;
+		reverse_iterator		rbegin(void);
+		const_reverse_iterator	rbegin(void) const;
+		reverse_iterator		rend(void);
+		const_reverse_iterator	rend(void) const;
 
 		// capacity
 		bool			empty(void) const;
@@ -668,6 +670,13 @@ namespace ft
 		return ( reverse_iterator(end()) );
 	}
 
+	template<typename T, typename Alloc>
+	typename vector<T,Alloc>::const_reverse_iterator
+	vector<T,Alloc>::rbegin(void) const
+	{
+		return ( const_reverse_iterator(end()) );
+	}
+
 	/*
 	 * Returns a reverse iterator pointing to the theoretical element preceding
 	 * the first element in the vector
@@ -679,6 +688,13 @@ namespace ft
 	vector<T,Alloc>::rend(void)
 	{
 		return ( reverse_iterator(begin()) );
+	}
+
+	template<typename T, typename Alloc>
+	typename vector<T,Alloc>::const_reverse_iterator
+	vector<T,Alloc>::rend(void) const
+	{
+		return ( const_reverse_iterator(begin()) );
 	}
 
 

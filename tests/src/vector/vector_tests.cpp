@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 17:52:53 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 16:27:21 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ namespace std
 
 		// iterator
 		test_vec_iterator();
+		test_vec_rev_iterator();
 
 		// capacity
 		test_vec_empty();
