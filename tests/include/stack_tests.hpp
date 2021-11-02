@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:48:12 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/30 16:57:04 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 11:58:52 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ namespace std
 
 	// construct/assign
 	void	test_stack_default_ctor(void);
+	void	test_stack_copy_ctor(void);
 	void	test_stack_copy_assign(void);
 
 	// capacity

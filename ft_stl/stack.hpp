@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/30 17:00:26 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 11:52:31 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ namespace ft
 	public:
 		// constructor
 		stack(const container_type& ctnr = container_type());
+
+		// copy constructor
+		stack(const stack& other);
 
 		// destructor
 		~stack(void);
@@ -107,6 +110,18 @@ namespace ft
 	template<typename T, typename Container>
 	stack<T, Container>::stack(const container_type& ctnr)
 	: c(ctnr)
+	{
+	}
+
+	/*
+	 * Copy constructor
+	 * Constructs a stack container adaptor object from another stack object
+	 *
+	 * @param other  Another stack object of the same type
+	 */
+	template<typename T, typename Container>
+	stack<T, Container>::stack(const stack& other)
+	: c(other.c)
 	{
 	}
 

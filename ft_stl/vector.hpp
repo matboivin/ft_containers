@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 23:44:01 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 11:51:50 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,13 +92,13 @@ namespace ft
 				   );
 
 		// copy constructor
-		vector(const vector& x);
+		vector(const vector& other);
 
 		// destructor
 		~vector(void);
 
 		// assignment operator
-		vector&	operator=(const vector& rhs);
+		vector&	operator=(const vector& other);
 
 		// allocator
 		allocator_type	get_alloc(void) const;
@@ -531,19 +531,19 @@ namespace ft
 	 * Constructs a container with a copy of each of the elements in x, in the same order.
 	 * Capacity of the new vector is equal to the size of x to avoid unused capacity.
 	 *
-	 * @param x  Another vector object of the same type
-	 *           (with the same class template arguments T and Allocator)
+	 * @param other  Another vector object of the same type
+	 *               (with the same class template arguments T and Allocator)
 	 */
 	template<typename T, typename Alloc>
-	vector<T,Alloc>::vector(const vector& x)
-	: _M_alloc(x.get_alloc())
+	vector<T,Alloc>::vector(const vector& other)
+	: _M_alloc(other.get_alloc())
 	{
-		size_type	len = x.size();
+		size_type	len = other.size();
 
 		_M_create_storage(len);
 		for ( size_type i = 0; i < len; ++i )
 		{
-			this->_M_alloc.construct(this->_M_end, x[i]);
+			this->_M_alloc.construct(this->_M_end, other[i]);
 			++this->_M_end;
 		}
 	}
@@ -568,21 +568,21 @@ namespace ft
 	 * and modifying its size accordingly.
 	 * The container preserves its current allocator, which is used to allocate storage
 	 * in case of reallocation.
-	 * Capacity of the vector is equal to the size of rhs to avoid unused capacity.
+	 * Capacity of the vector is equal to the size of x to avoid unused capacity.
 	 *
-	 * @param x  Another vector object of the same type
+	 * @param other  Another vector object of the same type
 	 *           (with the same class template arguments T and Allocator)
 	 *
 	 * @return  *this
 	 */
 	template<typename T, typename Alloc>
 	vector<T,Alloc>&
-	vector<T,Alloc>::operator=(const vector& rhs)
+	vector<T,Alloc>::operator=(const vector& other)
 	{
 		// avoid self-assignment
-		if (this != &rhs)
+		if (this != &other)
 		{
-			size_type	new_size = rhs.size();
+			size_type	new_size = other.size();
 
 			_M_erase_at_end(this->_M_begin);
 			if (capacity() < new_size)
@@ -593,7 +593,7 @@ namespace ft
 			}
 			for ( size_type i = 0; i < new_size; ++i )
 			{
-				this->_M_alloc.construct(this->_M_end, rhs[i]);
+				this->_M_alloc.construct(this->_M_end, other[i]);
 				++this->_M_end;
 			}
 		}

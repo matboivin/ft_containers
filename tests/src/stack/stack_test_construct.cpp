@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:51:27 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/30 16:44:43 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 12:02:06 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,28 @@ namespace std
 		start = clock();
 		stack<int, std::list<int> >	stack2;
 		displayElapsedTime(start, clock());
+	}
+
+	void	test_stack_copy_ctor(void)
+	{
+		std::cout << "TEST: Copy Constructor \n\n";
+
+		explainTest("Creates a new object from existing one passed as parameter.");
+
+		// create a vector
+		vector<int>	vec(1000000, 1);
+		// create original stack
+		stack<int, vector<int> >	stack1(vec);
+
+		clock_t	start = clock();
+
+		// create a copy from stack1
+		stack<int, vector<int> >	stack2(stack1);
+
+		displayElapsedTime(start, clock());
+
+		// assert they're identical
+		assert(stack1 == stack2);
 	}
 
 	void	test_stack_copy_assign(void)
