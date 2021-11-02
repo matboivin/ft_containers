@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 18:27:40 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 18:28:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 12:16:26 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,14 @@ namespace std
 		for ( int i = 0; i < 10; ++i )
 			vec2.push_back(35 - i);
 
-		displayVecInfos(vec1, "vector 1");
-		displayVecInfos(vec2, "vector 2");
+		// create backup
+		vector<int>	backup1(vec1);
+		vector<int>	backup2(vec2);
+		vector<int>	backup3(vec3);
+
+		// first test
+		displayVecInfos(vec1, "before: vector 1");
+		displayVecInfos(vec2, "before: vector 2");
 
 		std::cout << "swap(vec1, vec2);\n\n";
 
@@ -48,15 +54,23 @@ namespace std
 		swap(vec1, vec2);
 		clock_t	time_end = clock();
 
-		displayVecInfos(vec1, "vector 1");
-		displayVecInfos(vec2, "vector 2");
-
+		displayVecInfos(vec1, "after: vector 1");
+		displayVecInfos(vec2, "after: vector 2");
 		displayElapsedTime(time_start, time_end);
 
+		// assert using backup vectors
+		assert(vec1 == backup2);
+		assert(vec2 == backup1);
+
+		// second test
 		std::cout << "swap(vec1, vec3);\n\n";
 
 		time_start = clock();
 		swap(vec1, vec3);
 		displayElapsedTime(time_start, clock());
+
+		// assert using backup vectors
+		assert(vec1 == backup3);
+		assert(vec3 == backup2);
 	}
 }

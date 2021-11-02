@@ -6,12 +6,13 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:51:27 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 12:02:06 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 12:15:28 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iomanip>
 #include <iostream>
+#include <deque>
 #include <list>
 #include "vector.hpp"
 #include "tests.hpp"
@@ -29,14 +30,32 @@ namespace std
 
 		explainTest("Constructs a stack container adaptor object.");
 
-		// with default container
+		// Test default container
+		std::cout << "1. With default container" << std::endl;
+
 		clock_t	start = clock();
-		stack<int>	stack1;
+		stack<int>	stack_default;
 		displayElapsedTime(start, clock());
 
-		// with std::list
+		// Test std::vector and vector
+		std::cout << "2. With vector" << std::endl;
+
 		start = clock();
-		stack<int, std::list<int> >	stack2;
+		stack<int, vector<int> >	stack_vec;
+		displayElapsedTime(start, clock());
+
+		// Test std::deque
+		std::cout << "3. With deque" << std::endl;
+
+		start = clock();
+		stack<int, std::deque<int> >	stack_deque;
+		displayElapsedTime(start, clock());
+
+		// Test std::list
+		std::cout << "4. With list" << std::endl;
+
+		start = clock();
+		stack<int, std::list<int> >	stack_lst;
 		displayElapsedTime(start, clock());
 	}
 
@@ -46,20 +65,38 @@ namespace std
 
 		explainTest("Creates a new object from existing one passed as parameter.");
 
-		// create a vector
-		vector<int>	vec(1000000, 1);
-		// create original stack
-		stack<int, vector<int> >	stack1(vec);
+		// Test vector
+		vector<int>					vec(1000000, 1);
+		stack<int, vector<int> >	stack_vec(vec);
 
 		clock_t	start = clock();
-
-		// create a copy from stack1
-		stack<int, vector<int> >	stack2(stack1);
-
+		stack<int, vector<int> >	copy_stack_vec(stack_vec);
 		displayElapsedTime(start, clock());
 
 		// assert they're identical
-		assert(stack1 == stack2);
+		assert(stack_vec == copy_stack_vec);
+
+		// Test deque
+		std::list<int>				de_que(1000000, 1);
+		stack<int, std::list<int> >	stack_deque(de_que);
+
+		start = clock();
+		stack<int, std::list<int> > copy_stack_deque(stack_deque);
+		displayElapsedTime(start, clock());
+
+		// assert they're identical
+		assert(stack_deque == copy_stack_deque);
+
+		// Test list
+		std::list<int>				lst(1000000, 1);
+		stack<int, std::list<int> >	stack_lst(lst);
+
+		start = clock();
+		stack<int, std::list<int> > copy_stack_lst(stack_lst);
+		displayElapsedTime(start, clock());
+
+		// assert they're identical
+		assert(stack_lst == copy_stack_lst);
 	}
 
 	void	test_stack_copy_assign(void)
@@ -68,7 +105,7 @@ namespace std
 
 		explainTest("Replaces the contents with a copy of the contents of other.");
 
-		// with std::list
+		// Test std::list
 		stack<int, std::list<int> >	stack1;
 		stack<int, std::list<int> >	stack2;
 
@@ -83,7 +120,7 @@ namespace std
 
 		assert(stack1 == stack2);
 
-		// with std::vector and vector
+		// Test std::vector and vector
 		vector<int>	vec(1000, 1);
 
 		stack<int, vector<int> >	stack3(vec);
