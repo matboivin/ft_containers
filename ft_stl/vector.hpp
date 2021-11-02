@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 17:02:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:32:14 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,12 @@ namespace ft
 		typedef typename allocator_type::const_reference				const_reference;
 		typedef typename allocator_type::pointer						pointer;
 		typedef typename allocator_type::const_pointer					const_pointer;
-		typedef std::size_t												size_type;
 		typedef ft::base_iterator<pointer, vector>						iterator;
 		typedef ft::base_iterator<const_pointer, vector>				const_iterator;
 		typedef ft::reverse_iterator<iterator>							reverse_iterator;
 		typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
 		typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
+		typedef std::size_t												size_type;
 
 	private:
 		// attributes
