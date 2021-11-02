@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 16:45:35 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/29 23:55:04 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 14:27:45 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,22 @@ namespace std
 
 		vector<int>	vec4(vec3);
 
+		std::cout << std::boolalpha
+				  << "(vec1 > vec2 && vec1 < vec3) ? " << (vec1 > vec2 && vec1 < vec3)
+				  << "\n(vec1 < vec2)   ? " << (vec1 < vec2)
+				  << "\n(vec3 != vec2)  ? " << (vec3 != vec2)
+				  << "\n(vec3 == vec4)  ? " << (vec3 == vec4)
+				  << "\n(vec3 != vec4)  ? " << (vec3 != vec4)
+				  << "\n(vec1 != vec4)  ? " << (vec1 != vec4)
+				  << "\n(vec3 >= vec4)  ? " << (vec3 >= vec4)
+				  << "\n(vec3 <= vec4)  ? " << (vec3 <= vec4)
+				  << "\n\n";
+
 		assert(vec1 > vec2 && vec1 < vec3);
+		assert((vec1 < vec2) == false);
 		assert(vec3 != vec2);
 		assert(vec3 == vec4);
+		assert((vec3 != vec4) == false);
 		assert(vec1 != vec4);
 		assert(vec3 >= vec4);
 		assert(vec3 <= vec4);

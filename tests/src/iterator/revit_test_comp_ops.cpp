@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:13 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 16:11:12 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 14:38:52 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,20 @@ namespace std
 		reverse_iterator<int*>	rev_it(arr + 1);
 		reverse_iterator<int*>	rev_ite(arr + 10);
 
-		assert(!(rev_it == rev_ite));
+		std::cout << std::boolalpha
+				  << "(rev_it == rev_ite) ? " << (rev_it == rev_ite)
+				  << "\n(rev_it != rev_ite) ? " << (rev_it != rev_ite)
+				  << "\n(rev_it > rev_ite)  ? " << (rev_it > rev_ite)
+				  << "\n(rev_it < rev_ite)  ? " << (rev_it < rev_ite)
+				  << "\n(rev_it <= rev_ite) ? " << (rev_it <= rev_ite)
+				  << "\n(rev_it >= rev_ite) ? " << (rev_it >= rev_ite)
+				  << "\n\n";
+
+		assert((rev_it == rev_ite) == false);
 		assert(rev_it != rev_ite);
-		assert(!(rev_it < rev_ite));
 		assert(rev_it > rev_ite);
-		assert(!(rev_it <= rev_ite));
+		assert((rev_it < rev_ite) == false);
+		assert((rev_it <= rev_ite) == false);
 		assert(rev_it >= rev_ite);
 	}
 }
