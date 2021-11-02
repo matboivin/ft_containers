@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 16:16:28 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:02:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@
 
 namespace ft
 {
+	/* Vector definition *************************************************** */
+
 	/*
 	 * Vector template class
 	 * Array which size can change dynamically
@@ -147,11 +149,11 @@ namespace ft
 							   );
 		iterator		erase(iterator position);
 		iterator		erase(iterator first, iterator last);
-		void			swap(vector& x);
+		void			swap(vector& other);
 		void			clear(void);
 	};
 
-	/* non-member function overloads **************************************** */
+	// non-member function overloads
 
 	// relational operators
 	template<typename T, typename Alloc>
@@ -169,20 +171,14 @@ namespace ft
 
 	// swap
 	template<typename T, typename Alloc>
-		void	swap(vector<T,Alloc>& x, vector<T,Alloc>& y);
+		void	swap(vector<T,Alloc>& lhs, vector<T,Alloc>& rhs);
 
 
-	/* ********************************************************************** */
-	/*                                                                        */
-	/*                             Implementation                             */
-	/*                                                                        */
-	/* ********************************************************************** */
+	/* Vector implementation ************************************************ */
 
 	/* helpers ************************************************************** */
 
-	/*
-	 * Allocate a storage space of size n
-	 */
+	/* Allocate a storage space of size n */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::pointer
 	vector<T,Alloc>::_M_allocate(size_type __n)
@@ -195,20 +191,18 @@ namespace ft
 
 	/*
 	 * Allocate a new storage space and set the pointers to the end
-	 * (it's empty, so it points to the beginning) and to the end of storage
+	 * and to the end of storage
 	 */
 	template<typename T, typename Alloc>
 	void
 	vector<T,Alloc>::_M_create_storage(size_type __n)
 	{
 		this->_M_begin = this->_M_allocate(__n);
-		this->_M_end = this->_M_begin;
+		this->_M_end = this->_M_begin; // since it's empty, points to the beginning
 		this->_M_endOfStorage = this->_M_begin + __n;
 	}
 
-	/*
-	 * Deallocate a storage space of size n pointed to by pointer p
-	 */
+	/* Deallocate a storage space of size n pointed to by pointer p */
 	template<typename T, typename Alloc>
 	void
 	vector<T,Alloc>::_M_deallocate(pointer __p, size_type __n)
@@ -217,9 +211,7 @@ namespace ft
 			this->_M_alloc.deallocate(__p, __n);
 	}
 
-	/*
-	 * Swap vector's data with x
-	 */
+	/* Swap vector's data with x */
 	template<typename T, typename Alloc>
 	void
 	vector<T,Alloc>::_M_swap_data(vector& __x)
@@ -237,9 +229,7 @@ namespace ft
 		this->_M_endOfStorage = __tmp_endOfStorage;
 	}
 
-	/*
-	 * Construct n elements using default value
-	 */
+	/* Construct n elements using default value */
 	template<typename T, typename Alloc>
 	void
 	vector<T,Alloc>::_M_default_initialize(size_type __n)
@@ -254,9 +244,7 @@ namespace ft
 		}
 	}
 
-	/*
-	 * Construct with n elements of value val
-	 */
+	/* Construct with n elements of value val */
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
 	void
@@ -275,9 +263,7 @@ namespace ft
 		}
 	}
 
-	/*
-	 * Insert a range of elements at a given position
-	 */
+	/* Insert a range of elements at a given position */
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
 	void
@@ -351,9 +337,7 @@ namespace ft
 		}
 	}
 
-	/*
-	 * Insert n elements of value val at a given position
-	 */
+	/* Insert n elements of value val at a given position */
 	template<typename T, typename Alloc>
 	void
 	vector<T, Alloc>::_M_fill_insert(iterator __pos, size_type __n, const value_type& __val)
@@ -423,9 +407,7 @@ namespace ft
 		}
 	}
 
-	/*
-	 * Calculates capacity growth (private member function to help)
-	 */
+	/* Calculates capacity growth (private member function to help) */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::size_type
 	vector<T,Alloc>::_M_calculateGrowth(const size_type __n)
@@ -439,9 +421,7 @@ namespace ft
 		return ( (__n > __dlb_capacity) ? __n : __dlb_capacity );
 	}
 
-	/*
-	 * Destroy elements from a given position to the end
-	 */
+	/* Destroy elements from a given position to the end */
 	template<typename T, typename Alloc>
 	void
 	vector<T,Alloc>::_M_erase_at_end(pointer __pos)
@@ -456,9 +436,7 @@ namespace ft
 		}
 	}
 
-	/*
-	 * Safety check for storage length
-	 */
+	/* Safety check for storage length */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::size_type
 	vector<T,Alloc>::_M_len_check(size_type __n, const char* __s) const
@@ -483,8 +461,6 @@ namespace ft
 	/*
 	 * Default constructor
 	 * Constructs an empty container, with no elements.
-	 *
-	 * @param alloc  Allocator object
 	 */
 	template<typename T, typename Alloc>
 	vector<T,Alloc>::vector(const allocator_type& alloc)
@@ -495,10 +471,6 @@ namespace ft
 	/*
 	 * Fill constructor
 	 * Constructs a container with n elements. Each element is a copy of val.
-	 *
-	 * @param n      Initial container size
-	 * @param val    Value to fill the container with
-	 * @param alloc  Allocator object
 	 */
 	template<typename T, typename Alloc>
 	vector<T,Alloc>::vector(size_type n, const value_type& val, const allocator_type& alloc)
@@ -511,12 +483,7 @@ namespace ft
 
 	/*
 	 * Range constructor
-	 * Constructs a container with as many elements as the range [first,last),
-	 * with each element constructed from its corresponding element in that range,
-	 * in the same order.
-	 *
-	 * @param alloc        Allocator object
-	 * @param first, last  Input iterators to the initial and final positions in a range
+	 * Constructs a container with the range of elements [first,last).
 	 */
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
@@ -530,11 +497,8 @@ namespace ft
 
 	/*
 	 * Copy constructor
-	 * Constructs a container with a copy of each of the elements in x, in the same order.
-	 * Capacity of the new vector is equal to the size of x to avoid unused capacity.
-	 *
-	 * @param other  Another vector object of the same type
-	 *               (with the same class template arguments T and Allocator)
+	 * Constructs a container with a copy the elements of other vector.
+	 * Capacity of the new vector is equal to the size of other to avoid unused capacity.
 	 */
 	template<typename T, typename Alloc>
 	vector<T,Alloc>::vector(const vector& other)
@@ -552,9 +516,6 @@ namespace ft
 
 	/*
 	 * Destructor
-	 *
-	 * Destroys all container elements, and deallocates all the storage capacity
-	 * allocated by the vector using its allocator.
 	 */
 	template<typename T, typename Alloc>
 	vector<T,Alloc>::~vector(void)
@@ -565,17 +526,11 @@ namespace ft
 
 	/*
 	 * Copy assignment operator
-	 *
 	 * Assigns new contents to the container, replacing its current contents,
 	 * and modifying its size accordingly.
 	 * The container preserves its current allocator, which is used to allocate storage
 	 * in case of reallocation.
-	 * Capacity of the vector is equal to the size of x to avoid unused capacity.
-	 *
-	 * @param other  Another vector object of the same type
-	 *           (with the same class template arguments T and Allocator)
-	 *
-	 * @return  *this
+	 * Capacity of the vector is equal to the size of other to avoid unused capacity.
 	 */
 	template<typename T, typename Alloc>
 	vector<T,Alloc>&
@@ -587,9 +542,8 @@ namespace ft
 			size_type	new_size = other.size();
 
 			_M_erase_at_end(this->_M_begin);
-			if (capacity() < new_size)
+			if (capacity() < new_size) // need to expand capacity
 			{
-				// need to expand capacity
 				_M_deallocate(this->_M_begin, capacity());
 				_M_create_storage(new_size);
 			}
@@ -604,11 +558,7 @@ namespace ft
 
 	/* allocator ************************************************************ */
 
-	/*
-	 * Returns a copy of the allocator object associated with the vector.
-	 *
-	 * @return  The allocator
-	 */
+	/* Returns a copy of the allocator object associated with the vector */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::allocator_type
 	vector<T,Alloc>::get_alloc(void) const
@@ -619,11 +569,7 @@ namespace ft
 
 	/* iterators ************************************************************ */
 
-	/*
-	 * Returns an iterator pointing to the first element in the vector
-	 *
-	 * @return  An iterator to the beginning of the sequence container
-	 */
+	/* Returns an iterator pointing to the first element in the vector */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::iterator
 	vector<T,Alloc>::begin(void)
@@ -638,12 +584,7 @@ namespace ft
 		return ( const_iterator(this->_M_begin) );
 	}
 
-	/*
-	 * Returns an iterator referring to the past-the-end element
-	 * in the vector container
-	 *
-	 * @return  An iterator to the element past the end of the sequence
-	 */
+	/* Returns an iterator referring to the past-the-end element in the vector container */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::iterator
 	vector<T,Alloc>::end(void)
@@ -658,11 +599,7 @@ namespace ft
 		return ( const_iterator(this->_M_end) );
 	}
 
-	/*
-	 * Returns a reverse iterator pointing to the last element in the vector
-	 *
-	 * @return  A reverse iterator to the reverse beginning of the sequence container
-	 */
+	/* Returns a reverse iterator pointing to the last element in the vector */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::reverse_iterator
 	vector<T,Alloc>::rbegin(void)
@@ -680,8 +617,6 @@ namespace ft
 	/*
 	 * Returns a reverse iterator pointing to the theoretical element preceding
 	 * the first element in the vector
-	 *
-	 * @return  A reverse iterator to the reverse end of the sequence container
 	 */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::reverse_iterator
@@ -700,12 +635,7 @@ namespace ft
 
 	/* capacity ************************************************************* */
 
-
-	/*
-	 * Checks whether the vector is empty (i.e. whether its size is 0).
-	 *
-	 * @return  true if the container size is 0, false otherwise
-	 */
+	/* Checks whether the vector is empty */
 	template<typename T, typename Alloc>
 	bool
 	vector<T,Alloc>::empty(void) const
@@ -713,11 +643,7 @@ namespace ft
 		return ( begin() == end() );
 	}
 
-	/*
-	 * Get the size of the vector
-	 *
-	 * @return  The number of elements in the vector
-	 */
+	/* Get the size of the vector */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::size_type
 	vector<T,Alloc>::size(void) const
@@ -730,8 +656,6 @@ namespace ft
 	 *
 	 * This is the maximum potential size the container can reach due to known system
 	 * or library implementation limitations.
-	 *
-	 * @return  The maximum number of elements a vector container can hold as content
 	 */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::size_type
@@ -742,40 +666,29 @@ namespace ft
 
 	/*
 	 * Resizes the container so that it contains n elements.
-	 *
-	 * If n is smaller than the current container size, the content is reduced to
-	 * its first n elements, removing those beyond (and destroying them).
-	 *
-	 * If n is greater than the current container size, the content is expanded
-	 * by inserting at the end as many elements as needed to reach a size of n.
-	 *
 	 * If val is specified, the new elements are initialized as copies of val,
 	 * otherwise, they are value-initialized.
-	 *
-	 * If n is also greater than the current container capacity, an automatic reallocation
-	 * of the allocated storage space takes place.
-	 *
-	 * @param n    New container size, expressed in number of elements
-	 * @param val  Object whose content is copied to the added elements in case that n
-	 *             is greater than the current container size.
-	 *             If not specified, the default constructor is used instead.
 	 */
 	template<typename T, typename Alloc>
 	void
 	vector<T,Alloc>::resize(size_type n, value_type val)
 	{
-		if (n > size())
-			_M_fill_insert(this->end(), n - size(), val);
-		else if (n < size())
+		// If n is smaller than the current container size, the content is reduced to
+		// its first n elements, removing those beyond (and destroying them).
+		if (n < size())
 			_M_erase_at_end(this->_M_begin + n);
+		// If n is greater than the current container size, the content is expanded
+		// by inserting at the end as many elements as needed to reach a size of n.
+		// If n is also greater than the current container capacity, an automatic reallocation
+		// of the allocated storage space takes place.
+		else if (n > size())
+			_M_fill_insert(this->end(), n - size(), val);
 	}
 
 	/*
 	 * Gets the size of allocated storage capacity
 	 * i.e., size of the storage space currently allocated for the vector,
 	 * expressed in terms of elements.
-	 *
-	 * @return  The size of the currently allocated storage capacity in the vector
 	 */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::size_type
@@ -784,21 +697,15 @@ namespace ft
 		return (size_type(this->_M_endOfStorage - this->_M_begin));
 	}
 
-	/*
-	 * Requests that the vector capacity be at least enough to contain n elements.
-	 *
-	 * If n is greater than the current vector capacity, the function causes
-	 * the container to reallocate its storage increasing its capacity to n or greater
-	 *
-	 * @param n  Minimum capacity for the vector
-	 *           Note that the resulting vector capacity may be equal or greater than n
-	 */
+	/* Requests that the vector capacity be at least enough to contain n elements */
 	template<typename T, typename Alloc>
 	void
 	vector<T,Alloc>::reserve(size_type n)
 	{
 		if (n <= capacity())
 			return ;
+		// If n is greater than the current vector capacity, the function causes
+		// the container to reallocate its storage increasing its capacity to n or greater
 		if (n > max_size())
 			throw std::length_error("vector::reserve");
 
@@ -808,29 +715,21 @@ namespace ft
 
 		_M_create_storage(_M_calculateGrowth(n));
 
+		// copy content in newly allocated array
 		for ( size_type i = 0; i < old_size; ++i )
 		{
 			this->_M_alloc.construct(this->_M_end, tmp[i]);
 			this->_M_alloc.destroy(&tmp[i]);
 			++this->_M_end;
 		}
+		// deallocate former array
 		_M_deallocate(tmp, old_capacity);
 	}
 
 
 	/* element access ******************************************************* */
 
-	/*
-	 * Access an element of the vector
-	 *
-	 * @param n  Position of an element in the container
-	 *
-	 * @return  A reference to the element at position n in the vector container
-	 *
-	 * @exceptsafe If the container size is greater than n, the function
-	 * never throws exceptions.
-	 * Otherwise, the behavior is undefined.
-	 */
+	/* Returns a reference to the element at position n in the vector container */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::reference
 	vector<T,Alloc>::operator[](size_type n)
@@ -845,9 +744,7 @@ namespace ft
 		return (this->_M_begin[n]);
 	}
 
-	/*
-	 * Safety check for at()
-	 */
+	/* Safety check for at() */
 	template<typename T, typename Alloc>
 	void
 	vector<T,Alloc>::_M_range_check(size_type __n) const
@@ -863,15 +760,7 @@ namespace ft
 		}
 	}
 
-	/*
-	 * Access an element of the vector
-	 *
-	 * @param n  Position of an element in the container
-	 *
-	 * @return  The element at the specified position in the container
-	 *
-	 * @exceptsafe If n is out of bounds, out_of_range si thrown
-	 */
+	/* Returns the element at the specified position in the container */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::reference
 	vector<T,Alloc>::at(size_type n)
@@ -888,11 +777,7 @@ namespace ft
 		return (this->_M_begin[n]);
 	}
 
-	/*
-	 * Access the first element in the vector
-	 *
-	 * @return  A reference to the first element in the vector container
-	 */
+	/* Returns the first element in the vector */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::reference
 	vector<T,Alloc>::front(void)
@@ -907,11 +792,7 @@ namespace ft
 		return ( *(begin()) );
 	}
 
-	/*
-	 * Access the last element in the vector
-	 *
-	 * @return  A reference to the last element in the vector container
-	 */
+	/* Returns the last element in the vector */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::reference
 	vector<T,Alloc>::back(void)
@@ -929,15 +810,9 @@ namespace ft
 
 	/* modifiers ************************************************************ */
 
-
 	/*
-	 * Assigns new contents to the vector, replacing its current contents,
-	 * and modifying its size accordingly.
-	 *
-	 * The new contents are elements constructed from each of the elements
-	 * in the range between first and last, in the same order.
-	 *
-	 * @param first, last  Input iterators to the initial and final positions in a sequence
+	 * Assigns new contents to the vector, replacing its current contents by the
+	 * given range, and modifying its size accordingly.
 	 */
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
@@ -952,12 +827,8 @@ namespace ft
 	}
 
 	/*
-	 * Assigns new contents to the vector, replacing its current contents,
-	 * and modifying its size accordingly.
-	 *
-	 * @param n    New size for the container
-	 * @param val  Value to fill the container with. Each of the n elements in
-	 *             the container will be initialized to a copy of this value
+	 * Assigns new contents to the vector, replacing its current contents with the
+	 * given value, and modifying its size accordingly.
 	 */
 	template<typename T, typename Alloc>
 	void
@@ -965,15 +836,12 @@ namespace ft
 	{
 		resize(n);
 		clear();
+		// Each element is initialized to value val
 		for ( ; n > 0; ++this->_M_end, --n )
 			this->_M_alloc.construct(this->_M_end, val);
 	}
 
-	/*
-	 * Adds a new element at the end of the vector, after its current last element.
-	 *
-	 * @param val  Value to be copied (or moved) to the new element
-	 */
+	/* Adds a new element at the end of the vector, after its current last element. */
 	template<typename T, typename Alloc>
 	void
 	vector<T,Alloc>::push_back(const value_type& val)
@@ -983,14 +851,14 @@ namespace ft
 		if (this->_M_end == this->_M_endOfStorage)
 			reserve(size() + 1);
 
-		// add the new element
+		// Add the new element
 		this->_M_alloc.construct(this->_M_end, val);
 		++this->_M_end;
 	}
 
 	/*
-	 * Removes the last element in the vector, effectively reducing the container size by one.
-	 * This destroys the removed element.
+	 * Removes the last element in the vector.
+	 * This destroys the removed element and reduce the container size by one.
 	 */
 	template<typename T, typename Alloc>
 	void
@@ -1001,17 +869,8 @@ namespace ft
 	}
 
 	/*
-	 * Insert elements
-	 * The vector is extended by inserting a single before the element at the specified
-	 * position, effectively increasing the container size by 1.
-	 *
-	 * If the new vector size surpasses the current vector capacity,
-	 * it causes an automatic reallocation of the allocated storage space.
-	 *
-	 * @param position  Position in the vector where the new elements are inserted
-	 * @param val       Value to be copied (or moved) to the inserted elements
-	 *
-	 * @return  An iterator that points to the first of the newly inserted elements
+	 * Insert a single element before the element at the specified position,
+	 * increasing the container size by 1.
 	 */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::iterator
@@ -1022,16 +881,8 @@ namespace ft
 	}
 
 	/*
-	 * Insert elements
-	 * The vector is extended by inserting new elements before the element at the specified
-	 * position, effectively increasing the container size by the number of elements inserted.
-	 *
-	 * If the new vector size surpasses the current vector capacity,
-	 * it causes an automatic reallocation of the allocated storage space.
-	 *
-	 * @param position  Position in the vector where the new elements are inserted
-	 * @param n         Number of elements to insert. Each element is initialized to a copy of val
-	 * @param val       Value to be copied (or moved) to the inserted elements
+	 * Insert n new elements before the element at the specified position,
+	 * effectively increasing the container size by n.
 	 */
 	template<typename T, typename Alloc>
 	void
@@ -1041,15 +892,8 @@ namespace ft
 	}
 
 	/*
-	 * Insert elements
-	 * The vector is extended by inserting a range of elements before the element at the specified
-	 * position, effectively increasing the container size by the number of elements inserted.
-	 *
-	 * If the new vector size surpasses the current vector capacity,
-	 * it causes an automatic reallocation of the allocated storage space.
-	 *
-	 * @param position     Position in the vector where the new elements are inserted
-	 * @param first, last  Iterators specifying a range of elements
+	 * Insert a range of elements before the element at the specified position,
+	 * effectively increasing the container size by the number of elements inserted.
 	 */
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
@@ -1062,15 +906,7 @@ namespace ft
 			_M_range_insert(position, first, last);
 	}
 
-	/*
-	 * Removes from the vector the element at the given position
-	 *
-	 * @param position  Iterator pointing to a single element to be removed
-	 *                  from the vector
-	 *
-	 * @return  An iterator pointing to the new location of the element
-	 *          that followed the last element erased by the function call
-	 */
+	/* Removes from the vector the element at the given position */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::iterator
 	vector<T,Alloc>::erase(iterator position)
@@ -1081,20 +917,13 @@ namespace ft
 
 		while (next != ite)
 			*(it++) = *(next++);
+
 		--this->_M_end;
 		this->_M_alloc.destroy(this->_M_end);
 		return (position);
 	}
 
-	/*
-	 * Removes from the vector a range of elements
-	 *
-	 * @param first, last  Iterators specifying a range within the vector
-	 *                     to be removed: [first,last)
-	 *
-	 * @return  An iterator pointing to the new location of the element
-	 *          that followed the last element erased by the function call
-	 */
+	/* Removes from the vector a range of elements */
 	template<typename T, typename Alloc>
 	typename vector<T,Alloc>::iterator
 	vector<T,Alloc>::erase(iterator first, iterator last)
@@ -1110,22 +939,15 @@ namespace ft
 		return (first);
 	}
 
-	/*
-	 * Exchanges the content of the container by the content of x
-	 *
-	 * @param x  Another vector container of the same type
-	 */
+	/* Exchanges the content of the vector and the other vector */
 	template<typename T, typename Alloc>
 	void
-	vector<T,Alloc>::swap(vector& x)
+	vector<T,Alloc>::swap(vector& other)
 	{
-		this->_M_swap_data(x);
+		this->_M_swap_data(other);
 	}
 
-	/*
-	 * Removes all elements from the vector (which are destroyed),
-	 * leaving the container with a size of 0.
-	 */
+	/* Destroys all elements from the vector, leaving the container with a size of 0 */
 	template<typename T, typename Alloc>
 	void
 	vector<T,Alloc>::clear(void)
@@ -1134,7 +956,7 @@ namespace ft
 	}
 
 
-	/* non-member function overloads implementation ************************* */
+	/* non-member function overloads **************************************** */
 
 	/*
 	 * Relational operators
@@ -1184,17 +1006,12 @@ namespace ft
 		return ( !(lhs < rhs) );
 	}
 
-	/*
-	 * Exchange contents of vectors
-	 *
-	 * @param x,y  vector containers of the same type
-	 *             (i.e., having both the same template parameters, T and Allocator)
-	 */
+	/* Exchange contents of two vectors */
 	template<typename T, typename Alloc>
 	void
-	swap(vector<T,Alloc>& x, vector<T,Alloc>& y)
+	swap(vector<T,Alloc>& rhs, vector<T,Alloc>& lhs)
 	{
-		x.swap(y);
+		rhs.swap(lhs);
 	}
 } // namespace ft
 
