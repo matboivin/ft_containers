@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 14:47:27 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 15:07:09 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ namespace ft
 		// destructor
 		~stack(void);
 
-		// assignment operator
+		// copy assignment operator
 		stack&	operator=(const stack& other);
 
 		// capacity

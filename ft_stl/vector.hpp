@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 14:47:21 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 15:06:49 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ namespace ft
 		// destructor
 		~vector(void);
 
-		// assignment operator
+		// copy assignment operator
 		vector&	operator=(const vector& other);
 
 		// allocator

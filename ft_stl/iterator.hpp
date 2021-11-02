@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 14:40:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/02 15:13:55 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,11 +178,17 @@ namespace ft
 	public:
 		// default constructor
 		reverse_iterator(void);
+
 		// initalization constructor
-		explicit reverse_iterator(iterator_type it);
+		explicit reverse_iterator(iterator_type x);
+
 		// copy constructor
 		template<typename Iter>
-			reverse_iterator(const reverse_iterator<Iter>& rev_it);
+			reverse_iterator(const reverse_iterator<Iter>& other);
+
+		// copy assignment operator
+		template<typename Iter>
+			reverse_iterator&	operator=(const reverse_iterator<Iter>& other);
 
 		// return copy of the original iterator
 		iterator_type		base(void) const;
@@ -216,7 +222,7 @@ namespace ft
 	 */
 	template<typename Iterator>
 	reverse_iterator<Iterator>::reverse_iterator(void)
-	: current(0)
+	: current()
 	{
 	}
 
@@ -226,11 +232,11 @@ namespace ft
 	 * The behavior of the constructed object replicates the original,
 	 * except that it iterates through its pointed elements in the reverse order.
 	 *
-	 * @param it  An iterator
+	 * @param x  An iterator
 	 */
 	template<typename Iterator>
-	reverse_iterator<Iterator>::reverse_iterator(iterator_type it)
-	: current(it)
+	reverse_iterator<Iterator>::reverse_iterator(iterator_type x)
+	: current(x)
 	{
 	}
 
@@ -238,13 +244,30 @@ namespace ft
 	 * Copy constructor
 	 * Constructs a reverse iterator from some other reverse iterator
 	 *
-	 * @param rev_it  An iterator of a reverse_iterator type
+	 * @param other  An iterator of a reverse_iterator type
 	 */
 	template<typename Iterator>
 	template<typename Iter>
-	reverse_iterator<Iterator>::reverse_iterator(const reverse_iterator<Iter>& rev_it)
-	: current(rev_it.base())
+	reverse_iterator<Iterator>::reverse_iterator(const reverse_iterator<Iter>& other)
+	: current(other.current)
 	{
+	}
+
+	/*
+	 * Copy assignment operator
+	 *
+	 * @param other  An iterator of a reverse_iterator type
+	 */
+	template<typename Iterator>
+	template<typename Iter>
+	reverse_iterator<Iterator>&
+	reverse_iterator<Iterator>::operator=(const reverse_iterator<Iter>& other)
+	{
+		// avoid self-assignment
+		if (this != &other)
+			this->current = other.base();
+
+		return (*this);
 	}
 
 	/* getter *************************************************************** */
@@ -551,11 +574,17 @@ namespace ft
 	public:
 		// default constructor
 		base_iterator(void);
+
 		// initalization constructor
-		explicit base_iterator(iterator_type it);
+		explicit base_iterator(iterator_type x);
+
 		// copy constructor
 		template<typename Iter >
-			base_iterator(const base_iterator<Iter, Container>& it);
+			base_iterator(const base_iterator<Iter,Container>& other);
+
+		// copy assignment operator
+		template<typename Iter>
+			base_iterator&	operator=(const base_iterator<Iter,Container>& other);
 
 		// return copy of the original iterator
 		iterator_type	base(void) const;
@@ -590,7 +619,7 @@ namespace ft
 	 */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>::base_iterator(void)
-	: current(0)
+	: current(Iterator())
 	{
 	}
 
@@ -601,8 +630,8 @@ namespace ft
 	 * @param it  An iterator
 	 */
 	template<typename Iterator, typename Container>
-	base_iterator<Iterator,Container>::base_iterator(iterator_type it)
-	: current(it)
+	base_iterator<Iterator,Container>::base_iterator(iterator_type x)
+	: current(x)
 	{
 	}
 
@@ -613,10 +642,27 @@ namespace ft
 	 * @param it  An iterator of a base_iterator type
 	 */
 	template<typename Iterator, typename Container>
-	template<typename Iter >
-	base_iterator<Iterator,Container>::base_iterator(const base_iterator<Iter, Container>& it)
-	: current(it.base())
+	template<typename Iter>
+	base_iterator<Iterator,Container>::base_iterator(const base_iterator<Iter,Container>& other)
+	: current(other.base())
 	{
+	}
+
+	/*
+	 * Copy assignment operator
+	 *
+	 * @param other  An iterator of a base_iterator type
+	 */
+	template<typename Iterator, typename Container>
+	template<typename Iter>
+	base_iterator<Iterator,Container>&
+	base_iterator<Iterator,Container>::operator=(const base_iterator<Iter,Container>& other)
+	{
+		// avoid self-assignment
+		if (this != &other)
+			this->current = other.base();
+
+		return (*this);
 	}
 
 	/* getter *************************************************************** */
