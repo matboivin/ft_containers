@@ -18,6 +18,7 @@ IMPL_FILES = algorithm.hpp \
 			 map.hpp \
 			 stack.hpp \
 			 type_traits.hpp \
+			 utility.hpp \
 			 vector.hpp
 
 IMPL_DIR = ft_stl
