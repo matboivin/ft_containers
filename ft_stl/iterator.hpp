@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 00:46:27 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/07 00:58:21 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,252 +133,115 @@ namespace ft
 
 		public:
 			// default constructor
-			reverse_iterator(void);
+			reverse_iterator(void)
+			: _M_current()
+			{
+			}
 
 			// initalization constructor
-			explicit reverse_iterator(iterator_type x);
+			explicit reverse_iterator(iterator_type x)
+			: _M_current(x)
+			{
+			}
 
 			// copy constructor
 			template<typename Iter>
-				reverse_iterator(const reverse_iterator<Iter>& other);
+				reverse_iterator(const reverse_iterator<Iter>& other)
+				: _M_current(other.base())
+				{
+				}
 
 			// copy assignment operator
 			template<typename Iter>
-				reverse_iterator&	operator=(const reverse_iterator<Iter>& other);
+				reverse_iterator&	operator=(const reverse_iterator<Iter>& other)
+				{
+					if (this != &other)
+						this->_M_current = other.base();
+
+					return (*this);
+				}
 
 			// return copy of the original iterator
-			iterator_type		base(void) const;
+			iterator_type	base(void) const
+			{
+				return (_M_current);
+			}
 
 			// accesses the pointed-to element
-			reference			operator*(void) const;
-			pointer				operator->(void) const;
+			// Internally, the function decreases a copy of its base iterator
+			// and returns * the result of dereferencing it
+			reference	operator*(void) const
+			{
+				iterator_type	copy = _M_current;
+
+				--copy;
+				return (*copy);
+			}
+
+			// Internally, the function calls operator* and returns its address
+			pointer	operator->(void) const
+			{
+				return ( &(operator*()) );
+			}
 
 			// accesses an element by index
-			reference			operator[](difference_type n) const;
+			reference	operator[](difference_type n) const
+			{
+				return ( *(*this + n) );
+			}
 
 			// advances or decrements the iterator
-			reverse_iterator&	operator++(void);
-			reverse_iterator	operator++(int);
-			reverse_iterator&	operator+= (difference_type n);
-			reverse_iterator	operator+(difference_type n) const;
-			reverse_iterator&	operator--(void);
-			reverse_iterator	operator--(int);
-			reverse_iterator&	operator-=(difference_type n);
-			reverse_iterator	operator-(difference_type n) const;
+
+			reverse_iterator&	operator++(void)
+			{
+				--_M_current;
+				return (*this);
+			}
+
+			reverse_iterator	operator++(int)
+			{
+				reverse_iterator	backup = *this;
+
+				++(*this);
+				return (backup);
+			}
+
+			reverse_iterator&	operator+=(difference_type n)
+			{
+				_M_current -= n;
+				return (*this);
+			}
+
+			reverse_iterator	operator+(difference_type n) const
+			{
+				return ( reverse_iterator(base() - n) );
+			}
+
+			reverse_iterator&	operator--(void)
+			{
+				++_M_current;
+				return (*this);
+			}
+
+			reverse_iterator	operator--(int)
+			{
+				reverse_iterator	backup = *this;
+
+				--(*this);
+				return (backup);
+			}
+
+			reverse_iterator&	operator-=(difference_type n)
+			{
+				_M_current += n;
+				return (*this);
+			}
+
+			reverse_iterator	operator-(difference_type n) const
+			{
+				return ( reverse_iterator(base() + n) );
+			}
 		};
-
-	/* non-member function overloads **************************************** */
-
-	// relational operators
-	template<typename Iter1, typename Iter2>
-		bool	operator==(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs);
-	template<typename Iter1, typename Iter2>
-		bool	operator!=(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs);
-	template<typename Iter1, typename Iter2>
-		bool	operator<(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs);
-	template<typename Iter1, typename Iter2>
-		bool	operator<=(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs);
-	template<typename Iter1, typename Iter2>
-		bool	operator>(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs);
-	template<typename Iter1, typename Iter2>
-		bool	operator>=(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs);
-
-	// addition operator
-	template<typename Iterator>
-		reverse_iterator<Iterator>
-		operator+(typename reverse_iterator<Iterator>::difference_type n,
-				  const reverse_iterator<Iterator>& rev_it);
-
-	// subtraction operator
-	template<typename Iterator>
-		typename reverse_iterator<Iterator>::difference_type
-		operator-(const reverse_iterator<Iterator>& lhs,
-				  const reverse_iterator<Iterator>& rhs);
-
-
-	/* Reverse iterator implementation ************************************** */
-
-	/* construct/copy/destroy *********************************************** */
-
-	/*
-	 * Default constructor
-	 * Constructs a reverse iterator that points to no object
-	 */
-	template<typename Iterator>
-		reverse_iterator<Iterator>::reverse_iterator(void)
-		: _M_current()
-		{
-		}
-
-	/*
-	 * Initalization constructor
-	 * Constructs a reverse iterator from some original iterator x.
-	 */
-	template<typename Iterator>
-		reverse_iterator<Iterator>::reverse_iterator(iterator_type x)
-		: _M_current(x)
-		{
-		}
-
-	/*
-	 * Copy constructor
-	 * Constructs a reverse iterator from some other reverse iterator
-	 */
-	template<typename Iterator>
-	template<typename Iter>
-		reverse_iterator<Iterator>::reverse_iterator(const reverse_iterator<Iter>& other)
-		: _M_current(other.base())
-		{
-		}
-
-	/*
-	 * Copy assignment operator
-	 */
-	template<typename Iterator>
-	template<typename Iter>
-		reverse_iterator<Iterator>&
-		reverse_iterator<Iterator>::operator=(const reverse_iterator<Iter>& other)
-		{
-			if (this != &other)
-				this->_M_current = other.base();
-
-			return (*this);
-		}
-
-	/* getter *************************************************************** */
-
-	/* Returns a copy of the base iterator */
-	template<typename Iterator>
-		typename reverse_iterator<Iterator>::iterator_type
-		reverse_iterator<Iterator>::base(void) const
-		{
-			return (_M_current);
-		}
-
-
-	/* element access ******************************************************* */
-
-	/*
-	 * Dereference iterator
-	 * Internally, the function decreases a copy of its base iterator and returns
-	 * the result of dereferencing it
-	 */
-	template<typename Iterator>
-		typename reverse_iterator<Iterator>::reference
-		reverse_iterator<Iterator>::operator*(void) const
-		{
-			iterator_type	copy = _M_current;
-
-			--copy;
-			return (*copy);
-		}
-
-	/*
-	 * Dereference iterator
-	 * Internally, the function calls operator* and returns its address
-	 */
-	template<typename Iterator>
-		typename reverse_iterator<Iterator>::pointer
-		reverse_iterator<Iterator>::operator->(void) const
-		{
-			return ( &(operator*()) );
-		}
-
-	/*
-	 * Dereference iterator with offset
-	 * Accesses the element located n positions away from the element
-	 * currently pointed to by the iterator.
-	 */
-	template<typename Iterator>
-		typename reverse_iterator<Iterator>::reference
-		reverse_iterator<Iterator>::operator[](difference_type n) const
-		{
-			return ( *(*this + n) );
-		}
-
-
-	/* advance/decrease ***************************************************** */
-
-	/* Increment iterator position: pre-increment version */
-	template<typename Iterator>
-		reverse_iterator<Iterator>&
-		reverse_iterator<Iterator>::operator++(void)
-		{
-			--_M_current;
-			return (*this);
-		}
-
-	/* Increment iterator position: post-increment version */
-	template<typename Iterator>
-		reverse_iterator<Iterator>
-		reverse_iterator<Iterator>::operator++(int)
-		{
-			reverse_iterator	backup = *this;
-
-			++(*this);
-			return (backup);
-		}
-
-	/*
-	 * Advance iterator
-	 * Advances the reverse_iterator by n element positions
-	 */
-	template<typename Iterator>
-		reverse_iterator<Iterator>&
-		reverse_iterator<Iterator>::operator+=(difference_type n)
-		{
-			_M_current -= n;
-			return (*this);
-		}
-
-	/* Addition operator */
-	template<typename Iterator>
-		reverse_iterator<Iterator>
-		reverse_iterator<Iterator>::operator+(difference_type n) const
-		{
-			return ( reverse_iterator(base() - n) );
-		}
-
-	/* Decrease iterator position: pre-decrement version */
-	template<typename Iterator>
-		reverse_iterator<Iterator>&
-		reverse_iterator<Iterator>::operator--(void)
-		{
-			++_M_current;
-			return (*this);
-		}
-
-	/* Decrease iterator position: post-decrement version */
-	template<typename Iterator>
-		reverse_iterator<Iterator>
-		reverse_iterator<Iterator>::operator--(int)
-		{
-			reverse_iterator	backup = *this;
-
-			--(*this);
-			return (backup);
-		}
-
-	/*
-	 * Retrocede iterator
-	 * Decreases the reverse_iterator by n element positions
-	 */
-	template<typename Iterator>
-		reverse_iterator<Iterator>&
-		reverse_iterator<Iterator>::operator-=(difference_type n)
-		{
-			_M_current += n;
-			return (*this);
-		}
-
-	/* Subtraction operator */
-	template<typename Iterator>
-		reverse_iterator<Iterator>
-		reverse_iterator<Iterator>::operator-(difference_type n) const
-		{
-			return ( reverse_iterator(base() + n) );
-		}
-
 
 	/* non-member function overloads **************************************** */
 
@@ -486,242 +349,112 @@ namespace ft
 
 		public:
 			// default constructor
-			base_iterator(void);
+			base_iterator(void)
+			: _M_current(Iterator())
+			{
+			}
 
 			// initalization constructor
-			explicit base_iterator(iterator_type x);
+			base_iterator(iterator_type x)
+			: _M_current(x)
+			{
+			}
 
 			// copy constructor
 			template<typename Iter>
-				base_iterator(const base_iterator<Iter,typename ft::enable_if<(ft::is_same<Iter, typename Container::pointer>::value), Container>::type>& other);
+				base_iterator(const base_iterator<Iter,
+							  typename ft::enable_if<(ft::is_same<Iter,
+							  typename Container::pointer>::value), Container>::type>& other
+							  )
+				: _M_current(other.base())
+				{
+				}
 
 			// copy assignment operator
 			template<typename Iter>
-				base_iterator&	operator=(const base_iterator<Iter,Container>& other);
+				base_iterator&	operator=(const base_iterator<Iter,Container>& other)
+				{
+					if (this != &other)
+						this->_M_current = other.base();
+
+					return (*this);
+				}
 
 			// return copy of the original iterator
-			iterator_type	base(void) const;
+			iterator_type	base(void) const
+			{
+				return (_M_current);
+			}
 
 			// accesses the pointed-to element
-			reference		operator*(void) const;
-			pointer			operator->(void) const;
+			reference	operator*(void) const
+			{
+				return (*_M_current);
+			}
+
+			pointer	operator->(void) const
+			{
+				return (_M_current);
+			}
 
 			// accesses an element by index
-			reference		operator[](difference_type n) const;
+			reference	operator[](difference_type n) const
+			{
+				return (_M_current[n]);
+			}
 
 			// advances or decrements the iterator
-			base_iterator&	operator++(void);
-			base_iterator	operator++(int);
-			base_iterator&	operator+=(difference_type n);
-			base_iterator	operator+(difference_type n) const;
-			base_iterator&	operator--(void);
-			base_iterator	operator--(int);
-			base_iterator&	operator-=(difference_type n);
-			base_iterator	operator-(difference_type n) const;
+
+			base_iterator&	operator++(void)
+			{
+				++_M_current;
+				return (*this);
+			}
+
+			base_iterator	operator++(int)
+			{
+				base_iterator	backup = *this;
+
+				++_M_current;
+				return (backup);
+			}
+
+			base_iterator&	operator+=(difference_type n)
+			{
+				_M_current += n;
+				return (*this);
+			}
+
+			base_iterator	operator+(difference_type n) const
+			{
+				return ( base_iterator(base() + n) );
+			}
+
+			base_iterator&	operator--(void)
+			{
+				--_M_current;
+				return (*this);
+			}
+
+			base_iterator	operator--(int)
+			{
+				base_iterator	backup = *this;
+
+				--_M_current;
+				return (backup);
+			}
+
+			base_iterator&	operator-=(difference_type n)
+			{
+				_M_current -= n;
+				return (*this);
+			}
+
+			base_iterator	operator-(difference_type n) const
+			{
+				return ( base_iterator(base() - n) );
+			}
 		};
-
-	/* non-member function overloads **************************************** */
-
-	template<typename Iter1, typename Iter2, typename Container>
-		bool	operator==(const base_iterator<Iter1,Container>& lhs,
-						   const base_iterator<Iter2,Container>& rhs);
-	template<typename Iter1, typename Iter2, typename Container>
-		bool	operator!=(const base_iterator<Iter1,Container>& lhs,
-						   const base_iterator<Iter2,Container>& rhs);
-	template<typename Iter1, typename Iter2, typename Container>
-		bool	operator<(const base_iterator<Iter1,Container>& lhs,
-						  const base_iterator<Iter2,Container>& rhs);
-	template<typename Iter1, typename Iter2, typename Container>
-		bool	operator<=(const base_iterator<Iter1,Container>& lhs,
-						   const base_iterator<Iter2,Container>& rhs);
-	template<typename Iter1, typename Iter2, typename Container>
-		bool	operator>(const base_iterator<Iter1,Container>& lhs,
-						  const base_iterator<Iter2,Container>& rhs);
-	template<typename Iter1, typename Iter2, typename Container>
-		bool	operator>=(const base_iterator<Iter1,Container>& lhs,
-						   const base_iterator<Iter2,Container>& rhs);
-
-	template<typename Iterator, typename Container>
-		base_iterator<Iterator,Container>
-		operator+(typename base_iterator<Iterator,Container>::difference_type n,
-				  const base_iterator<Iterator,Container>& it);
-
-	template<typename Iterator, typename Container>
-		typename base_iterator<Iterator,Container>::difference_type
-		operator-(const base_iterator<Iterator,Container>& lhs,
-				  const base_iterator<Iterator,Container>& rhs);
-
-
-	/* Base iterator implementation ***************************************** */
-
-	/* construct/copy/destroy *********************************************** */
-
-	/*
-	 * Default constructor
-	 * Constructs an iterator that points to no object
-	 */
-	template<typename Iterator, typename Container>
-		base_iterator<Iterator,Container>::base_iterator(void)
-		: _M_current(Iterator())
-		{
-		}
-
-	/*
-	 * Initalization constructor
-	 * Constructs an iterator from some original iterator x
-	 */
-	template<typename Iterator, typename Container>
-		base_iterator<Iterator,Container>::base_iterator(iterator_type x)
-		: _M_current(x)
-		{
-		}
-
-	/*
-	 * Copy constructor
-	 * Constructs an iterator from some other iterator
-	 */
-	template<typename Iterator, typename Container>
-	template<typename Iter>
-		base_iterator<Iterator,Container>::base_iterator(
-			const base_iterator<Iter,
-				typename ft::enable_if<(ft::is_same<Iter, typename Container::pointer>::value), Container>::type>& other
-			)
-		: _M_current(other.base())
-		{
-		}
-
-	/* Copy assignment operator */
-	template<typename Iterator, typename Container>
-	template<typename Iter>
-		base_iterator<Iterator,Container>&
-		base_iterator<Iterator,Container>::operator=(const base_iterator<Iter,Container>& other)
-		{
-			if (this != &other)
-				this->_M_current = other.base();
-
-			return (*this);
-		}
-
-	/* getter *************************************************************** */
-
-	/* Returns a copy of the base iterator */
-	template<typename Iterator, typename Container>
-		typename base_iterator<Iterator,Container>::iterator_type
-		base_iterator<Iterator,Container>::base(void) const
-		{
-			return (_M_current);
-		}
-
-
-	/* element access ******************************************************* */
-
-	/* Dereference iterator and returns a reference to the element pointed by the iterator */
-	template<typename Iterator, typename Container>
-		typename base_iterator<Iterator,Container>::reference
-		base_iterator<Iterator,Container>::operator*(void) const
-		{
-			return (*_M_current);
-		}
-
-	/* Dereference iterator and returns a pointer to the element pointed to by the iterator */
-	template<typename Iterator, typename Container>
-		typename base_iterator<Iterator,Container>::pointer
-		base_iterator<Iterator,Container>::operator->(void) const
-		{
-			return (_M_current);
-		}
-
-	/* Dereference iterator with offset */
-	template<typename Iterator, typename Container>
-		typename base_iterator<Iterator,Container>::reference
-		base_iterator<Iterator,Container>::operator[](difference_type n) const
-		{
-			return (_M_current[n]);
-		}
-
-
-	/* advance/decrease ***************************************************** */
-
-	/* Increment iterator position: pre-increment version */
-	template<typename Iterator, typename Container>
-		base_iterator<Iterator,Container>&
-		base_iterator<Iterator,Container>::operator++(void)
-		{
-			++_M_current;
-			return (*this);
-		}
-
-	/* Increment iterator position: post-increment version */
-	template<typename Iterator, typename Container>
-		base_iterator<Iterator,Container>
-		base_iterator<Iterator,Container>::operator++(int)
-		{
-			base_iterator	backup = *this;
-
-			++_M_current;
-			return (backup);
-		}
-
-	/*
-	 * Advance iterator
-	 * Advances the base_iterator by n element positions
-	 */
-	template<typename Iterator, typename Container>
-		base_iterator<Iterator,Container>&
-		base_iterator<Iterator,Container>::operator+=(difference_type n)
-		{
-			_M_current += n;
-			return (*this);
-		}
-
-	/* Addition operator */
-	template<typename Iterator, typename Container>
-		base_iterator<Iterator,Container>
-		base_iterator<Iterator,Container>::operator+(difference_type n) const
-		{
-			return ( base_iterator(base() + n) );
-		}
-
-	/* Decrease iterator position: pre-decrement version */
-	template<typename Iterator, typename Container>
-		base_iterator<Iterator,Container>&
-		base_iterator<Iterator,Container>::operator--(void)
-		{
-			--_M_current;
-			return (*this);
-		}
-
-	/* Decrease iterator position: post-decrement version */
-	template<typename Iterator, typename Container>
-		base_iterator<Iterator,Container>
-		base_iterator<Iterator,Container>::operator--(int)
-		{
-			base_iterator	backup = *this;
-
-			--_M_current;
-			return (backup);
-		}
-
-	/*
-	 * Retrocede iterator
-	 * Decreases the base_iterator by n element positions
-	 */
-	template<typename Iterator, typename Container>
-		base_iterator<Iterator,Container>&
-		base_iterator<Iterator,Container>::operator-=(difference_type n)
-		{
-			_M_current -= n;
-			return (*this);
-		}
-
-	/* Subtraction operator */
-	template<typename Iterator, typename Container>
-		base_iterator<Iterator,Container>
-		base_iterator<Iterator,Container>::operator-(difference_type n) const
-		{
-			return ( base_iterator(base() - n) );
-		}
-
 
 	/* non-member function overloads **************************************** */
 
