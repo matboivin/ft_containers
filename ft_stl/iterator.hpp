@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 17:13:53 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/06 23:40:57 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ namespace ft
 		typedef typename ft::iterator_traits<Iterator>::reference			reference;
 
 	protected:
-		Iterator	current; // copy of the original iterator
+		Iterator	_M_current; // copy of the original iterator
 
 	public:
 		// default constructor
@@ -210,7 +210,7 @@ namespace ft
 	 */
 	template<typename Iterator>
 	reverse_iterator<Iterator>::reverse_iterator(void)
-	: current()
+	: _M_current()
 	{
 	}
 
@@ -220,7 +220,7 @@ namespace ft
 	 */
 	template<typename Iterator>
 	reverse_iterator<Iterator>::reverse_iterator(iterator_type x)
-	: current(x)
+	: _M_current(x)
 	{
 	}
 
@@ -231,7 +231,7 @@ namespace ft
 	template<typename Iterator>
 	template<typename Iter>
 	reverse_iterator<Iterator>::reverse_iterator(const reverse_iterator<Iter>& other)
-	: current(other.base())
+	: _M_current(other.base())
 	{
 	}
 
@@ -244,7 +244,7 @@ namespace ft
 	reverse_iterator<Iterator>::operator=(const reverse_iterator<Iter>& other)
 	{
 		if (this != &other)
-			this->current = other.base();
+			this->_M_current = other.base();
 
 		return (*this);
 	}
@@ -256,7 +256,7 @@ namespace ft
 	typename reverse_iterator<Iterator>::iterator_type
 	reverse_iterator<Iterator>::base(void) const
 	{
-		return (current);
+		return (_M_current);
 	}
 
 
@@ -271,7 +271,7 @@ namespace ft
 	typename reverse_iterator<Iterator>::reference
 	reverse_iterator<Iterator>::operator*(void) const
 	{
-		iterator_type	copy = current;
+		iterator_type	copy = _M_current;
 
 		--copy;
 		return (*copy);
@@ -308,7 +308,7 @@ namespace ft
 	reverse_iterator<Iterator>&
 	reverse_iterator<Iterator>::operator++(void)
 	{
-		--current;
+		--_M_current;
 		return (*this);
 	}
 
@@ -331,7 +331,7 @@ namespace ft
 	reverse_iterator<Iterator>&
 	reverse_iterator<Iterator>::operator+=(difference_type n)
 	{
-		current -= n;
+		_M_current -= n;
 		return (*this);
 	}
 
@@ -348,7 +348,7 @@ namespace ft
 	reverse_iterator<Iterator>&
 	reverse_iterator<Iterator>::operator--(void)
 	{
-		++current;
+		++_M_current;
 		return (*this);
 	}
 
@@ -371,7 +371,7 @@ namespace ft
 	reverse_iterator<Iterator>&
 	reverse_iterator<Iterator>::operator-=(difference_type n)
 	{
-		current += n;
+		_M_current += n;
 		return (*this);
 	}
 
@@ -486,7 +486,7 @@ namespace ft
 		typedef typename _iter_traits::reference			reference;
 
 	protected:
-		Iterator	current; // copy of the original iterator
+		Iterator	_M_current; // copy of the original iterator
 
 	public:
 		// default constructor
@@ -566,7 +566,7 @@ namespace ft
 	 */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>::base_iterator(void)
-	: current(Iterator())
+	: _M_current(Iterator())
 	{
 	}
 
@@ -576,7 +576,7 @@ namespace ft
 	 */
 	template<typename Iterator, typename Container>
 	base_iterator<Iterator,Container>::base_iterator(iterator_type x)
-	: current(x)
+	: _M_current(x)
 	{
 	}
 
@@ -587,7 +587,7 @@ namespace ft
 	template<typename Iterator, typename Container>
 	template<typename Iter>
 	base_iterator<Iterator,Container>::base_iterator(const base_iterator<Iter,typename ft::enable_if<(ft::is_same<Iter, typename Container::pointer>::value), Container>::type>& other)
-	: current(other.base())
+	: _M_current(other.base())
 	{
 	}
 
@@ -598,7 +598,7 @@ namespace ft
 	base_iterator<Iterator,Container>::operator=(const base_iterator<Iter,Container>& other)
 	{
 		if (this != &other)
-			this->current = other.base();
+			this->_M_current = other.base();
 
 		return (*this);
 	}
@@ -610,7 +610,7 @@ namespace ft
 	typename base_iterator<Iterator,Container>::iterator_type
 	base_iterator<Iterator,Container>::base(void) const
 	{
-		return (current);
+		return (_M_current);
 	}
 
 
@@ -621,7 +621,7 @@ namespace ft
 	typename base_iterator<Iterator,Container>::reference
 	base_iterator<Iterator,Container>::operator*(void) const
 	{
-		return (*current);
+		return (*_M_current);
 	}
 
 	/* Dereference iterator and returns a pointer to the element pointed to by the iterator */
@@ -629,7 +629,7 @@ namespace ft
 	typename base_iterator<Iterator,Container>::pointer
 	base_iterator<Iterator,Container>::operator->(void) const
 	{
-		return (current);
+		return (_M_current);
 	}
 
 	/* Dereference iterator with offset */
@@ -637,7 +637,7 @@ namespace ft
 	typename base_iterator<Iterator,Container>::reference
 	base_iterator<Iterator,Container>::operator[](difference_type n) const
 	{
-		return (current[n]);
+		return (_M_current[n]);
 	}
 
 
@@ -648,7 +648,7 @@ namespace ft
 	base_iterator<Iterator,Container>&
 	base_iterator<Iterator,Container>::operator++(void)
 	{
-		++current;
+		++_M_current;
 		return (*this);
 	}
 
@@ -659,7 +659,7 @@ namespace ft
 	{
 		base_iterator	backup = *this;
 
-		++current;
+		++_M_current;
 		return (backup);
 	}
 
@@ -671,7 +671,7 @@ namespace ft
 	base_iterator<Iterator,Container>&
 	base_iterator<Iterator,Container>::operator+=(difference_type n)
 	{
-		current += n;
+		_M_current += n;
 		return (*this);
 	}
 
@@ -688,7 +688,7 @@ namespace ft
 	base_iterator<Iterator,Container>&
 	base_iterator<Iterator,Container>::operator--(void)
 	{
-		--current;
+		--_M_current;
 		return (*this);
 	}
 
@@ -699,7 +699,7 @@ namespace ft
 	{
 		base_iterator	backup = *this;
 
-		--current;
+		--_M_current;
 		return (backup);
 	}
 
@@ -711,7 +711,7 @@ namespace ft
 	base_iterator<Iterator,Container>&
 	base_iterator<Iterator,Container>::operator-=(difference_type n)
 	{
-		current -= n;
+		_M_current -= n;
 		return (*this);
 	}
 
