@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 17:45:45 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/06 23:50:55 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,20 @@ namespace ft
 		typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 		typedef std::size_t												size_type;
 
-	protected:
-		// attributes
-		Compare	comp; // A binary predicate
+		class value_compare
+		{
+			friend class map;
 
-		//value_compare(Compare c) : comp(c) {}
+		protected:
+			// attributes
+			Compare	comp; // A binary predicate
+			// value_compare(Compare c) : comp(c) {}
+		public:
+			// bool	operator()(const value_type& x, const value_type& y) const
+			// {
+			// 	return comp(x.first, y.first);
+			// }
+		};
 
 	public:
 		// default constructor
