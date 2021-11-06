@@ -57,3 +57,4 @@
 - [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
 - [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines)
 - [Documenting C++ Code](https://developer.lsst.io/cpp/api-docs.html)
+- [Coding Style](https://gcc.gnu.org/onlinedocs/libstdc++/manual/source_code_style.html)
