@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 23:52:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 00:06:08 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/07 00:24:36 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,25 +40,37 @@ namespace ft
 
 			// copy constructor
 			template<typename U, typename V>
-			pair(const pair<U,V>& pr);
+				pair(const pair<U,V>& other);
 
 			// initialization constructor
-			pair(const first_type& a, const second_type& b);
+			pair(const first_type& x, const second_type& y);
 		};
 
 		/* Pair implementation ************************************************** */
 
 		/* construct/copy/destroy *********************************************** */
 
+		/* Default constructor */
 		template<typename T1, typename T2>
 			pair<T1,T2>::pair(void)
+			: first(), second()
 			{
-				//
 			}
 
+		/* Copy constructor */
 		template<typename T1, typename T2>
+		template<typename U, typename V>
+			pair<T1,T2>::pair(const pair<U,V>& other)
+			: first(other.first), second(other.second)
+			{
+			}
 
+		/* Initialization constructor */
 		template<typename T1, typename T2>
+			pair<T1,T2>::pair(const first_type& x, const second_type& y)
+			: first(x), second(y)
+			{
+			}
 } // namespace ft
 
 #endif
