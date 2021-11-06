@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 00:10:27 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/07 00:46:27 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,6 @@
 
 namespace ft
 {
-	/*
-	 * Iterators
-	 */
-
 	/* Category tags ******************************************************** */
 
 	/* Empty classes to identify categories */

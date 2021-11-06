@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 23:52:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 00:37:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/07 00:45:52 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 namespace ft
 {
-	/* Pair definition ****************************************************** */
+	/* Classes ************************************************************** */
 
 	/*
 	 * Represents a pair of values which may be from different types
@@ -35,71 +35,25 @@ namespace ft
 			T1	first;
 			T2	second;
 
-			// constructor
-			pair(void);
-
-			// copy constructor
-			template<typename U, typename V>
-				pair(const pair<U,V>& other);
-
-			// initialization constructor
-			pair(const first_type& x, const second_type& y);
-
-			// copy assignment operator
-			pair&	operator=(const pair& other);
-		};
-
-		// non-member function overloads
-
-		// relational operators
-
-		template<typename T1, typename T2>
-			bool	operator==(const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
-
-		template<typename T1, typename T2>
-			bool	operator!=(const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
-
-		template<typename T1, typename T2>
-			bool	operator<(const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
-
-		template<typename T1, typename T2>
-			bool	operator<=(const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
-
-		template<typename T1, typename T2>
-			bool	operator>(const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
-
-		template<typename T1, typename T2>
-			bool	operator>=(const pair<T1,T2>& lhs, const pair<T1,T2>& rhs);
-
-
-		/* Pair implementation ************************************************** */
-
-		/* construct/copy/destroy *********************************************** */
-
-		/* Default constructor */
-		template<typename T1, typename T2>
-			pair<T1,T2>::pair(void)
+			// default constructor
+			pair(void)
 			: first(), second()
 			{
 			}
 
-		/* Copy constructor */
-		template<typename T1, typename T2>
-		template<typename U, typename V>
-			pair<T1,T2>::pair(const pair<U,V>& other)
+			// copy constructor
+			pair(const pair<U,V>& other)
 			: first(other.first), second(other.second)
 			{
 			}
 
-		/* Initialization constructor */
-		template<typename T1, typename T2>
+			// initialization constructor
 			pair<T1,T2>::pair(const first_type& x, const second_type& y)
 			: first(x), second(y)
 			{
 			}
 
-		/* Copy assignment operator */
-		template<typename T1, typename T2>
+			// copy assignment operator
 			pair<T1,T2>&	pair<T1,T2>::operator=(const pair& other)
 			{
 				if (this != &other)
@@ -109,6 +63,8 @@ namespace ft
 				}
 				return (*this);
 			}
+
+		};
 
 		/* non-member function overloads **************************************** */
 
@@ -154,6 +110,18 @@ namespace ft
 			bool	pair<T1,T2>::operator>=(const pair<T1,T2>& lhs, const pair<T1,T2>& rhs)
 			{
 				return (!(lhs < rhs));
+			}
+
+
+		/* Functions ************************************************************ */
+
+		/*
+		 * Constructs and returns a pair object with x as first and y as second
+		 */
+		template<typename T1, typename T2>
+			pair<T1,T2>	make_pair(T1 x, T2 y)
+			{
+				return ( ft::pair<T1,T2>(x, y) );
 			}
 
 } // namespace ft
