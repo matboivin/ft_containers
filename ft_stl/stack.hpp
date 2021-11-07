@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 00:11:30 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/07 01:05:30 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@
 
 namespace ft
 {
-	/* Stack definition ***************************************************** */
-
 	/*
 	 * Stack template class
 	 * Encapsulates another container and provides a LIFO way to access to its elements
@@ -45,167 +43,53 @@ namespace ft
 
 		public:
 			// constructor
-			explicit stack(const container_type& ctnr = container_type());
+			explicit stack(const container_type& ctnr = container_type())
+			: c(ctnr)
+			{
+			}
 
 			// copy constructor
-			stack(const stack& other);
+			stack(const stack& other)
+			: c(other.c)
+			{
+			}
 
 			// destructor
-			~stack(void);
+			~stack(void) {}
 
 			// copy assignment operator
-			stack&	operator=(const stack& other);
+			stack&	operator=(const stack& other)
+			{
+				if (this != &other)
+					c = other.c;
+
+				return (*this);
+			}
 
 			// capacity
-			bool				empty(void) const;
-			size_type			size(void) const;
+			bool		empty(void) const { return (c.empty()); }
+			size_type	size(void) const  { return (c.size()); }
 
 			// element access
-			value_type&			top(void);
-			const value_type&	top(void) const;
+			// returns the last element (top of the stack)
+			value_type&			top(void)       { return (c.back()); }
+			const value_type&	top(void) const { return (c.back()); }
 
 			// modifiers
-			void				push(const value_type& val);
-			void				pop(void);
+			// push an element on the stop of the stack
+			void	push(const value_type& val) { c.push_back(val); }
+			// removes the last element added
+			void	pop(void) { c.pop_back(); }
 
 			// friend relational operators
 			template<typename _T, typename _Container>
-				friend bool	operator==(const stack<_T, _Container>& lhs, const stack<_T, _Container>& rhs);
+				friend bool	operator==(const stack<_T, _Container>& lhs,
+									   const stack<_T, _Container>& rhs);
+
 			template<typename _T, typename _Container>
-				friend bool	operator<(const stack<_T, _Container>& lhs, const stack<_T, _Container>& rhs);
+				friend bool	operator<(const stack<_T, _Container>& lhs,
+									  const stack<_T, _Container>& rhs);
 		};
-
-	// non-member function overloads
-
-	// relational operators
-	template<typename T, typename Container>
-		bool	operator!=(const stack<T,Container>& lhs, const stack<T,Container>& rhs);
-	template<typename T, typename Container>
-		bool	operator>(const stack<T,Container>& lhs, const stack<T,Container>& rhs);
-	template<typename T, typename Container>
-		bool	operator<=(const stack<T,Container>& lhs, const stack<T,Container>& rhs);
-	template<typename T, typename Container>
-		bool	operator>=(const stack<T,Container>& lhs, const stack<T,Container>& rhs);
-
-
-	/* Stack implementation ************************************************* */
-
-	/* construct/copy/destroy *********************************************** */
-
-	/*
-	 * Constructor
-	 * Constructs a stack container adaptor object
-	 */
-	template<typename T, typename Container>
-		stack<T,Container>::stack(const container_type& ctnr)
-		: c(ctnr)
-		{
-		}
-
-	/*
-	 * Copy constructor
-	 * Constructs a stack container adaptor object from another stack object
-	 */
-	template<typename T, typename Container>
-		stack<T,Container>::stack(const stack& other)
-		: c(other.c)
-		{
-		}
-
-	/*
-	 * Destructor
-	 */
-	template<typename T, typename Container>
-		stack<T,Container>::~stack(void)
-		{
-		}
-
-	/*
-	 * Copy assignment operator
-	 * Replaces the contents with a copy of the contents of other.
-	 * Calls the assignment operator of the underlying container object.
-	 */
-	template<typename T, typename Container>
-		stack<T,Container>&
-		stack<T,Container>::operator=(const stack& other)
-		{
-			// avoid self-assignment
-			if (this != &other)
-				c = other.c;
-
-			return (*this);
-		}
-
-	/* capacity ************************************************************* */
-
-	/*
-	 * Test whether container is empty.
-	 * Calls the member function empty of the underlying container object.
-	 */
-	template<typename T, typename Container>
-		bool
-		stack<T,Container>::empty(void) const
-		{
-			return (c.empty());
-		}
-
-	/*
-	 * Returns the number of elements in the stack.
-	 * Calls the member function size of the underlying container object.
-	 */
-	template<typename T, typename Container>
-		typename stack<T,Container>::size_type
-		stack<T,Container>::size(void) const
-		{
-			return (c.size());
-		}
-
-
-	/* element access ******************************************************* */
-
-	/* Returns a reference to the top element (last element inserted) in the stack */
-	template<typename T, typename Container>
-		typename stack<T,Container>::value_type&
-		stack<T,Container>::top(void)
-		{
-			return (c.back());
-		}
-
-	/* Returns a const reference to the top element (last element inserted) in the stack */
-	template<typename T, typename Container>
-		const typename stack<T,Container>::value_type&
-		stack<T,Container>::top(void) const
-		{
-			return (c.back());
-		}
-
-
-	/* modifiers ************************************************************ */
-
-	/*
-	 * Inserts a new element at the top of the stack, above its current top element.
-	 * Calls the member function push_back of the underlying container object.
-	 */
-	template<typename T, typename Container>
-		void
-		stack<T,Container>::push(const value_type& val)
-		{
-			c.push_back(val);
-		}
-
-	/*
-	 * Remove top element.
-	 * Calls the member function pop_back of the underlying container object.
-	 */
-	template<typename T, typename Container>
-		void
-		stack<T,Container>::pop(void)
-		{
-			c.pop_back();
-		}
-
-
-	/* non-member function overloads **************************************** */
 
 	/*
 	 * Relational operators

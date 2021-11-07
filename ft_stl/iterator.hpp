@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 00:58:21 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/07 01:05:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,8 +243,6 @@ namespace ft
 			}
 		};
 
-	/* non-member function overloads **************************************** */
-
 	/* Relational operators */
 
 	template<typename Iter1, typename Iter2>
@@ -456,8 +454,6 @@ namespace ft
 			}
 		};
 
-	/* non-member function overloads **************************************** */
-
 	/* Relational operators */
 
 	template<typename Iter1, typename Iter2, typename Container>
@@ -561,7 +557,6 @@ namespace ft
 	 * @param Cond  A compile-time constant of type bool
 	 * @param T     A type
 	 */
-
 	template<bool Cond, typename T = void>
 		struct requires_input_iter {};
 
