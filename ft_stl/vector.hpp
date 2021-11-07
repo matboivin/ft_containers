@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 15:26:04 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/07 17:40:38 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,9 @@ namespace ft
 				void		_M_range_insert(iterator __pos, InputIterator __first, InputIterator __last);
 			void			_M_fill_insert(iterator __pos, size_type __n, const value_type& __val);
 			size_type		_M_calculateGrowth(const size_type __n);
+			void			_M_erase_at_end(pointer __pos);
 			void			_M_range_check(size_type __n) const;
 			size_type		_M_len_check(size_type __n, const char* __s) const;
-			void			_M_erase_at_end(pointer __pos);
 
 		public:
 			// default constructor
@@ -452,6 +452,22 @@ namespace ft
 			return ( (__len > max_size()) ? max_size() : __len );
 		}
 
+	/* Safety check for at() */
+	template<typename T, typename Alloc>
+		void
+		vector<T,Alloc>::_M_range_check(size_type __n) const
+		{
+			if (__n >= size())
+			{
+				std::stringstream	err_msg;
+
+				err_msg << "vector::_M_range_check: __n (which is " << __n
+						<< ") >= this->size() (which is " << this->size() << ")";
+
+				throw std::out_of_range(err_msg.str());
+			}
+		}
+
 	/* construct/copy/destroy *********************************************** */
 
 	/*
@@ -735,22 +751,6 @@ namespace ft
 		vector<T,Alloc>::operator[](size_type n) const
 		{
 			return (this->_M_begin[n]);
-		}
-
-	/* Safety check for at() */
-	template<typename T, typename Alloc>
-		void
-		vector<T,Alloc>::_M_range_check(size_type __n) const
-		{
-			if (__n >= size())
-			{
-				std::stringstream	err_msg;
-
-				err_msg << "vector::_M_range_check: __n (which is " << __n 
-						<< ") >= this->size() (which is " << this->size() << ")";
-
-				throw std::out_of_range(err_msg.str());
-			}
 		}
 
 	/* Returns the element at the specified position in the container */
