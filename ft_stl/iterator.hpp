@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 01:05:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/07 15:21:46 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,14 +119,18 @@ namespace ft
 							  typename ft::iterator_traits<Iterator>::pointer,
 							  typename ft::iterator_traits<Iterator>::reference>
 		{
+		private:
+			// More readable private alias
+			typedef typename ft::iterator_traits<Iterator>		_iter_traits;
+
 		public:
 			// types
-			typedef Iterator													iterator_type;
-			typedef typename ft::iterator_traits<Iterator>::iterator_category	iterator_category;
-			typedef typename ft::iterator_traits<Iterator>::value_type			value_type;
-			typedef typename ft::iterator_traits<Iterator>::difference_type		difference_type;
-			typedef typename ft::iterator_traits<Iterator>::pointer				pointer;
-			typedef typename ft::iterator_traits<Iterator>::reference			reference;
+			typedef Iterator									iterator_type;
+			typedef typename _iter_traits::iterator_category	iterator_category;
+			typedef typename _iter_traits::value_type			value_type;
+			typedef typename _iter_traits::difference_type		difference_type;
+			typedef typename _iter_traits::pointer				pointer;
+			typedef typename _iter_traits::reference			reference;
 
 		protected:
 			Iterator	_M_current; // copy of the original iterator

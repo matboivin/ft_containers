@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/06 23:50:55 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/07 15:22:42 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,6 @@
 
 #include <memory>
 #include "algorithm.hpp"
-
-/*
- * Credits:
- * Detailed comments mostly from www.cplusplus.com
- */
 
 namespace ft
 {

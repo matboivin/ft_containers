@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 00:18:14 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/07 15:26:04 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,7 @@ namespace ft
 	 * Array which size can change dynamically
 	 *
 	 * @param T      Type of the elements
-	 * @param Alloc  Type of the allocator object used to define the storage
-	 *               allocation model
+	 * @param Alloc  Type of the allocator object used to define the storage allocation model
 	 */
 	template<typename T, typename Alloc = std::allocator<T> >
 		class vector
@@ -186,7 +185,6 @@ namespace ft
 		{
 			if (__n > 0)
 				return (this->_M_alloc.allocate(__n));
-
 			return (pointer());
 		}
 
@@ -368,7 +366,6 @@ namespace ft
 				{
 					size_type		__nb_elem_before = begin() - __pos;
 					size_type		__nb_elem_after = __pos - end();
-
 					// alloc new elements
 					const size_type	__new_size = _M_len_check(__n, "vector::_M_fill_insert");
 					pointer			__new_start = this->_M_allocate(__new_size);
@@ -418,7 +415,6 @@ namespace ft
 			// handle overflow
 			if (__dlb_capacity >= max_size())
 				return (max_size());
-			
 			return ( (__n > __dlb_capacity) ? __n : __dlb_capacity );
 		}
 
@@ -453,7 +449,6 @@ namespace ft
 				__len = size() + size();
 			else
 				__len = size() + __n;
-
 			return ( (__len > max_size()) ? max_size() : __len );
 		}
 
@@ -564,7 +559,7 @@ namespace ft
 		typename vector<T,Alloc>::allocator_type
 		vector<T,Alloc>::get_alloc(void) const
 		{
-			return ( allocator_type(this->_M_alloc) );
+			return (allocator_type(this->_M_alloc));
 		}
 
 
@@ -575,14 +570,14 @@ namespace ft
 		typename vector<T,Alloc>::iterator
 		vector<T,Alloc>::begin(void)
 		{
-			return ( iterator(this->_M_begin) );
+			return (iterator(this->_M_begin));
 		}
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_iterator
 		vector<T,Alloc>::begin(void) const
 		{
-			return ( const_iterator(this->_M_begin) );
+			return (const_iterator(this->_M_begin));
 		}
 
 	/* Returns an iterator referring to the past-the-end element in the vector container */
@@ -590,14 +585,14 @@ namespace ft
 		typename vector<T,Alloc>::iterator
 		vector<T,Alloc>::end(void)
 		{
-			return ( iterator(this->_M_end) );
+			return (iterator(this->_M_end));
 		}
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_iterator
 		vector<T,Alloc>::end(void) const
 		{
-			return ( const_iterator(this->_M_end) );
+			return (const_iterator(this->_M_end));
 		}
 
 	/* Returns a reverse iterator pointing to the last element in the vector */
@@ -605,14 +600,14 @@ namespace ft
 		typename vector<T,Alloc>::reverse_iterator
 		vector<T,Alloc>::rbegin(void)
 		{
-			return ( reverse_iterator(end()) );
+			return (reverse_iterator(end()));
 		}
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_reverse_iterator
 		vector<T,Alloc>::rbegin(void) const
 		{
-			return ( const_reverse_iterator(end()) );
+			return (const_reverse_iterator(end()));
 		}
 
 	/*
@@ -623,14 +618,14 @@ namespace ft
 		typename vector<T,Alloc>::reverse_iterator
 		vector<T,Alloc>::rend(void)
 		{
-			return ( reverse_iterator(begin()) );
+			return (reverse_iterator(begin()));
 		}
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_reverse_iterator
 		vector<T,Alloc>::rend(void) const
 		{
-			return ( const_reverse_iterator(begin()) );
+			return (const_reverse_iterator(begin()));
 		}
 
 
@@ -641,7 +636,7 @@ namespace ft
 		bool
 		vector<T,Alloc>::empty(void) const
 		{
-			return ( begin() == end() );
+			return (begin() == end());
 		}
 
 	/* Get the size of the vector */
@@ -649,7 +644,7 @@ namespace ft
 		typename vector<T,Alloc>::size_type
 		vector<T,Alloc>::size(void) const
 		{
-			return ( size_type(this->_M_end - this->_M_begin) );
+			return (size_type(this->_M_end - this->_M_begin));
 		}
 
 	/*
@@ -662,7 +657,7 @@ namespace ft
 		typename vector<T,Alloc>::size_type
 		vector<T,Alloc>::max_size(void) const
 		{
-			return ( this->_M_alloc.max_size() );
+			return (this->_M_alloc.max_size());
 		}
 
 	/*
@@ -715,15 +710,12 @@ namespace ft
 			pointer		tmp = this->_M_begin;
 
 			_M_create_storage(_M_calculateGrowth(n));
-
-			// copy content in newly allocated array
 			for ( size_type i = 0; i < old_size; ++i )
 			{
 				this->_M_alloc.construct(this->_M_end, tmp[i]);
 				this->_M_alloc.destroy(&tmp[i]);
 				++this->_M_end;
 			}
-			// deallocate former array
 			_M_deallocate(tmp, old_capacity);
 		}
 
@@ -753,8 +745,8 @@ namespace ft
 			if (__n >= size())
 			{
 				std::stringstream	err_msg;
-		
-				err_msg << "vector::_M_range_check: __n (which is " << __n
+
+				err_msg << "vector::_M_range_check: __n (which is " << __n 
 						<< ") >= this->size() (which is " << this->size() << ")";
 
 				throw std::out_of_range(err_msg.str());
@@ -852,7 +844,6 @@ namespace ft
 			if (this->_M_end == this->_M_endOfStorage)
 				reserve(size() + 1);
 
-			// Add the new element
 			this->_M_alloc.construct(this->_M_end, val);
 			++this->_M_end;
 		}
