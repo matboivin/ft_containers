@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/08 10:10:12 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/08 11:55:07 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,9 @@
 #define MAP_HPP
 
 #include <memory>
-#include "utility.hpp"
 #include "algorithm.hpp"
+#include "tree.hpp"
+#include "utility.hpp"
 
 namespace ft
 {

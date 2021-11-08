@@ -17,6 +17,7 @@ IMPL_FILES = algorithm.hpp \
 			 iterator.hpp \
 			 map.hpp \
 			 stack.hpp \
+			 tree.hpp \
 			 type_traits.hpp \
 			 utility.hpp \
 			 vector.hpp
