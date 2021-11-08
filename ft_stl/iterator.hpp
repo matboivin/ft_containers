@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 15:21:46 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/08 11:19:11 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -536,24 +536,32 @@ namespace ft
 
 	/* iterator types ******************************************************* */
 
-	/* Helpers for iter_is_input */
+	/* Helpers for is_input_iter */
 
 	// false by default
 	template<typename Iter>
-		struct iter_is_input : public false_type {};
+		struct __is_input_iter_helper : public false_type {};
 
 	// specializations to return true for iterators that can be cast to input iterator
 	template<>
-		struct iter_is_input<ft::input_iterator_tag> : public true_type {};
+		struct __is_input_iter_helper<ft::input_iterator_tag>
+		: public true_type {};
 
 	template<>
-		struct iter_is_input<ft::forward_iterator_tag> : public true_type {};
+		struct __is_input_iter_helper<ft::forward_iterator_tag>
+		: public true_type {};
 
 	template<>
-		struct iter_is_input<ft::bidirectional_iterator_tag> : public true_type {};
+		struct __is_input_iter_helper<ft::bidirectional_iterator_tag>
+		: public true_type {};
 
 	template<>
-		struct iter_is_input<ft::random_access_iterator_tag> : public true_type {};
+		struct __is_input_iter_helper<ft::random_access_iterator_tag>
+		: public true_type {};
+	
+	template<typename Iter>
+		struct is_input_iter
+		: public __is_input_iter_helper<typename ft::remove_cv<Iter>::type>::type {};
 
 	/*
 	 * The type T is defined only if Cond (T is not an integral type) is true
@@ -566,7 +574,7 @@ namespace ft
 
 	template<typename T>
 		struct requires_input_iter<true,T>
-		: public iter_is_input<typename ft::iterator_traits<T>::iterator_category>
+		: public is_input_iter<typename ft::iterator_traits<T>::iterator_category>
 		{
 			typedef T	type;
 		};

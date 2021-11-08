@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 17:40:38 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/08 11:18:57 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ namespace ft
 			template<typename InputIterator>
 				vector(InputIterator first, InputIterator last,
 					   const allocator_type& alloc = allocator_type(),
-					   typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0
+					   typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type* = 0
 					   );
 
 			// copy constructor
@@ -135,7 +135,7 @@ namespace ft
 			// modifiers
 			template<typename InputIterator>
 				void		assign(InputIterator first, InputIterator last,
-								   typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0
+								   typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type* = 0
 								   );
 			void			assign(size_type n, const value_type& val);
 			void			push_back(const value_type& val);
@@ -145,7 +145,7 @@ namespace ft
 			template<typename InputIterator>
 				void		insert(iterator position,
 								   InputIterator first, InputIterator last,
-								   typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type* = 0
+								   typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type* = 0
 								   );
 			iterator		erase(iterator position);
 			iterator		erase(iterator first, iterator last);
@@ -501,7 +501,8 @@ namespace ft
 	template<typename InputIterator>
 		vector<T,Alloc>::vector(InputIterator first, InputIterator last,
 								const allocator_type& alloc,
-								typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type*)
+								typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type*
+								)
 		: _M_alloc(alloc)
 		{
 			_M_range_initialize(first, last);
@@ -811,7 +812,7 @@ namespace ft
 	template<typename InputIterator>
 		void
 		vector<T,Alloc>::assign(InputIterator first, InputIterator last,
-								typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type*
+								typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type*
 								)
 		{
 			_M_erase_at_end(_M_begin);
@@ -890,8 +891,9 @@ namespace ft
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
 		void
-		vector<T,Alloc>::insert(iterator position, InputIterator first, InputIterator last,
-								typename ft::requires_input_iter<!ft::is_integral<InputIterator>::value, InputIterator>::type*
+		vector<T,Alloc>::insert(iterator position,
+								InputIterator first, InputIterator last,
+								typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type*
 								)
 		{
 			if (first != last)

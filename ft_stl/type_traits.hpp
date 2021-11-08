@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:29:54 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 00:11:58 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/08 10:42:05 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,59 +37,107 @@ namespace ft
 			operator value_type() const { return value; }
 		};
 
-	// Helpers to represent true and false values
+	/* Represent true and false values */
 	typedef integral_constant<bool,true>	true_type;
 	typedef integral_constant<bool,false>	false_type;
 
+	/* Remove const qualifier */
+	template<typename T>
+		struct remove_const
+		{
+			typedef T	type;
+		};
+
+	template<typename T>
+		struct remove_const<const T>
+		{
+			typedef T	type;
+		};
+
+	/* Remove volatile qualifier */
+	template<typename T>
+		struct remove_volatile
+		{
+			typedef T	type;
+		};
+
+	template<typename T>
+		struct remove_volatile<volatile T>
+		{
+			typedef T	type;
+		};
+
+	/* Remove const and volatile qualifiers */
+	template<typename T>
+		struct remove_cv
+		{
+			typedef typename remove_volatile<typename remove_const<T>::type>::type	type;
+		};
+
 	/* Helpers for is_integral */
 
-	// false by default
+	/* False by default */
 	template<typename T>
-		struct type_is_integral : public false_type {};
+		struct __is_integral_helper
+		: public false_type {};
 
-	// specializations to return true for integral types
+	/* Specializations to return true for integral types */
 	template<>
-		struct type_is_integral<bool> : public true_type {};
-
-	template<>
-		struct type_is_integral<char> : public true_type {};
-
-	template<>
-		struct type_is_integral<wchar_t> : public true_type {};
+		struct __is_integral_helper<bool>
+		: public true_type {};
 
 	template<>
-		struct type_is_integral<signed char> : public true_type {};
+		struct __is_integral_helper<char>
+		: public true_type {};
 
 	template<>
-		struct type_is_integral<short int> : public true_type {};
+		struct __is_integral_helper<wchar_t>
+		: public true_type {};
 
 	template<>
-		struct type_is_integral<int> : public true_type {};
+		struct __is_integral_helper<signed char>
+		: public true_type {};
 
 	template<>
-		struct type_is_integral<long int> : public true_type {};
+		struct __is_integral_helper<short int>
+		: public true_type {};
 
 	template<>
-		struct type_is_integral<long long int> : public true_type {};
+		struct __is_integral_helper<int>
+		: public true_type {};
 
 	template<>
-		struct type_is_integral<unsigned char> : public true_type {};
+		struct __is_integral_helper<long int>
+		: public true_type {};
 
 	template<>
-		struct type_is_integral<unsigned short int> : public true_type {};
+		struct __is_integral_helper<long long int>
+		: public true_type {};
 
 	template<>
-		struct type_is_integral<unsigned int> : public true_type {};
+		struct __is_integral_helper<unsigned char>
+		: public true_type {};
 
 	template<>
-		struct type_is_integral<unsigned long int> : public true_type {};
+		struct __is_integral_helper<unsigned short int>
+		: public true_type {};
 
 	template<>
-		struct type_is_integral<unsigned long long int> : public true_type {};
+		struct __is_integral_helper<unsigned int>
+		: public true_type {};
+
+	template<>
+		struct __is_integral_helper<unsigned long int>
+		: public true_type {};
+
+	template<>
+		struct __is_integral_helper<unsigned long long int>
+		: public true_type {};
 
 	/* Trait class that identifies whether T is an integral type */
 	template<typename T>
-		struct is_integral : public type_is_integral<T> {};
+		struct is_integral
+		: public __is_integral_helper<typename ft::remove_cv<T>::type>::type {};
 
 	/* Trait class that identifies whether T is the same type as U */
 	template<typename T, typename U>
