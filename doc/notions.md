@@ -52,6 +52,12 @@
 - [SFINAE](https://www.enseignement.polytechnique.fr/informatique/INF478/docs/Cpp/en/cpp/language/sfinae.html)
 - [How does std::enabled_if work when enabling via a parameter](https://stackoverflow.com/questions/51785354/how-does-stdenabled-if-work-when-enabling-via-a-parameter)
 
+### Tree
+
+- [Wiki: Arbre bicolore](https://fr.wikipedia.org/wiki/Arbre_bicolore)
+- [Arbres rouges et noirs](https://www.irif.fr/~carton/Enseignement/Algorithmique/Programmation/RedBlackTree/)
+- [Red Black Tree Rotations | Red Black tree Insertion](https://youtu.be/vQUXO2XYUl8)
+
 ### Style guidelines
 
 - [Google C++ Style Guide](https://google.github.io/styleguide/cppguide.html)
