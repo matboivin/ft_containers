@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 15:22:37 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/08 10:11:05 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,11 @@ namespace ft
 		{
 		public:
 			//types
-			typedef typename Container::value_type	value_type;
-			typedef typename Container::size_type	size_type;
-			typedef Container						container_type;
+			typedef Container							container_type;
+			typedef typename Container::value_type		value_type;
+			typedef typename Container::size_type		size_type;
+			typedef typename Container::reference		reference;
+			typedef typename Container::const_reference	const_reference;
 
 		protected:
 			// attributes
