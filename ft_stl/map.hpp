@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/15 17:14:31 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/15 18:22:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,10 @@ namespace ft
 		typedef ft::pair<const Key, T>									value_type;
 		typedef Compare													key_compare;
 		typedef Allocator												allocator_type;
-		typedef allocator_type::reference								reference;
-		typedef allocator_type::const_reference							const_reference;
-		typedef allocator_type::pointer									pointer;
-		typedef allocator_type::const_pointer							const_pointer;
+		typedef typename allocator_type::reference						reference;
+		typedef typename allocator_type::const_reference				const_reference;
+		typedef typename allocator_type::pointer						pointer;
+		typedef typename allocator_type::const_pointer					const_pointer;
 		typedef ft::base_iterator<pointer, map>							iterator;
 		typedef ft::base_iterator<const_pointer,map>					const_iterator;
 		typedef ft::reverse_iterator<iterator>							reverse_iterator;
@@ -52,7 +52,7 @@ namespace ft
 		typedef std::size_t												size_type;
 
 	private:
-		typedef typename Allocator::value_type						_alloc_value_type;
+		typedef typename Allocator::value_type							_alloc_value_type;
 
 		class value_compare
 		{
@@ -70,8 +70,8 @@ namespace ft
 		};
 
 	private:
-		typedef typename std::allocator_traits<Allocator>::template rebind<value_type>::other	_pair_alloc_type;
-		typedef ft::RedBlackTree<key_type, value_type, key_compare, _pair_alloc_type>			_repr_type;
+		typedef typename allocator_type::template rebind<value_type>::other				_pair_alloc_type;
+		typedef ft::RedBlackTree<key_type, value_type, key_compare, _pair_alloc_type>	_repr_type;
 
 		_repr_type	_M_tree;
 
@@ -134,7 +134,7 @@ namespace ft
 
 	// copy assignment operator
 	template<typename Key, typename T, typename Compare, typename Allocator>
-	typename map<Key,T,Compare,Allocator>&
+	map<Key,T,Compare,Allocator>&
 	map<Key,T,Compare,Allocator>::operator=(const map& other)
 	{
 		if (this != &other)

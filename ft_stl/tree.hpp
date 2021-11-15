@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/15 17:18:19 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/15 18:25:30 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ namespace ft
 	};
 
 	// Base node
-	template<typename Key, typename Val>
 	struct _RedBlackTreeNode
 	{
 		// types
@@ -76,48 +75,60 @@ namespace ft
 		struct RedBlackTreeNode : public _RedBlackTreeNode
 		{
 			// types
-			typedef Val						value_type;
-			typedef value_type*				pointer;
-			typedef const value_type*		const_pointer;
 			typedef RedBlackTreeNode<Val>*	link_type;
 
 			// attributes
-			value_type	_M_value;
+			Val	_M_value;
 
-			pointer			_M_valuePtr(void)       { return (pointer(this->_M_valuePtr)); }
-			const_pointer	_M_valuePtr(void) const { return (const_pointer(this->_M_valuePtr)); }
+			Val*		_M_valuePtr(void)       { return (&this->_M_valuePtr); }
+			const Val*	_M_valuePtr(void) const { return (&this->_M_valuePtr); }
 		};
 
-	template<typename Key, typename Val, typename Compare, typename Alloc = std::allocator<Val> >
+	template<typename Key, typename Val, typename Compare,
+			 typename Alloc = std::allocator<Val> >
 		class RedBlackTree
 		{
-		private:
+		protected:
 			// types
-			typedef Key								key_type;
-			typedef Val								value_type;
-			typedef value_type*						pointer;
-			typedef const value_type*				const_pointer;
-			typedef value_type&						reference;
-			typedef const value_type&				const_reference;
-			typedef std::ptrdiff_t					difference_type;
-			typedef Alloc							allocator_type;
 			typedef _RedBlackTreeNode*				node_pointer;
 			typedef const _RedBlackTreeNode*		const_node_pointer;
 			typedef RedBlackTreeNode<Val>*			link_type;
 			typedef const RedBlackTreeNode<Val>*	const_link_type;
+
+			// typedef Key								key_type;
+			// typedef Val								value_type;
+			// typedef value_type*						pointer;
+			// typedef const value_type*				const_pointer;
+			// typedef value_type&						reference;
+			// typedef const value_type&				const_reference;
+			// typedef std::ptrdiff_t					difference_type;
+			typedef Alloc							allocator_type;
+
+		private:
+			typedef typename allocator_type::template rebind<RedBlackTreeNode<Val> >::other	_node_alloc_type;
 
 			// attributes
 			allocator_type	_M_alloc; // internal copy of the allocator
 			node_pointer	_M_root;
 			node_pointer	_M_nodes;
 
+			// key_type	_M_get_Key(value_type x)
+			// {
+			// 	return ();
+			// }
+
 		public:
 			// default constructor
-			RedBlackTree(void) : _M_alloc(alloc) {}
+			RedBlackTree(void) : _M_alloc(allocator_type()) {}
 			// copy constructor
-			RedBlackTree(const RedBlackTree& other) : _M_alloc(other.get_alloc()) {}
+			RedBlackTree(const RedBlackTree& other) : _M_alloc(other._M_alloc) {}
 			// copy assignment operator
-			RedBlackTree&	operator=(const RedBlackTree& other) { return (*this); };
+			RedBlackTree&	operator=(const RedBlackTree& other)
+			{
+				if (this != &other)
+					//
+				return (*this);
+			};
 			// destructor
 			~RedBlackTree(void) {};
 		};
