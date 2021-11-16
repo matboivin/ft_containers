@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 19:49:04 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 20:55:02 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -384,6 +384,7 @@ namespace ft
 			typedef Alloc							allocator_type;
 			typedef Key								key_type;
 			typedef Val								value_type;
+			typedef Compare							key_compare;
 			typedef value_type*						pointer;
 			typedef const value_type*				const_pointer;
 			typedef value_type&						reference;
@@ -399,6 +400,7 @@ namespace ft
 
 			// attributes
 			allocator_type	_M_alloc; // internal copy of the allocator
+			key_compare		_M_key_compare;
 			size_type		_M_node_count;
 			node_pointer	_M_root;
 			node_pointer	_M_nodes;
@@ -435,6 +437,9 @@ namespace ft
 			// allocator
 			allocator_type		get_alloc(void) const;
 			_node_alloc_type	get_node_alloc(void) const;
+
+			// getters
+			key_compare	key_comp(void) const;
 
 			// capacity
 			bool		empty(void) const;
@@ -567,6 +572,8 @@ namespace ft
 				this->_M_root = __node;
 			else
 				this->_M_nodes = __node; // tmp
+
+			++this->_M_node_count;
 			return (__node);
 		}
 
@@ -575,7 +582,7 @@ namespace ft
 	// default constructor
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,Compare,Alloc>::RedBlackTree(const allocator_type& alloc)
-		: _M_alloc(alloc), _M_node_count(0), _M_root(), _M_nodes()
+		: _M_alloc(alloc), _M_key_compare(), _M_node_count(0), _M_root(), _M_nodes()
 		{
 			//
 		}
@@ -584,6 +591,7 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,Compare,Alloc>::RedBlackTree(const RedBlackTree& other)
 		: _M_alloc(other._M_alloc),
+		  _M_key_compare(other._M_key_compare),
 		  _M_node_count(other._M_node_count),
 		  _M_root(other._M_root),
 		  _M_nodes(other.M_nodes)
@@ -598,6 +606,7 @@ namespace ft
 			if (this != &other)
 			{
 				// _M_erase_recursive(this->_M_root);
+				this->_M_key_compare = other._M_key_compare;
 				this->_M_node_count = other._M_node_count;
 				// this->_M_root = other._M_root;
 				// this->_M_nodes = other._M_nodes;
@@ -626,6 +635,15 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::get_node_alloc(void) const
 		{
 			return (_node_alloc_type(this->_M_alloc));
+		}
+
+	/* getters ************************************************************** */
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::key_compare
+		RedBlackTree<Key,Val,Compare,Alloc>::key_comp(void) const
+		{
+			return (this->_M_key_compare);
 		}
 
 	/* capacity ************************************************************* */
