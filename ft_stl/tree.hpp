@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 18:23:35 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 18:31:56 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,15 @@ namespace ft
 			Val				_M_value;
 
 			// Retrieve the value address
-			Val*		_get_value_ptr(void)       { return (&this->_M_value); }
-			const Val*	_get_value_ptr(void) const { return (&this->_M_value); }
+			Val*	_get_value_ptr(void)
+			{
+				return (&this->_M_value);
+			}
+
+			const Val*	_get_value_ptr(void) const
+			{
+				return (&this->_M_value);
+			}
 
 			// Get node holding lower value
 			static node_pointer	_get_leftmost(node_pointer x)
