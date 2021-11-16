@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 17:06:00 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 17:17:14 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,14 @@ namespace ft
 			const Val*	_get_value_ptr(void) const { return (&this->_M_value); }
 
 			// Get node holding lower value
-			static node_pointer	_getLeftmost(node_pointer x)
+			static node_pointer	_get_leftmost(node_pointer x)
 			{
 				while (x->_M_left != 0)
 					x = x->_M_left;
 				return (x);
 			}
 
-			static const_node_pointer	_getLeftmost(const_node_pointer x)
+			static const_node_pointer	_get_leftmost(const_node_pointer x)
 			{
 				while (x->_M_left != 0)
 					x = x->_M_left;
@@ -63,14 +63,14 @@ namespace ft
 			}
 
 			// Get node holding greater value
-			static node_pointer	_getRightmost(node_pointer x)
+			static node_pointer	_get_rightmost(node_pointer x)
 			{
 				while (x->_M_right != 0)
 					x = x->_M_right;
 				return (x);
 			}
 
-			static const_node_pointer	_getRightmost(const_node_pointer x)
+			static const_node_pointer	_get_rightmost(const_node_pointer x)
 			{
 				while (x->_M_right != 0)
 					x = x->_M_right;
@@ -121,7 +121,9 @@ namespace ft
 			void			_M_deallocate_node(node_pointer __node);
 			void			_M_drop_node(node_pointer __node);
 			void			_M_erase_recursive(node_pointer __node);
-			node_pointer	_M_get_root(void);
+			node_pointer	_M_get_root(void) const;
+			node_pointer	_M_get_leftmost(void) const;
+			node_pointer	_M_get_rightmost(void) const;
 
 		public:
 			// default constructor
@@ -139,9 +141,6 @@ namespace ft
 			// allocator
 			allocator_type		get_alloc(void) const;
 			_node_alloc_type	get_node_alloc(void) const;
-
-			// element access
-			node_pointer	get_root(void) const;
 
 			// capacity
 			bool		empty(void) const;
@@ -208,6 +207,7 @@ namespace ft
 			_M_deallocate_node(__node);
 		}
 
+	// Erase recursively the tree from the node passed as parameter
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_erase_recursive(node_pointer __node)
@@ -223,11 +223,28 @@ namespace ft
 			}
 		}
 
+	// Get root node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_root(void)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_root(void) const
 		{
 			return (this->_M_root);
+		}
+
+	// Get node holding lower value
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_leftmost(void) const
+		{
+			return (_get_leftmost(this->_M_root));
+		}
+
+	// Get node holding greater value
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_rightmost(void) const
+		{
+			return (_get_rightmost(this->_M_root));
 		}
 
 	/* construct/copy/destroy *********************************************** */
@@ -309,15 +326,6 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::max_size(void) const
 		{
 			return (this->get_node_alloc().max_size());
-		}
-
-	/* element access ******************************************************* */
-
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
-		RedBlackTree<Key,Val,Compare,Alloc>::get_root(void) const
-		{
-			return (this->_M_root);
 		}
 
 	/* modifiers ************************************************************ */
