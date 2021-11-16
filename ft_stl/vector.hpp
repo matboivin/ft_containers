@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/08 11:18:57 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 18:29:40 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,7 @@ namespace ft
 			iterator		erase(iterator first, iterator last);
 			void			swap(vector& other);
 			void			clear(void);
-		};
+		}; // class vector
 
 	// non-member function overloads
 

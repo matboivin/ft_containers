@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/08 10:21:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 18:28:34 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ namespace ft
 			template<typename _T, typename _Container>
 				friend bool	operator<(const stack<_T, _Container>& lhs,
 									  const stack<_T, _Container>& rhs);
-		};
+		}; // class stack
 
 	/*
 	 * Relational operators

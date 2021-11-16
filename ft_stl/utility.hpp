@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/06 23:52:44 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/15 18:18:21 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 18:29:02 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ namespace ft
 				return (*this);
 			}
 
-		};
+		}; // struct pair
 
 		/* non-member function overloads **************************************** */
 

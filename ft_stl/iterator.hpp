@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/08 11:19:11 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 18:28:51 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,7 +245,7 @@ namespace ft
 			{
 				return ( reverse_iterator(base() + n) );
 			}
-		};
+		}; // class reverse_iterator
 
 	/* Relational operators */
 
@@ -318,7 +318,7 @@ namespace ft
 		}
 
 
-	/* Base iterator definition ********************************************* */
+	/* Base iterator ******************************************************** */
 
 	/*
 	 * Base iterator
@@ -456,7 +456,7 @@ namespace ft
 			{
 				return ( base_iterator(base() - n) );
 			}
-		};
+		}; // class base_iterator
 
 	/* Relational operators */
 
