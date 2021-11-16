@@ -36,3 +36,4 @@ original
 test_containers
 test_backup
 tests/outputs/
+test_tree

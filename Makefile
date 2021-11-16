@@ -129,6 +129,10 @@ debug:
 	./$(NAME) > $(TEST_OUT_DIR)/mine.out 2>&1
 	./$(NAME_CMP)
 
+debug_tree:
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) tests/src/map/tree_tests.cpp -o test_tree
+	valgrind --leak-check=full ./test_tree
+
 check_leaks: $(NAME)
 	valgrind --leak-check=full ./$(NAME)
 

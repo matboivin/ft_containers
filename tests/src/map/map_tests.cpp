@@ -1,36 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.cpp                                           :+:      :+:    :+:   */
+/*   map_tests.cpp                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 17:51:24 by mboivin          ###   ########.fr       */
+/*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
+/*   Updated: 2021/11/16 17:43:58 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <iomanip>
+#include <iostream>
+#include <string>
 #include "tests.hpp"
-#include "vector_tests.hpp"
-#include "stack_tests.hpp"
 #include "map_tests.hpp"
-#include "revit_tests.hpp"
 
-int	main(void)
+#if defined(TEST_FT)
+namespace ft
+#else
+namespace std
+#endif
 {
-	#if defined(TEST_FT)
-	// ft::test_vector();
-	// ft::test_stack();
-	// ft::test_revit();
-	// ft::test_map();
-	#elif defined(TEST_STD)
-	// std::test_vector();
-	// std::test_stack();
-	// std::test_revit();
-	// std::test_map();
-	#else
-		generate_output();
-	#endif
-
-	return (0);
+	void	test_map(void)
+	{
+		#if defined(TEST_FT)
+		std::cout << std::setw(42) << " MY MAP \n\n";
+		#else
+		std::cout << std::setw(42) << " ORIGINAL MAP \n\n";
+		#endif
+	}
 }

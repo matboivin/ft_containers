@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 17:17:14 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 17:37:23 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ namespace ft
 			node_pointer	_M_get_root(void) const;
 			node_pointer	_M_get_leftmost(void) const;
 			node_pointer	_M_get_rightmost(void) const;
+			node_pointer	_M_insert_node(const value_type& __val);
 
 		public:
 			// default constructor
@@ -245,6 +246,19 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_rightmost(void) const
 		{
 			return (_get_rightmost(this->_M_root));
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(const value_type& __val)
+		{
+			node_pointer	__node = _M_create_node(__val);
+
+			if (this->_M_root == 0)
+				this->_M_root = __node;
+			else
+				this->_M_nodes = __node; // tmp
+			return (__node);
 		}
 
 	/* construct/copy/destroy *********************************************** */
