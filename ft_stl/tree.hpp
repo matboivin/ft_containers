@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 16:26:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 16:35:35 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,111 +104,171 @@ namespace ft
 
 		protected:
 			// helpers
-			node_pointer	_M_allocate_node(void)
-			{
-				return (this->get_node_alloc().allocate(1));
-			}
-
-			void	_M_construct_node(node_pointer __node, const value_type& __val)
-			{
-				this->_M_alloc.construct(__node->_get_value_ptr(), __val);
-			}
-
-			node_pointer	_M_create_node(const value_type& __val)
-			{
-				node_pointer	__node = this->_M_allocate_node();
-
-				_M_construct_node(__node, __val);
-				__node->_M_color = RED;
-				__node->_M_weight = 0;
-				__node->_M_parent = 0;
-				__node->_M_left = 0;
-				__node->_M_right = 0;
-				return (__node);
-			}
-
-			void	_M_destroy_node(node_pointer __node)
-			{
-				this->_M_alloc.destroy(__node->_get_value_ptr());
-			}
-
-			void	_M_deallocate_node(node_pointer __node)
-			{
-				if (__node)
-					this->get_node_alloc().deallocate(__node, 1);
-			}
-
-			void	_M_drop_node(node_pointer __node)
-			{
-				_M_destroy_node(__node);
-				_M_deallocate_node(__node);
-			}
-
-			void	_M_erase_recursive(node_pointer __node) // reverse in order
-			{
-				node_pointer	__tmp;
-
-				while (__node != 0)
-				{
-					_M_erase_recursive(__node);
-					__tmp = static_cast<node_pointer>(__node->_M_left);
-					_M_drop_node(__node);
-					__node = __tmp;
-				}
-			}
-
-			node_pointer	_M_get_root(void)
-			{
-				return (this->_M_root);
-			}
+			node_pointer	_M_allocate_node(void);
+			void			_M_construct_node(node_pointer __node, const value_type& __val);
+			node_pointer	_M_create_node(const value_type& __val);
+			void			_M_destroy_node(node_pointer __node);
+			void			_M_deallocate_node(node_pointer __node);
+			void			_M_drop_node(node_pointer __node);
+			void			_M_erase_recursive(node_pointer __node);
+			node_pointer	_M_get_root(void);
 
 		public:
 			// default constructor
-			RedBlackTree(const allocator_type& alloc = allocator_type())
-			: _M_alloc(alloc), _M_node_count(0), _M_root(), _M_nodes()
-			{
-				//
-			}
+			RedBlackTree(const allocator_type& alloc = allocator_type());
 
 			// copy constructor
-			RedBlackTree(const RedBlackTree& other)
-			: _M_alloc(other._M_alloc),
-			  _M_node_count(other._M_node_count),
-			  _M_root(other._M_root),
-			  _M_nodes(other.M_nodes)
-			{
-			}
+			RedBlackTree(const RedBlackTree& other);
 
 			// copy assignment operator
-			RedBlackTree&	operator=(const RedBlackTree& other)
-			{
-				if (this != &other)
-				{
-					// _M_erase_recursive(node_pointer(this->_M_root));
-					this->_M_node_count = other._M_node_count;
-					// this->_M_root = other._M_root;
-					// this->_M_nodes = other._M_nodes;
-				}
-				return (*this);
-			}
+			RedBlackTree&	operator=(const RedBlackTree& other);
 
 			// destructor
-			~RedBlackTree(void)
-			{
-				_M_erase_recursive(node_pointer(this->_M_root));
-			}
+			~RedBlackTree(void);
 
 			// allocator
-			allocator_type	get_alloc(void) const
-			{
-				return (allocator_type(this->_M_alloc));
-			}
-
-			_node_alloc_type	get_node_alloc(void) const
-			{
-				return (_node_alloc_type(this->_M_alloc));
-			}
+			allocator_type		get_alloc(void) const;
+			_node_alloc_type	get_node_alloc(void) const;
 		};
+
+	/* Tree implementation ************************************************** */
+
+	/* helpers ************************************************************** */
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_allocate_node(void)
+		{
+			return (this->get_node_alloc().allocate(1));
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_construct_node(node_pointer __node, const value_type& __val)
+		{
+			this->_M_alloc.construct(__node->_get_value_ptr(), __val);
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_create_node(const value_type& __val)
+		{
+			node_pointer	__node = this->_M_allocate_node();
+
+			_M_construct_node(__node, __val);
+			__node->_M_color = RED;
+			__node->_M_weight = 0;
+			__node->_M_parent = 0;
+			__node->_M_left = 0;
+			__node->_M_right = 0;
+			return (__node);
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_destroy_node(node_pointer __node)
+		{
+			this->_M_alloc.destroy(__node->_get_value_ptr());
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_deallocate_node(node_pointer __node)
+		{
+			if (__node)
+				this->get_node_alloc().deallocate(__node, 1);
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_drop_node(node_pointer __node)
+		{
+			_M_destroy_node(__node);
+			_M_deallocate_node(__node);
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_erase_recursive(node_pointer __node)
+		{
+			node_pointer	__tmp;
+
+			while (__node != 0) // reverse in order
+			{
+				_M_erase_recursive(__node);
+				__tmp = static_cast<node_pointer>(__node->_M_left);
+				_M_drop_node(__node);
+				__node = __tmp;
+			}
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_root(void)
+		{
+			return (this->_M_root);
+		}
+
+	/* construct/copy/destroy *********************************************** */
+
+	// default constructor
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		RedBlackTree<Key,Val,Compare,Alloc>::RedBlackTree(const allocator_type& alloc)
+		: _M_alloc(alloc), _M_node_count(0), _M_root(), _M_nodes()
+		{
+			//
+		}
+
+	// copy constructor
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		RedBlackTree<Key,Val,Compare,Alloc>::RedBlackTree(const RedBlackTree& other)
+		: _M_alloc(other._M_alloc),
+		  _M_node_count(other._M_node_count),
+		  _M_root(other._M_root),
+		  _M_nodes(other.M_nodes)
+		{
+		}
+
+	// copy assignment operator
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		RedBlackTree<Key,Val,Compare,Alloc>&
+		RedBlackTree<Key,Val,Compare,Alloc>::operator=(const RedBlackTree& other)
+		{
+			if (this != &other)
+			{
+				// _M_erase_recursive(node_pointer(this->_M_root));
+				this->_M_node_count = other._M_node_count;
+				// this->_M_root = other._M_root;
+				// this->_M_nodes = other._M_nodes;
+			}
+			return (*this);
+		}
+
+	// destructor
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		RedBlackTree<Key,Val,Compare,Alloc>::~RedBlackTree(void)
+		{
+			_M_erase_recursive(node_pointer(this->_M_root));
+		}
+
+
+	/* allocator ************************************************************ */
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::allocator_type
+		RedBlackTree<Key,Val,Compare,Alloc>::get_alloc(void) const
+		{
+			return (allocator_type(this->_M_alloc));
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::_node_alloc_type
+		RedBlackTree<Key,Val,Compare,Alloc>::get_node_alloc(void) const
+		{
+			return (_node_alloc_type(this->_M_alloc));
+		}
+
+
 } // namespace ft
 
 #endif
