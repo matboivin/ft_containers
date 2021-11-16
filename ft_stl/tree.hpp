@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 18:32:42 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 18:33:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ namespace ft
 					x = x->_M_right;
 				return (x);
 			}
-		};
+		}; // struct RedBlackTreeNode
 
 	/* Tree definition ****************************************************** */
 
@@ -159,7 +159,7 @@ namespace ft
 
 			// modifiers
 			void	clear(void);
-		};
+		}; // class RedBlackTree
 
 	/* Tree implementation ************************************************** */
 
