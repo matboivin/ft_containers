@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 18:48:19 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 19:46:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,17 +84,69 @@ namespace ft
 					x = x->_M_right;
 				return (x);
 			}
+
+			// Increment node
+			static node_pointer			_increment_node(node_pointer x)
+			{
+				if (x->_M_right != 0)
+				{
+					while (x->_M_left != 0)
+						x = x->_M_left;
+				}
+				else
+				{
+					if (x->_M_parent != 0)
+						x = x->_M_parent;
+				}
+				return (x);
+			}
+
+			static const_node_pointer	_increment_node(const_node_pointer x)
+			{
+				if (x->_M_right != 0)
+				{
+					x = x->_M_right;
+					while (x->_M_left != 0)
+						x = x->_M_left;
+				}
+				else
+				{
+					if (x->_M_parent != 0)
+						x = x->_M_parent;
+				}
+				return (x);
+			}
+
+			// Decrement node
+			static node_pointer			_decrement_node(node_pointer x)
+			{
+				if (x->_M_left != 0)
+				{
+					x = x->_M_left;
+					while (x->_M_right != 0)
+						x = x->_M_right;
+				}
+				return (x);
+			}
+
+			static const_node_pointer	_decrement_node(const_node_pointer x)
+			{
+				if (x->_M_left != 0)
+				{
+					x = x->_M_left;
+					while (x->_M_right != 0)
+						x = x->_M_right;
+				}
+				return (x);
+			}
 		}; // struct RedBlackTreeNode
 
 	
-	/* RedBlackTree iterator ************************************************ */
+	/* RedBlackTree iterators *********************************************** */
 
-	/*
-	 * RedBlackTree iterator
-	 */
-
+	// RedBlackTree iterator
 	template<typename T>
-		struct RedBlackTree_iterator
+		struct RBtree_iterator
 		{
 			// types
 			typedef T										value_type;
@@ -107,33 +159,31 @@ namespace ft
 			node_pointer	_M_node; // copy of the original iterator
 
 			// default constructor
-			RedBlackTree_iterator(void)
+			RBtree_iterator(void)
 			: _M_node()
 			{
 			}
 
 			// initalization constructor
-			RedBlackTree_iterator(node_pointer x)
+			RBtree_iterator(node_pointer x)
 			: _M_node(x)
 			{
 			}
 
 			// copy constructor
-			template<typename Iter>
-				RedBlackTree_iterator(const RedBlackTree_iterator<T>& other)
-				: _M_node(other.get_node())
-				{
-				}
+			RBtree_iterator(const RBtree_iterator& other)
+			: _M_node(other.get_node())
+			{
+			}
 
 			// copy assignment operator
-			template<typename Iter>
-				RedBlackTree_iterator&	operator=(const RedBlackTree_iterator<T>& other)
-				{
-					if (this != &other)
-						this->_M_node = other.get_node();
+			RBtree_iterator&	operator=(const RBtree_iterator& other)
+			{
+				if (this != &other)
+					this->_M_node = other.get_node();
 
-					return (*this);
-				}
+				return (*this);
+			}
 
 			// return copy of the underlying node
 			node_pointer	get_node(void) const
@@ -144,59 +194,150 @@ namespace ft
 			// accesses the pointed-to element
 			reference	operator*(void) const
 			{
-				return (*_M_node);
+				return (*_M_node->_get_value_ptr());
 			}
 
 			pointer	operator->(void) const
 			{
-				return (_M_node);
+				return (_M_node->_get_value_ptr());
 			}
 
 			// advances or decrements the iterator
 
-			RedBlackTree_iterator&	operator++(void)
+			RBtree_iterator&	operator++(void)
 			{
 				++_M_node;
 				return (*this);
 			}
 
-			RedBlackTree_iterator	operator++(int)
+			RBtree_iterator	operator++(int)
 			{
-				RedBlackTree_iterator	backup = *this;
+				RBtree_iterator	backup = *this;
 
 				++_M_node;
 				return (backup);
 			}
 
-			RedBlackTree_iterator&	operator--(void)
+			RBtree_iterator&	operator--(void)
 			{
 				--_M_node;
 				return (*this);
 			}
 
-			RedBlackTree_iterator	operator--(int)
+			RBtree_iterator	operator--(int)
 			{
-				RedBlackTree_iterator	backup = *this;
+				RBtree_iterator	backup = *this;
 
 				--_M_node;
 				return (backup);
 			}
-		}; // struct RedBlackTree_iterator
+		}; // struct RBtree_iterator
 
 	/* Relational operators */
 
 	template<typename T1, typename T2>
 		bool
-		operator==(const RedBlackTree_iterator<T1>& lhs,
-				   const RedBlackTree_iterator<T2>& rhs)
+		operator==(const RBtree_iterator<T1>& lhs,
+				   const RBtree_iterator<T2>& rhs)
 		{
 			return (lhs.get_node() == rhs.get_node());
 		}
 
 	template<typename T1, typename T2>
 		bool
-		operator!=(const RedBlackTree_iterator<T1>& lhs,
-				   const RedBlackTree_iterator<T2>& rhs)
+		operator!=(const RBtree_iterator<T1>& lhs,
+				   const RBtree_iterator<T2>& rhs)
+		{
+			return (lhs.get_node() != rhs.get_node());
+		}
+
+	// RedBlackTree const_iterator
+	template<typename T>
+		struct RBtree_const_iterator
+		{
+			// types
+			typedef T										value_type;
+			typedef T&										reference;
+			typedef T*										pointer;
+			typedef RBtree_iterator<T>						iterator;
+			typedef typename ft::bidirectional_iterator_tag	iterator_category;
+			typedef std::ptrdiff_t							difference_type;
+			typedef RedBlackTreeNode<T>*					node_pointer;
+
+			node_pointer	_M_node; // copy of the original iterator
+
+			// default constructor
+			RBtree_const_iterator(void)
+			: _M_node()
+			{
+			}
+
+			// initalization constructor
+			RBtree_const_iterator(node_pointer x)
+			: _M_node(x)
+			{
+			}
+
+			// copy constructor
+			RBtree_const_iterator(const RBtree_const_iterator& other)
+			: _M_node(other.get_node())
+			{
+			}
+
+			RBtree_const_iterator(const iterator& other)
+			: _M_node(other.get_node())
+			{
+			}
+
+			// copy assignment operator
+			RBtree_const_iterator&	operator=(const RBtree_const_iterator& other)
+			{
+				if (this != &other)
+					this->_M_node = other.get_node();
+
+				return (*this);
+			}
+
+			iterator	remove_const(void) const
+			{
+				return (iterator(const_cast<typename iterator::nod_pointer>(this->_M_node)));
+			}
+
+			// return copy of the underlying node
+			node_pointer	get_node(void) const
+			{
+				return (_M_node);
+			}
+
+			// accesses the pointed-to element
+			reference	operator*(void) const
+			{
+				return (*_M_node->_get_value_ptr());
+			}
+
+			pointer	operator->(void) const
+			{
+				return (_M_node->_get_value_ptr());
+			}
+
+			// advances or decrements the iterator
+
+		}; // struct RBtree_const_iterator
+
+	/* Relational operators */
+
+	template<typename T1, typename T2>
+		bool
+		operator==(const RBtree_const_iterator<T1>& lhs,
+				   const RBtree_const_iterator<T2>& rhs)
+		{
+			return (lhs.get_node() == rhs.get_node());
+		}
+
+	template<typename T1, typename T2>
+		bool
+		operator!=(const RBtree_const_iterator<T1>& lhs,
+				   const RBtree_const_iterator<T2>& rhs)
 		{
 			return (lhs.get_node() != rhs.get_node());
 		}
@@ -343,7 +484,7 @@ namespace ft
 			while (__node != 0) // reverse in order
 			{
 				_M_erase_recursive(__node);
-				__tmp = static_cast<node_pointer>(__node->_M_left);
+				__tmp = __node->_M_left;
 				_M_drop_node(__node);
 				__node = __tmp;
 			}
