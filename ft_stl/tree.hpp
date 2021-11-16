@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/15 19:20:48 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 16:26:24 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,64 +24,54 @@ namespace ft
 	};
 
 	// Base node
-	struct _RedBlackTreeNode
-	{
-		// types
-		typedef _RedBlackTreeNode*			node_pointer;
-		typedef const _RedBlackTreeNode*	const_node_pointer;
-		// attributes
-		NodeColor		_M_color;
-		node_pointer	_M_parent;
-		node_pointer	_M_left;
-		node_pointer	_M_right;
-
-		// Get node holding lower value
-		static node_pointer
-		_getLeftmost(node_pointer x)
-		{
-			while (x->_M_left != 0)
-				x = x->_M_left;
-			return (x);
-		}
-
-		static const_node_pointer
-		_getLeftmost(const_node_pointer x)
-		{
-			while (x->_M_left != 0)
-				x = x->_M_left;
-			return (x);
-		}
-
-		// Get node holding greater value
-		static node_pointer
-		_getRightmost(node_pointer x)
-		{
-			while (x->_M_right != 0)
-				x = x->_M_right;
-			return (x);
-		}
-
-		static const_node_pointer
-		_getRightmost(const_node_pointer x)
-		{
-			while (x->_M_right != 0)
-				x = x->_M_right;
-			return (x);
-		}
-	};
-
-	// Node struct
 	template<typename Val>
-		struct RedBlackTreeNode : public _RedBlackTreeNode
+		struct RedBlackTreeNode
 		{
 			// types
-			typedef RedBlackTreeNode<Val>*	link_type;
+			typedef RedBlackTreeNode<Val>*			node_pointer;
+			typedef const RedBlackTreeNode<Val>*	const_node_pointer;
 
 			// attributes
-			Val	_M_value;
+			NodeColor		_M_color;
+			std::size_t		_M_weight;
+			node_pointer	_M_parent;
+			node_pointer	_M_left;
+			node_pointer	_M_right;
+			Val				_M_value;
 
-			Val*		_M_valuePtr(void)       { return (&this->_M_valuePtr); }
-			const Val*	_M_valuePtr(void) const { return (&this->_M_valuePtr); }
+			// getters
+			Val*		_get_value_ptr(void)       { return (&this->_M_value); }
+			const Val*	_get_value_ptr(void) const { return (&this->_M_value); }
+
+			// Get node holding lower value
+			static node_pointer	_getLeftmost(node_pointer x)
+			{
+				while (x->_M_left != 0)
+					x = x->_M_left;
+				return (x);
+			}
+
+			static const_node_pointer	_getLeftmost(const_node_pointer x)
+			{
+				while (x->_M_left != 0)
+					x = x->_M_left;
+				return (x);
+			}
+
+			// Get node holding greater value
+			static node_pointer	_getRightmost(node_pointer x)
+			{
+				while (x->_M_right != 0)
+					x = x->_M_right;
+				return (x);
+			}
+
+			static const_node_pointer	_getRightmost(const_node_pointer x)
+			{
+				while (x->_M_right != 0)
+					x = x->_M_right;
+				return (x);
+			}
 		};
 
 	template<typename Key, typename Val,
@@ -92,10 +82,6 @@ namespace ft
 		protected:
 			// types
 			typedef Alloc							allocator_type;
-			typedef _RedBlackTreeNode*				node_pointer;
-			typedef const _RedBlackTreeNode*		const_node_pointer;
-			typedef RedBlackTreeNode<Val>*			link_type;
-			typedef const RedBlackTreeNode<Val>*	const_link_type;
 			typedef Key								key_type;
 			typedef Val								value_type;
 			typedef value_type*						pointer;
@@ -103,6 +89,8 @@ namespace ft
 			typedef value_type&						reference;
 			typedef const value_type&				const_reference;
 			typedef std::ptrdiff_t					difference_type;
+			typedef RedBlackTreeNode<Val>*			node_pointer;
+			typedef const RedBlackTreeNode<Val>*	const_node_pointer;
 
 		private:
 			// aliases
@@ -116,64 +104,110 @@ namespace ft
 
 		protected:
 			// helpers
-			link_type
-			_M_allocate_node(void)
+			node_pointer	_M_allocate_node(void)
 			{
-				return (this->_M_alloc.allocate(1));
+				return (this->get_node_alloc().allocate(1));
 			}
 
-			void
-			_M_construct_node(link_type __node, const value_type& __val)
+			void	_M_construct_node(node_pointer __node, const value_type& __val)
 			{
-				this->_M_alloc.construct(__node->_M_valuePtr, __val);
+				this->_M_alloc.construct(__node->_get_value_ptr(), __val);
 			}
 
-			link_type
-			_M_create_node(const value_type& __val)
+			node_pointer	_M_create_node(const value_type& __val)
 			{
-				link_type	__node = this->_M_allocate_node();
+				node_pointer	__node = this->_M_allocate_node();
+
 				_M_construct_node(__node, __val);
+				__node->_M_color = RED;
+				__node->_M_weight = 0;
+				__node->_M_parent = 0;
+				__node->_M_left = 0;
+				__node->_M_right = 0;
 				return (__node);
 			}
 
-			void
-			_M_destroy_node(link_type __node)
+			void	_M_destroy_node(node_pointer __node)
 			{
-				this->_M_alloc.destroy(__node->_M_valuePtr);
+				this->_M_alloc.destroy(__node->_get_value_ptr());
 			}
 
-			void
-			_M_deallocate_node(link_type __node)
+			void	_M_deallocate_node(node_pointer __node)
 			{
 				if (__node)
-					this->_M_alloc.deallocate(__node, 1);
+					this->get_node_alloc().deallocate(__node, 1);
+			}
+
+			void	_M_drop_node(node_pointer __node)
+			{
+				_M_destroy_node(__node);
+				_M_deallocate_node(__node);
+			}
+
+			void	_M_erase_recursive(node_pointer __node) // reverse in order
+			{
+				node_pointer	__tmp;
+
+				while (__node != 0)
+				{
+					_M_erase_recursive(__node);
+					__tmp = static_cast<node_pointer>(__node->_M_left);
+					_M_drop_node(__node);
+					__node = __tmp;
+				}
+			}
+
+			node_pointer	_M_get_root(void)
+			{
+				return (this->_M_root);
 			}
 
 		public:
 			// default constructor
 			RedBlackTree(const allocator_type& alloc = allocator_type())
-			: _M_alloc(alloc), _M_node_count(0)
+			: _M_alloc(alloc), _M_node_count(0), _M_root(), _M_nodes()
 			{
 				//
 			}
 
 			// copy constructor
 			RedBlackTree(const RedBlackTree& other)
-			: _M_alloc(other._M_alloc), _M_node_count(other._M_node_count)
-			{}
+			: _M_alloc(other._M_alloc),
+			  _M_node_count(other._M_node_count),
+			  _M_root(other._M_root),
+			  _M_nodes(other.M_nodes)
+			{
+			}
 
 			// copy assignment operator
 			RedBlackTree&	operator=(const RedBlackTree& other)
 			{
 				if (this != &other)
 				{
+					// _M_erase_recursive(node_pointer(this->_M_root));
 					this->_M_node_count = other._M_node_count;
+					// this->_M_root = other._M_root;
+					// this->_M_nodes = other._M_nodes;
 				}
 				return (*this);
-			};
+			}
 
 			// destructor
-			~RedBlackTree(void) {};
+			~RedBlackTree(void)
+			{
+				_M_erase_recursive(node_pointer(this->_M_root));
+			}
+
+			// allocator
+			allocator_type	get_alloc(void) const
+			{
+				return (allocator_type(this->_M_alloc));
+			}
+
+			_node_alloc_type	get_node_alloc(void) const
+			{
+				return (_node_alloc_type(this->_M_alloc));
+			}
 		};
 } // namespace ft
 
