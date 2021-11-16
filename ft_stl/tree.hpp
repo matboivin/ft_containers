@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 17:37:23 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 18:23:35 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,8 @@ namespace ft
 			node_pointer	_M_get_root(void) const;
 			node_pointer	_M_get_leftmost(void) const;
 			node_pointer	_M_get_rightmost(void) const;
+			const key_type&	_M_get_key(void) const;
+			const_reference	_M_get_value(void) const;
 			node_pointer	_M_insert_node(const value_type& __val);
 
 		public:
@@ -246,6 +248,22 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_rightmost(void) const
 		{
 			return (_get_rightmost(this->_M_root));
+		}
+
+	// Get only key of the pair
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		const typename RedBlackTree<Key,Val,Compare,Alloc>::key_type&
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_key(void) const
+		{
+			return (*this->_get_value_ptr());
+		}
+
+	// Get pair<key,value>
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::const_reference
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_value(void) const
+		{
+			return (static_cast<key_type>(*this->_get_value_ptr()));
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
