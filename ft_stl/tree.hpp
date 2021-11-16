@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 19:46:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 19:49:04 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,7 +206,7 @@ namespace ft
 
 			RBtree_iterator&	operator++(void)
 			{
-				++_M_node;
+				this->_M_node = _increment_node(this->_M_node);
 				return (*this);
 			}
 
@@ -214,13 +214,13 @@ namespace ft
 			{
 				RBtree_iterator	backup = *this;
 
-				++_M_node;
+				this->_M_node = _increment_node(this->_M_node);
 				return (backup);
 			}
 
 			RBtree_iterator&	operator--(void)
 			{
-				--_M_node;
+				this->_M_node = _decrement_node(this->_M_node);
 				return (*this);
 			}
 
@@ -228,7 +228,7 @@ namespace ft
 			{
 				RBtree_iterator	backup = *this;
 
-				--_M_node;
+				this->_M_node = _decrement_node(this->_M_node);
 				return (backup);
 			}
 		}; // struct RBtree_iterator
@@ -322,6 +322,33 @@ namespace ft
 
 			// advances or decrements the iterator
 
+			RBtree_const_iterator&	operator++(void)
+			{
+				this->_M_node = _increment_node(this->_M_node);
+				return (*this);
+			}
+
+			RBtree_const_iterator	operator++(int)
+			{
+				RBtree_const_iterator	backup = *this;
+
+				this->_M_node = _increment_node(this->_M_node);
+				return (backup);
+			}
+
+			RBtree_const_iterator&	operator--(void)
+			{
+				this->_M_node = _decrement_node(this->_M_node);
+				return (*this);
+			}
+
+			RBtree_const_iterator	operator--(int)
+			{
+				RBtree_const_iterator	backup = *this;
+
+				this->_M_node = _decrement_node(this->_M_node);
+				return (backup);
+			}
 		}; // struct RBtree_const_iterator
 
 	/* Relational operators */
