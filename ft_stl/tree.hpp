@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 16:35:35 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 17:06:00 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,11 @@ namespace ft
 		BLACK = 1
 	};
 
-	// Base node
+	/* Node definition and implementation *********************************** */
+
+	/*
+	 * Red Black Tree template class
+	 */
 	template<typename Val>
 		struct RedBlackTreeNode
 		{
@@ -39,7 +43,7 @@ namespace ft
 			node_pointer	_M_right;
 			Val				_M_value;
 
-			// getters
+			// Retrieve the value address
 			Val*		_get_value_ptr(void)       { return (&this->_M_value); }
 			const Val*	_get_value_ptr(void) const { return (&this->_M_value); }
 
@@ -74,6 +78,11 @@ namespace ft
 			}
 		};
 
+	/* Tree definition ****************************************************** */
+
+	/*
+	 * Red Black Tree template class
+	 */
 	template<typename Key, typename Val,
 			 typename Compare = std::less<Key>,
 			 typename Alloc = std::allocator<Val> >
@@ -89,6 +98,7 @@ namespace ft
 			typedef value_type&						reference;
 			typedef const value_type&				const_reference;
 			typedef std::ptrdiff_t					difference_type;
+			typedef std::size_t						size_type;
 			typedef RedBlackTreeNode<Val>*			node_pointer;
 			typedef const RedBlackTreeNode<Val>*	const_node_pointer;
 
@@ -98,7 +108,7 @@ namespace ft
 
 			// attributes
 			allocator_type	_M_alloc; // internal copy of the allocator
-			std::size_t		_M_node_count;
+			size_type		_M_node_count;
 			node_pointer	_M_root;
 			node_pointer	_M_nodes;
 
@@ -129,6 +139,17 @@ namespace ft
 			// allocator
 			allocator_type		get_alloc(void) const;
 			_node_alloc_type	get_node_alloc(void) const;
+
+			// element access
+			node_pointer	get_root(void) const;
+
+			// capacity
+			bool		empty(void) const;
+			size_type	size(void) const;
+			size_type	max_size(void) const;
+
+			// modifiers
+			void	clear(void);
 		};
 
 	/* Tree implementation ************************************************** */
@@ -236,7 +257,7 @@ namespace ft
 		{
 			if (this != &other)
 			{
-				// _M_erase_recursive(node_pointer(this->_M_root));
+				// _M_erase_recursive(this->_M_root);
 				this->_M_node_count = other._M_node_count;
 				// this->_M_root = other._M_root;
 				// this->_M_nodes = other._M_nodes;
@@ -248,9 +269,8 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,Compare,Alloc>::~RedBlackTree(void)
 		{
-			_M_erase_recursive(node_pointer(this->_M_root));
+			_M_erase_recursive(this->_M_root);
 		}
-
 
 	/* allocator ************************************************************ */
 
@@ -266,6 +286,47 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::get_node_alloc(void) const
 		{
 			return (_node_alloc_type(this->_M_alloc));
+		}
+
+	/* capacity ************************************************************* */
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		bool
+		RedBlackTree<Key,Val,Compare,Alloc>::empty(void) const
+		{
+			return (this->_M_node_count == 0);
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::size_type
+		RedBlackTree<Key,Val,Compare,Alloc>::size(void) const
+		{
+			return (this->_M_node_count);
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::size_type
+		RedBlackTree<Key,Val,Compare,Alloc>::max_size(void) const
+		{
+			return (this->get_node_alloc().max_size());
+		}
+
+	/* element access ******************************************************* */
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
+		RedBlackTree<Key,Val,Compare,Alloc>::get_root(void) const
+		{
+			return (this->_M_root);
+		}
+
+	/* modifiers ************************************************************ */
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::clear(void)
+		{
+			_M_erase_recursive(this->_M_root);
 		}
 
 
