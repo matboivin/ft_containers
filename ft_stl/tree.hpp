@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 18:33:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/16 18:48:19 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #define TREE_HPP
 
 #include <memory>
+#include "iterator.hpp"
 
 namespace ft
 {
@@ -84,6 +85,121 @@ namespace ft
 				return (x);
 			}
 		}; // struct RedBlackTreeNode
+
+	
+	/* RedBlackTree iterator ************************************************ */
+
+	/*
+	 * RedBlackTree iterator
+	 */
+
+	template<typename T>
+		struct RedBlackTree_iterator
+		{
+			// types
+			typedef T										value_type;
+			typedef T&										reference;
+			typedef T*										pointer;
+			typedef typename ft::bidirectional_iterator_tag	iterator_category;
+			typedef std::ptrdiff_t							difference_type;
+			typedef RedBlackTreeNode<T>*					node_pointer;
+
+			node_pointer	_M_node; // copy of the original iterator
+
+			// default constructor
+			RedBlackTree_iterator(void)
+			: _M_node()
+			{
+			}
+
+			// initalization constructor
+			RedBlackTree_iterator(node_pointer x)
+			: _M_node(x)
+			{
+			}
+
+			// copy constructor
+			template<typename Iter>
+				RedBlackTree_iterator(const RedBlackTree_iterator<T>& other)
+				: _M_node(other.get_node())
+				{
+				}
+
+			// copy assignment operator
+			template<typename Iter>
+				RedBlackTree_iterator&	operator=(const RedBlackTree_iterator<T>& other)
+				{
+					if (this != &other)
+						this->_M_node = other.get_node();
+
+					return (*this);
+				}
+
+			// return copy of the underlying node
+			node_pointer	get_node(void) const
+			{
+				return (_M_node);
+			}
+
+			// accesses the pointed-to element
+			reference	operator*(void) const
+			{
+				return (*_M_node);
+			}
+
+			pointer	operator->(void) const
+			{
+				return (_M_node);
+			}
+
+			// advances or decrements the iterator
+
+			RedBlackTree_iterator&	operator++(void)
+			{
+				++_M_node;
+				return (*this);
+			}
+
+			RedBlackTree_iterator	operator++(int)
+			{
+				RedBlackTree_iterator	backup = *this;
+
+				++_M_node;
+				return (backup);
+			}
+
+			RedBlackTree_iterator&	operator--(void)
+			{
+				--_M_node;
+				return (*this);
+			}
+
+			RedBlackTree_iterator	operator--(int)
+			{
+				RedBlackTree_iterator	backup = *this;
+
+				--_M_node;
+				return (backup);
+			}
+		}; // struct RedBlackTree_iterator
+
+	/* Relational operators */
+
+	template<typename T1, typename T2>
+		bool
+		operator==(const RedBlackTree_iterator<T1>& lhs,
+				   const RedBlackTree_iterator<T2>& rhs)
+		{
+			return (lhs.get_node() == rhs.get_node());
+		}
+
+	template<typename T1, typename T2>
+		bool
+		operator!=(const RedBlackTree_iterator<T1>& lhs,
+				   const RedBlackTree_iterator<T2>& rhs)
+		{
+			return (lhs.get_node() != rhs.get_node());
+		}
 
 	/* Tree definition ****************************************************** */
 
