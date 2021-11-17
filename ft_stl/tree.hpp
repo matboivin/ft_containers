@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/17 21:07:40 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/17 21:24:37 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ namespace ft
 			{
 				if (x->_M_right != 0)
 				{
+					x = x->_M_right;
 					while (x->_M_left != 0)
 						x = x->_M_left;
 				}
@@ -627,8 +628,8 @@ namespace ft
 			++this->_M_node_count;
 			this->_M_minimum = _M_get_leftmost();
 			this->_M_maximum = _M_get_rightmost();
-			this->_M_minimum->_M_left = this->_M_sentinel;
-			this->_M_maximum->_M_right = this->_M_reverse_sentinel;
+			this->_M_minimum->_M_left = this->_M_reverse_sentinel;
+			this->_M_maximum->_M_right = this->_M_sentinel;
 			return (ft::pair<iterator,bool>(iterator(__node), true));
 		}
 
