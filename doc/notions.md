@@ -58,6 +58,7 @@
 - [Arbres rouges et noirs](https://www.irif.fr/~carton/Enseignement/Algorithmique/Programmation/RedBlackTree/)
 - [Red Black Tree Rotations | Red Black tree Insertion](https://youtu.be/vQUXO2XYUl8)
 - [Red-Black Tree (Fully Explained, With Java Code)](https://www.happycoders.eu/algorithms/red-black-tree-java/)
+- [5.17 Red Black Tree Insertion](https://youtu.be/qA02XWRTBdw)
 
 ### Style guidelines
 
