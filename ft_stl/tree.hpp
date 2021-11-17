@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/17 16:26:29 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/17 16:32:58 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,18 @@ namespace ft
 						x = x->_M_right;
 				}
 				return (x);
+			}
+
+			static void		_set_node_links(bool is_left,
+											 node_pointer node, node_pointer parent
+											 )
+			{
+				node->_M_parent = parent;
+
+				if (is_left)
+					parent->_M_left = node;
+				else
+					parent->_M_right = node;
 			}
 		}; // struct RedBlackTreeNode
 
@@ -610,11 +622,7 @@ namespace ft
 						return (ft::pair<iterator,bool>(iterator(__cursor), false));
 					}
 				}
-				if (__insert_left)
-					__parent->_M_left = __node;
-				else
-					__parent->_M_right = __node;
-				__node->_M_parent = __parent;
+				_set_node_links(__insert_left, __node, __parent);
 				__cursor = __node;
 			}
 			++this->_M_node_count;
