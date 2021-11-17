@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/17 18:13:45 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/17 21:07:40 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,6 @@ namespace ft
 			}
 		}; // struct RedBlackTreeNode
 
-	
 	/* RedBlackTree iterators *********************************************** */
 
 	// RedBlackTree iterator
@@ -300,7 +299,7 @@ namespace ft
 
 			iterator	remove_const(void) const
 			{
-				return (iterator(const_cast<typename iterator::nod_pointer>(this->_M_node)));
+				return (iterator(const_cast<typename iterator::node_pointer>(this->_M_node)));
 			}
 
 			// return copy of the underlying node
@@ -325,6 +324,8 @@ namespace ft
 			RBtree_const_iterator&	operator++(void)
 			{
 				this->_M_node = _increment_node(this->_M_node);
+				std::cout << "incr: " << _M_get_key(this->_M_node) << " => "
+						  << _M_get_value(this->_M_node).second << std::endl; // debug
 				return (*this);
 			}
 
@@ -408,6 +409,7 @@ namespace ft
 			key_compare		_M_key_compare;
 			size_type		_M_node_count;
 			node_pointer	_M_sentinel;
+			node_pointer	_M_reverse_sentinel;
 			node_pointer	_M_root;
 			node_pointer	_M_minimum;
 			node_pointer	_M_maximum;
@@ -524,20 +526,12 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_erase_recursive(node_pointer __node)
 		{
-			if (__node == 0)
-				return ;
-
-			node_pointer	__tmp;
-
-			while (__node != 0) // reverse in order
+			if (__node != 0) // reverse in order
 			{
-				std::cout << "Erasing: " << _M_get_key(__node) << " => "
-						  << _M_get_value(__node).second << std::endl; // debug
-
+				std::cout << "erasing: " << _M_get_value(__node).first << std::endl;
 				_M_erase_recursive(__node->_M_right);
-				__tmp = __node->_M_left;
+				_M_erase_recursive(__node->_M_left);
 				_M_drop_node(__node);
-				__node = __tmp;
 			}
 		}
 
@@ -595,9 +589,12 @@ namespace ft
 			}
 			else
 			{
-				node_pointer	__cursor = _M_get_root();
+				node_pointer	__cursor(_M_get_root());
 				node_pointer	__parent = 0;
 				bool			__insert_left = false;
+
+				this->_M_minimum->_M_left = 0;
+				this->_M_maximum->_M_right = 0;
 
 				while (__cursor != 0)
 				{
@@ -618,18 +615,20 @@ namespace ft
 						return (ft::pair<iterator,bool>(iterator(__cursor), false));
 					}
 				}
-				// rebalance
+				// todo: rebalance
+				__cursor = __node;
+				__node->_M_parent = __parent;
 				if (__insert_left)
 					__parent->_M_left = __node;
 				else
 					__parent->_M_right = __node;
-				__node->_M_parent = __parent;
-				__cursor = __node;
 				//
 			}
 			++this->_M_node_count;
 			this->_M_minimum = _M_get_leftmost();
 			this->_M_maximum = _M_get_rightmost();
+			this->_M_minimum->_M_left = this->_M_sentinel;
+			this->_M_maximum->_M_right = this->_M_reverse_sentinel;
 			return (ft::pair<iterator,bool>(iterator(__node), true));
 		}
 
@@ -642,12 +641,13 @@ namespace ft
 		  _M_key_compare(),
 		  _M_node_count(0),
 		  _M_sentinel(),
+		  _M_reverse_sentinel(),
 		  _M_root(),
 		  _M_minimum(),
 		  _M_maximum()
 		{
-			_M_sentinel = _M_allocate_node();
-			this->_M_alloc.construct(_M_sentinel->_get_value_ptr(), value_type());
+			this->_M_sentinel = _M_create_node(value_type());
+			this->_M_reverse_sentinel = _M_create_node(value_type());
 		}
 
 	// copy constructor
@@ -657,6 +657,7 @@ namespace ft
 		  _M_key_compare(other._M_key_compare),
 		  _M_node_count(other._M_node_count),
 		  _M_sentinel(other._M_sentinel),
+		  _M_reverse_sentinel(other._M_reverse_sentinel),
 		  _M_root(other._M_root),
 		  _M_minimum(other._M_minimum),
 		  _M_maximum(other._M_maximum)
@@ -684,7 +685,6 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::~RedBlackTree(void)
 		{
 			_M_erase_recursive(this->_M_root);
-			_M_deallocate_node(this->_M_sentinel);
 		}
 
 	/* allocator ************************************************************ */
