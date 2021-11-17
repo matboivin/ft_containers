@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/17 15:47:23 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/17 16:12:05 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -422,8 +422,8 @@ namespace ft
 			node_pointer			_M_get_root(void) const;
 			node_pointer			_M_get_leftmost(void) const;
 			node_pointer			_M_get_rightmost(void) const;
-			const key_type&			_M_get_key(void) const;
-			const_reference			_M_get_value(void) const;
+			const key_type&			_M_get_key(node_pointer __node) const;
+			const_reference			_M_get_value(node_pointer __node) const;
 			ft::pair<iterator,bool>	_M_insert_node(const value_type& __val);
 
 		public:
@@ -520,7 +520,7 @@ namespace ft
 
 			while (__node != 0) // reverse in order
 			{
-				_M_erase_recursive(__node);
+				_M_erase_recursive(__node->_M_right);
 				__tmp = __node->_M_left;
 				_M_drop_node(__node);
 				__node = __tmp;
@@ -554,17 +554,17 @@ namespace ft
 	// Get only key of the pair
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		const typename RedBlackTree<Key,Val,Compare,Alloc>::key_type&
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_key(void) const
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_key(node_pointer __node) const
 		{
-			return (*this->_get_value_ptr());
+			return (static_cast<key_type&>(__node->_get_value_ptr()->first));
 		}
 
 	// Get pair<key,value>
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_reference
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_value(void) const
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_value(node_pointer __node) const
 		{
-			return (static_cast<key_type>(*this->_get_value_ptr()));
+			return (*__node->_get_value_ptr());
 		}
 
 	// Insert a node
@@ -585,9 +585,9 @@ namespace ft
 
 				while (__cursor != 0)
 				{
-					if (_M_key_compare(__cursor->_M_value, __node->_M_value))
+					if (_M_key_compare(_M_get_key(__cursor), _M_get_key(__node)))
 						__cursor = __cursor->_M_left;
-					else if (_M_key_compare(__node->_M_value, __cursor->_M_value))
+					else if (_M_key_compare(_M_get_key(__node), _M_get_key(__cursor)))
 						__cursor = __cursor->_M_right;
 					else // key already exists
 					{
