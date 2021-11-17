@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/17 16:12:05 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/17 16:26:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -516,10 +516,16 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_erase_recursive(node_pointer __node)
 		{
+			if (__node == 0)
+				return ;
+
 			node_pointer	__tmp;
 
 			while (__node != 0) // reverse in order
 			{
+				std::cout << "Erasing: " << _M_get_key(__node) << " => "
+						  << _M_get_value(__node).second << std::endl; // debug
+
 				_M_erase_recursive(__node->_M_right);
 				__tmp = __node->_M_left;
 				_M_drop_node(__node);
@@ -582,19 +588,33 @@ namespace ft
 			else
 			{
 				node_pointer	__cursor = _M_get_root();
+				node_pointer	__parent = 0;
+				bool			__insert_left = false;
 
 				while (__cursor != 0)
 				{
+					__parent = __cursor;
 					if (_M_key_compare(_M_get_key(__cursor), _M_get_key(__node)))
+					{
 						__cursor = __cursor->_M_left;
+						__insert_left = true;
+					}
 					else if (_M_key_compare(_M_get_key(__node), _M_get_key(__cursor)))
+					{
 						__cursor = __cursor->_M_right;
+						__insert_left = false;
+					}
 					else // key already exists
 					{
 						_M_drop_node(__node);
 						return (ft::pair<iterator,bool>(iterator(__cursor), false));
 					}
 				}
+				if (__insert_left)
+					__parent->_M_left = __node;
+				else
+					__parent->_M_right = __node;
+				__node->_M_parent = __parent;
 				__cursor = __node;
 			}
 			++this->_M_node_count;
