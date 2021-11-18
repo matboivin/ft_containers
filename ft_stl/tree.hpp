@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/18 14:11:45 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/18 15:05:24 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -801,6 +801,12 @@ namespace ft
 		{
 			if (node->_M_value.first != 0)
 			{
+				if (node->_M_color == RED)
+				{
+					outfile << "\n    \""
+						<< node->_M_value.first << "=" << node->_M_value.second
+						<< "\\n" << node << "\" [color=\"red\"]";
+				}
 				outfile << "\n    \""
 						<< node->_M_value.first << "=" << node->_M_value.second
 						<< "\\n" << node << "\"";
@@ -877,7 +883,11 @@ namespace ft
 				return ;
 			}
 
-			outfile << "digraph rb_tree {";
+			outfile << "digraph rb_tree {\n"
+						"    graph [\n    charset = \"UTF-8\";\n    fontcolor = white,\n"
+						"    fontsize = 18,\n    style = \"filled\"\n  ];\n\n"
+						"  node [\n    style = \"solid,filled\"\n    color = black,\n"
+						"\n    fontcolor = white\n  ];";
 
 			node_pointer	root = _M_get_root();
 
