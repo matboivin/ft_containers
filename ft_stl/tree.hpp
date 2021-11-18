@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/18 15:51:37 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/18 18:23:48 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -458,6 +458,7 @@ namespace ft
 			const_reference			_M_get_value(node_pointer __node) const;
 			bool					_M_grandparent_is_root(node_pointer __node) const;
 			bool					_M_check_node_color(node_pointer __node, NodeColor expected) const;
+			ft::pair<iterator,bool>	_M_insert_rebalance(node_pointer __node);
 			ft::pair<iterator,bool>	_M_insert_node(const value_type& __val);
 
 		public:
@@ -500,7 +501,7 @@ namespace ft
 			static void	write_node_next(std::ofstream& outfile, node_pointer node);
 			static void	write_leaf(std::ofstream& outfile, char side, int count);
 			static void	write_branch(std::ofstream& outfile, node_pointer node);
-			void	write_tree_dot(void);
+			void		write_tree_dot(void);
 		}; // class RedBlackTree
 
 	/* Tree implementation ************************************************** */
@@ -632,6 +633,35 @@ namespace ft
 			return (__node->_M_color == expected);
 		}
 
+	// Rebalance tree
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_rebalance(node_pointer __node)
+		{
+			// if node is the root or node's parent is Black, return
+			if ((__node == this->_M_root) || _M_check_node_color(__node->_get_parent(), BLACK))
+				return (ft::pair<iterator,bool>(iterator(__node), true));
+			// if parent is Red
+			if (_M_check_node_color(__node->_get_parent(), RED))
+			{
+				node_pointer	__uncle = __node->_get_uncle();
+
+				if (_M_check_node_color(__uncle, BLACK))
+				{
+					//
+				}
+				else if (_M_check_node_color(__uncle, RED))
+				{
+					__node->_get_parent()->_M_color = BLACK;
+					__uncle->_M_color = BLACK;
+
+					if (!_M_grandparent_is_root(__node))
+						__node->_get_grandparent()->_M_color = RED;
+				}
+			}
+			return (ft::pair<iterator,bool>(iterator(__node), true));
+		}
+
 	// Insert a node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
@@ -686,29 +716,7 @@ namespace ft
 			this->_M_maximum = _M_get_rightmost();
 			this->_M_minimum->_M_left = this->_M_reverse_sentinel;
 			this->_M_maximum->_M_right = this->_M_sentinel;
-
-			// if node is the root or node's parent is Black, return
-			if ((__node == this->_M_root) || _M_check_node_color(__node->_get_parent(), BLACK))
-				return (ft::pair<iterator,bool>(iterator(__node), true));
-			// todo: rebalance
-			if (_M_check_node_color(__node->_get_parent(), RED))
-			{
-				node_pointer	__uncle = __node->_get_uncle();
-
-				if (_M_check_node_color(__uncle, BLACK))
-				{
-					//
-				}
-				else if (_M_check_node_color(__uncle, RED))
-				{
-					__node->_get_parent()->_M_color = BLACK;
-					__uncle->_M_color = BLACK;
-
-					if (!_M_grandparent_is_root(__node))
-						__node->_get_grandparent()->_M_color = RED;
-				}
-			}
-			return (ft::pair<iterator,bool>(iterator(__node), true));
+			return (_M_insert_rebalance(__node));
 		}
 
 	/* construct/copy/destroy *********************************************** */
@@ -955,7 +963,7 @@ namespace ft
 						"    graph [\n    charset = \"UTF-8\";\n    fontcolor = white,\n"
 						"    fontsize = 18,\n    style = \"filled\"\n  ];\n\n"
 						"  node [\n    style = \"solid,filled\"\n    color = black,\n"
-						"\n    fontcolor = white\n  ];";
+						"\n    fontcolor = white\n  ];\n";
 
 			node_pointer	root = _M_get_root();
 
