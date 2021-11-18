@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/19 00:10:15 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/19 00:53:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -350,7 +350,7 @@ namespace ft
 
 			RBtree_const_iterator&	operator++(void)
 			{
-				this->_M_node = _increment_node(this->_M_node);
+				this->_M_node = this->_M_node->_increment_node(this->_M_node);
 				return (*this);
 			}
 
@@ -358,13 +358,13 @@ namespace ft
 			{
 				RBtree_const_iterator	backup = *this;
 
-				this->_M_node = _increment_node(this->_M_node);
+				this->_M_node = this->_M_node->_increment_node(this->_M_node);
 				return (backup);
 			}
 
 			RBtree_const_iterator&	operator--(void)
 			{
-				this->_M_node = _decrement_node(this->_M_node);
+				this->_M_node = this->_M_node->_decrement_node(this->_M_node);
 				return (*this);
 			}
 
@@ -372,7 +372,7 @@ namespace ft
 			{
 				RBtree_const_iterator	backup = *this;
 
-				this->_M_node = _decrement_node(this->_M_node);
+				this->_M_node = this->_M_node->_decrement_node(this->_M_node);
 				return (backup);
 			}
 		}; // struct RBtree_const_iterator
@@ -447,6 +447,7 @@ namespace ft
 			void					_M_destroy_node(node_pointer __node);
 			void					_M_deallocate_node(node_pointer __node);
 			void					_M_drop_node(node_pointer __node);
+			void					_M_drop_sentinels(void);
 			void					_M_erase_recursive(node_pointer __node);
 			node_pointer			_M_get_root(void) const;
 			node_pointer			_M_get_leftmost(void) const;
@@ -555,8 +556,21 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_drop_node(node_pointer __node)
 		{
-			_M_destroy_node(__node);
-			_M_deallocate_node(__node);
+			if (__node != 0)
+			{
+				_M_destroy_node(__node);
+				_M_deallocate_node(__node);
+			}
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_drop_sentinels(void)
+		{
+			_M_destroy_node(this->_M_sentinel);
+			_M_deallocate_node(this->_M_sentinel);
+			_M_destroy_node(this->_M_reverse_sentinel);
+			_M_deallocate_node(this->_M_reverse_sentinel);
 		}
 
 	// Erase recursively the tree from the node passed as parameter
@@ -566,10 +580,11 @@ namespace ft
 		{
 			if (__node != 0)
 			{
-				// std::cout << "erasing: " << _M_get_value(__node).first << std::endl;
 				_M_erase_recursive(__node->_M_right);
 				_M_erase_recursive(__node->_M_left);
 				_M_drop_node(__node);
+				if (this->_M_node_count)
+					--this->_M_node_count;
 			}
 		}
 
@@ -855,11 +870,21 @@ namespace ft
 		{
 			if (this != &other)
 			{
-				// _M_erase_recursive(this->_M_root);
+				_M_erase_recursive(this->_M_root);
 				this->_M_key_compare = other._M_key_compare;
-				this->_M_node_count = other._M_node_count;
-				this->_M_sentinel = other._M_sentinel;
-				// this->_M_root = other._M_root;
+				// this->_M_sentinel = _M_create_node(value_type());
+				// this->_M_reverse_sentinel = _M_create_node(value_type());
+
+				const_iterator	it = other.begin();
+				const_iterator	ite = other.end();
+
+				while (it != ite)
+				{
+					value_type	val = *it;
+					std::cout << "val: " << val.first << std::endl;
+					//_M_insert_node(val);
+					++it;
+				}
 			}
 			return (*this);
 		}
@@ -869,10 +894,7 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::~RedBlackTree(void)
 		{
 			if (size() == 0)
-			{
-				_M_drop_node(this->_M_sentinel);
-				_M_drop_node(this->_M_reverse_sentinel);
-			}
+				_M_drop_sentinels();
 			else
 				_M_erase_recursive(this->_M_root);
 		}
