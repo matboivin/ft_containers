@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/18 18:23:48 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/18 20:56:41 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ namespace ft
 
 				if (grand_parent == 0)
 					return (0);
-				if (grand_parent->_M_left == this)
+				if (grand_parent->_M_left == this->_M_parent)
 					return (grand_parent->_M_right);
 				return (grand_parent->_M_left);
 			}
@@ -458,6 +458,8 @@ namespace ft
 			const_reference			_M_get_value(node_pointer __node) const;
 			bool					_M_grandparent_is_root(node_pointer __node) const;
 			bool					_M_check_node_color(node_pointer __node, NodeColor expected) const;
+			void					_M_rotate_left(node_pointer __x);
+			void					_M_rotate_right(node_pointer __x);
 			ft::pair<iterator,bool>	_M_insert_rebalance(node_pointer __node);
 			ft::pair<iterator,bool>	_M_insert_node(const value_type& __val);
 
@@ -633,6 +635,48 @@ namespace ft
 			return (__node->_M_color == expected);
 		}
 
+	// Rotate left
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_rotate_left(node_pointer __x)
+		{
+			node_pointer	__y = __x->_M_right;
+
+			__x->_M_right = __y->_M_left;
+			if (__y->_M_left != 0)
+				__y->_M_left->_M_parent = __x;
+			__y->_M_parent = __x->_M_parent;
+			if (__x == this->_M_get_root())
+				__x = __y;
+			else if (__x == __x->_M_parent->_M_left)
+				__x->_M_parent->_M_left = __y;
+			else
+				__x->_M_parent->_M_right = __y;
+			__y->_M_left = __x;
+			__x->_M_parent = __y;
+		}
+
+	// Rotate right
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_rotate_right(node_pointer __x)
+		{
+			node_pointer	__y = __x->_M_left;
+
+			__x->_M_left = __y->_M_right;
+			if (__y->_M_right != 0)
+				__y->_M_right->_M_parent = __x;
+			__y->_M_parent = __x->_M_parent;
+			if (__x == this->_M_get_root())
+				__x = __y;
+			else if (__x == __x->_M_parent->_M_right)
+				__x->_M_parent->_M_right = __y;
+			else
+				__x->_M_parent->_M_left = __y;
+			__y->_M_right = __x;
+			__x->_M_parent = __y;
+		}
+
 	// Rebalance tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
@@ -640,25 +684,39 @@ namespace ft
 		{
 			// if node is the root or node's parent is Black, return
 			if ((__node == this->_M_root) || _M_check_node_color(__node->_get_parent(), BLACK))
+			{
+				this->_M_minimum = _M_get_leftmost();
+				this->_M_maximum = _M_get_rightmost();
+				this->_M_minimum->_M_left = this->_M_reverse_sentinel;
+				this->_M_maximum->_M_right = this->_M_sentinel;
 				return (ft::pair<iterator,bool>(iterator(__node), true));
+			}
 			// if parent is Red
 			if (_M_check_node_color(__node->_get_parent(), RED))
 			{
 				node_pointer	__uncle = __node->_get_uncle();
 
-				if (_M_check_node_color(__uncle, BLACK))
+				if ((__uncle == 0) || (_M_check_node_color(__uncle, BLACK)))
 				{
-					//
+					if (_M_key_compare(_M_get_key(__node->_M_parent), _M_get_key(__node)))
+						_M_rotate_left(__node->_M_parent);
+					if (_M_key_compare(_M_get_key(__node), _M_get_key(__node->_M_parent)))
+						_M_rotate_right(__node->_M_parent);
 				}
-				else if (_M_check_node_color(__uncle, RED))
+				if (_M_check_node_color(__uncle, RED))
 				{
 					__node->_get_parent()->_M_color = BLACK;
 					__uncle->_M_color = BLACK;
 
 					if (!_M_grandparent_is_root(__node))
 						__node->_get_grandparent()->_M_color = RED;
+					return (_M_insert_rebalance(__node));
 				}
 			}
+			this->_M_minimum = _M_get_leftmost();
+			this->_M_maximum = _M_get_rightmost();
+			this->_M_minimum->_M_left = this->_M_reverse_sentinel;
+			this->_M_maximum->_M_right = this->_M_sentinel;
 			return (ft::pair<iterator,bool>(iterator(__node), true));
 		}
 
@@ -712,10 +770,6 @@ namespace ft
 					__parent->_M_right = __node;
 			}
 			++this->_M_node_count;
-			this->_M_minimum = _M_get_leftmost();
-			this->_M_maximum = _M_get_rightmost();
-			this->_M_minimum->_M_left = this->_M_reverse_sentinel;
-			this->_M_maximum->_M_right = this->_M_sentinel;
 			return (_M_insert_rebalance(__node));
 		}
 
