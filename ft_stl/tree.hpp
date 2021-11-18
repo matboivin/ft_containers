@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/18 15:05:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/18 15:46:01 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,32 @@ namespace ft
 			const Val*	_get_value_ptr(void) const
 			{
 				return (&this->_M_value);
+			}
+
+			// get siblings
+			node_pointer			_get_parent(void)
+			{
+				return (this->_M_parent);
+			}
+
+			node_pointer			_get_grandparent(void)
+			{
+				node_pointer	parent = this->_M_parent;
+
+				if (parent == 0)
+					return (0);
+				return (parent->_M_parent);
+			}
+
+			node_pointer			_get_uncle(void)
+			{
+				node_pointer	grand_parent = this->_get_grandparent();
+
+				if (grand_parent == 0)
+					return (0);
+				if (grand_parent->_M_left == this)
+					return (grand_parent->_M_right);
+				return (grand_parent->_M_left);
 			}
 
 			// Get node holding lower value
@@ -430,6 +456,8 @@ namespace ft
 			node_pointer			_M_get_rightmost(void) const;
 			const key_type&			_M_get_key(node_pointer __node) const;
 			const_reference			_M_get_value(node_pointer __node) const;
+			bool					_M_grandparent_is_root(node_pointer __node) const;
+			bool					_M_check_node_color(node_pointer __node, NodeColor expected) const;
 			ft::pair<iterator,bool>	_M_insert_node(const value_type& __val);
 
 		public:
@@ -584,6 +612,26 @@ namespace ft
 			return (*__node->_get_value_ptr());
 		}
 
+	// Check whether the node's grandparent is root node
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		bool
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_grandparent_is_root(node_pointer __node) const
+		{
+			if (__node->_get_grandparent() == 0)
+				return (false);
+			return (__node->_get_grandparent() == this->_M_root);
+		}
+
+	// Check node's color
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		bool
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_check_node_color(node_pointer __node, NodeColor expected) const
+		{
+			if (__node == 0)
+				return (false);
+			return (__node->_M_color == expected);
+		}
+
 	// Insert a node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
@@ -626,20 +674,40 @@ namespace ft
 						return (ft::pair<iterator,bool>(iterator(__cursor), false));
 					}
 				}
-				// todo: rebalance
 				__cursor = __node;
 				__node->_M_parent = __parent;
 				if (__insert_left)
 					__parent->_M_left = __node;
 				else
 					__parent->_M_right = __node;
-				//
 			}
 			++this->_M_node_count;
 			this->_M_minimum = _M_get_leftmost();
 			this->_M_maximum = _M_get_rightmost();
 			this->_M_minimum->_M_left = this->_M_reverse_sentinel;
 			this->_M_maximum->_M_right = this->_M_sentinel;
+
+			// if node is the root or node's parent is Black, return
+			if ((__node == this->_M_root) || _M_check_node_color(__node->_get_parent(), BLACK))
+				return (ft::pair<iterator,bool>(iterator(__node), true));
+			// todo: rebalance
+			if (_M_check_node_color(__node->_get_parent(), RED))
+			{
+				node_pointer	__uncle = __node->_get_uncle();
+
+				if (_M_check_node_color(__uncle, BLACK))
+				{
+					//
+				}
+				else if (_M_check_node_color(__uncle, RED))
+				{
+					__node->_get_parent()->_M_color = BLACK;
+					__uncle->_M_color = BLACK;
+
+					if (!_M_grandparent_is_root(__node))
+						__node->_get_grandparent()->_M_color = RED;
+				}
+			}
 			return (ft::pair<iterator,bool>(iterator(__node), true));
 		}
 
@@ -813,7 +881,7 @@ namespace ft
 			}
 			else
 			{
-				outfile << "\n    \"sentinel\\n" << node << "\"";
+				outfile << "\n    \"sentinel\\n" << node << "\" [color=\"gray\", shape=plain]";
 			}
 		}
 
@@ -829,7 +897,7 @@ namespace ft
 			}
 			else
 			{
-				outfile << " -> \"sentinel\\n" << node << "\"";
+				outfile << " -> \"sentinel\\n" << node << "\" [color=\"gray\", shape=plain]";
 			}
 		}
 
@@ -853,7 +921,7 @@ namespace ft
 				write_node_next(outfile, node->_M_left);
 				write_branch(outfile, node->_M_left);
 			}
-			else if (!node->_M_left && node->_M_right)
+			else if (!node->_M_left)
 				write_leaf(outfile, 'L', count++);
 			write_node(outfile, node);
 			if (node->_M_right)
@@ -861,7 +929,7 @@ namespace ft
 				write_node_next(outfile, node->_M_right);
 				write_branch(outfile, node->_M_right);
 			}
-			else if (!node->_M_right && node->_M_left)
+			else if (!node->_M_right)
 				write_leaf(outfile, 'R', count++);
 		}
 
