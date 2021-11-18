@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/18 23:32:44 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/18 23:36:46 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -838,7 +838,13 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,Compare,Alloc>::~RedBlackTree(void)
 		{
-			_M_erase_recursive(this->_M_root);
+			if (size() == 0)
+			{
+				_M_drop_node(this->_M_sentinel);
+				_M_drop_node(this->_M_reverse_sentinel);
+			}
+			else
+				_M_erase_recursive(this->_M_root);
 		}
 
 	/* allocator ************************************************************ */

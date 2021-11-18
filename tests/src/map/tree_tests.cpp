@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/18 15:49:03 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/18 23:37:08 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ namespace ft
 
 		std::cout << "size: " << tree.size() << '\n';
 
+		std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
+				  << (tree.begin() == tree.end()) << '\n';
+
 		tree.insert( pair<int, std::string>(10, "ten") );
 		tree.insert( pair<int, std::string>(10, "ten") );
 		tree.insert( pair<int, std::string>(10, "ten") );
@@ -46,15 +49,15 @@ namespace ft
 
 		std::cout << "size: " << tree.size() << '\n';
 
-		// std::cout << "begin: " << tree.begin()->first << '\n';
-		// std::cout << "end:   " << tree.end()->first << '\n';
+		std::cout << "begin: " << tree.begin()->first << '\n';
+		std::cout << "end:   " << tree.end()->first << '\n';
 
-		// for (tree_type::iterator it = tree.begin();
-		// 	 it != tree.end();
-		// 	 ++it)
-		// {
-		// 	std::cout << it->first << " => " << it->second << '\n';
-		// }
+		for (tree_type::iterator it = tree.begin();
+			 it != tree.end();
+			 ++it)
+		{
+			std::cout << it->first << " => " << it->second << '\n';
+		}
 
 		tree.write_tree_dot();
 	}
