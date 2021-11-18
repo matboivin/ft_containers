@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/18 15:46:01 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/18 15:51:37 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -881,7 +881,7 @@ namespace ft
 			}
 			else
 			{
-				outfile << "\n    \"sentinel\\n" << node << "\" [color=\"gray\", shape=plain]";
+				outfile << "\n    \"sentinel\\n" << node << "\"";
 			}
 		}
 
@@ -897,7 +897,7 @@ namespace ft
 			}
 			else
 			{
-				outfile << " -> \"sentinel\\n" << node << "\" [color=\"gray\", shape=plain]";
+				outfile << " -> \"sentinel\\n" << node << "\"";
 			}
 		}
 

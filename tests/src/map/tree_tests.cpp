@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/17 21:24:53 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/18 15:49:03 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,38 +23,40 @@ namespace ft
 	{
 		std::cout << std::setw(42) << " TREE \n\n";
 
-		typedef RedBlackTree<char,pair<char,int> >						tree_type;
-		typedef pair<RedBlackTree<char,pair<char,int> >::iterator,bool>	pair_type;
+		typedef RedBlackTree<int,pair<int, std::string> >						tree_type;
+		typedef pair<RedBlackTree<int,pair<int, std::string> >::iterator,bool>	pair_type;
 
 		tree_type	tree;
 		pair_type	ret;
 
 		std::cout << "size: " << tree.size() << '\n';
 
-		tree.insert( pair<char,int>('b', 100) );
-		tree.insert( pair<char,int>('b', 100) );
-		tree.insert( pair<char,int>('b', 100) );
-		tree.insert( pair<char,int>('b', 100) );
-		tree.insert( pair<char,int>('b', 100) );
-		tree.insert( pair<char,int>('b', 100) );
-		tree.insert( pair<char,int>('a', 200) );
-		tree.insert( pair<char,int>('z', 200) );
-		// tree.insert( pair<char,int>('c', 300) );
-		// tree.insert( pair<char,int>('c', 300) );
+		tree.insert( pair<int, std::string>(10, "ten") );
+		tree.insert( pair<int, std::string>(10, "ten") );
+		tree.insert( pair<int, std::string>(10, "ten") );
+		tree.insert( pair<int, std::string>(10, "ten") );
+		tree.insert( pair<int, std::string>(10, "ten") );
+		tree.insert( pair<int, std::string>(10, "ten") );
+		tree.insert( pair<int, std::string>(18, "eighteen") );
+		tree.insert( pair<int, std::string>(7,  "seven") );
+		tree.insert( pair<int, std::string>(15, "fifteen") );
+		tree.insert( pair<int, std::string>(15, "fifteen") );
+		tree.insert( pair<int, std::string>(7,  "seven") );
+		tree.insert( pair<int, std::string>(16, "sixteen") );
 
 		std::cout << "size: " << tree.size() << '\n';
 
-		std::cout << "begin: " << tree.begin()->first << '\n';
-		std::cout << "end:   " << tree.end()->first << '\n';
+		// std::cout << "begin: " << tree.begin()->first << '\n';
+		// std::cout << "end:   " << tree.end()->first << '\n';
 
-		for (tree_type::iterator it = tree.begin();
-			 it != tree.end();
-			 ++it)
-		{
-			std::cout << it->first << " => " << it->second << '\n';
-		}
+		// for (tree_type::iterator it = tree.begin();
+		// 	 it != tree.end();
+		// 	 ++it)
+		// {
+		// 	std::cout << it->first << " => " << it->second << '\n';
+		// }
 
-		//displayTreeInfos(tree);
+		tree.write_tree_dot();
 	}
 }
 
