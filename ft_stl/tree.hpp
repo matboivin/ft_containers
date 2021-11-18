@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/18 20:56:41 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/18 23:32:44 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -682,37 +682,33 @@ namespace ft
 		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_rebalance(node_pointer __node)
 		{
-			// if node is the root or node's parent is Black, return
-			if ((__node == this->_M_root) || _M_check_node_color(__node->_get_parent(), BLACK))
+			// if node is the root or node's parent is Black, do nothing
+			if ((__node != this->_M_root) && !_M_check_node_color(__node->_get_parent(), BLACK))
 			{
-				this->_M_minimum = _M_get_leftmost();
-				this->_M_maximum = _M_get_rightmost();
-				this->_M_minimum->_M_left = this->_M_reverse_sentinel;
-				this->_M_maximum->_M_right = this->_M_sentinel;
-				return (ft::pair<iterator,bool>(iterator(__node), true));
-			}
-			// if parent is Red
-			if (_M_check_node_color(__node->_get_parent(), RED))
-			{
-				node_pointer	__uncle = __node->_get_uncle();
-
-				if ((__uncle == 0) || (_M_check_node_color(__uncle, BLACK)))
+				// if parent is Red
+				if (_M_check_node_color(__node->_get_parent(), RED))
 				{
-					if (_M_key_compare(_M_get_key(__node->_M_parent), _M_get_key(__node)))
-						_M_rotate_left(__node->_M_parent);
-					if (_M_key_compare(_M_get_key(__node), _M_get_key(__node->_M_parent)))
-						_M_rotate_right(__node->_M_parent);
-				}
-				if (_M_check_node_color(__uncle, RED))
-				{
-					__node->_get_parent()->_M_color = BLACK;
-					__uncle->_M_color = BLACK;
+					node_pointer	__uncle = __node->_get_uncle();
 
-					if (!_M_grandparent_is_root(__node))
-						__node->_get_grandparent()->_M_color = RED;
-					return (_M_insert_rebalance(__node));
+					if ((__uncle == 0) || (_M_check_node_color(__uncle, BLACK)))
+					{
+						if (_M_key_compare(_M_get_key(__node->_M_parent), _M_get_key(__node)))
+							_M_rotate_left(__node->_M_parent);
+						if (_M_key_compare(_M_get_key(__node), _M_get_key(__node->_M_parent)))
+							_M_rotate_right(__node->_M_parent);
+					}
+					if (_M_check_node_color(__uncle, RED))
+					{
+						__node->_get_parent()->_M_color = BLACK;
+						__uncle->_M_color = BLACK;
+
+						if (!_M_grandparent_is_root(__node))
+							__node->_get_grandparent()->_M_color = RED;
+						return (_M_insert_rebalance(__node));
+					}
 				}
 			}
+			// set new leftmost, rightmost and sentinels
 			this->_M_minimum = _M_get_leftmost();
 			this->_M_maximum = _M_get_rightmost();
 			this->_M_minimum->_M_left = this->_M_reverse_sentinel;
@@ -727,47 +723,64 @@ namespace ft
 		{
 			node_pointer	__node = _M_create_node(__val);
 
-			if (this->_M_root == 0)
+			if (this->_M_root == 0) // first node becomes the root
 			{
 				__node->_M_color = BLACK;
 				this->_M_root = __node;
 			}
 			else
 			{
-				node_pointer	__cursor(_M_get_root());
-				node_pointer	__parent = 0;
-				bool			__insert_left = false;
-
 				this->_M_minimum->_M_left = 0;
 				this->_M_maximum->_M_right = 0;
 
-				while (__cursor != 0)
+				// check whether the new node is lower than the minimum node
+				if (_M_key_compare(_M_get_key(__node), _M_get_key(this->_M_minimum)))
 				{
-					__parent = __cursor;
-					if (_M_key_compare(_M_get_key(__node), _M_get_key(__cursor)))
-					{
-						__cursor = __cursor->_M_left;
-						__insert_left = true;
-					}
-					else if (_M_key_compare(_M_get_key(__cursor), _M_get_key(__node)))
-					{
-						__cursor = __cursor->_M_right;
-						__insert_left = false;
-					}
-					else // key already exists
-					{
-						_M_drop_node(__node);
-						this->_M_minimum->_M_left = this->_M_reverse_sentinel;
-						this->_M_maximum->_M_right = this->_M_sentinel;
-						return (ft::pair<iterator,bool>(iterator(__cursor), false));
-					}
+					this->_M_minimum->_M_left = __node;
+					__node->_M_parent = this->_M_minimum;
 				}
-				__cursor = __node;
-				__node->_M_parent = __parent;
-				if (__insert_left)
-					__parent->_M_left = __node;
+				// check whether the new node is greater than the maximum node
+				else if (_M_key_compare(_M_get_key(this->_M_maximum), _M_get_key(__node)))
+				{
+					this->_M_maximum->_M_right = __node;
+					__node->_M_parent = this->_M_maximum;
+				}
+				// else move down to the tree until a leaf
 				else
-					__parent->_M_right = __node;
+				{
+					bool			__insert_left = false;
+					node_pointer	__cursor(_M_get_root());
+					node_pointer	__parent = 0;
+
+					while (__cursor != 0)
+					{
+						__parent = __cursor;
+						if (_M_key_compare(_M_get_key(__node), _M_get_key(__cursor)))
+						{
+							__cursor = __cursor->_M_left;
+							__insert_left = true;
+						}
+						else if (_M_key_compare(_M_get_key(__cursor), _M_get_key(__node)))
+						{
+							__cursor = __cursor->_M_right;
+							__insert_left = false;
+						}
+						else // key already exists
+						{
+							_M_drop_node(__node);
+							this->_M_minimum->_M_left = this->_M_reverse_sentinel;
+							this->_M_maximum->_M_right = this->_M_sentinel;
+							return (ft::pair<iterator,bool>(iterator(__cursor), false));
+						}
+					}
+					// set siblings
+					__cursor = __node;
+					__node->_M_parent = __parent;
+					if (__insert_left)
+						__parent->_M_left = __node;
+					else
+						__parent->_M_right = __node;
+				}
 			}
 			++this->_M_node_count;
 			return (_M_insert_rebalance(__node));
