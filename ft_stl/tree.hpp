@@ -6,13 +6,14 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/17 21:24:37 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/11/18 14:11:45 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef TREE_HPP
 #define TREE_HPP
 
+#include <cstdlib> // system
 #include <memory>
 #include "iterator.hpp"
 #include "utility.hpp"
@@ -465,6 +466,13 @@ namespace ft
 			// modifiers
 			ft::pair<iterator,bool>	insert(const value_type& val); // tmp
 			void					clear(void);
+
+			// debug
+			static void	write_node(std::ofstream& outfile, node_pointer node);
+			static void	write_node_next(std::ofstream& outfile, node_pointer node);
+			static void	write_leaf(std::ofstream& outfile, char side, int count);
+			static void	write_branch(std::ofstream& outfile, node_pointer node);
+			void	write_tree_dot(void);
 		}; // class RedBlackTree
 
 	/* Tree implementation ************************************************** */
@@ -527,9 +535,9 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_erase_recursive(node_pointer __node)
 		{
-			if (__node != 0) // reverse in order
+			if (__node != 0)
 			{
-				std::cout << "erasing: " << _M_get_value(__node).first << std::endl;
+				// std::cout << "erasing: " << _M_get_value(__node).first << std::endl;
 				_M_erase_recursive(__node->_M_right);
 				_M_erase_recursive(__node->_M_left);
 				_M_drop_node(__node);
@@ -585,7 +593,7 @@ namespace ft
 
 			if (this->_M_root == 0)
 			{
-				__node->_M_color = RED;
+				__node->_M_color = BLACK;
 				this->_M_root = __node;
 			}
 			else
@@ -613,6 +621,8 @@ namespace ft
 					else // key already exists
 					{
 						_M_drop_node(__node);
+						this->_M_minimum->_M_left = this->_M_reverse_sentinel;
+						this->_M_maximum->_M_right = this->_M_sentinel;
 						return (ft::pair<iterator,bool>(iterator(__cursor), false));
 					}
 				}
@@ -782,7 +792,105 @@ namespace ft
 		{
 			return (_M_insert_node(val));
 		}
-	//
+
+	/* debug **************************************************************** */
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::write_node(std::ofstream& outfile, node_pointer node)
+		{
+			if (node->_M_value.first != 0)
+			{
+				outfile << "\n    \""
+						<< node->_M_value.first << "=" << node->_M_value.second
+						<< "\\n" << node << "\"";
+			}
+			else
+			{
+				outfile << "\n    \"sentinel\\n" << node << "\"";
+			}
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::write_node_next(std::ofstream& outfile, node_pointer node)
+		{
+			if (node->_M_value.first != 0)
+			{
+				outfile << " -> \""
+						<< node->_M_value.first << "=" << node->_M_value.second
+						<< "\\n" << node << "\";";
+			}
+			else
+			{
+				outfile << " -> \"sentinel\\n" << node << "\"";
+			}
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::write_leaf(std::ofstream& outfile, char side, int count)
+		{
+			outfile << " -> leaf_" << side << "_" << count << ";";
+			outfile << "\n    leaf_" << side << "_" << count << " [shape=plain];";
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::write_branch(std::ofstream& outfile, node_pointer node)
+		{
+			static int	count = 0;
+
+			write_node(outfile, node);
+			if (node->_M_left)
+			{
+				write_node_next(outfile, node->_M_left);
+				write_branch(outfile, node->_M_left);
+			}
+			else if (!node->_M_left && node->_M_right)
+				write_leaf(outfile, 'L', count++);
+			write_node(outfile, node);
+			if (node->_M_right)
+			{
+				write_node_next(outfile, node->_M_right);
+				write_branch(outfile, node->_M_right);
+			}
+			else if (!node->_M_right && node->_M_left)
+				write_leaf(outfile, 'R', count++);
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::write_tree_dot(void)
+		{
+			std::string		filename = "ast.dot";
+			std::ofstream	outfile;
+
+			if (size() == 0)
+				return ;
+
+			outfile.open(filename.c_str(), std::ios::out);
+
+			if ( !outfile.is_open() )
+			{
+				std::cout << "Error: Unable to open \'" << filename << "\'" << std::endl;
+				return ;
+			}
+
+			outfile << "digraph rb_tree {";
+
+			node_pointer	root = _M_get_root();
+
+			if (!root->_M_left && !root->_M_right)
+				outfile << "    '" << root->_M_value.first << "=" << root->_M_value.second << "';";
+			else
+				write_branch(outfile, root);
+			outfile << "\n}";
+
+			outfile.close();
+			std::cout << "Successfully created " << filename << " in working dir" << std::endl;
+			system("dot -Tsvg ast.dot -o ast.svg");
+		}
 
 } // namespace ft
 
