@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/09 18:57:49 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/09 20:09:03 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,32 +54,6 @@ namespace ft
 			const Val*	_get_value_ptr(void) const
 			{
 				return (&this->_M_value);
-			}
-
-			// get siblings
-			node_pointer	_get_parent(void)
-			{
-				return (this->_M_parent);
-			}
-
-			node_pointer	_get_grandparent(void)
-			{
-				node_pointer	parent = this->_M_parent;
-
-				if (parent == 0)
-					return (0);
-				return (parent->_M_parent);
-			}
-
-			node_pointer	_get_uncle(void)
-			{
-				node_pointer	grand_parent = this->_get_grandparent();
-
-				if (grand_parent == 0)
-					return (0);
-				if (grand_parent->_M_left == this->_M_parent)
-					return (grand_parent->_M_right);
-				return (grand_parent->_M_left);
 			}
 
 			// Get node holding lower value
@@ -481,10 +455,9 @@ namespace ft
 			node_pointer			_M_get_rightmost(void) const;
 			const key_type&			_M_get_key(node_pointer __node) const;
 			const_reference			_M_get_value(node_pointer __node) const;
-			bool					_M_grandparent_is_root(node_pointer __node) const;
-			bool					_M_check_node_color(node_pointer __node, NodeColor expected) const;
 			void					_M_rotate_left(node_pointer __x);
 			void					_M_rotate_right(node_pointer __x);
+			void					_M_rebalance_recolor(node_pointer __node);
 			void					_M_rebalance(node_pointer __node);
 			void					_M_insert(bool insert_left,
 											  node_pointer __node, node_pointer __parent);
@@ -653,26 +626,6 @@ namespace ft
 			return (*__node->_get_value_ptr());
 		}
 
-	// Check whether the node's grandparent is root node
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		bool
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_grandparent_is_root(node_pointer __node) const
-		{
-			if (__node->_get_grandparent() == 0)
-				return (false);
-			return (__node->_get_grandparent() == _M_get_root());
-		}
-
-	// Check node's color
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		bool
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_check_node_color(node_pointer __node, NodeColor expected) const
-		{
-			if (__node == 0)
-				return (false);
-			return (__node->_M_color == expected);
-		}
-
 	// Rotate left
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
@@ -684,8 +637,8 @@ namespace ft
 			if (__y->_M_left != 0)
 				__y->_M_left->_M_parent = __x;
 			__y->_M_parent = __x->_M_parent;
-			if (__x == _M_get_root())
-				__x = __y;
+			if (__x == this->_M_header._M_parent)
+				this->_M_header._M_parent = __y;
 			else if (__x == __x->_M_parent->_M_left)
 				__x->_M_parent->_M_left = __y;
 			else
@@ -705,14 +658,29 @@ namespace ft
 			if (__y->_M_right != 0)
 				__y->_M_right->_M_parent = __x;
 			__y->_M_parent = __x->_M_parent;
-			if (__x == _M_get_root())
-				__x = __y;
+			if (__x == this->_M_header._M_parent)
+				this->_M_header._M_parent = __y;
 			else if (__x == __x->_M_parent->_M_right)
 				__x->_M_parent->_M_right = __y;
 			else
 				__x->_M_parent->_M_left = __y;
 			__y->_M_right = __x;
 			__x->_M_parent = __y;
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_rebalance_recolor(node_pointer __node)
+		{
+			node_pointer	__grand_parent = __node->_M_parent->_M_parent;
+			node_pointer	__parent = __node->_M_parent;
+
+			if (__node == __node->_M_parent->_M_right)
+				_M_rotate_left(__grand_parent);
+			else
+				_M_rotate_right(__grand_parent);
+			__parent->_M_color = BLACK;
+			__grand_parent->_M_color = RED;
 		}
 
 	// Rebalance tree
@@ -723,15 +691,26 @@ namespace ft
 			node_pointer	__root = this->_M_header._M_parent;
 
 			// if node is not root or has red parent, rebalance
-			if ((__node != __root) && _M_check_node_color(__node->_get_parent(), RED))
+			if ((__node != __root) && (__node->_M_parent->_M_color == RED))
 			{
-				node_pointer	__uncle = __node->_get_uncle();
+				node_pointer	__grand_parent = __node->_M_parent->_M_parent;
+				node_pointer	__uncle;
 
-				// rotate then recolor
-				if ((__uncle == 0) || (_M_check_node_color(__uncle, BLACK)))
+				// get the node's uncle
+				if (__node->_M_parent == __grand_parent->_M_left)
+					__uncle = __grand_parent->_M_right;
+				else
+					__uncle = __grand_parent->_M_left;
+
+				if (__uncle && __uncle->_M_color == RED) // uncle is red
 				{
-					node_pointer	__grand_parent = __node->_get_grandparent();
-
+					__node->_M_parent->_M_color = BLACK;
+					__uncle->_M_color = BLACK;
+					__grand_parent->_M_color = RED;
+					_M_rebalance(__node);
+				}
+				else // no uncle or uncle is black
+				{
 					if (__node == __grand_parent->_M_left->_M_right)
 					{
 						_M_rotate_left(__node->_M_parent);
@@ -742,23 +721,7 @@ namespace ft
 						_M_rotate_right(__node->_M_parent);
 						__node = __node->_M_right;
 					}
-					node_pointer	__parent = __node->_get_parent();
-
-					if (__node == __parent->_M_right)
-						_M_rotate_left(__grand_parent);
-					else
-						_M_rotate_right(__grand_parent);
-					__grand_parent->_M_color = RED;
-					__parent->_M_color = BLACK;
-				}
-				else if (_M_check_node_color(__uncle, RED)) // only recolor
-				{
-					__node->_get_parent()->_M_color = BLACK;
-					__uncle->_M_color = BLACK;
-
-					if (!_M_grandparent_is_root(__node))
-						__node->_get_grandparent()->_M_color = RED;
-					_M_rebalance(__node);
+					_M_rebalance_recolor(__node);
 				}
 			}
 			__root->_M_color = BLACK;
