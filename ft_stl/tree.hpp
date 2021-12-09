@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/09 17:01:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/09 18:09:26 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -464,9 +464,6 @@ namespace ft
 			// attributes
 			allocator_type	_M_alloc; // internal copy of the allocator
 			key_compare		_M_key_compare;
-			// node_pointer	_M_root;
-			// node_pointer	_M_minimum;
-			// node_pointer	_M_maximum;
 
 		protected:
 			// helpers
@@ -483,12 +480,16 @@ namespace ft
 			node_pointer			_M_get_rightmost(void) const;
 			const key_type&			_M_get_key(node_pointer __node) const;
 			const_reference			_M_get_value(node_pointer __node) const;
+	
 			bool					_M_grandparent_is_root(node_pointer __node) const;
 			bool					_M_check_node_color(node_pointer __node, NodeColor expected) const;
 			void					_M_rotate_left(node_pointer __x);
 			void					_M_rotate_right(node_pointer __x);
 			void					_M_rebalance_recolor(node_pointer __node);
 			ft::pair<iterator,bool>	_M_insert_rebalance(node_pointer __node);
+
+			iterator				_M_insert(bool insert_left,
+											  node_pointer __node, node_pointer __parent);
 			ft::pair<iterator,bool>	_M_insert_node(const value_type& __val);
 
 		public:
@@ -777,10 +778,11 @@ namespace ft
 
 	// Insert a node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
-		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(const value_type& __val)
+		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert(bool insert_left,
+													   node_pointer __node, node_pointer __parent)
 		{
-			node_pointer	__node = _M_create_node(__val);
+			__node->_M_parent = __parent;
 
 			if (this->_M_node_count == 0) // first node becomes the root
 			{
@@ -788,39 +790,56 @@ namespace ft
 				this->_M_header._M_parent = __node;
 				this->_M_header._M_left = __node;
 				this->_M_header._M_right = __node->_M_right;
-				++this->_M_node_count;
-				return (ft::pair<iterator,bool>(iterator(__node), true));
 			}
+			else if (insert_left)
+			{
+				__parent->_M_left = __node;
+				if (__parent == this->_M_header._M_left)
+					this->_M_header._M_left = __node;
+			}
+			else
+			{
+				__parent->_M_right = __node;
+				if (__parent == this->_M_header._M_right)
+					this->_M_header._M_right = __node;
+			}
+			++this->_M_node_count;
+			return (iterator(__node));
+		}
 
-			// check whether the new node is lower than the minimum node
-			if (_M_key_compare(_M_get_key(__node), _M_get_key(this->_M_header._M_left)))
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(const value_type& __val)
+		{
+			const key_type	__key = __val.first;
+			bool			__insert_left = true;
+			node_pointer	__parent;
+			node_pointer	__node = _M_create_node(__val);
+
+			// check whether the new node is lower than the current leftmost node
+			if (_M_key_compare(__key, _M_get_key(this->_M_header._M_left)))
+				__parent = _M_get_leftmost();
+			// check whether the new node is greater than the current rightmost node
+			else if (_M_key_compare(_M_get_key(this->_M_header._M_right), __key))
 			{
-				this->_M_header._M_left = __node;
-				__node->_M_parent = this->_M_header._M_left;
-			}
-			// check whether the new node is greater than the maximum node
-			else if (_M_key_compare(_M_get_key(this->_M_header._M_right), _M_get_key(__node)))
-			{
-				this->_M_header._M_right = __node;
-				__node->_M_parent = this->_M_header._M_right;
+				__insert_left = false;
+				__parent = _M_get_rightmost();
 			}
 			// else move down to the tree until a leaf
 			else
 			{
-				bool			__insert_left = false;
 				node_pointer	__cursor(_M_get_root());
-				node_pointer	__parent = 0;
 
 				while (__cursor != 0)
 				{
 					__parent = __cursor;
 
-					if (_M_key_compare(_M_get_key(__node), _M_get_key(__cursor))) // (node < cursor)
+					if (_M_key_compare(__key, _M_get_key(__cursor))) // (node < cursor)
 					{
 						__cursor = __cursor->_M_left;
 						__insert_left = true;
 					}
-					else if (_M_key_compare(_M_get_key(__cursor), _M_get_key(__node))) // (node > cursor)
+					else if (_M_key_compare(_M_get_key(__cursor), __key)) // (node > cursor)
 					{
 						__cursor = __cursor->_M_right;
 						__insert_left = false;
@@ -829,19 +848,11 @@ namespace ft
 					{
 						_M_drop_node(__node);
 						// second element is false if no new value was inserted
-						return (ft::pair<iterator,bool>(iterator(__cursor), false));
+						return (ft::pair<iterator,bool>(iterator(__node), false));
 					}
 				}
-				// set siblings
-				__cursor = __node;
-				__node->_M_parent = __parent;
-				if (__insert_left)
-					__parent->_M_left = __node;
-				else
-					__parent->_M_right = __node;
 			}
-			++this->_M_node_count;
-			return (_M_insert_rebalance(__node));
+			return (ft::pair<iterator,bool>(iterator(_M_insert(__insert_left, __node, __parent)), true));
 		}
 
 	/* construct/copy/destroy *********************************************** */
