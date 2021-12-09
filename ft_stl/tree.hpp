@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/09 23:40:35 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/09 23:55:31 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,14 @@ namespace ft
 				}
 				else
 				{
-					if (x->_M_parent != 0)
-						x = x->_M_parent;
+					node_pointer	__parent = x->_M_parent;
+
+					while (x == __parent->_M_right)
+					{
+						x = __parent;
+						__parent = __parent->_M_parent;
+					}
+					x = __parent;
 				}
 				return (x);
 			}
@@ -113,8 +119,14 @@ namespace ft
 				}
 				else
 				{
-					if (x->_M_parent != 0)
-						x = x->_M_parent;
+					node_pointer	__parent = x->_M_parent;
+
+					while (x == __parent->_M_right)
+					{
+						x = __parent;
+						__parent = __parent->_M_parent;
+					}
+					x = __parent;
 				}
 				return (x);
 			}
@@ -128,6 +140,17 @@ namespace ft
 					while (x->_M_right != 0)
 						x = x->_M_right;
 				}
+				else
+				{
+					node_pointer	__parent = x->_M_parent;
+
+					while (x == __parent->_M_left)
+					{
+						x = __parent;
+						__parent = __parent->_M_parent;
+					}
+					x = __parent;
+				}
 				return (x);
 			}
 
@@ -138,6 +161,17 @@ namespace ft
 					x = x->_M_left;
 					while (x->_M_right != 0)
 						x = x->_M_right;
+				}
+				else
+				{
+					node_pointer	__parent = x->_M_parent;
+
+					while (x == __parent->_M_left)
+					{
+						x = __parent;
+						__parent = __parent->_M_parent;
+					}
+					x = __parent;
 				}
 				return (x);
 			}

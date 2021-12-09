@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/09 23:39:11 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/09 23:51:31 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ namespace ft
 		std::size_t i = 0;
 
 		for (tree_type::iterator it = tree.begin();
-			 i < tree.size();
+			 it != tree.end();
 			 ++it, ++i)
 		{
 			std::cout << it->first << " => " << it->second << '\n';
