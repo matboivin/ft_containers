@@ -38,6 +38,7 @@
 - [How to implement an STL-style iterator and avoid common pitfalls?](https://stackoverflow.com/a/8054856)
 - [std::iterator is deprecated: Why, What It Was, and What to Use Instead](https://www.fluentcpp.com/2018/05/08/std-iterator-deprecated/)
 - [How to check if a template parameter is an iterator type or not? SFINAE](https://www.cplusplus.com/forum/beginner/270488/)
+- [Why does end() in stl_tree.h return a reference to the iterator object but begin() returns object?](https://stackoverflow.com/questions/24126879/why-does-end-in-stl-tree-h-return-a-reference-to-the-iterator-object-but-begin)
 
 #### Vector
 

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/09 20:09:03 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/09 23:40:35 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -325,7 +325,6 @@ namespace ft
 			{
 				if (this != &other)
 					this->_M_node = other.get_node();
-
 				return (*this);
 			}
 
@@ -457,7 +456,6 @@ namespace ft
 			const_reference			_M_get_value(node_pointer __node) const;
 			void					_M_rotate_left(node_pointer __x);
 			void					_M_rotate_right(node_pointer __x);
-			void					_M_rebalance_recolor(node_pointer __node);
 			void					_M_rebalance(node_pointer __node);
 			void					_M_insert(bool insert_left,
 											  node_pointer __node, node_pointer __parent);
@@ -668,63 +666,65 @@ namespace ft
 			__x->_M_parent = __y;
 		}
 
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_rebalance_recolor(node_pointer __node)
-		{
-			node_pointer	__grand_parent = __node->_M_parent->_M_parent;
-			node_pointer	__parent = __node->_M_parent;
-
-			if (__node == __node->_M_parent->_M_right)
-				_M_rotate_left(__grand_parent);
-			else
-				_M_rotate_right(__grand_parent);
-			__parent->_M_color = BLACK;
-			__grand_parent->_M_color = RED;
-		}
-
 	// Rebalance tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_rebalance(node_pointer __node)
 		{
-			node_pointer	__root = this->_M_header._M_parent;
-
 			// if node is not root or has red parent, rebalance
-			if ((__node != __root) && (__node->_M_parent->_M_color == RED))
+			if ((__node != this->_M_header._M_parent) && (__node->_M_parent->_M_color == RED))
 			{
 				node_pointer	__grand_parent = __node->_M_parent->_M_parent;
 				node_pointer	__uncle;
 
-				// get the node's uncle
 				if (__node->_M_parent == __grand_parent->_M_left)
+				{
 					__uncle = __grand_parent->_M_right;
+
+					if (__uncle && __uncle->_M_color == RED) // uncle is red
+					{
+						__node->_M_parent->_M_color = BLACK;
+						__uncle->_M_color = BLACK;
+						__grand_parent->_M_color = RED;
+						_M_rebalance(__grand_parent);
+					}
+					else // no uncle or uncle is black
+					{
+						if (__node == __node->_M_parent->_M_right)
+						{
+							_M_rotate_left(__node->_M_parent);
+							__node = __node->_M_left;
+						}
+						_M_rotate_right(__grand_parent);
+						__node->_M_parent->_M_color = BLACK;
+						__grand_parent->_M_color = RED;
+					}
+				}
 				else
+				{
 					__uncle = __grand_parent->_M_left;
 
-				if (__uncle && __uncle->_M_color == RED) // uncle is red
-				{
-					__node->_M_parent->_M_color = BLACK;
-					__uncle->_M_color = BLACK;
-					__grand_parent->_M_color = RED;
-					_M_rebalance(__node);
-				}
-				else // no uncle or uncle is black
-				{
-					if (__node == __grand_parent->_M_left->_M_right)
+					if (__uncle && __uncle->_M_color == RED) // uncle is red
 					{
-						_M_rotate_left(__node->_M_parent);
-						__node = __node->_M_left;
+						__node->_M_parent->_M_color = BLACK;
+						__uncle->_M_color = BLACK;
+						__grand_parent->_M_color = RED;
+						_M_rebalance(__grand_parent);
 					}
-					else if (__node == __grand_parent->_M_right->_M_left)
+					else // no uncle or uncle is black
 					{
-						_M_rotate_right(__node->_M_parent);
-						__node = __node->_M_right;
+						if (__node == __node->_M_parent->_M_left)
+						{
+							_M_rotate_right(__node->_M_parent);
+							__node = __node->_M_right;
+						}
+						_M_rotate_left(__grand_parent);
+						__node->_M_parent->_M_color = BLACK;
+						__grand_parent->_M_color = RED;
 					}
-					_M_rebalance_recolor(__node);
 				}
 			}
-			__root->_M_color = BLACK;
+			this->_M_header._M_parent->_M_color = BLACK;
 		}
 
 	// Insert a node

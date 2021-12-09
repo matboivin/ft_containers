@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/09 20:09:37 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/09 23:39:11 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ namespace ft
 		std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
 				  << (tree.begin() == tree.end()) << '\n';
 
-		tree.insert( pair<int, std::string>(10, "ten") );
+		tree.insert( pair<int, std::string>(8,  "eight") );
 
 		std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
 				  << (tree.begin() == tree.end()) << '\n'
@@ -100,20 +100,26 @@ namespace ft
 		std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
 				  << (tree.begin() == tree.end()) << '\n'; // true
 
-		tree.insert( pair<int, std::string>(10, "ten") );
-		tree.insert( pair<int, std::string>(10, "ten") );
-		tree.insert( pair<int, std::string>(10, "ten") );
-		tree.insert( pair<int, std::string>(10, "ten") );
-		tree.insert( pair<int, std::string>(10, "ten") );
-		tree.insert( pair<int, std::string>(10, "ten") );
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(8,  "eight") );
 		tree.insert( pair<int, std::string>(18, "eighteen") );
-		tree.insert( pair<int, std::string>(7,  "seven") );
+		tree.insert( pair<int, std::string>(5,  "five") );
 		tree.insert( pair<int, std::string>(15, "fifteen") );
 		tree.insert( pair<int, std::string>(15, "fifteen") );
-		tree.insert( pair<int, std::string>(7,  "seven") );
-		tree.insert( pair<int, std::string>(16, "sixteen") );
-		tree.insert( pair<int, std::string>(30, "thirty") );
-		// tree.insert( pair<int, std::string>(25, "twenty-five") );
+		tree.insert( pair<int, std::string>(17, "seventeen") );
+		tree.insert( pair<int, std::string>(25, "twenty-five") );
+		tree.insert( pair<int, std::string>(40, "fourty") );
+		tree.insert( pair<int, std::string>(80, "eighty") );
+		tree.insert( pair<int, std::string>(11, "eleven") );
+		tree.insert( pair<int, std::string>(11, "eleven") );
+		tree.insert( pair<int, std::string>(80, "eighty") );
+		tree.insert( pair<int, std::string>(11, "eleven") );
+		tree.insert( pair<int, std::string>(80, "eighty") );
+		tree.insert( pair<int, std::string>(20, "twenty") );
 
 		std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
 				  << (tree.begin() == tree.end()) << '\n'; // false
