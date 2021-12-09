@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/09 16:49:58 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/09 18:48:23 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,47 +102,48 @@ namespace ft
 
 		tree.insert( pair<int, std::string>(10, "ten") );
 		tree.insert( pair<int, std::string>(10, "ten") );
-		tree.insert( pair<int, std::string>(10, "ten") );
-		tree.insert( pair<int, std::string>(10, "ten") );
-		tree.insert( pair<int, std::string>(10, "ten") );
-		tree.insert( pair<int, std::string>(10, "ten") );
-		tree.insert( pair<int, std::string>(18, "eighteen") );
-		tree.insert( pair<int, std::string>(7,  "seven") );
-		tree.insert( pair<int, std::string>(15, "fifteen") );
-		tree.insert( pair<int, std::string>(15, "fifteen") );
-		tree.insert( pair<int, std::string>(7,  "seven") );
-		tree.insert( pair<int, std::string>(16, "sixteen") );
-		tree.insert( pair<int, std::string>(30, "thirty") );
-		tree.insert( pair<int, std::string>(25, "twenty-five") );
+		// tree.insert( pair<int, std::string>(10, "ten") );
+		// tree.insert( pair<int, std::string>(10, "ten") );
+		// tree.insert( pair<int, std::string>(10, "ten") );
+		// tree.insert( pair<int, std::string>(10, "ten") );
+		// tree.insert( pair<int, std::string>(18, "eighteen") );
+		// tree.insert( pair<int, std::string>(7,  "seven") );
+		// tree.insert( pair<int, std::string>(15, "fifteen") );
+		// tree.insert( pair<int, std::string>(15, "fifteen") );
+		// tree.insert( pair<int, std::string>(7,  "seven") );
+		// tree.insert( pair<int, std::string>(16, "sixteen") );
+		// tree.insert( pair<int, std::string>(30, "thirty") );
+		// tree.insert( pair<int, std::string>(25, "twenty-five") );
 
-		std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
-				  << (tree.begin() == tree.end()) << '\n'; // false
+		// std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
+		// 		  << (tree.begin() == tree.end()) << '\n'; // false
 
-		std::cout << "tree size: " << tree.size() << '\n';
-		std::cout << "copy size: " << copy_tree.size() << '\n';
+		// std::cout << "tree size: " << tree.size() << '\n';
+		// std::cout << "copy size: " << copy_tree.size() << '\n';
 
-		std::cout << "begin: " << tree.begin()->first << '\n';
-		std::cout << "end:   " << tree.end()->first << '\n';
+		// std::cout << "begin: " << tree.begin()->first << '\n';
+		// std::cout << "end:   " << tree.end()->first << '\n';
 
-		for (tree_type::iterator it = tree.begin();
-			 it != tree.end();
-			 ++it)
-		{
-			std::cout << it->first << " => " << it->second << '\n';
-		}
+		// for (tree_type::iterator it = tree.begin();
+		// 	 it != tree.end();
+		// 	 ++it)
+		// {
+		// 	std::cout << it->first << " => " << it->second << '\n';
+		// }
 
-		// copy_tree = tree;
+		// // copy_tree = tree;
 
-		tree.clear();
-		std::cout << "tree size: " << tree.size() << '\n';
-		std::cout << "copy size: " << copy_tree.size() << '\n';
+		// tree.clear();
+		// std::cout << "tree size: " << tree.size() << '\n';
+		// std::cout << "copy size: " << copy_tree.size() << '\n';
 
-		tree.write_tree_dot();
+		// tree.write_tree_dot();
 	}
 }
 
 int	main(void)
 {
-	ft::test_tree();
+	// ft::test_tree();
+	ft::test_tree_insert();
 	return (0);
 }
