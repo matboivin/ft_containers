@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/19 00:53:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/09 17:01:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ namespace ft
 	/* Node definition and implementation *********************************** */
 
 	/*
-	 * Red Black Tree template class
+	 * Red Black Tree Node template class
 	 */
 	template<typename Val>
-		struct RedBlackTreeNode
+		struct RBTreeNode
 		{
 			// types
-			typedef RedBlackTreeNode<Val>*			node_pointer;
-			typedef const RedBlackTreeNode<Val>*	const_node_pointer;
+			typedef RBTreeNode<Val>*		node_pointer;
+			typedef const RBTreeNode<Val>*	const_node_pointer;
 
 			// attributes
 			NodeColor		_M_color;
@@ -46,7 +46,7 @@ namespace ft
 			Val				_M_value;
 
 			// Retrieve the value address
-			Val*		_get_value_ptr(void)
+			Val*	_get_value_ptr(void)
 			{
 				return (&this->_M_value);
 			}
@@ -167,11 +167,42 @@ namespace ft
 				}
 				return (x);
 			}
-		}; // struct RedBlackTreeNode
+		}; // struct RBTreeNode
 
-	/* RedBlackTree iterators *********************************************** */
 
-	// RedBlackTree iterator
+	/* Header definition and implementation ********************************* */
+
+	/*
+	 * Red Black Tree Header template class
+	 */
+	template<typename Val>
+		struct RBTreeHeader
+		{
+			// attributes
+			RBTreeNode<Val>		_M_header;
+			std::size_t			_M_node_count;
+
+			// default constructor
+			RBTreeHeader(void)
+			{
+				_M_reset();
+			}
+
+			// set defaults
+			void	_M_reset(void)
+			{
+				_M_header._M_color = RED;
+				_M_header._M_parent = 0; // will be the root
+				_M_header._M_left = &_M_header; // leftmost
+				_M_header._M_right = &_M_header; // rightmost
+				_M_node_count = 0;
+			}
+		}; // struct RBTreeHeader
+
+
+	/* Red Black Tree iterators ********************************************* */
+
+	// Red Black Tree iterator
 	template<typename T>
 		struct RBtree_iterator
 		{
@@ -181,7 +212,7 @@ namespace ft
 			typedef T*										pointer;
 			typedef typename ft::bidirectional_iterator_tag	iterator_category;
 			typedef std::ptrdiff_t							difference_type;
-			typedef RedBlackTreeNode<T>*					node_pointer;
+			typedef RBTreeNode<T>*							node_pointer;
 
 			node_pointer	_M_node; // copy of the original iterator
 
@@ -277,7 +308,7 @@ namespace ft
 			return (lhs.get_node() != rhs.get_node());
 		}
 
-	// RedBlackTree const_iterator
+	// Red Black Tree const_iterator
 	template<typename T>
 		struct RBtree_const_iterator
 		{
@@ -288,7 +319,7 @@ namespace ft
 			typedef RBtree_iterator<T>						iterator;
 			typedef typename ft::bidirectional_iterator_tag	iterator_category;
 			typedef std::ptrdiff_t							difference_type;
-			typedef RedBlackTreeNode<T>*					node_pointer;
+			typedef RBTreeNode<T>*							node_pointer;
 
 			node_pointer	_M_node; // copy of the original iterator
 
@@ -404,40 +435,38 @@ namespace ft
 			 typename Compare = std::less<Key>,
 			 typename Alloc = std::allocator<Val> >
 		class RedBlackTree
+		: public RBTreeHeader<Val>
 		{
 		protected:
 			// types
-			typedef Alloc							allocator_type;
-			typedef Key								key_type;
-			typedef Val								value_type;
-			typedef Compare							key_compare;
-			typedef value_type*						pointer;
-			typedef const value_type*				const_pointer;
-			typedef value_type&						reference;
-			typedef const value_type&				const_reference;
-			typedef std::ptrdiff_t					difference_type;
-			typedef std::size_t						size_type;
-			typedef RedBlackTreeNode<Val>*			node_pointer;
-			typedef const RedBlackTreeNode<Val>*	const_node_pointer;
+			typedef Alloc						allocator_type;
+			typedef Key							key_type;
+			typedef Val							value_type;
+			typedef Compare						key_compare;
+			typedef value_type*					pointer;
+			typedef const value_type*			const_pointer;
+			typedef value_type&					reference;
+			typedef const value_type&			const_reference;
+			typedef std::ptrdiff_t				difference_type;
+			typedef std::size_t					size_type;
+			typedef RBTreeNode<Val>*			node_pointer;
+			typedef const RBTreeNode<Val>*		const_node_pointer;
 
 		public:
 			// iterators
-			typedef RBtree_iterator<Val>			iterator;
-			typedef RBtree_const_iterator<Val>		const_iterator;
+			typedef RBtree_iterator<Val>		iterator;
+			typedef RBtree_const_iterator<Val>	const_iterator;
 
 		private:
 			// aliases
-			typedef typename allocator_type::template rebind<RedBlackTreeNode<Val> >::other	_node_alloc_type;
+			typedef typename allocator_type::template rebind<RBTreeNode<Val> >::other	_node_alloc_type;
 
 			// attributes
 			allocator_type	_M_alloc; // internal copy of the allocator
 			key_compare		_M_key_compare;
-			size_type		_M_node_count;
-			node_pointer	_M_sentinel;
-			node_pointer	_M_reverse_sentinel;
-			node_pointer	_M_root;
-			node_pointer	_M_minimum;
-			node_pointer	_M_maximum;
+			// node_pointer	_M_root;
+			// node_pointer	_M_minimum;
+			// node_pointer	_M_maximum;
 
 		protected:
 			// helpers
@@ -447,9 +476,9 @@ namespace ft
 			void					_M_destroy_node(node_pointer __node);
 			void					_M_deallocate_node(node_pointer __node);
 			void					_M_drop_node(node_pointer __node);
-			void					_M_drop_sentinels(void);
-			void					_M_erase_recursive(node_pointer __node);
+			void					_M_erase(node_pointer __node);
 			node_pointer			_M_get_root(void) const;
+			node_pointer			_M_get_end(void) const;
 			node_pointer			_M_get_leftmost(void) const;
 			node_pointer			_M_get_rightmost(void) const;
 			const key_type&			_M_get_key(node_pointer __node) const;
@@ -563,28 +592,17 @@ namespace ft
 			}
 		}
 
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_drop_sentinels(void)
-		{
-			_M_destroy_node(this->_M_sentinel);
-			_M_deallocate_node(this->_M_sentinel);
-			_M_destroy_node(this->_M_reverse_sentinel);
-			_M_deallocate_node(this->_M_reverse_sentinel);
-		}
-
 	// Erase recursively the tree from the node passed as parameter
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_erase_recursive(node_pointer __node)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_erase(node_pointer __node)
 		{
-			if (__node != 0)
+			while (__node != 0)
 			{
-				_M_erase_recursive(__node->_M_right);
-				_M_erase_recursive(__node->_M_left);
+				_M_erase(__node->_M_right);
+				node_pointer	__tmp = __node->_M_left;
 				_M_drop_node(__node);
-				if (this->_M_node_count)
-					--this->_M_node_count;
+				__node = __tmp;
 			}
 		}
 
@@ -593,23 +611,31 @@ namespace ft
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_root(void) const
 		{
-			return (this->_M_root);
+			return (this->_M_header._M_parent);
 		}
 
-	// Get node holding lower value
+	// Get end (header)
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_end(void) const
+		{
+			return (&this->_M_header);
+		}
+
+	// Get node holding lowest value
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_leftmost(void) const
 		{
-			return (this->_M_root->_get_leftmost(this->_M_root));
+			return (this->_M_header._M_left);
 		}
 
-	// Get node holding greater value
+	// Get node holding greatest value
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_rightmost(void) const
 		{
-			return (this->_M_root->_get_rightmost(this->_M_root));
+			return (this->_M_header._M_right);
 		}
 
 	// Get only key of the pair
@@ -635,7 +661,7 @@ namespace ft
 		{
 			if (__node->_get_grandparent() == 0)
 				return (false);
-			return (__node->_get_grandparent() == this->_M_root);
+			return (__node->_get_grandparent() == _M_get_root());
 		}
 
 	// Check node's color
@@ -659,7 +685,7 @@ namespace ft
 			if (__y->_M_left != 0)
 				__y->_M_left->_M_parent = __x;
 			__y->_M_parent = __x->_M_parent;
-			if (__x == this->_M_get_root())
+			if (__x == _M_get_root())
 				__x = __y;
 			else if (__x == __x->_M_parent->_M_left)
 				__x->_M_parent->_M_left = __y;
@@ -680,7 +706,7 @@ namespace ft
 			if (__y->_M_right != 0)
 				__y->_M_right->_M_parent = __x;
 			__y->_M_parent = __x->_M_parent;
-			if (__x == this->_M_get_root())
+			if (__x == _M_get_root())
 				__x = __y;
 			else if (__x == __x->_M_parent->_M_right)
 				__x->_M_parent->_M_right = __y;
@@ -714,7 +740,7 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_rebalance(node_pointer __node)
 		{
 			// if node is not root or is red, rebalance
-			if ((__node != this->_M_root) && _M_check_node_color(__node->_get_parent(), RED))
+			if ((__node != this->_M_header._M_parent) && _M_check_node_color(__node->_get_parent(), RED))
 			{
 				node_pointer	__uncle = __node->_get_uncle();
 
@@ -745,11 +771,7 @@ namespace ft
 					return (_M_insert_rebalance(__node));
 				}
 			}
-			// set new leftmost, rightmost and sentinels
-			this->_M_minimum = _M_get_leftmost();
-			this->_M_maximum = _M_get_rightmost();
-			this->_M_minimum->_M_left = this->_M_reverse_sentinel;
-			this->_M_maximum->_M_right = this->_M_sentinel;
+			// TODO leftmost and rightmost
 			return (ft::pair<iterator,bool>(iterator(__node), true));
 		}
 
@@ -760,34 +782,27 @@ namespace ft
 		{
 			node_pointer	__node = _M_create_node(__val);
 
-			if (this->_M_root == 0) // first node becomes the root
+			if (this->_M_node_count == 0) // first node becomes the root
 			{
 				__node->_M_color = BLACK;
-				this->_M_root = __node;
-
+				this->_M_header._M_parent = __node;
+				this->_M_header._M_left = __node;
+				this->_M_header._M_right = __node->_M_right;
 				++this->_M_node_count;
-				this->_M_minimum = _M_get_leftmost();
-				this->_M_maximum = _M_get_rightmost();
-				this->_M_minimum->_M_left = this->_M_reverse_sentinel;
-				this->_M_maximum->_M_right = this->_M_sentinel;
-
 				return (ft::pair<iterator,bool>(iterator(__node), true));
 			}
 
-			this->_M_minimum->_M_left = 0;
-			this->_M_maximum->_M_right = 0;
-
 			// check whether the new node is lower than the minimum node
-			if (_M_key_compare(_M_get_key(__node), _M_get_key(this->_M_minimum)))
+			if (_M_key_compare(_M_get_key(__node), _M_get_key(this->_M_header._M_left)))
 			{
-				this->_M_minimum->_M_left = __node;
-				__node->_M_parent = this->_M_minimum;
+				this->_M_header._M_left = __node;
+				__node->_M_parent = this->_M_header._M_left;
 			}
 			// check whether the new node is greater than the maximum node
-			else if (_M_key_compare(_M_get_key(this->_M_maximum), _M_get_key(__node)))
+			else if (_M_key_compare(_M_get_key(this->_M_header._M_right), _M_get_key(__node)))
 			{
-				this->_M_maximum->_M_right = __node;
-				__node->_M_parent = this->_M_maximum;
+				this->_M_header._M_right = __node;
+				__node->_M_parent = this->_M_header._M_right;
 			}
 			// else move down to the tree until a leaf
 			else
@@ -813,9 +828,7 @@ namespace ft
 					else // key already exists
 					{
 						_M_drop_node(__node);
-						this->_M_minimum->_M_left = this->_M_reverse_sentinel;
-						this->_M_maximum->_M_right = this->_M_sentinel;
-						// second value is false if no new value was inserted
+						// second element is false if no new value was inserted
 						return (ft::pair<iterator,bool>(iterator(__cursor), false));
 					}
 				}
@@ -837,29 +850,15 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,Compare,Alloc>::RedBlackTree(const allocator_type& alloc)
 		: _M_alloc(alloc),
-		  _M_key_compare(),
-		  _M_node_count(0),
-		  _M_sentinel(),
-		  _M_reverse_sentinel(),
-		  _M_root(),
-		  _M_minimum(),
-		  _M_maximum()
+		  _M_key_compare()
 		{
-			this->_M_sentinel = _M_create_node(value_type());
-			this->_M_reverse_sentinel = _M_create_node(value_type());
 		}
 
 	// copy constructor
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,Compare,Alloc>::RedBlackTree(const RedBlackTree& other)
 		: _M_alloc(other._M_alloc),
-		  _M_key_compare(other._M_key_compare),
-		  _M_node_count(other._M_node_count),
-		  _M_sentinel(other._M_sentinel),
-		  _M_reverse_sentinel(other._M_reverse_sentinel),
-		  _M_root(other._M_root),
-		  _M_minimum(other._M_minimum),
-		  _M_maximum(other._M_maximum)
+		  _M_key_compare(other._M_key_compare)
 		{
 		}
 
@@ -870,10 +869,9 @@ namespace ft
 		{
 			if (this != &other)
 			{
-				_M_erase_recursive(this->_M_root);
+				_M_erase(this->_M_header._M_parent);
+				this->_M_reset();
 				this->_M_key_compare = other._M_key_compare;
-				// this->_M_sentinel = _M_create_node(value_type());
-				// this->_M_reverse_sentinel = _M_create_node(value_type());
 
 				const_iterator	it = other.begin();
 				const_iterator	ite = other.end();
@@ -882,7 +880,7 @@ namespace ft
 				{
 					value_type	val = *it;
 					std::cout << "val: " << val.first << std::endl;
-					//_M_insert_node(val);
+					_M_insert_node(val);
 					++it;
 				}
 			}
@@ -893,10 +891,8 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,Compare,Alloc>::~RedBlackTree(void)
 		{
-			if (size() == 0)
-				_M_drop_sentinels();
-			else
-				_M_erase_recursive(this->_M_root);
+			_M_erase(this->_M_header._M_parent);
+			this->_M_reset();
 		}
 
 	/* allocator ************************************************************ */
@@ -930,28 +926,28 @@ namespace ft
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::begin(void)
 		{
-			return (iterator(this->_M_minimum));
+			return (iterator(this->_M_header._M_left));
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::begin(void) const
 		{
-			return (const_iterator(this->_M_minimum));
+			return (const_iterator(this->_M_header._M_left));
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::end(void)
 		{
-			return (iterator(_M_sentinel));
+			return (iterator(&this->_M_header));
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::end(void) const
 		{
-			return (const_iterator(_M_sentinel));
+			return (const_iterator(&this->_M_header));
 		}
 
 	/* capacity ************************************************************* */
@@ -983,7 +979,8 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::clear(void)
 		{
-			_M_erase_recursive(this->_M_root);
+			_M_erase(this->_M_header._M_parent);
+			this->_M_reset();
 		}
 
 	// tmp (insert from map)

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/18 23:37:08 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/09 16:49:58 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,86 @@
 
 namespace ft
 {
+	typedef RedBlackTree<int,pair<int, std::string> >						tree_type;
+	typedef pair<RedBlackTree<int,pair<int, std::string> >::iterator,bool>	pair_type;
+
 	void	test_tree(void)
 	{
+		std::cout << std::setw(42) << " MAP \n\n";
+
+		std::map<int, std::string>	m;
+		tree_type					tree;
+
+		// map
+
+		std::cout << std::boolalpha << "(m.begin() == m.end())? "
+				  << (m.begin() == m.end()) << "\n\n";
+
+		m[10] = "ten";
+
+		std::cout << std::boolalpha << "(m.begin() == m.end())? "
+				  << (m.begin() == m.end()) << '\n'
+				  << "begin(): " << m.begin()->second << '\n'
+				  << "end(): " << (--m.end())->second << "\n\n";
+
+		m.clear();
+
+		std::cout << "map size: " << m.size() << '\n';
+
+		m[1] = "one";
+		m[2] = "two";
+		m[3] = "three";
+		m[4] = "four";
+		m[5] = "five";
+		m[6] = "six";
+
+		std::cout << "map size: " << m.size() << '\n';
+
+		std::map<int, std::string>::iterator it = m.begin();
+		m.erase(it);
+
+		// erase all odd numbers from c
+		for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it)
+		{
+			if (it->first % 2 != 0)
+				m.erase(it++);
+		}
+	
+		for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it)
+			std::cout << it->second << ' ';
+
+		std::cout << "\nmap size: " << m.size() << "\n\n";
+
 		std::cout << std::setw(42) << " TREE \n\n";
 
-		typedef RedBlackTree<int,pair<int, std::string> >						tree_type;
-		typedef pair<RedBlackTree<int,pair<int, std::string> >::iterator,bool>	pair_type;
-
-		tree_type	tree;
-		pair_type	ret;
-
-		std::cout << "size: " << tree.size() << '\n';
+		// tree
 
 		std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
 				  << (tree.begin() == tree.end()) << '\n';
+
+		tree.insert( pair<int, std::string>(10, "ten") );
+
+		std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
+				  << (tree.begin() == tree.end()) << '\n'
+				  << "begin(): " << tree.begin()->second << '\n'
+				  << "end(): " << (--tree.end())->second << '\n';
+
+		std::cout << "tree size: " << tree.size() << '\n';
+	}
+
+	void	test_tree_insert(void)
+	{
+		std::cout << std::setw(42) << " TREE \n\n";
+
+		tree_type	tree;
+		tree_type	copy_tree;
+		pair_type	ret;
+
+		std::cout << "tree size: " << tree.size() << '\n';
+		std::cout << "copy size: " << copy_tree.size() << '\n';
+
+		std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
+				  << (tree.begin() == tree.end()) << '\n'; // true
 
 		tree.insert( pair<int, std::string>(10, "ten") );
 		tree.insert( pair<int, std::string>(10, "ten") );
@@ -46,8 +112,14 @@ namespace ft
 		tree.insert( pair<int, std::string>(15, "fifteen") );
 		tree.insert( pair<int, std::string>(7,  "seven") );
 		tree.insert( pair<int, std::string>(16, "sixteen") );
+		tree.insert( pair<int, std::string>(30, "thirty") );
+		tree.insert( pair<int, std::string>(25, "twenty-five") );
 
-		std::cout << "size: " << tree.size() << '\n';
+		std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
+				  << (tree.begin() == tree.end()) << '\n'; // false
+
+		std::cout << "tree size: " << tree.size() << '\n';
+		std::cout << "copy size: " << copy_tree.size() << '\n';
 
 		std::cout << "begin: " << tree.begin()->first << '\n';
 		std::cout << "end:   " << tree.end()->first << '\n';
@@ -58,6 +130,12 @@ namespace ft
 		{
 			std::cout << it->first << " => " << it->second << '\n';
 		}
+
+		// copy_tree = tree;
+
+		tree.clear();
+		std::cout << "tree size: " << tree.size() << '\n';
+		std::cout << "copy size: " << copy_tree.size() << '\n';
 
 		tree.write_tree_dot();
 	}
