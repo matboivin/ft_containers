@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 16:14:48 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 16:22:10 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -500,14 +500,14 @@ namespace ft
 			node_pointer				_M_get_rightmost(void) const;
 			const key_type&				_M_get_key(node_pointer __node) const;
 			const_reference				_M_get_value(node_pointer __node) const;
+			node_pointer				_M_get_pos_from_hint(iterator __hint, const key_type& __key);
+			ft::pair<node_pointer,bool>	_M_get_insert_pos(iterator __hint, const key_type& __key);
 			void						_M_rotate_left(node_pointer __x);
 			void						_M_rotate_right(node_pointer __x);
 			void						_M_rebalance(node_pointer __node);
-			node_pointer				_M_get_pos_from_hint(iterator __hint, const key_type& __key);
-			ft::pair<node_pointer,bool>	_M_get_insert_pos(iterator __hint, const key_type& __key);
 			void						_M_insert(bool insert_left,
 												  node_pointer __node, node_pointer __parent);
-			ft::pair<iterator,bool>	_M_insert_node(const value_type& __val);
+			ft::pair<iterator,bool>		_M_insert_node(iterator __pos, const value_type& __val);
 
 		public:
 			// default constructor
@@ -923,10 +923,10 @@ namespace ft
 	/* Inserts one node with no hint */
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(const value_type& __val)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(iterator __pos, const value_type& __val)
 		{
 			const key_type				__key = __val.first;
-			ft::pair<node_pointer,bool>	__res = _M_get_insert_pos(iterator(_M_get_root()), __key);
+			ft::pair<node_pointer,bool>	__res = _M_get_insert_pos(__pos, __key);
 
 			if (_M_get_key(__res.first) == __key) // key already exists
 				return (_pair_it_bool(iterator(__res.first), false));
@@ -968,10 +968,12 @@ namespace ft
 
 				const_iterator	it = other.begin();
 				const_iterator	ite = other.end();
+				iterator		hint = iterator(_M_get_root());
 
 				while (it != ite)
 				{
-					_M_insert_node(*it); // tmp need range
+					_M_insert_node(hint, *it);
+					hint = it.remove_const();
 					++it;
 				}
 			}
@@ -1116,7 +1118,7 @@ namespace ft
 		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
 		RedBlackTree<Key,Val,Compare,Alloc>::insert(const value_type& val)
 		{
-			return (_M_insert_node(val));
+			return (_M_insert_node(iterator(_M_get_root()), val));
 		}
 
 	// template<typename Key, typename Val, typename Compare, typename Alloc>
