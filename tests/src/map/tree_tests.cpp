@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 12:35:43 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 13:55:42 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,11 +130,9 @@ namespace ft
 		std::cout << "begin: " << tree.begin()->first << '\n';
 		std::cout << "end:   " << tree.end()->first << '\n';
 
-		std::size_t i = 0;
-
 		for (tree_type::iterator it = tree.begin();
 			 it != tree.end();
-			 ++it, ++i)
+			 ++it)
 		{
 			std::cout << it->first << " => " << it->second << '\n';
 		}
@@ -147,12 +145,16 @@ namespace ft
 		std::cout << "tree size: " << tree.size() << '\n';
 		std::cout << "copy size: " << copy_tree.size() << '\n';
 
-		for (tree_type::iterator it = copy_tree.begin();
-			 it != copy_tree.end();
-			 ++it, ++i)
+		tree_type::iterator	end = copy_tree.end();
+		--end;
+
+		for (;
+			 end != copy_tree.begin();
+			 --end)
 		{
-			std::cout << it->first << " => " << it->second << '\n';
+			std::cout << end->first << " => " << end->second << '\n';
 		}
+		std::cout << end->first << " => " << end->second << '\n';
 	}
 }
 

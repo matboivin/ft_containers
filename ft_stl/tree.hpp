@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 13:16:48 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 13:55:10 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ namespace ft
 			node_pointer	_M_left;
 			node_pointer	_M_right;
 			Val				_M_value;
+			int				_M_sentinel;
 
 			// Retrieve the value address
 			Val*	_get_value_ptr(void)
@@ -134,7 +135,11 @@ namespace ft
 			// Decrement node
 			static node_pointer	_decrement_node(node_pointer x)
 			{
-				if (x->_M_left != 0)
+				if (x->_M_sentinel == 1)
+				{
+					x = x->_M_right;
+				}
+				else if (x->_M_left != 0)
 				{
 					x = x->_M_left;
 					while (x->_M_right != 0)
@@ -156,7 +161,11 @@ namespace ft
 
 			static const_node_pointer	_decrement_node(const_node_pointer x)
 			{
-				if (x->_M_left != 0)
+				if (x->_M_sentinel == 1)
+				{
+					x = x->_M_right;
+				}
+				else if (x->_M_left != 0)
 				{
 					x = x->_M_left;
 					while (x->_M_right != 0)
@@ -203,6 +212,7 @@ namespace ft
 				_M_header._M_parent = 0; // will be the root
 				_M_header._M_left = &_M_header; // leftmost
 				_M_header._M_right = &_M_header; // rightmost
+				_M_header._M_sentinel = 1;
 				_M_node_count = 0;
 			}
 		}; // struct RBTreeHeader
@@ -477,24 +487,25 @@ namespace ft
 
 		protected:
 			// helpers
-			node_pointer			_M_allocate_node(void);
-			void					_M_construct_node(node_pointer __node, const value_type& __val);
-			node_pointer			_M_create_node(const value_type& __val);
-			void					_M_destroy_node(node_pointer __node);
-			void					_M_deallocate_node(node_pointer __node);
-			void					_M_drop_node(node_pointer __node);
-			void					_M_erase(node_pointer __node);
-			node_pointer			_M_get_root(void) const;
-			node_pointer			_M_get_end(void) const;
-			node_pointer			_M_get_leftmost(void) const;
-			node_pointer			_M_get_rightmost(void) const;
-			const key_type&			_M_get_key(node_pointer __node) const;
-			const_reference			_M_get_value(node_pointer __node) const;
-			void					_M_rotate_left(node_pointer __x);
-			void					_M_rotate_right(node_pointer __x);
-			void					_M_rebalance(node_pointer __node);
-			void					_M_insert(bool insert_left,
-											  node_pointer __node, node_pointer __parent);
+			node_pointer				_M_allocate_node(void);
+			void						_M_construct_node(node_pointer __node, const value_type& __val);
+			node_pointer				_M_create_node(const value_type& __val);
+			void						_M_destroy_node(node_pointer __node);
+			void						_M_deallocate_node(node_pointer __node);
+			void						_M_drop_node(node_pointer __node);
+			void						_M_erase(node_pointer __node);
+			node_pointer				_M_get_root(void) const;
+			node_pointer				_M_get_end(void) const;
+			node_pointer				_M_get_leftmost(void) const;
+			node_pointer				_M_get_rightmost(void) const;
+			const key_type&				_M_get_key(node_pointer __node) const;
+			const_reference				_M_get_value(node_pointer __node) const;
+			void						_M_rotate_left(node_pointer __x);
+			void						_M_rotate_right(node_pointer __x);
+			void						_M_rebalance(node_pointer __node);
+			ft::pair<node_pointer,bool>	_M_get_node_pos(iterator __hint, const key_type& __key);
+			void						_M_insert(bool insert_left,
+												  node_pointer __node, node_pointer __parent);
 			ft::pair<iterator,bool>	_M_insert_node(const value_type& __val);
 
 		public:
@@ -578,6 +589,7 @@ namespace ft
 			__node->_M_parent = 0;
 			__node->_M_left = 0;
 			__node->_M_right = 0;
+			__node->_M_sentinel = 0;
 			return (__node);
 		}
 
@@ -770,6 +782,52 @@ namespace ft
 				}
 			}
 			this->_M_header._M_parent->_M_color = BLACK;
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer,bool>
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_node_pos(iterator __hint, const key_type& __key)
+		{
+			bool		__insert_left = true;
+			iterator	__parent;
+
+			// check whether the new node is lower than the current leftmost node
+			if ( _M_key_compare( __key, _M_get_key(_M_get_leftmost()) ) )
+			{
+				__parent = iterator(_M_get_leftmost());
+			}
+			// check whether the new node is greater than the current rightmost node
+			else if ( _M_key_compare(_M_get_key(_M_get_rightmost()), __key ) )
+			{
+				__insert_left = false;
+				__parent = iterator(_M_get_rightmost());
+			}
+			// else move down to the tree until a leaf
+			else
+			{
+				iterator	__cursor(__hint);
+
+				while (__cursor != 0)
+				{
+					__parent = __cursor;
+
+					if (_M_key_compare(__key, _M_get_key(__cursor))) // (node < cursor)
+					{
+						--__cursor;
+						__insert_left = true;
+					}
+					else if (_M_key_compare(_M_get_key(__cursor), __key)) // (node > cursor)
+					{
+						++__cursor;
+						__insert_left = false;
+					}
+					else // key already exists
+					{
+						return (ft::pair<node_pointer,bool>(0, 0));
+					}
+				}
+			}
+			return (ft::pair<node_pointer,bool>(__parent, __insert_left));
 		}
 
 	// Insert a node
@@ -1014,6 +1072,8 @@ namespace ft
 		{
 			return (this->get_node_alloc().max_size());
 		}
+
+	/* element access ******************************************************* */
 
 	/* modifiers ************************************************************ */
 
