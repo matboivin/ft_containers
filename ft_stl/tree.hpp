@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 17:21:41 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 17:37:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -542,6 +542,8 @@ namespace ft
 			// element access
 			iterator				lower_bound(const key_type& k);
 			const_iterator			lower_bound(const key_type& k) const;
+			iterator				upper_bound(const key_type& k);
+			const_iterator			upper_bound(const key_type& k) const;
 
 			// capacity
 			bool					empty(void) const;
@@ -1107,7 +1109,10 @@ namespace ft
 
 	/* element access ******************************************************* */
 
-	/* Gets the first element that is equivalent or after k */
+	/*
+	 * Gets the first element that is equivalent or after k
+	 * i.e. The first element for which key_comp(element_key,k) would return false
+	 */
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::lower_bound(const key_type& k)
@@ -1117,8 +1122,7 @@ namespace ft
 
 			while (it != ite)
 			{
-				// first element for which key_comp(element_key,k) would return false
-				if (!_M_key_compare(_M_get_key(it._M_node), k))
+				if (!_M_key_compare(_M_get_key(it._M_node), k)) // k <= elem
 					return (it);
 				++it;
 			}
@@ -1134,8 +1138,43 @@ namespace ft
 
 			while (it != ite)
 			{
-				// first element for which key_comp(element_key,k) would return false
-				if (!_M_key_compare(_M_get_key(it._M_node), k))
+				if (!_M_key_compare(_M_get_key(it._M_node), k)) // k <= elem
+					return (it);
+				++it;
+			}
+			return (ite);
+		}
+
+	/*
+	 * Gets the first element that is after k
+	 * i.e. The first element for which key_comp(k,element_key) would return true
+	 */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::upper_bound(const key_type& k)
+		{
+			iterator	it = begin();
+			iterator	ite = end();
+
+			while (it != ite)
+			{
+				if (_M_key_compare(k, _M_get_key(it._M_node))) // k < elem
+					return (it);
+				++it;
+			}
+			return (ite);
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::upper_bound(const key_type& k) const
+		{
+			const_iterator	it = begin();
+			const_iterator	ite = end();
+
+			while (it != ite)
+			{
+				if (_M_key_compare(k, _M_get_key(it._M_node))) // k < elem
 					return (it);
 				++it;
 			}

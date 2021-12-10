@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 17:30:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 17:38:36 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,16 @@ namespace ft
 				  << "m.lower_bound(24):    " << m.lower_bound(24)->first << '\n'
 				  << "tree.lower_bound(24): " << tree.lower_bound(24)->first << "\n\n"
 				  << "(m.lower_bound(99) == m.end())?       " << (m.lower_bound(99) == m.end()) << '\n'
-				  << "(tree.lower_bound(99) == tree.end())? " << (tree.lower_bound(99) == tree.end()) << '\n';
+				  << "(tree.lower_bound(99) == tree.end())? " << (tree.lower_bound(99) == tree.end())
+				  << "\n\n";
+
+		std::cout << "m.upper_bound(5):     " << m.upper_bound(5)->first << '\n'
+				  << "tree.upper_bound(5):  " << tree.upper_bound(5)->first << '\n'
+				  << "m.upper_bound(24):    " << m.upper_bound(24)->first << '\n'
+				  << "tree.upper_bound(24): " << tree.upper_bound(24)->first << "\n\n"
+				  << "(m.upper_bound(99) == m.end())?       " << (m.upper_bound(99) == m.end()) << '\n'
+				  << "(tree.upper_bound(99) == tree.end())? " << (tree.upper_bound(99) == tree.end())
+				  << "\n\n";
 	}
 }
 
