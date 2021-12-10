@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 14:23:54 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 16:11:02 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -503,7 +503,8 @@ namespace ft
 			void						_M_rotate_left(node_pointer __x);
 			void						_M_rotate_right(node_pointer __x);
 			void						_M_rebalance(node_pointer __node);
-			ft::pair<node_pointer,bool>	_M_get_node_pos(iterator __hint, const key_type& __key);
+			node_pointer				_M_get_pos_from_hint(iterator __hint, const key_type& __key);
+			ft::pair<node_pointer,bool>	_M_get_insert_pos(iterator __hint, const key_type& __key);
 			void						_M_insert(bool insert_left,
 												  node_pointer __node, node_pointer __parent);
 			ft::pair<iterator,bool>	_M_insert_node(const value_type& __val);
@@ -814,10 +815,65 @@ namespace ft
 			++this->_M_node_count;
 		}
 
-	// get node position
+	/* Gets position to insert new node */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_pos_from_hint(iterator __hint, const key_type& __key)
+		{
+			// decrement if hint is past the last element
+			if (__hint == end())
+				--__hint;
+
+			if (__hint._M_node == this->_M_header._M_parent)
+				return (__hint._M_node);
+
+			// find nearest position if hint is not root
+			iterator	__prev(__hint);
+
+			// node < hint pos
+			if (_M_key_compare( __key, _M_get_key(__hint._M_node) ))
+			{
+				// node < root && root < hint pos
+				if (_M_key_compare( __key, _M_get_key(this->_M_header._M_parent))
+					&& _M_key_compare( _M_get_key(this->_M_header._M_parent), _M_get_key(__hint._M_node) ))
+				{
+					__hint = this->_M_header._M_parent; // start from root directly
+				}
+				else
+				{
+					--__hint;
+					while (__hint._M_node && _M_key_compare(__key, _M_get_key(__hint._M_node)))
+					{
+						__prev = __hint;
+						--__hint;
+					}
+				}
+			}
+			else if (_M_key_compare(_M_get_key(__hint._M_node), __key)) // (node > hint pos)
+			{
+				// node > root && root > hint pos
+				if (_M_key_compare( _M_get_key(this->_M_header._M_parent),  __key)
+					&& _M_key_compare( _M_get_key(__hint._M_node), _M_get_key(this->_M_header._M_parent) ))
+				{
+					__hint = this->_M_header._M_parent; // start from root directly
+				}
+				else
+				{
+					++__hint;
+					while (__hint._M_node && _M_key_compare(_M_get_key(__hint._M_node), __key))
+					{
+						__prev = __hint;
+						++__hint;
+					}
+				}
+			}
+			return (__hint._M_node);
+		}
+
+	/* Gets position to insert new node */
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer,bool>
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_node_pos(iterator __hint, const key_type& __key)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_insert_pos(iterator __hint, const key_type& __key)
 		{
 			bool			__insert_left = true;
 			node_pointer	__parent;
@@ -836,7 +892,51 @@ namespace ft
 			// else move down to the tree until a leaf
 			else
 			{
-				node_pointer	__cursor(__hint._M_node);
+				// decrement if hint is past the last element
+				if (__hint == end())
+					--__hint;
+
+				// find nearest position if hint is not root
+				if (__hint._M_node != this->_M_header._M_parent)
+				{
+					iterator	__prev(__hint);
+
+					// node < hint pos
+					if (_M_key_compare( __key, _M_get_key(__hint._M_node) ))
+					{
+						// node < root && root < hint pos
+						if (_M_key_compare( __key, _M_get_key(this->_M_header._M_parent))
+							&& _M_key_compare( _M_get_key(this->_M_header._M_parent), _M_get_key(__hint._M_node) ))
+							__hint = this->_M_header._M_parent; // start from root directly
+						else
+						{
+							--__hint;
+							while (__hint._M_node && _M_key_compare(__key, _M_get_key(__hint._M_node)))
+							{
+								__prev = __hint;
+								--__hint;
+							}
+						}
+					}
+					else if (_M_key_compare(_M_get_key(__hint._M_node), __key)) // (node > hint pos)
+					{
+						// node > root && root > hint pos
+						if (_M_key_compare( _M_get_key(this->_M_header._M_parent),  __key)
+							&& _M_key_compare( _M_get_key(__hint._M_node), _M_get_key(this->_M_header._M_parent) ))
+							__hint = this->_M_header._M_parent; // start from root directly
+						else
+						{
+							++__hint;
+							while (__hint._M_node && _M_key_compare(_M_get_key(__hint._M_node), __key))
+							{
+								__prev = __hint;
+								++__hint;
+							}
+						}
+					}
+				}
+
+				node_pointer	__cursor = __hint._M_node;
 
 				while (__cursor != 0)
 				{
@@ -866,7 +966,7 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(const value_type& __val)
 		{
 			const key_type				__key = __val.first;
-			ft::pair<node_pointer,bool>	__res = _M_get_node_pos(iterator(_M_get_root()), __key);
+			ft::pair<node_pointer,bool>	__res = _M_get_insert_pos(iterator(_M_get_root()), __key);
 
 			if (_M_get_key(__res.first) == __key) // key already exists
 				return (_pair_it_bool(iterator(__res.first), false));
