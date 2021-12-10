@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 17:38:36 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 18:36:05 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,7 +181,7 @@ namespace ft
 		std::cout << "\n\n";
 	}
 
-	void	test_tree_bounds(void)
+	void	test_tree_access(void)
 	{
 		std::cout << std::setw(42) << " MAP \n\n";
 
@@ -210,20 +210,28 @@ namespace ft
 		tree.insert( pair<int, std::string>(11, "eleven") );
 		tree.insert( pair<int, std::string>(20, "twenty") );
 
-		std::cout << "m.lower_bound(5):     " << m.lower_bound(5)->first << '\n'
-				  << "tree.lower_bound(5):  " << tree.lower_bound(5)->first << '\n'
-				  << "m.lower_bound(24):    " << m.lower_bound(24)->first << '\n'
-				  << "tree.lower_bound(24): " << tree.lower_bound(24)->first << "\n\n"
+		std::cout << "m.lower_bound(5):                     " << m.lower_bound(5)->first << '\n'
+				  << "tree.lower_bound(5):                  " << tree.lower_bound(5)->first << '\n'
+				  << "m.lower_bound(24):                    " << m.lower_bound(24)->first << '\n'
+				  << "tree.lower_bound(24):                 " << tree.lower_bound(24)->first << "\n\n"
 				  << "(m.lower_bound(99) == m.end())?       " << (m.lower_bound(99) == m.end()) << '\n'
 				  << "(tree.lower_bound(99) == tree.end())? " << (tree.lower_bound(99) == tree.end())
 				  << "\n\n";
 
-		std::cout << "m.upper_bound(5):     " << m.upper_bound(5)->first << '\n'
-				  << "tree.upper_bound(5):  " << tree.upper_bound(5)->first << '\n'
-				  << "m.upper_bound(24):    " << m.upper_bound(24)->first << '\n'
-				  << "tree.upper_bound(24): " << tree.upper_bound(24)->first << "\n\n"
+		std::cout << "m.upper_bound(5):                     " << m.upper_bound(5)->first << '\n'
+				  << "tree.upper_bound(5):                  " << tree.upper_bound(5)->first << '\n'
+				  << "m.upper_bound(24):                    " << m.upper_bound(24)->first << '\n'
+				  << "tree.upper_bound(24):                 " << tree.upper_bound(24)->first << "\n\n"
 				  << "(m.upper_bound(99) == m.end())?       " << (m.upper_bound(99) == m.end()) << '\n'
 				  << "(tree.upper_bound(99) == tree.end())? " << (tree.upper_bound(99) == tree.end())
+				  << "\n\n";
+
+		std::cout << "m.find(5):                     " << m.find(5)->first << '\n'
+				  << "tree.find(5):                  " << tree.find(5)->first << '\n'
+				  << "m.find(40):                    " << m.find(40)->first << '\n'
+				  << "tree.find(40):                 " << tree.find(40)->first << "\n\n"
+				  << "(m.find(99) == m.end())?       " << (m.find(99) == m.end()) << '\n'
+				  << "(tree.find(99) == tree.end())? " << (tree.find(99) == tree.end())
 				  << "\n\n";
 	}
 }
@@ -232,6 +240,6 @@ int	main(void)
 {
 	// ft::test_tree();
 	// ft::test_tree_insert();
-	ft::test_tree_bounds();
+	ft::test_tree_access();
 	return (0);
 }

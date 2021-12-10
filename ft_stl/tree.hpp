@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 17:37:29 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 18:34:10 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -545,6 +545,9 @@ namespace ft
 			iterator				upper_bound(const key_type& k);
 			const_iterator			upper_bound(const key_type& k) const;
 
+			iterator				find(const key_type& k);
+			const_iterator			find(const key_type& k) const;
+
 			// capacity
 			bool					empty(void) const;
 			size_type				size(void) const;
@@ -764,7 +767,7 @@ namespace ft
 				__insert_left = false;
 				__parent = _M_get_rightmost();
 			}
-			// else move down to the tree until a leaf
+			// else move down the tree until finding a leaf
 			else
 			{
 				node_pointer	__cursor = _M_get_pos_from_hint(__hint, __key);
@@ -793,7 +796,6 @@ namespace ft
 			}
 			return (ft::pair<node_pointer,bool>(__parent, __insert_left));
 		}
-
 
 	/* Rotate left */
 	template<typename Key, typename Val, typename Compare, typename Alloc>
@@ -1181,6 +1183,39 @@ namespace ft
 			return (ite);
 		}
 
+	/* Gets the element with the key k, else return end */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::find(const key_type& k)
+		{
+			iterator	it = begin();
+			iterator	ite = end();
+
+			while (it != ite)
+			{
+				if (k == _M_get_key(it._M_node))
+					return (it);
+				++it;
+			}
+			return (ite);
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::find(const key_type& k) const
+		{
+			const_iterator	it = begin();
+			const_iterator	ite = end();
+
+			while (it != ite)
+			{
+				if (k == _M_get_key(it._M_node))
+					return (it);
+				++it;
+			}
+			return (ite);
+		}
+
 	/* modifiers ************************************************************ */
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
@@ -1238,10 +1273,6 @@ namespace ft
 						<< node->_M_value.first << "=" << node->_M_value.second
 						<< "\\n" << node << "\"";
 			}
-			else
-			{
-				outfile << "\n    \"sentinel\\n" << node << "\"";
-			}
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
@@ -1253,10 +1284,6 @@ namespace ft
 				outfile << " -> \""
 						<< node->_M_value.first << "=" << node->_M_value.second
 						<< "\\n" << node << "\";";
-			}
-			else
-			{
-				outfile << " -> \"sentinel\\n" << node << "\"";
 			}
 		}
 
