@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 16:22:10 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 16:24:42 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1121,11 +1121,12 @@ namespace ft
 			return (_M_insert_node(iterator(_M_get_root()), val));
 		}
 
-	// template<typename Key, typename Val, typename Compare, typename Alloc>
-	// 	typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
-	// 	RedBlackTree<Key,Val,Compare,Alloc>::	insert(iterator position, const value_type& val)
-	// 	{
-	// 	}
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::insert(iterator position, const value_type& val)
+		{
+			return (_M_insert_node(position, val));
+		}
 
 	// template<typename Key, typename Val, typename Compare, typename Alloc>
 	// template<typename InputIterator>
