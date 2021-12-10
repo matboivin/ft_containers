@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 16:51:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 16:56:26 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -968,15 +968,13 @@ namespace ft
 				this->_M_reset();
 				this->_M_key_compare = other._M_key_compare;
 
-				const_iterator	it = other.begin();
-				const_iterator	ite = other.end();
-				iterator		hint = iterator(_M_get_root());
+				const_iterator	first = other.begin();
+				const_iterator	last = other.end();
 
-				while (it != ite)
+				while (first != last)
 				{
-					_M_insert_node(hint, *it);
-					hint = it.remove_const();
-					++it;
+					_M_insert_node(end(), *first);
+					++first;
 				}
 			}
 			return (*this);
