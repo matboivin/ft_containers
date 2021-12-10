@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 17:51:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 19:10:40 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "stack_tests.hpp"
 #include "map_tests.hpp"
 #include "revit_tests.hpp"
+#include "tree_tests.hpp"
 
 int	main(void)
 {
@@ -29,7 +30,8 @@ int	main(void)
 	// std::test_revit();
 	// std::test_map();
 	#else
-		generate_output();
+		ft::test_tree();
+		//generate_output();
 	#endif
 
 	return (0);

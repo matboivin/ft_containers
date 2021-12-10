@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 16:01:10 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 19:03:30 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -349,7 +349,7 @@ namespace std
 	{
 		std::cout << "TEST: Modifiers: clear() \n\n";
 
-		explainTest("Add a new elements at the end of the vector.");
+		explainTest("Destroys all elements from the vector, leaving the container with a size of 0.");
 
 		// create a vector
 		vector<int>	vec;
