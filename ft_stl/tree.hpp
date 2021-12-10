@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 16:11:02 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 16:14:48 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -682,139 +682,6 @@ namespace ft
 			return (*__node->_get_value_ptr());
 		}
 
-	// Rotate left
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_rotate_left(node_pointer __x)
-		{
-			node_pointer	__y = __x->_M_right;
-
-			__x->_M_right = __y->_M_left;
-			if (__y->_M_left != 0)
-				__y->_M_left->_M_parent = __x;
-			__y->_M_parent = __x->_M_parent;
-			if (__x == this->_M_header._M_parent)
-				this->_M_header._M_parent = __y;
-			else if (__x == __x->_M_parent->_M_left)
-				__x->_M_parent->_M_left = __y;
-			else
-				__x->_M_parent->_M_right = __y;
-			__y->_M_left = __x;
-			__x->_M_parent = __y;
-		}
-
-	// Rotate right
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_rotate_right(node_pointer __x)
-		{
-			node_pointer	__y = __x->_M_left;
-
-			__x->_M_left = __y->_M_right;
-			if (__y->_M_right != 0)
-				__y->_M_right->_M_parent = __x;
-			__y->_M_parent = __x->_M_parent;
-			if (__x == this->_M_header._M_parent)
-				this->_M_header._M_parent = __y;
-			else if (__x == __x->_M_parent->_M_right)
-				__x->_M_parent->_M_right = __y;
-			else
-				__x->_M_parent->_M_left = __y;
-			__y->_M_right = __x;
-			__x->_M_parent = __y;
-		}
-
-	// Rebalance tree
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_rebalance(node_pointer __node)
-		{
-			// if node is not root or has red parent, rebalance
-			if ((__node != this->_M_header._M_parent) && (__node->_M_parent->_M_color == RED))
-			{
-				node_pointer	__grand_parent = __node->_M_parent->_M_parent;
-				node_pointer	__uncle;
-
-				if (__node->_M_parent == __grand_parent->_M_left)
-				{
-					__uncle = __grand_parent->_M_right;
-
-					if (__uncle && __uncle->_M_color == RED) // uncle is red
-					{
-						__node->_M_parent->_M_color = BLACK;
-						__uncle->_M_color = BLACK;
-						__grand_parent->_M_color = RED;
-						_M_rebalance(__grand_parent);
-					}
-					else // no uncle or uncle is black
-					{
-						if (__node == __node->_M_parent->_M_right)
-						{
-							_M_rotate_left(__node->_M_parent);
-							__node = __node->_M_left;
-						}
-						_M_rotate_right(__grand_parent);
-						__node->_M_parent->_M_color = BLACK;
-						__grand_parent->_M_color = RED;
-					}
-				}
-				else
-				{
-					__uncle = __grand_parent->_M_left;
-
-					if (__uncle && __uncle->_M_color == RED) // uncle is red
-					{
-						__node->_M_parent->_M_color = BLACK;
-						__uncle->_M_color = BLACK;
-						__grand_parent->_M_color = RED;
-						_M_rebalance(__grand_parent);
-					}
-					else // no uncle or uncle is black
-					{
-						if (__node == __node->_M_parent->_M_left)
-						{
-							_M_rotate_right(__node->_M_parent);
-							__node = __node->_M_right;
-						}
-						_M_rotate_left(__grand_parent);
-						__node->_M_parent->_M_color = BLACK;
-						__grand_parent->_M_color = RED;
-					}
-				}
-			}
-			this->_M_header._M_parent->_M_color = BLACK;
-		}
-
-	// Actually perform the insertion
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert(bool insert_left,
-													   node_pointer __node, node_pointer __parent)
-		{
-			__node->_M_parent = __parent;
-
-			if (this->_M_node_count == 0) // first node becomes the root
-			{
-				this->_M_header._M_parent = __node;
-				this->_M_header._M_left = __node;
-				this->_M_header._M_right = __node;
-			}
-			else if (insert_left)
-			{
-				__parent->_M_left = __node;
-				if (__parent == this->_M_header._M_left)
-					this->_M_header._M_left = __node; // update leftmost
-			}
-			else
-			{
-				__parent->_M_right = __node;
-				if (__parent == this->_M_header._M_right)
-					this->_M_header._M_right = __node; // update rightmost
-			}
-			_M_rebalance(__node);
-			++this->_M_node_count;
-		}
-
 	/* Gets position to insert new node */
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
@@ -892,51 +759,9 @@ namespace ft
 			// else move down to the tree until a leaf
 			else
 			{
-				// decrement if hint is past the last element
-				if (__hint == end())
-					--__hint;
+				node_pointer	__cursor = _M_get_pos_from_hint(__hint, __key);
 
-				// find nearest position if hint is not root
-				if (__hint._M_node != this->_M_header._M_parent)
-				{
-					iterator	__prev(__hint);
-
-					// node < hint pos
-					if (_M_key_compare( __key, _M_get_key(__hint._M_node) ))
-					{
-						// node < root && root < hint pos
-						if (_M_key_compare( __key, _M_get_key(this->_M_header._M_parent))
-							&& _M_key_compare( _M_get_key(this->_M_header._M_parent), _M_get_key(__hint._M_node) ))
-							__hint = this->_M_header._M_parent; // start from root directly
-						else
-						{
-							--__hint;
-							while (__hint._M_node && _M_key_compare(__key, _M_get_key(__hint._M_node)))
-							{
-								__prev = __hint;
-								--__hint;
-							}
-						}
-					}
-					else if (_M_key_compare(_M_get_key(__hint._M_node), __key)) // (node > hint pos)
-					{
-						// node > root && root > hint pos
-						if (_M_key_compare( _M_get_key(this->_M_header._M_parent),  __key)
-							&& _M_key_compare( _M_get_key(__hint._M_node), _M_get_key(this->_M_header._M_parent) ))
-							__hint = this->_M_header._M_parent; // start from root directly
-						else
-						{
-							++__hint;
-							while (__hint._M_node && _M_key_compare(_M_get_key(__hint._M_node), __key))
-							{
-								__prev = __hint;
-								++__hint;
-							}
-						}
-					}
-				}
-
-				node_pointer	__cursor = __hint._M_node;
+				__parent = __cursor;
 
 				while (__cursor != 0)
 				{
@@ -961,6 +786,141 @@ namespace ft
 			return (ft::pair<node_pointer,bool>(__parent, __insert_left));
 		}
 
+
+	/* Rotate left */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_rotate_left(node_pointer __x)
+		{
+			node_pointer	__y = __x->_M_right;
+
+			__x->_M_right = __y->_M_left;
+			if (__y->_M_left != 0)
+				__y->_M_left->_M_parent = __x;
+			__y->_M_parent = __x->_M_parent;
+			if (__x == this->_M_header._M_parent)
+				this->_M_header._M_parent = __y;
+			else if (__x == __x->_M_parent->_M_left)
+				__x->_M_parent->_M_left = __y;
+			else
+				__x->_M_parent->_M_right = __y;
+			__y->_M_left = __x;
+			__x->_M_parent = __y;
+		}
+
+	/* Rotate right */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_rotate_right(node_pointer __x)
+		{
+			node_pointer	__y = __x->_M_left;
+
+			__x->_M_left = __y->_M_right;
+			if (__y->_M_right != 0)
+				__y->_M_right->_M_parent = __x;
+			__y->_M_parent = __x->_M_parent;
+			if (__x == this->_M_header._M_parent)
+				this->_M_header._M_parent = __y;
+			else if (__x == __x->_M_parent->_M_right)
+				__x->_M_parent->_M_right = __y;
+			else
+				__x->_M_parent->_M_left = __y;
+			__y->_M_right = __x;
+			__x->_M_parent = __y;
+		}
+
+	/* Rebalance tree */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_rebalance(node_pointer __node)
+		{
+			// if node is not root or has red parent, rebalance
+			if ((__node != this->_M_header._M_parent) && (__node->_M_parent->_M_color == RED))
+			{
+				node_pointer	__grand_parent = __node->_M_parent->_M_parent;
+				node_pointer	__uncle;
+
+				if (__node->_M_parent == __grand_parent->_M_left)
+				{
+					__uncle = __grand_parent->_M_right;
+
+					if (__uncle && __uncle->_M_color == RED) // uncle is red
+					{
+						__node->_M_parent->_M_color = BLACK;
+						__uncle->_M_color = BLACK;
+						__grand_parent->_M_color = RED;
+						_M_rebalance(__grand_parent);
+					}
+					else // no uncle or uncle is black
+					{
+						if (__node == __node->_M_parent->_M_right)
+						{
+							_M_rotate_left(__node->_M_parent);
+							__node = __node->_M_left;
+						}
+						_M_rotate_right(__grand_parent);
+						__node->_M_parent->_M_color = BLACK;
+						__grand_parent->_M_color = RED;
+					}
+				}
+				else
+				{
+					__uncle = __grand_parent->_M_left;
+
+					if (__uncle && __uncle->_M_color == RED) // uncle is red
+					{
+						__node->_M_parent->_M_color = BLACK;
+						__uncle->_M_color = BLACK;
+						__grand_parent->_M_color = RED;
+						_M_rebalance(__grand_parent);
+					}
+					else // no uncle or uncle is black
+					{
+						if (__node == __node->_M_parent->_M_left)
+						{
+							_M_rotate_right(__node->_M_parent);
+							__node = __node->_M_right;
+						}
+						_M_rotate_left(__grand_parent);
+						__node->_M_parent->_M_color = BLACK;
+						__grand_parent->_M_color = RED;
+					}
+				}
+			}
+			this->_M_header._M_parent->_M_color = BLACK;
+		}
+
+	/* Actually perform the insertion */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert(bool insert_left,
+													   node_pointer __node, node_pointer __parent)
+		{
+			__node->_M_parent = __parent;
+
+			if (this->_M_node_count == 0) // first node becomes the root
+			{
+				this->_M_header._M_parent = __node;
+				this->_M_header._M_left = __node;
+				this->_M_header._M_right = __node;
+			}
+			else if (insert_left)
+			{
+				__parent->_M_left = __node;
+				if (__parent == this->_M_header._M_left)
+					this->_M_header._M_left = __node; // update leftmost
+			}
+			else
+			{
+				__parent->_M_right = __node;
+				if (__parent == this->_M_header._M_right)
+					this->_M_header._M_right = __node; // update rightmost
+			}
+			_M_rebalance(__node);
+			++this->_M_node_count;
+		}
+
+	/* Inserts one node with no hint */
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(const value_type& __val)
