@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 16:56:26 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 17:00:13 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -560,7 +560,7 @@ namespace ft
 			static void	write_node_next(std::ofstream& outfile, node_pointer node);
 			static void	write_leaf(std::ofstream& outfile, char side, int count);
 			static void	write_branch(std::ofstream& outfile, node_pointer node);
-			void		write_tree_dot(void);
+			void		write_tree_dot(const std::string& filename);
 		}; // class RedBlackTree
 
 	/* Tree implementation ************************************************** */
@@ -1216,9 +1216,8 @@ namespace ft
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::write_tree_dot(void)
+		RedBlackTree<Key,Val,Compare,Alloc>::write_tree_dot(const std::string& filename)
 		{
-			std::string		filename = "ast.dot";
 			std::ofstream	outfile;
 
 			if (size() == 0)
