@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 12:36:21 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 13:16:48 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -446,23 +446,25 @@ namespace ft
 		{
 		protected:
 			// types
-			typedef Alloc						allocator_type;
-			typedef Key							key_type;
-			typedef Val							value_type;
-			typedef Compare						key_compare;
-			typedef value_type*					pointer;
-			typedef const value_type*			const_pointer;
-			typedef value_type&					reference;
-			typedef const value_type&			const_reference;
-			typedef std::ptrdiff_t				difference_type;
-			typedef std::size_t					size_type;
-			typedef RBTreeNode<Val>*			node_pointer;
-			typedef const RBTreeNode<Val>*		const_node_pointer;
+			typedef Alloc									allocator_type;
+			typedef Key										key_type;
+			typedef Val										value_type;
+			typedef Compare									key_compare;
+			typedef value_type*								pointer;
+			typedef const value_type*						const_pointer;
+			typedef value_type&								reference;
+			typedef const value_type&						const_reference;
+			typedef std::ptrdiff_t							difference_type;
+			typedef std::size_t								size_type;
+			typedef RBTreeNode<Val>*						node_pointer;
+			typedef const RBTreeNode<Val>*					const_node_pointer;
 
 		public:
 			// iterators
-			typedef RBtree_iterator<Val>		iterator;
-			typedef RBtree_const_iterator<Val>	const_iterator;
+			typedef RBtree_iterator<Val>					iterator;
+			typedef RBtree_const_iterator<Val>				const_iterator;
+			typedef ft::reverse_iterator<iterator>			reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 		private:
 			// aliases
@@ -516,10 +518,14 @@ namespace ft
 			key_compare			key_comp(void) const;
 
 			// iterators
-			iterator			begin(void);
-			const_iterator		begin(void) const;
-			iterator			end(void);
-			const_iterator		end(void) const;
+			iterator				begin(void);
+			const_iterator			begin(void) const;
+			iterator				end(void);
+			const_iterator			end(void) const;
+			reverse_iterator		rbegin(void);
+			const_reverse_iterator	rbegin(void) const;
+			reverse_iterator		rend(void);
+			const_reverse_iterator	rend(void) const;
 
 			// capacity
 			bool				empty(void) const;
@@ -881,7 +887,7 @@ namespace ft
 
 				while (it != ite)
 				{
-					_M_insert_node(*it);
+					_M_insert_node(*it); // tmp need range
 					++it;
 				}
 			}
@@ -923,6 +929,7 @@ namespace ft
 
 	/* iterators ************************************************************ */
 
+	/* Returns an iterator pointing to the first element in the tree */
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::begin(void)
@@ -937,6 +944,7 @@ namespace ft
 			return (const_iterator(this->_M_header._M_left));
 		}
 
+	/* Returns an iterator referring to the past-the-end element in the tree */
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::end(void)
@@ -949,6 +957,39 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::end(void) const
 		{
 			return (const_iterator(&this->_M_header));
+		}
+
+	/* Returns a reverse iterator pointing to the last element in the tree */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::reverse_iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::rbegin(void)
+		{
+			return (reverse_iterator(end()));
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::const_reverse_iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::rbegin(void) const
+		{
+			return (const_reverse_iterator(end()));
+		}
+
+	/*
+	 * Returns a reverse iterator pointing to the theoretical element preceding
+	 * the first element in the tree
+	 */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::reverse_iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::rend(void)
+		{
+			return (reverse_iterator(begin()));
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::const_reverse_iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::rend(void) const
+		{
+			return (const_reverse_iterator(begin()));
 		}
 
 	/* capacity ************************************************************* */

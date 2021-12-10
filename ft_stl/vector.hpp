@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 18:29:40 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 13:16:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -597,7 +597,7 @@ namespace ft
 			return (const_iterator(this->_M_begin));
 		}
 
-	/* Returns an iterator referring to the past-the-end element in the vector container */
+	/* Returns an iterator referring to the past-the-end element in the vector */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::iterator
 		vector<T,Alloc>::end(void)
