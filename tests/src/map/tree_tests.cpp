@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 13:55:42 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 16:53:40 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ namespace ft
 
 		tree_type	tree;
 		tree_type	copy_tree;
-		pair_type	ret;
 
 		std::cout << "tree size: " << tree.size() << '\n';
 		std::cout << "copy size: " << copy_tree.size() << '\n';
@@ -148,13 +147,35 @@ namespace ft
 		tree_type::iterator	end = copy_tree.end();
 		--end;
 
-		for (;
-			 end != copy_tree.begin();
-			 --end)
+		for ( ; end != copy_tree.begin(); --end)
 		{
 			std::cout << end->first << " => " << end->second << '\n';
 		}
 		std::cout << end->first << " => " << end->second << '\n';
+
+		std::cout << std::setw(42) << " TREE RANGE \n\n";
+
+		tree_type::iterator	from = copy_tree.begin();
+		tree_type::iterator	to = copy_tree.end();
+
+		for (int i = 0; i < 4; ++i)
+			++from;
+		for (int i = 0; i < 2; ++i)
+			--to;
+
+		std::cout << "from: " << from->first << '\n';
+		std::cout << "to:   " << to->first << '\n';
+
+		tree.insert(from, to);
+		std::cout << "tree size: " << tree.size() << '\n';
+
+		for (tree_type::iterator it = tree.begin();
+			 it != tree.end();
+			 ++it)
+		{
+			std::cout << it->first << " => " << it->second << '\n';
+		}
+		std::cout << "\n\n";
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 16:24:42 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 16:51:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -551,7 +551,9 @@ namespace ft
 			ft::pair<iterator,bool>	insert(const value_type& val);
 			iterator				insert(iterator position, const value_type& val);
 			template<typename InputIterator>
-				void	insert(InputIterator first, InputIterator last);
+				void	insert(InputIterator first, InputIterator last,
+							   typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
+							   									value_type>::value>::type* = 0);
 
 			// debug
 			static void	write_node(std::ofstream& outfile, node_pointer node);
@@ -1128,12 +1130,19 @@ namespace ft
 			return (_M_insert_node(position, val));
 		}
 
-	// template<typename Key, typename Val, typename Compare, typename Alloc>
-	// template<typename InputIterator>
-	// 	void
-	// 	RedBlackTree<Key,Val,Compare,Alloc>::insert(InputIterator first, InputIterator last)
-	// 	{
-	// 	}
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+	template<typename InputIterator>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::insert(InputIterator first, InputIterator last,
+													typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
+													value_type>::value>::type*)
+		{
+			while (first != last)
+			{
+				_M_insert_node(end(), *first);
+				++first;
+			}
+		}
 
 	/* debug **************************************************************** */
 
