@@ -31,6 +31,7 @@
 *.out
 *.app
 
+samples/
 ft_containers
 original
 test_containers
