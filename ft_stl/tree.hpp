@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 13:55:10 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 14:23:54 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -784,53 +784,7 @@ namespace ft
 			this->_M_header._M_parent->_M_color = BLACK;
 		}
 
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		typename ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer,bool>
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_node_pos(iterator __hint, const key_type& __key)
-		{
-			bool		__insert_left = true;
-			iterator	__parent;
-
-			// check whether the new node is lower than the current leftmost node
-			if ( _M_key_compare( __key, _M_get_key(_M_get_leftmost()) ) )
-			{
-				__parent = iterator(_M_get_leftmost());
-			}
-			// check whether the new node is greater than the current rightmost node
-			else if ( _M_key_compare(_M_get_key(_M_get_rightmost()), __key ) )
-			{
-				__insert_left = false;
-				__parent = iterator(_M_get_rightmost());
-			}
-			// else move down to the tree until a leaf
-			else
-			{
-				iterator	__cursor(__hint);
-
-				while (__cursor != 0)
-				{
-					__parent = __cursor;
-
-					if (_M_key_compare(__key, _M_get_key(__cursor))) // (node < cursor)
-					{
-						--__cursor;
-						__insert_left = true;
-					}
-					else if (_M_key_compare(_M_get_key(__cursor), __key)) // (node > cursor)
-					{
-						++__cursor;
-						__insert_left = false;
-					}
-					else // key already exists
-					{
-						return (ft::pair<node_pointer,bool>(0, 0));
-					}
-				}
-			}
-			return (ft::pair<node_pointer,bool>(__parent, __insert_left));
-		}
-
-	// Insert a node
+	// Actually perform the insertion
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert(bool insert_left,
@@ -860,14 +814,13 @@ namespace ft
 			++this->_M_node_count;
 		}
 
+	// get node position
 	template<typename Key, typename Val, typename Compare, typename Alloc>
-		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(const value_type& __val)
+		typename ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer,bool>
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_node_pos(iterator __hint, const key_type& __key)
 		{
-			const key_type	__key = __val.first;
 			bool			__insert_left = true;
 			node_pointer	__parent;
-			node_pointer	__node = _M_create_node(__val);
 
 			// check whether the new node is lower than the current leftmost node
 			if ( _M_key_compare( __key, _M_get_key(_M_get_leftmost()) ) )
@@ -883,7 +836,7 @@ namespace ft
 			// else move down to the tree until a leaf
 			else
 			{
-				node_pointer	__cursor(_M_get_root());
+				node_pointer	__cursor(__hint._M_node);
 
 				while (__cursor != 0)
 				{
@@ -901,13 +854,26 @@ namespace ft
 					}
 					else // key already exists
 					{
-						_M_drop_node(__node);
-						// second element is false if no new value was inserted
-						return (_pair_it_bool(iterator(__node), false));
+						return (ft::pair<node_pointer,bool>(__cursor, 0));
 					}
 				}
 			}
-			_M_insert(__insert_left, __node, __parent);
+			return (ft::pair<node_pointer,bool>(__parent, __insert_left));
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(const value_type& __val)
+		{
+			const key_type				__key = __val.first;
+			ft::pair<node_pointer,bool>	__res = _M_get_node_pos(iterator(_M_get_root()), __key);
+
+			if (_M_get_key(__res.first) == __key) // key already exists
+				return (_pair_it_bool(iterator(__res.first), false));
+
+			node_pointer	__node = _M_create_node(__val);
+
+			_M_insert(__res.second, __node, __res.first);
 			return (_pair_it_bool(iterator(__node), true));
 		}
 
