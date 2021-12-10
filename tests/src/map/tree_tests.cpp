@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 17:00:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 17:30:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,11 +180,49 @@ namespace ft
 
 		std::cout << "\n\n";
 	}
+
+	void	test_tree_bounds(void)
+	{
+		std::cout << std::setw(42) << " MAP \n\n";
+
+		std::map<int, std::string>	m;
+		tree_type					tree;
+
+		m[8]  = "eight";
+		m[18] = "eighteen";
+		m[5]  = "five";
+		m[15] = "fifteen";
+		m[17] = "seventeen";
+		m[25] = "twenty-five";
+		m[40] = "fourty";
+		m[80] = "eigthy";
+		m[11] = "eleven";
+		m[20] = "twenty";
+
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(18, "eighteen") );
+		tree.insert( pair<int, std::string>(5,  "five") );
+		tree.insert( pair<int, std::string>(15, "fifteen") );
+		tree.insert( pair<int, std::string>(17, "seventeen") );
+		tree.insert( pair<int, std::string>(25, "twenty-five") );
+		tree.insert( pair<int, std::string>(40, "fourty") );
+		tree.insert( pair<int, std::string>(80, "eighty") );
+		tree.insert( pair<int, std::string>(11, "eleven") );
+		tree.insert( pair<int, std::string>(20, "twenty") );
+
+		std::cout << "m.lower_bound(5):     " << m.lower_bound(5)->first << '\n'
+				  << "tree.lower_bound(5):  " << tree.lower_bound(5)->first << '\n'
+				  << "m.lower_bound(24):    " << m.lower_bound(24)->first << '\n'
+				  << "tree.lower_bound(24): " << tree.lower_bound(24)->first << "\n\n"
+				  << "(m.lower_bound(99) == m.end())?       " << (m.lower_bound(99) == m.end()) << '\n'
+				  << "(tree.lower_bound(99) == tree.end())? " << (tree.lower_bound(99) == tree.end()) << '\n';
+	}
 }
 
 int	main(void)
 {
 	// ft::test_tree();
-	ft::test_tree_insert();
+	// ft::test_tree_insert();
+	ft::test_tree_bounds();
 	return (0);
 }

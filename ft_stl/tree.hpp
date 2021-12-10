@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 17:00:13 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 17:21:41 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -523,11 +523,11 @@ namespace ft
 			~RedBlackTree(void);
 
 			// allocator
-			allocator_type		get_alloc(void) const;
-			_node_alloc_type	get_node_alloc(void) const;
+			allocator_type			get_alloc(void) const;
+			_node_alloc_type		get_node_alloc(void) const;
 
 			// getters
-			key_compare			key_comp(void) const;
+			key_compare				key_comp(void) const;
 
 			// iterators
 			iterator				begin(void);
@@ -539,13 +539,17 @@ namespace ft
 			reverse_iterator		rend(void);
 			const_reverse_iterator	rend(void) const;
 
+			// element access
+			iterator				lower_bound(const key_type& k);
+			const_iterator			lower_bound(const key_type& k) const;
+
 			// capacity
-			bool				empty(void) const;
-			size_type			size(void) const;
-			size_type			max_size(void) const;
+			bool					empty(void) const;
+			size_type				size(void) const;
+			size_type				max_size(void) const;
 
 			// modifiers
-			void				clear(void);
+			void					clear(void);
 
 			// tmp
 			ft::pair<iterator,bool>	insert(const value_type& val);
@@ -718,7 +722,7 @@ namespace ft
 					}
 				}
 			}
-			else if (_M_key_compare(_M_get_key(__hint._M_node), __key)) // (node > hint pos)
+			else if (_M_key_compare(_M_get_key(__hint._M_node), __key)) // node > hint pos
 			{
 				// node > root && root > hint pos
 				if (_M_key_compare( _M_get_key(this->_M_header._M_parent),  __key)
@@ -1102,6 +1106,41 @@ namespace ft
 		}
 
 	/* element access ******************************************************* */
+
+	/* Gets the first element that is equivalent or after k */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::lower_bound(const key_type& k)
+		{
+			iterator	it = begin();
+			iterator	ite = end();
+
+			while (it != ite)
+			{
+				// first element for which key_comp(element_key,k) would return false
+				if (!_M_key_compare(_M_get_key(it._M_node), k))
+					return (it);
+				++it;
+			}
+			return (ite);
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::lower_bound(const key_type& k) const
+		{
+			const_iterator	it = begin();
+			const_iterator	ite = end();
+
+			while (it != ite)
+			{
+				// first element for which key_comp(element_key,k) would return false
+				if (!_M_key_compare(_M_get_key(it._M_node), k))
+					return (it);
+				++it;
+			}
+			return (ite);
+		}
 
 	/* modifiers ************************************************************ */
 
