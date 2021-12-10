@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/09 23:55:31 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 12:36:21 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -322,23 +322,23 @@ namespace ft
 		{
 			// types
 			typedef T										value_type;
-			typedef T&										reference;
-			typedef T*										pointer;
+			typedef const T&								reference;
+			typedef const T*								pointer;
 			typedef RBtree_iterator<T>						iterator;
 			typedef typename ft::bidirectional_iterator_tag	iterator_category;
 			typedef std::ptrdiff_t							difference_type;
-			typedef RBTreeNode<T>*							node_pointer;
+			typedef const RBTreeNode<T>*					const_node_pointer;
 
-			node_pointer	_M_node; // copy of the original iterator
+			const_node_pointer	_M_node; // copy of the original iterator
 
 			// default constructor
 			RBtree_const_iterator(void)
-			: _M_node()
+			: _M_node(0)
 			{
 			}
 
 			// initalization constructor
-			RBtree_const_iterator(node_pointer x)
+			RBtree_const_iterator(const_node_pointer x)
 			: _M_node(x)
 			{
 			}
@@ -368,7 +368,7 @@ namespace ft
 			}
 
 			// return copy of the underlying node
-			node_pointer	get_node(void) const
+			const_node_pointer	get_node(void) const
 			{
 				return (_M_node);
 			}
@@ -527,8 +527,13 @@ namespace ft
 			size_type			max_size(void) const;
 
 			// modifiers
-			ft::pair<iterator,bool>	insert(const value_type& val); // tmp
-			void					clear(void);
+			void				clear(void);
+
+			// tmp
+			ft::pair<iterator,bool>	insert(const value_type& val);
+			iterator				insert(iterator position, const value_type& val);
+			template<typename InputIterator>
+				void	insert(InputIterator first, InputIterator last);
 
 			// debug
 			static void	write_node(std::ofstream& outfile, node_pointer node);
@@ -876,9 +881,7 @@ namespace ft
 
 				while (it != ite)
 				{
-					value_type	val = *it;
-					std::cout << "val: " << val.first << std::endl;
-					_M_insert_node(val);
+					_M_insert_node(*it);
 					++it;
 				}
 			}
@@ -988,6 +991,19 @@ namespace ft
 		{
 			return (_M_insert_node(val));
 		}
+
+	// template<typename Key, typename Val, typename Compare, typename Alloc>
+	// 	typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
+	// 	RedBlackTree<Key,Val,Compare,Alloc>::	insert(iterator position, const value_type& val)
+	// 	{
+	// 	}
+
+	// template<typename Key, typename Val, typename Compare, typename Alloc>
+	// template<typename InputIterator>
+	// 	void
+	// 	RedBlackTree<Key,Val,Compare,Alloc>::insert(InputIterator first, InputIterator last)
+	// 	{
+	// 	}
 
 	/* debug **************************************************************** */
 

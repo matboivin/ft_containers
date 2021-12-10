@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/09 23:51:31 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/10 12:35:43 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,13 +139,20 @@ namespace ft
 			std::cout << it->first << " => " << it->second << '\n';
 		}
 
-		// copy_tree = tree;
+		copy_tree = tree;
 
 		tree.write_tree_dot();
 
 		tree.clear();
 		std::cout << "tree size: " << tree.size() << '\n';
 		std::cout << "copy size: " << copy_tree.size() << '\n';
+
+		for (tree_type::iterator it = copy_tree.begin();
+			 it != copy_tree.end();
+			 ++it, ++i)
+		{
+			std::cout << it->first << " => " << it->second << '\n';
+		}
 	}
 }
 
