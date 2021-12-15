@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 13:16:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/15 14:40:14 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,7 +198,7 @@ namespace ft
 		{
 			this->_M_begin = this->_M_allocate(__n);
 			this->_M_end = this->_M_begin; // since it's empty, points to the beginning
-			this->_M_endOfStorage = this->_M_begin + __n;
+			this->_M_end_of_storage = this->_M_begin + __n;
 		}
 
 	/* Deallocate a storage space of size n pointed to by pointer p */
@@ -221,11 +221,11 @@ namespace ft
 
 			__x._M_begin = this->_M_begin;
 			__x._M_end = this->_M_end;
-			__x._M_endOfStorage = this->_M_endOfStorage;
+			__x._M_end_of_storage = this->_M_endOfStorage;
 
 			this->_M_begin = __tmp_begin;
 			this->_M_end = __tmp_end;
-			this->_M_endOfStorage = __tmp_endOfStorage;
+			this->_M_end_of_storage = __tmp_endOfStorage;
 		}
 
 	/* Construct n elements using default value */
@@ -331,7 +331,7 @@ namespace ft
 					_M_deallocate(this->_M_begin, capacity());
 					this->_M_begin = pointer(__new_start);
 					this->_M_end = pointer(__new_end);
-					this->_M_endOfStorage = this->_M_begin + __new_size;
+					this->_M_end_of_storage = this->_M_begin + __new_size;
 				}
 			}
 		}
@@ -400,7 +400,7 @@ namespace ft
 					_M_deallocate(this->_M_begin, capacity());
 					this->_M_begin = pointer(__new_start);
 					this->_M_end = pointer(__new_end);
-					this->_M_endOfStorage = this->_M_begin + __new_size;
+					this->_M_end_of_storage = this->_M_begin + __new_size;
 				}
 			}
 		}
@@ -707,7 +707,7 @@ namespace ft
 		typename vector<T,Alloc>::size_type
 		vector<T,Alloc>::capacity(void) const
 		{
-			return (size_type(this->_M_endOfStorage - this->_M_begin));
+			return (size_type(this->_M_end_of_storage - this->_M_begin));
 		}
 
 	/* Requests that the vector capacity be at least enough to contain n elements */
