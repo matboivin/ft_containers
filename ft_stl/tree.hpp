@@ -539,14 +539,14 @@ namespace ft
 			reverse_iterator		rend(void);
 			const_reverse_iterator	rend(void) const;
 
-			// element access
+			// lookup
+			size_type				count(const key_type& k) const;
+			iterator				find(const key_type& k);
+			const_iterator			find(const key_type& k) const;
 			iterator				lower_bound(const key_type& k);
 			const_iterator			lower_bound(const key_type& k) const;
 			iterator				upper_bound(const key_type& k);
 			const_iterator			upper_bound(const key_type& k) const;
-
-			iterator				find(const key_type& k);
-			const_iterator			find(const key_type& k) const;
 
 			// capacity
 			bool					empty(void) const;
@@ -1109,7 +1109,50 @@ namespace ft
 			return (this->get_node_alloc().max_size());
 		}
 
-	/* element access ******************************************************* */
+	/* lookup *************************************************************** */
+
+	/* Returns 1 if the tree contains an element matching key k */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::size_type
+		RedBlackTree<Key,Val,Compare,Alloc>::count(const key_type& k) const
+		{
+			const_iterator	it = this->find(k);
+
+			return (it != this->end());
+		}
+
+	/* Gets the element with the key k, else return end */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::find(const key_type& k)
+		{
+			iterator	it = begin();
+			iterator	ite = end();
+
+			while (it != ite)
+			{
+				if (k == _M_get_key(it._M_node))
+					return (it);
+				++it;
+			}
+			return (ite);
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::find(const key_type& k) const
+		{
+			const_iterator	it = begin();
+			const_iterator	ite = end();
+
+			while (it != ite)
+			{
+				if (k == _M_get_key(it._M_node))
+					return (it);
+				++it;
+			}
+			return (ite);
+		}
 
 	/*
 	 * Gets the first element that is equivalent or after k
@@ -1177,39 +1220,6 @@ namespace ft
 			while (it != ite)
 			{
 				if (_M_key_compare(k, _M_get_key(it._M_node))) // k < elem
-					return (it);
-				++it;
-			}
-			return (ite);
-		}
-
-	/* Gets the element with the key k, else return end */
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
-		RedBlackTree<Key,Val,Compare,Alloc>::find(const key_type& k)
-		{
-			iterator	it = begin();
-			iterator	ite = end();
-
-			while (it != ite)
-			{
-				if (k == _M_get_key(it._M_node))
-					return (it);
-				++it;
-			}
-			return (ite);
-		}
-
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator
-		RedBlackTree<Key,Val,Compare,Alloc>::find(const key_type& k) const
-		{
-			const_iterator	it = begin();
-			const_iterator	ite = end();
-
-			while (it != ite)
-			{
-				if (k == _M_get_key(it._M_node))
 					return (it);
 				++it;
 			}
