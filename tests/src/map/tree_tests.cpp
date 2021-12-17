@@ -501,7 +501,7 @@ namespace ft
 		std::cout << "tree size: " << tree.size() << '\n';
 	}
 
-		void	test_tree(void)
+	void	test_tree(void)
 	{
 		ft::test_tree_default_ctor();
 		ft::test_tree_copy_ctor();

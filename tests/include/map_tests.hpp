@@ -18,7 +18,7 @@
 #include "tests.hpp"
 
 #if defined(TEST_FT)
-# include "map.hpp"
+//# include "map.hpp"
 
 namespace ft
 #else

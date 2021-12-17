@@ -15,19 +15,18 @@ COL_RESET = \033[0m
 
 IMPL_FILES = algorithm.hpp \
 			 iterator.hpp \
-			 map.hpp \
 			 stack.hpp \
 			 tree.hpp \
 			 type_traits.hpp \
 			 utility.hpp \
 			 vector.hpp
+#			 map.hpp tree.hpp
 
 IMPL_DIR = ft_stl
 
 # TESTS
 
 TEST_INC_FILES = tests.hpp \
-				 map_tests.hpp \
 				 revit_tests.hpp \
 				 stack_tests.hpp \
 				 vector_tests.hpp
@@ -35,7 +34,6 @@ TEST_INC_FILES = tests.hpp \
 TEST_SRC_FILES = main.cpp \
 				 generate_output.cpp \
 				 test_utils.cpp \
-				 map_tests.cpp \
 				 revit_test_comp_ops.cpp \
 				 revit_test_construct.cpp \
 				 revit_test_elem_access.cpp \
@@ -56,6 +54,8 @@ TEST_SRC_FILES = main.cpp \
 				 vector_test_modifiers.cpp \
 				 vector_test_swap.cpp \
 				 vector_tests.cpp
+
+# map_tests.cpp map_tests.hpp
 
 INC_DIR = tests/include
 SRC_DIR = tests/src
@@ -131,10 +131,10 @@ debug:
 
 debug_tree:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) tests/src/map/tree_tests.cpp -o test_tree
-	valgrind --leak-check=full ./test_tree
+#	valgrind --leak-check=full ./test_tree
 
 check_leaks: $(NAME)
-	valgrind --leak-check=full ./$(NAME)
+#	valgrind --leak-check=full ./$(NAME)
 
 show:
 	@echo "VPATH\n$(VPATH)\n"
