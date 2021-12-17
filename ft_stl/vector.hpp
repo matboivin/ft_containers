@@ -58,7 +58,7 @@ namespace ft
 			allocator_type	_M_alloc; // internal copy of the allocator
 			pointer			_M_begin; // points to the beginning of the dynamic array
 			pointer			_M_end;   // points to the end of the dynamic array
-			pointer			_M_endOfStorage; // points to the end of the allocation
+			pointer			_M_end_of_storage; // points to the end of the allocation
 
 		protected:
 			// helpers
@@ -217,11 +217,11 @@ namespace ft
 		{
 			pointer	__tmp_begin(__x._M_begin);
 			pointer	__tmp_end(__x._M_end);
-			pointer	__tmp_endOfStorage(__x._M_endOfStorage);
+			pointer	__tmp_endOfStorage(__x._M_end_of_storage);
 
 			__x._M_begin = this->_M_begin;
 			__x._M_end = this->_M_end;
-			__x._M_end_of_storage = this->_M_endOfStorage;
+			__x._M_end_of_storage = this->_M_end_of_storage;
 
 			this->_M_begin = __tmp_begin;
 			this->_M_end = __tmp_end;
@@ -476,7 +476,7 @@ namespace ft
 	 */
 	template<typename T, typename Alloc>
 		vector<T,Alloc>::vector(const allocator_type& alloc)
-		: _M_alloc(alloc), _M_begin(), _M_end(), _M_endOfStorage()
+		: _M_alloc(alloc), _M_begin(), _M_end(), _M_end_of_storage()
 		{
 		}
 
@@ -842,7 +842,7 @@ namespace ft
 		{
 			// If the new vector size surpasses the current vector capacity,
 			// it causes an automatic reallocation of the allocated storage space.
-			if (this->_M_end == this->_M_endOfStorage)
+			if (this->_M_end == this->_M_end_of_storage)
 				reserve(size() + 1);
 
 			this->_M_alloc.construct(this->_M_end, val);
