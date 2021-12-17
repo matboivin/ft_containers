@@ -130,7 +130,7 @@ debug:
 	./$(NAME_CMP)
 
 debug_tree:
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) tests/src/map/tree_tests.cpp -o test_tree
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) tests/src/map/tree_tests.cpp tests/src/main.cpp tests/src/test_utils.cpp -o test_tree
 #	valgrind --leak-check=full ./test_tree
 
 check_leaks: $(NAME)

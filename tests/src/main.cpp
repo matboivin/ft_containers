@@ -20,18 +20,18 @@
 int	main(void)
 {
 	#if defined(TEST_FT)
-	ft::test_vector();
-	ft::test_stack();
+	// ft::test_vector();
+	// ft::test_stack();
 	// ft::test_revit();
 	// ft::test_map();
 	#elif defined(TEST_STD)
-	std::test_vector();
-	std::test_stack();
+	// std::test_vector();
+	// std::test_stack();
 	// std::test_revit();
 	// std::test_map();
 	#else
-	//ft::test_tree();
-	generate_output();
+	ft::test_tree();
+	// generate_output();
 	#endif
 
 	return (0);
