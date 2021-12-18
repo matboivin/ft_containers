@@ -128,10 +128,12 @@ debug:
 
 debug_tree:
 	$(CXX) $(CPPFLAGS) $(CXXFLAGS) tests/src/map/tree_tests.cpp tests/src/main.cpp tests/src/test_utils.cpp -o test_tree
-#	valgrind --leak-check=full ./test_tree
+
+test_tree:
+	valgrind --leak-check=full ./test_tree
 
 check_leaks: $(NAME)
-#	valgrind --leak-check=full ./$(NAME)
+	valgrind --leak-check=full ./$(NAME)
 
 show:
 	@echo "VPATH\n$(VPATH)\n"
@@ -148,4 +150,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all debug show clean fclean re
+.PHONY: all debug show clean fclean re test_tree

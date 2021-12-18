@@ -499,7 +499,9 @@ namespace ft
 			node_pointer				_M_get_leftmost(void) const;
 			node_pointer				_M_get_rightmost(void) const;
 			const key_type&				_M_get_key(node_pointer __node) const;
+			const key_type&				_M_get_key(const_node_pointer __node) const;
 			const_reference				_M_get_value(node_pointer __node) const;
+			const_reference				_M_get_value(const_node_pointer __node) const;
 			node_pointer				_M_get_pos_from_hint(iterator __hint, const key_type& __key);
 			ft::pair<node_pointer,bool>	_M_get_insert_pos(iterator __hint, const key_type& __key);
 			void						_M_rotate_left(node_pointer __x);
@@ -685,10 +687,24 @@ namespace ft
 			return (static_cast<key_type&>(__node->_get_value_ptr()->first));
 		}
 
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		const typename RedBlackTree<Key,Val,Compare,Alloc>::key_type&
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_key(const_node_pointer __node) const
+		{
+			return (static_cast<const key_type&>(__node->_get_value_ptr()->first));
+		}
+
 	// Get pair<key,value>
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_reference
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_value(node_pointer __node) const
+		{
+			return (*__node->_get_value_ptr());
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::const_reference
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_value(const_node_pointer __node) const
 		{
 			return (*__node->_get_value_ptr());
 		}
