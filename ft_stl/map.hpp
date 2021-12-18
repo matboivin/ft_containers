@@ -122,6 +122,15 @@ namespace ft
 			void				clear(void);
 
 			// lookup
+			iterator			find(const key_type& k);
+			const_iterator		find(const key_type& k) const;
+			size_type			count(const key_type& k) const;
+			iterator			lower_bound(const key_type& k);
+			const_iterator		lower_bound(const key_type& k) const;
+			iterator			upper_bound(const key_type& k);
+			const_iterator		upper_bound(const key_type& k) const;
+			pair<iterator,iterator>				equal_range(const key_type& k);
+			pair<const_iterator,const_iterator>	equal_range(const key_type& k) const;
 
 			// observers
 			key_compare		key_comp(void) const;
@@ -321,6 +330,87 @@ namespace ft
 		}
 
 	/* lookup *************************************************************** */
+
+	/*
+	 * Returns the number of elements matching key k
+	 * Since every key in the map is unique, it will return one if found. Otherwise, zero.
+	 */
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		typename map<Key,T,Compare,Allocator>::iterator
+		map<Key,T,Compare,Allocator>::find(const key_type& k)
+		{
+			return (this->_M_tree.find(k));
+		}
+
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		typename map<Key,T,Compare,Allocator>::const_iterator
+		map<Key,T,Compare,Allocator>::find(const key_type& k) const
+		{
+			return (this->_M_tree.find(k));
+		}
+
+	// Gets the element with the key k, else return end
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		typename map<Key,T,Compare,Allocator>::size_type
+		map<Key,T,Compare,Allocator>::count(const key_type& k) const
+		{
+			return (this->_M_tree.count(k) != this->_M_tree.end());
+		}
+
+	/*
+	 * Gets the first element that is equivalent or after k
+	 * i.e. The first element for which key_comp(element_key,k) would return false
+	 */
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		typename map<Key,T,Compare,Allocator>::iterator
+		map<Key,T,Compare,Allocator>::lower_bound(const key_type& k)
+		{
+			return (this->_M_tree.lower_bound(k));
+		}
+
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		typename map<Key,T,Compare,Allocator>::const_iterator
+		map<Key,T,Compare,Allocator>::lower_bound(const key_type& k) const
+		{
+			return (this->_M_tree.lower_bound(k));
+		}
+
+	/*
+	 * Gets the first element that is after k
+	 * i.e. The first element for which key_comp(k,element_key) would return true
+	 */
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		typename map<Key,T,Compare,Allocator>::iterator
+		map<Key,T,Compare,Allocator>::upper_bound(const key_type& k)
+		{
+			return (this->_M_tree.upper_bound(k));
+		}
+
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		typename map<Key,T,Compare,Allocator>::const_iterator
+		map<Key,T,Compare,Allocator>::upper_bound(const key_type& k) const
+		{
+			return (this->_M_tree.upper_bound(k));
+		}
+
+	/*
+	 * Returns the bounds of a range that have a key equivalent to k.
+	 * Since every key in the map is unique, it will return a range of one element.
+	 * If k is not found, returns two iterators pointing to the first element after k.
+	 */
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		ft::pair<typename map<Key,T,Compare,Allocator>::iterator,typename map<Key,T,Compare,Allocator>::iterator>
+		map<Key,T,Compare,Allocator>::equal_range(const key_type& k)
+		{
+			return (this->_M_tree.equal_range(k));
+		}
+
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		ft::pair<typename map<Key,T,Compare,Allocator>::const_iterator,typename map<Key,T,Compare,Allocator>::const_iterator>
+		map<Key,T,Compare,Allocator>::equal_range(const key_type& k) const
+		{
+			return (this->_M_tree.equal_range(k));
+		}
 
 	/* observers ************************************************************ */
 

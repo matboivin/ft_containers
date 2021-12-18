@@ -607,9 +607,9 @@ namespace ft
 			void					clear(void);
 
 			// lookup
-			size_type				count(const key_type& k) const;
 			iterator				find(const key_type& k);
 			const_iterator			find(const key_type& k) const;
+			size_type				count(const key_type& k) const;
 			iterator				lower_bound(const key_type& k);
 			const_iterator			lower_bound(const key_type& k) const;
 			iterator				upper_bound(const key_type& k);
@@ -1249,22 +1249,6 @@ namespace ft
 
 	/* lookup *************************************************************** */
 
-	// Returns the number of elements matching key k
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		typename RedBlackTree<Key,Val,Compare,Alloc>::size_type
-		RedBlackTree<Key,Val,Compare,Alloc>::count(const key_type& k) const
-		{
-			size_type		count = 0;
-			const_iterator	it = this->find(k);
-
-			while ((it != this->end()) && (k == _M_get_key(it._M_node)))
-			{
-				++count;
-				++it;
-			}
-			return (count);
-		}
-
 	// Gets the element with the key k, else return end
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
@@ -1296,6 +1280,22 @@ namespace ft
 				++it;
 			}
 			return (ite);
+		}
+
+	// Returns the number of elements matching key k
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::size_type
+		RedBlackTree<Key,Val,Compare,Alloc>::count(const key_type& k) const
+		{
+			size_type		count = 0;
+			const_iterator	it = this->find(k);
+
+			while ((it != this->end()) && (k == _M_get_key(it._M_node)))
+			{
+				++count;
+				++it;
+			}
+			return (count);
 		}
 
 	/*
