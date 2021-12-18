@@ -331,10 +331,7 @@ namespace ft
 
 	/* lookup *************************************************************** */
 
-	/*
-	 * Returns the number of elements matching key k
-	 * Since every key in the map is unique, it will return one if found. Otherwise, zero.
-	 */
+	// Gets the element with the key k, else return end
 	template<typename Key, typename T, typename Compare, typename Allocator>
 		typename map<Key,T,Compare,Allocator>::iterator
 		map<Key,T,Compare,Allocator>::find(const key_type& k)
@@ -349,7 +346,10 @@ namespace ft
 			return (this->_M_tree.find(k));
 		}
 
-	// Gets the element with the key k, else return end
+	/*
+	 * Returns the number of elements matching key k
+	 * Since every key in the map is unique, it will return one if found. Otherwise, zero.
+	 */
 	template<typename Key, typename T, typename Compare, typename Allocator>
 		typename map<Key,T,Compare,Allocator>::size_type
 		map<Key,T,Compare,Allocator>::count(const key_type& k) const
