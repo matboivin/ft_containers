@@ -103,9 +103,12 @@ namespace ft
 					while (x == __parent->_M_right)
 					{
 						x = __parent;
+						if (x->_M_sentinel == 1)
+							break ;
 						__parent = __parent->_M_parent;
 					}
-					x = __parent;
+					if (x != __parent)
+						x = __parent;
 				}
 				return (x);
 			}
@@ -125,9 +128,12 @@ namespace ft
 					while (x == __parent->_M_right)
 					{
 						x = __parent;
+						if (x->_M_sentinel == 1)
+							break ;
 						__parent = __parent->_M_parent;
 					}
-					x = __parent;
+					if (x != __parent)
+						x = __parent;
 				}
 				return (x);
 			}
@@ -203,6 +209,46 @@ namespace ft
 			RBTreeHeader(void)
 			{
 				_M_reset();
+			}
+
+			// swap data
+			void	_M_swap(RBTreeHeader& other)
+			{
+				const NodeColor		tmp_color(_M_header._M_color);
+				RBTreeNode<Val>*	tmp_parent(_M_header._M_parent);
+				RBTreeNode<Val>*	tmp_left(_M_header._M_left);
+				RBTreeNode<Val>*	tmp_right(_M_header._M_right);
+				const int			tmp_sentinel(_M_header._M_sentinel);
+				const std::size_t	tmp_count(_M_node_count);
+
+				_M_header._M_color = other._M_header._M_color;
+				_M_header._M_parent = other._M_header._M_parent;
+				_M_header._M_left = other._M_header._M_left;
+				_M_header._M_right = other._M_header._M_right;
+				_M_header._M_sentinel = other._M_header._M_sentinel;
+				_M_header._M_parent->_M_parent = &_M_header;
+				_M_node_count = other._M_node_count;
+
+				other._M_header._M_color = tmp_color;
+				other._M_header._M_parent = tmp_parent;
+				other._M_header._M_left = tmp_left;
+				other._M_header._M_right = tmp_right;
+				other._M_header._M_sentinel = tmp_sentinel;
+				other._M_header._M_parent->_M_parent = &other._M_header;
+				other._M_node_count = tmp_count;
+			}
+
+			void	_M_copy_reset(RBTreeHeader& other)
+			{
+				_M_header._M_color = other._M_header._M_color;
+				_M_header._M_parent = other._M_header._M_parent;
+				_M_header._M_left = other._M_header._M_left;
+				_M_header._M_right = other._M_header._M_right;
+				_M_header._M_sentinel = other._M_header._M_sentinel;
+				_M_header._M_parent->_M_parent = &_M_header;
+				_M_node_count = other._M_node_count;
+
+				other._M_reset();
 			}
 
 			// set defaults
@@ -558,15 +604,14 @@ namespace ft
 			size_type				max_size(void) const;
 
 			// modifiers
-			void					clear(void);
-
-			// tmp
 			ft::pair<iterator,bool>	insert(const value_type& val);
 			iterator				insert(iterator position, const value_type& val);
 			template<typename InputIterator>
 				void	insert(InputIterator first, InputIterator last,
 							   typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
 							   									value_type>::value>::type* = 0);
+			void					swap(RedBlackTree& other);
+			void					clear(void);
 
 			// debug
 			static void	write_node(std::ofstream& outfile, node_pointer node);
@@ -1142,7 +1187,6 @@ namespace ft
 				++count;
 				++it;
 			}
-
 			return (count);
 		}
 
@@ -1277,14 +1321,6 @@ namespace ft
 
 	/* modifiers ************************************************************ */
 
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		void
-		RedBlackTree<Key,Val,Compare,Alloc>::clear(void)
-		{
-			_M_erase(this->_M_header._M_parent);
-			this->_M_reset();
-		}
-
 	// tmp (insert from map)
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
@@ -1312,6 +1348,32 @@ namespace ft
 				_M_insert_node(end(), *first);
 				++first;
 			}
+		}
+
+	/* Exchanges the content of the tree and the other tree */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::swap(RedBlackTree& other)
+		{
+			key_compare		tmp_key_cmp(this->_M_key_compare);
+
+			this->_M_key_compare = other._M_key_compare;
+			other._M_key_compare = tmp_key_cmp;
+			if (size() > 0)
+				this->_M_swap(other);
+			else if (other.size() == 0)
+				other._M_copy_reset(*this);
+			else
+				this->_M_copy_reset(other);
+		}
+
+	/* Destroys all elements from the tree, leaving it with a size of 0 */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::clear(void)
+		{
+			_M_erase(this->_M_header._M_parent);
+			this->_M_reset();
 		}
 
 	/* debug **************************************************************** */
@@ -1416,13 +1478,12 @@ namespace ft
 			outfile.close();
 			std::cout << "Successfully created " << filename_dot << " in working dir" << std::endl;
 
-			std::string	dot_cmd = "dot -Tsvg ";
-
-			dot_cmd += filename;
-			dot_cmd += ".dot -o ";
-			dot_cmd += filename;
-			dot_cmd += ".svg";
-			system(dot_cmd.c_str());
+			// std::string	dot_cmd = "dot -Tsvg ";
+			// dot_cmd += filename;
+			// dot_cmd += ".dot -o ";
+			// dot_cmd += filename;
+			// dot_cmd += ".svg";
+			// system(dot_cmd.c_str());
 		}
 
 } // namespace ft

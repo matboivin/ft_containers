@@ -72,36 +72,33 @@ namespace std
 	void	test_vec_non_mb_swap(void);
 }
 
-/*
- * Display the vector size, capacity and content
- */
-
+/* Display the vector size, capacity and content */
 template<typename Vec>
-static void	displayVecInfos(const Vec& v, const std::string& title="vector")
-{
-	std::cout << title
-			  << "\n- size:      " << v.size()
-			  << "\n- capacity:  " << v.capacity()
-			  << "\n- contents:  ";
-			
-	if ( !v.size() )
+	static void	displayVecInfos(const Vec& v, const std::string& title="vector")
 	{
-		std::cout << "(empty)\n\n";
-		return ;
-	}
+		std::cout << title
+				<< "\n- size:      " << v.size()
+				<< "\n- capacity:  " << v.capacity()
+				<< "\n- contents:  ";
+				
+		if ( !v.size() )
+		{
+			std::cout << "(empty)\n\n";
+			return ;
+		}
 
-	typename Vec::const_iterator it = v.begin();
+		typename Vec::const_iterator it = v.begin();
 
-	std::cout << "[ ";
-	for ( int i = 0; it != v.end(); ++i, ++it )
-	{
-		std::cout << *it;
-		if ( it != (v.end() - 1) )
-			std::cout << ", ";
-		if ((i != 0) && (i % 10 == 0))
-			std::cout << "\n               ";
+		std::cout << "[ ";
+		for ( int i = 0; it != v.end(); ++i, ++it )
+		{
+			std::cout << *it;
+			if ( it != (v.end() - 1) )
+				std::cout << ", ";
+			if ((i != 0) && (i % 10 == 0))
+				std::cout << "\n               ";
+		}
+		std::cout << " ]\n\n";
 	}
-	std::cout << " ]\n\n";
-}
 
 #endif

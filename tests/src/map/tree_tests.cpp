@@ -22,6 +22,23 @@ namespace ft
 	typedef RedBlackTree<int,pair<int, std::string> >						tree_type;
 	typedef pair<RedBlackTree<int,pair<int, std::string> >::iterator,bool>	pair_type;
 
+	void	display_map_infos(const std::map<int, std::string>& m, const std::string& title="map")
+	{
+		std::cout << title
+				  << "\n- size:      " << m.size()
+				  << "\n- contents:  \n";
+
+		if ( !m.size() )
+		{
+			std::cout << "(empty)\n\n";
+			return ;
+		}
+
+		for (std::map<int, std::string>::const_iterator it_m = m.begin(); it_m != m.end(); ++it_m)
+			std::cout << it_m->first << " => " << it_m->second << '\n';
+		std::cout << "\n\n";
+	}
+
 	void	test_tree_default_ctor(void)
 	{
 		std::cout << "TEST: Default Constructor \n\n";
@@ -139,6 +156,9 @@ namespace ft
 		assert(tree.begin() == tree.end());
 
 		tree.insert( pair<int, std::string>(8,  "eight") );
+
+		displayTreeInfos(tree);
+
 		tree.insert( pair<int, std::string>(18, "eighteen") );
 		tree.insert( pair<int, std::string>(5,  "five") );
 		tree.insert( pair<int, std::string>(15, "fifteen") );
@@ -154,14 +174,7 @@ namespace ft
 				  << "begin(): " << tree.begin()->second << '\n'
 				  << "end(): " << (--tree.end())->second << '\n';
 
-		std::cout << "tree size: " << tree.size() << '\n';
-
-		for (tree_type::iterator it = tree.begin();
-			 it != tree.end();
-			 ++it)
-		{
-			std::cout << it->first << " => " << it->second << '\n';
-		}
+		displayTreeInfos(tree);
 	}
 
 	void	test_tree_rev_iterator(void)
@@ -504,12 +517,7 @@ namespace ft
 				  << "\nbegin: " << tree.begin()->first
 				  << "\nend:   " << tree.end()->first << '\n';
 
-		for (tree_type::iterator it = tree.begin();
-			 it != tree.end();
-			 ++it)
-		{
-			std::cout << it->first << " => " << it->second << '\n';
-		}
+		displayTreeInfos(tree);
 
 		tree.write_tree_dot("ast_before");
 
@@ -527,7 +535,7 @@ namespace ft
 		{
 			std::cout << end->first << " => " << end->second << '\n';
 		}
-		std::cout << end->first << " => " << end->second << '\n';
+		std::cout << end->first << " => " << end->second << "\n\n";
 
 		std::cout << std::setw(42) << " INSERT RANGE \n\n";
 
@@ -543,18 +551,106 @@ namespace ft
 		std::cout << "to:   " << to->first << '\n';
 
 		tree.insert(from, to);
-		std::cout << "tree size: " << tree.size() << '\n';
-
-		for (tree_type::iterator it = tree.begin();
-			 it != tree.end();
-			 ++it)
-		{
-			std::cout << it->first << " => " << it->second << '\n';
-		}
+		displayTreeInfos(tree);
 
 		tree.write_tree_dot("ast_after");
 
 		std::cout << "\n\n";
+	}
+
+	void	test_tree_swap(void)
+	{
+		std::cout << "TEST: Modifiers: swap() \n\n";
+
+		explainTest("Exchanges the content of the tree and the other tree.");
+
+		tree_type	tree;
+		tree_type	other_tree;
+		tree_type	empty_tree;
+
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(18, "eighteen") );
+		tree.insert( pair<int, std::string>(5,  "five") );
+		tree.insert( pair<int, std::string>(15, "fifteen") );
+		tree.insert( pair<int, std::string>(17, "seventeen") );
+		tree.insert( pair<int, std::string>(25, "twenty-five") );
+		tree.insert( pair<int, std::string>(40, "fourty") );
+		tree.insert( pair<int, std::string>(80, "eighty") );
+		tree.insert( pair<int, std::string>(20, "twenty") );
+
+		other_tree.insert( pair<int, std::string>(12,  "twelve") );
+
+		const pair<int, std::string>&	ref = *(tree.begin());
+		const tree_type::iterator		it = ++tree.begin();
+
+		displayTreeInfos(tree, "tree");
+		displayTreeInfos(other_tree, "other tree");
+
+		std::cout << "first node (reference): " << ref.first << " => " << ref.second << '\n'
+				  << "second node (iterator): " << it->first << " => " << it->second << "\n\n";
+
+		tree.swap(other_tree);
+
+		displayTreeInfos(tree, "tree");
+		displayTreeInfos(other_tree, "other tree");
+
+		std::cout << "first node (reference): " << ref.first << " => " << ref.second << '\n'
+				  << "second node (iterator): " << it->first << " => " << it->second << "\n\n";
+
+		empty_tree.swap(other_tree);
+
+		displayTreeInfos(tree, "tree");
+		displayTreeInfos(other_tree, "other tree");
+
+		std::cout << "first node (reference): " << ref.first << " => " << ref.second << '\n'
+				  << "second node (iterator): " << it->first << " => " << it->second << "\n\n";
+
+		empty_tree.swap(other_tree);
+
+		displayTreeInfos(tree, "tree");
+		displayTreeInfos(other_tree, "other tree");
+
+		std::cout << "first node (reference): " << ref.first << " => " << ref.second << '\n'
+				  << "second node (iterator): " << it->first << " => " << it->second << "\n\n";
+
+		// std::map<int, std::string>	m;
+		// std::map<int, std::string>	other_m;
+		// std::map<int, std::string>	empty_m;
+
+		// m[8]  = "eight";
+		// m[18] = "eighteen";
+		// m[5]  = "five";
+		// m[15] = "fifteen";
+		// m[17] = "seventeen";
+		// m[25] = "twenty-five";
+		// m[40] = "fourty";
+		// m[80] = "eigthy";
+		// m[11] = "eleven";
+		// m[20] = "twenty";
+
+		// other_m[12] = "twelve";
+
+		// const std::pair<int, std::string>&			ref_m = *(m.begin());
+		// const std::map<int, std::string>::iterator	it_m = ++m.begin();
+
+		// display_map_infos(m);
+		// display_map_infos(other_m, "other map");
+
+		// std::cout << "first node (reference): " << ref_m.first << " => " << ref_m.second << '\n'
+		// 		  << "second node (iterator): " << it_m->first << " => " << it_m->second << "\n\n";
+
+		// m.swap(other_m);
+
+		// display_map_infos(m);
+		// display_map_infos(other_m, "other map");
+
+		// std::cout << "first node (reference): " << ref_m.first << " => " << ref_m.second << '\n'
+		// 		  << "second node (iterator): " << it_m->first << " => " << it_m->second << "\n\n";
+
+		// other_m.swap(empty_m);
+
+		// display_map_infos(other_m, "other map");
+		// display_map_infos(empty_m, "empty map");
 	}
 
 	void	test_tree_clear(void)
@@ -606,6 +702,8 @@ namespace ft
 
 		// modifiers
 		ft::test_tree_insert();
+		// ft::test_tree_erase();
+		ft::test_tree_swap();
 		ft::test_tree_clear();
 	}
 }

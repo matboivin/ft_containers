@@ -37,31 +37,40 @@ namespace ft
 	void	test_tree_max_size(void);
 
 	// elements access
+	void	test_tree_count(void);
+	void	test_tree_find(void);
 	void	test_tree_lower_bound(void);
 	void	test_tree_upper_bound(void);
-	void	test_tree_find(void);
+	void	test_tree_equal_range(void);
 
 	// modifiers
 	void	test_tree_insert(void);
+	// void	test_tree_erase(void);
+	void	test_tree_swap(void);
 	void	test_tree_clear(void);
 }
 
-/*
- * Display the tree size and nodes
- */
+/* Display the tree size and nodes */
 
 template<typename RBTree>
-static void	displayTreeInfos(const RBTree& tree, const std::string& title="RB Tree")
-{
-	std::cout << title
-			  << "\n- size:      " << tree.size()
-			  << "\n- contents:  ";
-			
-	if ( !tree.size() )
+	static void	displayTreeInfos(const RBTree& tree, const std::string& title="RB Tree")
 	{
-		std::cout << "(empty)\n\n";
-		return ;
+		std::cout << title
+				<< "\n- size:      " << tree.size()
+				<< "\n- contents:  ";
+				
+		if ( !tree.size() )
+		{
+			std::cout << "(empty)\n\n";
+			return ;
+		}
+		std::cout << '\n';
+
+		typename RBTree::const_iterator it = tree.begin();
+
+		for (; it != tree.end(); ++it)
+			std::cout << it->first << " => " << it->second << '\n';
+		std::cout << "\n\n";
 	}
-}
 
 #endif
