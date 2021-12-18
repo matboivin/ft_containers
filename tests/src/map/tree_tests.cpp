@@ -426,6 +426,46 @@ namespace ft
 				  << "\n\n";
 	}
 
+	void	test_tree_equal_range(void)
+	{
+		std::cout << "TEST: Element access: equal_range() \n\n";
+
+		explainTest("Returns the bounds of a range that have a key equivalent to k.");
+
+		std::map<int, std::string>	m;
+		tree_type					tree;
+
+		m[8]  = "eight";
+		m[18] = "eighteen";
+		m[5]  = "five";
+		m[15] = "fifteen";
+		m[17] = "seventeen";
+		m[25] = "twenty-five";
+		m[40] = "fourty";
+		m[80] = "eigthy";
+		m[11] = "eleven";
+		m[20] = "twenty";
+
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(18, "eighteen") );
+		tree.insert( pair<int, std::string>(5,  "five") );
+		tree.insert( pair<int, std::string>(15, "fifteen") );
+		tree.insert( pair<int, std::string>(17, "seventeen") );
+		tree.insert( pair<int, std::string>(25, "twenty-five") );
+		tree.insert( pair<int, std::string>(40, "fourty") );
+		tree.insert( pair<int, std::string>(80, "eighty") );
+		tree.insert( pair<int, std::string>(11, "eleven") );
+		tree.insert( pair<int, std::string>(20, "twenty") );
+
+		std::cout << "m.equal_range(5):                     " << m.equal_range(5).first->first << '\n'
+				  << "tree.equal_range(5):                  " << tree.equal_range(5).first->first << '\n'
+				  << "m.equal_range(24):                    " << m.equal_range(24).first->first << '\n'
+				  << "tree.equal_range(24):                 " << tree.equal_range(24).first->first << "\n\n"
+				  << "(m.equal_range(99) == m.end())?       " << (m.equal_range(99).first == m.end()) << '\n'
+				  << "(tree.equal_range(99) == tree.end())? " << (tree.equal_range(99).first == tree.end())
+				  << "\n\n";
+	}
+
 	void	test_tree_insert(void)
 	{
 		std::cout << "TEST: Modifiers: insert() \n\n";
@@ -562,6 +602,7 @@ namespace ft
 		ft::test_tree_find();
 		ft::test_tree_lower_bound();
 		ft::test_tree_upper_bound();
+		ft::test_tree_equal_range();
 
 		// modifiers
 		ft::test_tree_insert();
