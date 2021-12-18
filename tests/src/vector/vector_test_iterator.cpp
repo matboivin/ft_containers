@@ -25,7 +25,7 @@ namespace std
 	{
 		std::cout << "TEST: Iterator \n\n";
 
-		explainTest("Move through the elements of the container like pointers do.");
+		explain_test("Move through the elements of the container like pointers do.");
 
 		// create vector
 		vector<int>	vec;
@@ -50,7 +50,7 @@ namespace std
 		clock_t	start = clock();
 		vector<int>::iterator	it = vec.begin();
 		vector<int>::iterator	ite = vec.end();
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		std::cout << "*it      = " << *it
 				<< "\n*(--ite) = " << *(--ite)
@@ -63,7 +63,7 @@ namespace std
 		start = clock();
 		vector<int>::const_iterator	const_it = vec.begin();
 		vector<int>::const_iterator	const_ite = vec.end();
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		std::cout << std::boolalpha
 				  << "(it == const_it)   ? " << (it == const_it)
@@ -96,7 +96,7 @@ namespace std
 	{
 		std::cout << "TEST: Reverse iterator \n\n";
 
-		explainTest("Move through the elements of the container backwards.");
+		explain_test("Move through the elements of the container backwards.");
 
 		// create vector
 		vector<int>	vec;
@@ -121,7 +121,7 @@ namespace std
 		clock_t	start = clock();
 		vector<int>::reverse_iterator	rev_it = vec.rbegin();
 		vector<int>::reverse_iterator	rev_ite = vec.rend();
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		std::cout << "*rev_it      = " << *rev_it
 				<< "\n*(--rev_ite) = " << *(--rev_ite)
@@ -134,7 +134,7 @@ namespace std
 		start = clock();
 		vector<int>::const_reverse_iterator	const_rev_it = vec.rbegin();
 		vector<int>::const_reverse_iterator	const_rev_ite = vec.rend();
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		std::cout << std::boolalpha
 				  << "(rev_it == const_rev_it)   ? " << (rev_it == const_rev_it)

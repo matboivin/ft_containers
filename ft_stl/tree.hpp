@@ -354,7 +354,7 @@ namespace ft
 			}
 		}; // struct RBtree_iterator
 
-	/* Relational operators */
+	// Relational operators
 
 	template<typename T1, typename T2>
 		bool
@@ -471,7 +471,7 @@ namespace ft
 			}
 		}; // struct RBtree_const_iterator
 
-	/* Relational operators */
+	// Relational operators
 
 	template<typename T1, typename T2>
 		bool
@@ -756,7 +756,7 @@ namespace ft
 			return (*__node->_get_value_ptr());
 		}
 
-	/* Gets position to insert new node */
+	// Gets position to insert new node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_pos_from_hint(iterator __hint, const key_type& __key)
@@ -811,7 +811,7 @@ namespace ft
 			return (__hint._M_node);
 		}
 
-	/* Gets position to insert new node */
+	// Gets position to insert new node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer,bool>
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_insert_pos(iterator __hint, const key_type& __key)
@@ -860,7 +860,7 @@ namespace ft
 			return (ft::pair<node_pointer,bool>(__parent, __insert_left));
 		}
 
-	/* Rotate left */
+	// Rotate left
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_rotate_left(node_pointer __x)
@@ -881,7 +881,7 @@ namespace ft
 			__x->_M_parent = __y;
 		}
 
-	/* Rotate right */
+	// Rotate right
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_rotate_right(node_pointer __x)
@@ -902,7 +902,7 @@ namespace ft
 			__x->_M_parent = __y;
 		}
 
-	/* Rebalance tree */
+	// Rebalance tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_rebalance(node_pointer __node)
@@ -963,7 +963,7 @@ namespace ft
 			this->_M_header._M_parent->_M_color = BLACK;
 		}
 
-	/* Actually perform the insertion */
+	// Actually perform the insertion
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert(bool insert_left,
@@ -993,7 +993,7 @@ namespace ft
 			++this->_M_node_count;
 		}
 
-	/* Inserts one node with no hint */
+	// Inserts one node with no hint
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(iterator __pos, const value_type& __val)
@@ -1086,7 +1086,7 @@ namespace ft
 
 	/* iterators ************************************************************ */
 
-	/* Returns an iterator pointing to the first element in the tree */
+	// Returns an iterator pointing to the first element in the tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::begin(void)
@@ -1101,7 +1101,7 @@ namespace ft
 			return (const_iterator(this->_M_header._M_left));
 		}
 
-	/* Returns an iterator referring to the past-the-end element in the tree */
+	// Returns an iterator referring to the past-the-end element in the tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::end(void)
@@ -1116,7 +1116,7 @@ namespace ft
 			return (const_iterator(&this->_M_header));
 		}
 
-	/* Returns a reverse iterator pointing to the last element in the tree */
+	// Returns a reverse iterator pointing to the last element in the tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::reverse_iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::rbegin(void)
@@ -1174,7 +1174,7 @@ namespace ft
 
 	/* lookup *************************************************************** */
 
-	/* Returns the number of elements matching key k */
+	// Returns the number of elements matching key k
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::size_type
 		RedBlackTree<Key,Val,Compare,Alloc>::count(const key_type& k) const
@@ -1190,7 +1190,7 @@ namespace ft
 			return (count);
 		}
 
-	/* Gets the element with the key k, else return end */
+	// Gets the element with the key k, else return end
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::find(const key_type& k)
@@ -1350,7 +1350,7 @@ namespace ft
 			}
 		}
 
-	/* Exchanges the content of the tree and the other tree */
+	// Exchanges the content of the tree and the other tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::swap(RedBlackTree& other)
@@ -1371,7 +1371,7 @@ namespace ft
 				other._M_copy_reset(*this);
 		}
 
-	/* Destroys all elements from the tree, leaving it with a size of 0 */
+	// Destroys all elements from the tree, leaving it with a size of 0
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::clear(void)

@@ -15,14 +15,14 @@
 #include <string>
 #include "tests.hpp"
 
-void	displayElapsedTime(clock_t start, clock_t end)
+void	display_elapsed_time(clock_t start, clock_t end)
 {
 	double	elapsed = static_cast<double>(end - start) / CLOCKS_PER_SEC;
 
 	std::cout << std::fixed << elapsed << " seconds\n\n";
 }
 
-void	explainTest(const std::string& msg) {
+void	explain_test(const std::string& msg) {
 
 	std::cout << "Test description: " << msg << "\n\n";
 }

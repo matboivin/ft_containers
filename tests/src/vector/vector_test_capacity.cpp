@@ -25,7 +25,7 @@ namespace std
 	{
 		std::cout << "TEST: Capacity: empty() \n\n";
 
-		explainTest("Returns true if the vector is empty.");
+		explain_test("Returns true if the vector is empty.");
 
 		// create an empty vector
 		vector<int>	vec1;
@@ -47,7 +47,7 @@ namespace std
 	{
 		std::cout << "TEST: Capacity: size() \n\n";
 
-		explainTest("Returns true the number of element in the vector.");
+		explain_test("Returns true the number of element in the vector.");
 
 		// create a vector
 		vector<int>	vec(42);
@@ -70,7 +70,7 @@ namespace std
 	{
 		std::cout << "TEST: Capacity: resize() \n\n";
 
-		explainTest("Resizes the container so that it contains n elements.");
+		explain_test("Resizes the container so that it contains n elements.");
 
 		// create expected results
 		vector<int>	res1;
@@ -97,24 +97,24 @@ namespace std
 		std::cout << "vec.resize(5);\n\n";
 		vec.resize(5); // [ 1, 2, 3, 4, 5 ]
 		assert(vec == res1);
-		displayVecInfos(vec);
+		display_vec_infos(vec);
 
 		std::cout << "\nvec.resize(8,100);\n\n";
 		vec.resize(8,100); // [ 1, 2, 3, 4, 5, 100, 100, 100 ]
 		assert(vec == res2);
-		displayVecInfos(vec);
+		display_vec_infos(vec);
 
 		std::cout << "\nvec.resize(12);\n\n";
 		vec.resize(12); // [ 1, 2, 3, 4, 5, 100, 100, 100, 0, 0, 0, 0 ]
 		assert(vec == res3);
-		displayVecInfos(vec);
+		display_vec_infos(vec);
 	}
 
 	void	test_vec_max_size(void)
 	{
 		std::cout << "TEST: Capacity: max_size() \n\n";
 
-		explainTest("Returns the maximum number of elements that the vector can hold.");
+		explain_test("Returns the maximum number of elements that the vector can hold.");
 
 		// Create two vectors of size 42
 		vector<int>		vec1(42);
@@ -129,7 +129,7 @@ namespace std
 	{
 		std::cout << "TEST: Capacity: capacity() \n\n";
 
-		explainTest("Returns the size of allocated storage capacity.");
+		explain_test("Returns the size of allocated storage capacity.");
 
 		// Create two vectors of size 42
 		vector<int>		vec1(42);
@@ -144,7 +144,7 @@ namespace std
 	{
 		std::cout << "TEST: Capacity: reserve() \n\n";
 
-		explainTest("Requests that the vector capacity be at least enough to contain n elements.");
+		explain_test("Requests that the vector capacity be at least enough to contain n elements.");
 
 		// Create two vectors of size 42
 		vector<int>		vec1(1);

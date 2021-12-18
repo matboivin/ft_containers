@@ -27,7 +27,7 @@ namespace std
 	{
 		std::cout << "TEST: Indirection operator * \n\n";
 
-		explainTest("Dereference iterator. "
+		explain_test("Dereference iterator. "
 					"Internally, the function decreases a copy of its base "
 					"iterator and returns the result of dereferencing it.");
 
@@ -55,7 +55,7 @@ namespace std
 	{
 		std::cout << "TEST: Pointer operator -> \n\n";
 
-		explainTest("Dereference iterator. "
+		explain_test("Dereference iterator. "
 					"Internally, the function calls operator* and returns its address.");
 
 		// iterator type pointing on map of int, string
@@ -80,7 +80,7 @@ namespace std
 	{
 		std::cout << "TEST:  Subscripting operator [] \n\n";
 
-		explainTest("Accesses the element located n positions away "
+		explain_test("Accesses the element located n positions away "
 					"from the element currently pointed to by the iterator.");
 
 		typedef std::vector<int>::iterator	iter_type;

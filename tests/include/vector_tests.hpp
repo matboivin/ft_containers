@@ -74,7 +74,7 @@ namespace std
 
 /* Display the vector size, capacity and content */
 template<typename Vec>
-	static void	displayVecInfos(const Vec& v, const std::string& title="vector")
+	static void	display_vec_infos(const Vec& v, const std::string& title="vector")
 	{
 		std::cout << title
 				<< "\n- size:      " << v.size()

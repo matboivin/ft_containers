@@ -25,7 +25,7 @@ namespace std
 	{
 		std::cout << "TEST: Non-member comparison operators \n\n";
 
-		explainTest("Operators to make comparison between two vectors.");
+		explain_test("Operators to make comparison between two vectors.");
 
 		// create vector
 		vector<int>	vec1;

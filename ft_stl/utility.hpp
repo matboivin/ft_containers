@@ -116,9 +116,7 @@ namespace ft
 
 		/* Functions ************************************************************ */
 
-		/*
-		 * Constructs and returns a pair object with x as first and y as second
-		 */
+		// Constructs and returns a pair object with x as first and y as second
 		template<typename T1, typename T2>
 			pair<T1,T2>	make_pair(T1 x, T2 y)
 			{

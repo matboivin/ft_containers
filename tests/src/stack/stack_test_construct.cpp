@@ -28,42 +28,42 @@ namespace std
 	{
 		std::cout << "TEST: Default Constructor \n\n";
 
-		explainTest("Constructs a stack container adaptor object.");
+		explain_test("Constructs a stack container adaptor object.");
 
 		// Test default container
 		std::cout << "1. With default container" << std::endl;
 
 		clock_t	start = clock();
 		stack<int>	stack_default;
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		// Test vector
 		std::cout << "2. With vector" << std::endl;
 
 		start = clock();
 		stack<int, vector<int> >	stack_vec;
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		// Test std::deque
 		std::cout << "3. With deque" << std::endl;
 
 		start = clock();
 		stack<int, std::deque<int> >	stack_deque;
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		// Test std::list
 		std::cout << "4. With list" << std::endl;
 
 		start = clock();
 		stack<int, std::list<int> >	stack_lst;
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 	}
 
 	void	test_stack_copy_ctor(void)
 	{
 		std::cout << "TEST: Copy Constructor \n\n";
 
-		explainTest("Creates a new object from existing one passed as parameter.");
+		explain_test("Creates a new object from existing one passed as parameter.");
 
 		// Test vector
 		std::cout << "1. With vector" << std::endl;
@@ -73,7 +73,7 @@ namespace std
 
 		clock_t	start = clock();
 		stack<int, vector<int> >	copy_stack_vec(stack_vec);
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		// assert they're identical
 		assert(stack_vec == copy_stack_vec);
@@ -86,7 +86,7 @@ namespace std
 
 		start = clock();
 		stack<int, std::list<int> > copy_stack_deque(stack_deque);
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		// assert they're identical
 		assert(stack_deque == copy_stack_deque);
@@ -99,7 +99,7 @@ namespace std
 
 		start = clock();
 		stack<int, std::list<int> > copy_stack_lst(stack_lst);
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		// assert they're identical
 		assert(stack_lst == copy_stack_lst);
@@ -109,7 +109,7 @@ namespace std
 	{
 		std::cout << "TEST: Copy assignment operator \n\n";
 
-		explainTest("Replaces the contents with a copy of the contents of other.");
+		explain_test("Replaces the contents with a copy of the contents of other.");
 
 		// Test vector
 		std::cout << "1. With vector" << std::endl;
@@ -123,7 +123,7 @@ namespace std
 
 		clock_t	start = clock();
 		stack_vec = copy_stack_vec;
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		assert(stack_vec == copy_stack_vec);
 
@@ -138,7 +138,7 @@ namespace std
 
 		start = clock();
 		stack_deque = copy_stack_deque;
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		assert(stack_deque == copy_stack_deque);
 
@@ -153,7 +153,7 @@ namespace std
 
 		start = clock();
 		stack_lst = copy_stack_lst;
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		assert(stack_lst == copy_stack_lst);
 	}

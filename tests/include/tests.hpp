@@ -33,8 +33,8 @@
 #define COL_YELLOW   "\033[0;33m"
 #define COL_YELLOW_B "\033[1;33m"
 
-void		displayElapsedTime(clock_t start, clock_t end);
-void		explainTest(const std::string& msg);
+void		display_elapsed_time(clock_t start, clock_t end);
+void		explain_test(const std::string& msg);
 int			continue_tests(const std::string& next_test);
 int			generate_output(void);
 std::string	str_to_lower(std::string str);

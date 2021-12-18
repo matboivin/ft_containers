@@ -27,7 +27,7 @@ namespace std
 	{
 		std::cout << "TEST: Element access: top() \n\n";
 
-		explainTest("Return the top element.");
+		explain_test("Return the top element.");
 
 		// Test vector
 		std::cout << "1. With vector" << std::endl;
@@ -51,7 +51,7 @@ namespace std
 		top_elem = stack_vec.top();
 		assert(top_elem == 12);
 
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 
 		// Test deque
 		std::cout << "2. With deque" << std::endl;
@@ -75,7 +75,7 @@ namespace std
 		top_elem = stack_deque.top();
 		assert(top_elem == 12);
 
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 
 		// Test list
 		std::cout << "3. With list" << std::endl;
@@ -99,6 +99,6 @@ namespace std
 		top_elem = stack_lst.top();
 		assert(top_elem == 12);
 
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 	}
 }

@@ -27,7 +27,7 @@ namespace std
 	{
 		std::cout << "TEST: Non-member comparison operators \n\n";
 
-		explainTest("Operators to make comparison between two stacks.");
+		explain_test("Operators to make comparison between two stacks.");
 
 		// Test vector
 		std::cout << "1. With vector" << std::endl;

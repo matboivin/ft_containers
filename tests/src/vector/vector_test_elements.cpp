@@ -25,7 +25,7 @@ namespace std
 	{
 		std::cout << "TEST: Element access: operator[] \n\n";
 
-		explainTest("Access an element of the vector.");
+		explain_test("Access an element of the vector.");
 
 		int	n = 2;
 		int	out = 30;
@@ -41,7 +41,7 @@ namespace std
 
 		clock_t	start = clock();
 		std::cout << "vector[" << n << "] " << vec[n] << "\n\n";
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		// If the container size is greater than n, the function never throws exceptions.
 		// Otherwise, the behavior is undefined.
@@ -52,7 +52,7 @@ namespace std
 	{
 		std::cout << "TEST: Element access: at() \n\n";
 
-		explainTest("This member function accesses the element at "
+		explain_test("This member function accesses the element at "
 					"the specified position in the container.");
 
 		// create vector
@@ -69,7 +69,7 @@ namespace std
 			int	n = vec.size() / 2;
 			clock_t	start = clock();
 			std::cout << "vector.at(" << n << ") " << vec.at(n) << "\n\n";
-			displayElapsedTime(start, clock());
+			display_elapsed_time(start, clock());
 		}
 		catch (std::out_of_range& oor)
 		{
@@ -90,7 +90,7 @@ namespace std
 	{
 		std::cout << "TEST: Element access: front() \n\n";
 
-		explainTest("Access the first element in the vector.");
+		explain_test("Access the first element in the vector.");
 
 		// create vector
 		vector<int>	vec;
@@ -103,7 +103,7 @@ namespace std
 
 		clock_t	start = clock();
 		std::cout << "vector.front(): " << vec.front() << "\n\n";
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		assert(vec.front() == 12);
 	}
@@ -112,7 +112,7 @@ namespace std
 	{
 		std::cout << "TEST: Element access: back() \n\n";
 
-		explainTest("Access the last element in the vector.");
+		explain_test("Access the last element in the vector.");
 
 		// create vector
 		vector<int>	vec;
@@ -125,7 +125,7 @@ namespace std
 
 		clock_t	start = clock();
 		std::cout << "vector.back(): " << vec.back() << "\n\n";
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		assert(vec.back() == 25);
 	}

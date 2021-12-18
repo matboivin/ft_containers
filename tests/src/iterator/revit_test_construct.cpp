@@ -26,20 +26,20 @@ namespace std
 	{
 		std::cout << "TEST: Default Constructor \n\n";
 
-		explainTest("Constructs a reverse iterator that points to no object.");
+		explain_test("Constructs a reverse iterator that points to no object.");
 
 		clock_t	start = clock();
 
 		reverse_iterator<int*>	rev_it;
 
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 	}
 
 	void	test_revit_init_ctor(void)
 	{
 		std::cout << "TEST: Init Constructor \n\n";
 
-		explainTest("Constructs a reverse iterator from some original iterator it.");
+		explain_test("Constructs a reverse iterator from some original iterator it.");
 
 		typedef std::vector<int>::iterator	iter_type;
 
@@ -63,7 +63,7 @@ namespace std
 	{
 		std::cout << "TEST: Copy Constructor \n\n";
 
-		explainTest("Constructs a reverse iterator from some other reverse iterator.");
+		explain_test("Constructs a reverse iterator from some other reverse iterator.");
 
 		std::vector<int>::reverse_iterator	rev_it;
 

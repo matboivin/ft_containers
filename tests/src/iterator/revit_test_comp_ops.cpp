@@ -26,7 +26,7 @@ namespace std
 	{
 		std::cout << "TEST: Comparison operators \n\n";
 
-		explainTest("Operators to make comparison between two reverse iterators.");
+		explain_test("Operators to make comparison between two reverse iterators.");
 
 		int	arr[10];
 

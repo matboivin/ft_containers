@@ -25,7 +25,7 @@ namespace ft
 {
 	/* Category tags ******************************************************** */
 
-	/* Empty classes to identify categories */
+	// Empty classes to identify categories
 
 	// each value pointed by the iterator is read only once and then the iterator is incremented
 	struct input_iterator_tag {};
@@ -536,7 +536,7 @@ namespace ft
 
 	/* iterator types ******************************************************* */
 
-	/* Helpers for is_input_iter */
+	// Helpers for is_input_iter 
 
 	// false by default
 	template<typename Iter>

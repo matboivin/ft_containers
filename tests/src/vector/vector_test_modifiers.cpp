@@ -25,7 +25,7 @@ namespace std
 	{
 		std::cout << "TEST: Modifiers: assign(first, last) \n\n";
 
-		explainTest("Assigns new contents to the vector using a range of iterators.");
+		explain_test("Assigns new contents to the vector using a range of iterators.");
 
 		// create vectors
 		vector<int>	vec1;
@@ -40,21 +40,21 @@ namespace std
 		first += 2;
 		last += 42;
 
-		displayVecInfos(vec2, "before");
+		display_vec_infos(vec2, "before");
 
 		clock_t	time_start = clock();
 		vec2.assign(first, last);
 		clock_t	time_end = clock();
 
-		displayVecInfos(vec2, "after");
-		displayElapsedTime(time_start, time_end);
+		display_vec_infos(vec2, "after");
+		display_elapsed_time(time_start, time_end);
 	}
 
 	void	test_vec_assign_val(void)
 	{
 		std::cout << "TEST: Modifiers: assign(n, val) \n\n";
 
-		explainTest("Assigns new contents to the vector using a fill value.");
+		explain_test("Assigns new contents to the vector using a fill value.");
 
 		// create vectors
 		vector<int>	vec;
@@ -63,21 +63,21 @@ namespace std
 		for ( int i = 0; i < 60; ++i )
 			vec.push_back(i);
 
-		displayVecInfos(vec, "before");
+		display_vec_infos(vec, "before");
 
 		clock_t	time_start = clock();
 		vec.assign(42, 42);
 		clock_t	time_end = clock();
 
-		displayVecInfos(vec, "after");
-		displayElapsedTime(time_start, time_end);
+		display_vec_infos(vec, "after");
+		display_elapsed_time(time_start, time_end);
 	}
 
 	void	test_vec_push_back(void)
 	{
 		std::cout << "TEST: Modifiers: push_back() \n\n";
 
-		explainTest("Add a new elements at the end of the vector.");
+		explain_test("Add a new elements at the end of the vector.");
 
 		// create a vector
 		vector<int>	vec;
@@ -88,14 +88,14 @@ namespace std
 		for ( int i = 0; i < 1000000; ++i )
 			vec.push_back(i);
 
-		displayElapsedTime(time_start, clock());
+		display_elapsed_time(time_start, clock());
 	}
 
 	void	test_vec_pop_back(void)
 	{
 		std::cout << "TEST: Modifiers: pop_back() \n\n";
 
-		explainTest("Removes (destroys) the last element in the vector.");
+		explain_test("Removes (destroys) the last element in the vector.");
 
 		// create a vector
 		vector<int>	vec;
@@ -112,14 +112,14 @@ namespace std
 		clock_t	time_end = clock();
 
 		std::cout << "vector size: " << vec.size() << "\n\n";
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 	}
 
 	void	test_vec_insert_val(void)
 	{
 		std::cout << "TEST: Modifiers: insert(pos, val) \n\n";
 
-		explainTest("Insert an element at the position pos.");
+		explain_test("Insert an element at the position pos.");
 
 		// create vectors
 		vector<int>	vec;
@@ -139,15 +139,15 @@ namespace std
 
 		vector<int>::iterator	it;
 
-		displayVecInfos(vec, "before");
+		display_vec_infos(vec, "before");
 
 		clock_t	time_start = clock();
 		it = vec.insert(vec.begin() + 2, 100);
 		clock_t	time_end = clock();
 
-		displayVecInfos(vec, "after");
+		display_vec_infos(vec, "after");
 		std::cout << "*it = " << *it << "\n\n";
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 
 		assert(*it == 100);
 		assert(vec == result);
@@ -157,7 +157,7 @@ namespace std
 	{
 		std::cout << "TEST: Modifiers: insert(pos, n, val) \n\n";
 
-		explainTest("Insert n elements at the position pos.");
+		explain_test("Insert n elements at the position pos.");
 
 		// create vectors
 		vector<int>	vec;
@@ -180,7 +180,7 @@ namespace std
 		for ( int i = 2; i < 10; ++i )
 			result.push_back(i);
 
-		displayVecInfos(vec, "before");
+		display_vec_infos(vec, "before");
 
 		clock_t	time_start = clock();
 		vec.insert(vec.begin() + 2, 3, 100);
@@ -188,8 +188,8 @@ namespace std
 		vec.insert(vec.begin() + 2, 2, 500);
 		clock_t	time_end = clock();
 
-		displayVecInfos(vec, "after");
-		displayElapsedTime(time_start, time_end);
+		display_vec_infos(vec, "after");
+		display_elapsed_time(time_start, time_end);
 
 		assert(vec == result);
 	}
@@ -198,7 +198,7 @@ namespace std
 	{
 		std::cout << "TEST: Modifiers: insert(pos, first, last) \n\n";
 
-		explainTest("Insert a range of elements at the position pos.");
+		explain_test("Insert a range of elements at the position pos.");
 
 		// create vectors
 		vector<int>	vec;
@@ -221,15 +221,15 @@ namespace std
 		for ( int i = 250; i < 300; i += 10 )
 			result.push_back(i);
 
-		displayVecInfos(vec, "before");
+		display_vec_infos(vec, "before");
 
 		clock_t	time_start = clock();
 		vec.insert(vec.begin() + 5, vec2.begin(), vec2.end());
 		vec.insert(vec.end(), vec2.begin(), vec2.end());
 		clock_t	time_end = clock();
 
-		displayVecInfos(vec, "after");
-		displayElapsedTime(time_start, time_end);
+		display_vec_infos(vec, "after");
+		display_elapsed_time(time_start, time_end);
 
 		assert(vec == result);
 	}
@@ -238,7 +238,7 @@ namespace std
 	{
 		std::cout << "TEST: Modifiers: erase(pos) \n\n";
 
-		explainTest("Removes from the vector the element at the given position.");
+		explain_test("Removes from the vector the element at the given position.");
 
 		// create a vector
 		vector<int>	vec;
@@ -263,7 +263,7 @@ namespace std
 				  << "\nvector.at(50)   = " << vec.at(50)
 				  << "\n*it             = " << *it << "\n\n";
 
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 
 		assert(*it == 51);
 	}
@@ -272,7 +272,7 @@ namespace std
 	{
 		std::cout << "TEST: Modifiers: erase(first, last) \n\n";
 
-		explainTest("Removes from the vector a range of elements.");
+		explain_test("Removes from the vector a range of elements.");
 
 		// create vectors
 		vector<int>	vec;
@@ -292,15 +292,15 @@ namespace std
 		first += 10;
 		last += 50;
 
-		//displayVecInfos(vec, "before");
+		//display_vec_infos(vec, "before");
 
 		vector<int>::iterator	it;
 		clock_t	time_start = clock();
 		it = vec.erase(first, last);
 		clock_t	time_end = clock();
 
-		//displayVecInfos(vec, "after");
-		displayElapsedTime(time_start, time_end);
+		//display_vec_infos(vec, "after");
+		display_elapsed_time(time_start, time_end);
 
 		assert(vec == original);
 	}
@@ -309,7 +309,7 @@ namespace std
 	{
 		std::cout << "TEST: Modifiers: swap() \n\n";
 
-		explainTest("Exchanges the content of the current instance by the content "
+		explain_test("Exchanges the content of the current instance by the content "
 					"of the vector parameter.");
 
 		// create vectors
@@ -324,8 +324,8 @@ namespace std
 		for ( int i = 0; i < 10; ++i )
 			vec2.push_back(35 - i);
 
-		displayVecInfos(vec1, "vector 1");
-		displayVecInfos(vec2, "vector 2");
+		display_vec_infos(vec1, "vector 1");
+		display_vec_infos(vec2, "vector 2");
 
 		std::cout << "vector.swap();\n\n";
 
@@ -333,23 +333,23 @@ namespace std
 		vec1.swap(vec2);
 		clock_t	time_end = clock();
 
-		displayVecInfos(vec1, "vector 1");
-		displayVecInfos(vec2, "vector 2");
+		display_vec_infos(vec1, "vector 1");
+		display_vec_infos(vec2, "vector 2");
 
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 
 		std::cout << "vector.swap();\n\n";
 
 		time_start = clock();
 		vec1.swap(vec3);
-		displayElapsedTime(time_start, clock());
+		display_elapsed_time(time_start, clock());
 	}
 
 	void	test_vec_clear(void)
 	{
 		std::cout << "TEST: Modifiers: clear() \n\n";
 
-		explainTest("Destroys all elements from the vector, leaving the container with a size of 0.");
+		explain_test("Destroys all elements from the vector, leaving the container with a size of 0.");
 
 		// create a vector
 		vector<int>	vec;
@@ -366,6 +366,6 @@ namespace std
 		clock_t	time_end = clock();
 
 		std::cout << "vector size: " << vec.size() << "\n\n";
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 	}
 }

@@ -43,20 +43,20 @@ namespace ft
 	{
 		std::cout << "TEST: Default Constructor \n\n";
 
-		explainTest("Constructs an empty tree.");
+		explain_test("Constructs an empty tree.");
 
 		clock_t	start = clock();
 
 		tree_type	tree;
 
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 	}
 
 	void	test_tree_copy_ctor(void)
 	{
 		std::cout << "TEST: Copy constructor \n\n";
 
-		explainTest("Creates a new object from existing one passed as parameter.");
+		explain_test("Creates a new object from existing one passed as parameter.");
 
 		// create tree
 		tree_type	tree;
@@ -87,7 +87,7 @@ namespace ft
 		// create a copy from tree
 		tree_type	copy_tree(tree);
 
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		// assert they're identical
 		//assert(tree == copy_tree);
@@ -100,7 +100,7 @@ namespace ft
 	{
 		std::cout << "TEST: Copy assignment operator \n\n";
 
-		explainTest("Copies a tree from an existing one.");
+		explain_test("Copies a tree from an existing one.");
 
 		// create trees
 		tree_type	tree;
@@ -132,7 +132,7 @@ namespace ft
 		// create a copy from tree
 		copy_tree = tree;
 
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		// assert they're identical
 		//assert(tree == copy_tree);
@@ -145,7 +145,7 @@ namespace ft
 	{
 		std::cout << "TEST: Iterator \n\n";
 
-		explainTest("Move through the elements of the container like pointers do.");
+		explain_test("Move through the elements of the container like pointers do.");
 
 		// create tree
 		tree_type	tree;
@@ -157,7 +157,7 @@ namespace ft
 
 		tree.insert( pair<int, std::string>(8,  "eight") );
 
-		displayTreeInfos(tree);
+		display_tree_infos(tree);
 
 		tree.insert( pair<int, std::string>(18, "eighteen") );
 		tree.insert( pair<int, std::string>(5,  "five") );
@@ -174,14 +174,14 @@ namespace ft
 				  << "begin(): " << tree.begin()->second << '\n'
 				  << "end(): " << (--tree.end())->second << '\n';
 
-		displayTreeInfos(tree);
+		display_tree_infos(tree);
 	}
 
 	void	test_tree_rev_iterator(void)
 	{
 		std::cout << "TEST: Reverse iterator \n\n";
 
-		explainTest("Move through the elements of the container backwards.");
+		explain_test("Move through the elements of the container backwards.");
 
 		// create tree
 		tree_type	tree;
@@ -219,7 +219,7 @@ namespace ft
 	{
 		std::cout << "TEST: Capacity: empty() \n\n";
 
-		explainTest("Returns true if the tree is empty.");
+		explain_test("Returns true if the tree is empty.");
 
 		// create tree
 		tree_type	tree;
@@ -244,7 +244,7 @@ namespace ft
 	{
 		std::cout << "TEST: Capacity: size() \n\n";
 
-		explainTest("Returns true the number of element in the tree.");
+		explain_test("Returns true the number of element in the tree.");
 
 		// create tree
 		tree_type	tree;
@@ -269,7 +269,7 @@ namespace ft
 	{
 		std::cout << "TEST: Capacity: max_size() \n\n";
 
-		explainTest("Returns the maximum number of elements that the tree can hold.");
+		explain_test("Returns the maximum number of elements that the tree can hold.");
 
 		// Create tree
 		tree_type	tree;
@@ -282,7 +282,7 @@ namespace ft
 	{
 		std::cout << "TEST: Element access: count() \n\n";
 
-		explainTest("Returns 1 if the tree contains an element matching key k.");
+		explain_test("Returns 1 if the tree contains an element matching key k.");
 
 		std::map<int, std::string>	m;
 		tree_type					tree;
@@ -322,7 +322,7 @@ namespace ft
 	{
 		std::cout << "TEST: Element access: find() \n\n";
 
-		explainTest("Returns the element with the key k, else return end.");
+		explain_test("Returns the element with the key k, else return end.");
 
 		std::map<int, std::string>	m;
 		tree_type					tree;
@@ -363,7 +363,7 @@ namespace ft
 	{
 		std::cout << "TEST: Element access: lower_bound() \n\n";
 
-		explainTest("Returns the first element that is equivalent or after k.");
+		explain_test("Returns the first element that is equivalent or after k.");
 
 		std::map<int, std::string>	m;
 		tree_type					tree;
@@ -403,7 +403,7 @@ namespace ft
 	{
 		std::cout << "TEST: Element access: upper_bound() \n\n";
 
-		explainTest("Returns the first element that is after k.");
+		explain_test("Returns the first element that is after k.");
 
 		std::map<int, std::string>	m;
 		tree_type					tree;
@@ -443,7 +443,7 @@ namespace ft
 	{
 		std::cout << "TEST: Element access: equal_range() \n\n";
 
-		explainTest("Returns the bounds of a range that have a key equivalent to k.");
+		explain_test("Returns the bounds of a range that have a key equivalent to k.");
 
 		std::map<int, std::string>	m;
 		tree_type					tree;
@@ -483,7 +483,7 @@ namespace ft
 	{
 		std::cout << "TEST: Modifiers: insert() \n\n";
 
-		explainTest("Insert element(s) into the tree.");
+		explain_test("Insert element(s) into the tree.");
 
 		tree_type	tree;
 		tree_type	copy_tree;
@@ -517,7 +517,7 @@ namespace ft
 				  << "\nbegin: " << tree.begin()->first
 				  << "\nend:   " << tree.end()->first << '\n';
 
-		displayTreeInfos(tree);
+		display_tree_infos(tree);
 
 		tree.write_tree_dot("ast_before");
 
@@ -551,7 +551,7 @@ namespace ft
 		std::cout << "to:   " << to->first << '\n';
 
 		tree.insert(from, to);
-		displayTreeInfos(tree);
+		display_tree_infos(tree);
 
 		tree.write_tree_dot("ast_after");
 
@@ -562,7 +562,7 @@ namespace ft
 	{
 		std::cout << "TEST: Modifiers: swap() \n\n";
 
-		explainTest("Exchanges the content of the tree and the other tree.");
+		explain_test("Exchanges the content of the tree and the other tree.");
 
 		tree_type	tree;
 		tree_type	other_tree;
@@ -583,32 +583,32 @@ namespace ft
 		const pair<int, std::string>&	ref = *(tree.begin());
 		const tree_type::iterator		it = ++tree.begin();
 
-		displayTreeInfos(tree, "tree");
-		displayTreeInfos(other_tree, "other tree");
+		display_tree_infos(tree, "tree");
+		display_tree_infos(other_tree, "other tree");
 
 		std::cout << "first node (reference): " << ref.first << " => " << ref.second << '\n'
 				  << "second node (iterator): " << it->first << " => " << it->second << "\n\n";
 
 		tree.swap(other_tree);
 
-		displayTreeInfos(tree, "tree");
-		displayTreeInfos(other_tree, "other tree");
+		display_tree_infos(tree, "tree");
+		display_tree_infos(other_tree, "other tree");
 
 		std::cout << "first node (reference): " << ref.first << " => " << ref.second << '\n'
 				  << "second node (iterator): " << it->first << " => " << it->second << "\n\n";
 
 		empty_tree.swap(other_tree);
 
-		displayTreeInfos(empty_tree, "empty tree");
-		displayTreeInfos(other_tree, "other tree");
+		display_tree_infos(empty_tree, "empty tree");
+		display_tree_infos(other_tree, "other tree");
 
 		std::cout << "first node (reference): " << ref.first << " => " << ref.second << '\n'
 				  << "second node (iterator): " << it->first << " => " << it->second << "\n\n";
 
 		empty_tree.swap(other_tree);
 
-		displayTreeInfos(empty_tree, "empty tree");
-		displayTreeInfos(other_tree, "other tree");
+		display_tree_infos(empty_tree, "empty tree");
+		display_tree_infos(other_tree, "other tree");
 
 		std::cout << "first node (reference): " << ref.first << " => " << ref.second << '\n'
 				  << "second node (iterator): " << it->first << " => " << it->second << "\n\n";
@@ -657,7 +657,7 @@ namespace ft
 	{
 		std::cout << "TEST: Modifiers: clear() \n\n";
 
-		explainTest("Destroys all elements from the tree, leaving it with a size of 0.");
+		explain_test("Destroys all elements from the tree, leaving it with a size of 0.");
 
 		tree_type	tree;
 

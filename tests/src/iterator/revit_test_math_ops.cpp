@@ -26,7 +26,7 @@ namespace std
 	{
 		std::cout << "TEST: Non-member operator+ \n\n";
 
-		explainTest("Returns a reverse iterator pointing to the element located "
+		explain_test("Returns a reverse iterator pointing to the element located "
 					"n positions away from the element pointed to by rev_it.");
 
 		int	n = 3;
@@ -53,7 +53,7 @@ namespace std
 	{
 		std::cout << "TEST: Non-member operator- \n\n";
 
-		explainTest("Computes the distance between two reverse iterators. "
+		explain_test("Computes the distance between two reverse iterators. "
 					"Returns the same as subtracting lhs's base iterator "
 					"from rhs's base iterator");
 

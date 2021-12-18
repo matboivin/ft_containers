@@ -25,7 +25,7 @@ namespace std
 	{
 		std::cout << "TEST: Non-member swap() \n\n";
 
-		explainTest("Exchange contents of 2 vectors.");
+		explain_test("Exchange contents of 2 vectors.");
 
 		// create vectors
 		vector<int>	vec1;
@@ -45,8 +45,8 @@ namespace std
 		vector<int>	backup3(vec3);
 
 		// first test
-		displayVecInfos(vec1, "before: vector 1");
-		displayVecInfos(vec2, "before: vector 2");
+		display_vec_infos(vec1, "before: vector 1");
+		display_vec_infos(vec2, "before: vector 2");
 
 		std::cout << "swap(vec1, vec2);\n\n";
 
@@ -54,9 +54,9 @@ namespace std
 		swap(vec1, vec2);
 		clock_t	time_end = clock();
 
-		displayVecInfos(vec1, "after: vector 1");
-		displayVecInfos(vec2, "after: vector 2");
-		displayElapsedTime(time_start, time_end);
+		display_vec_infos(vec1, "after: vector 1");
+		display_vec_infos(vec2, "after: vector 2");
+		display_elapsed_time(time_start, time_end);
 
 		// assert using backup vectors
 		assert(vec1 == backup2);
@@ -67,7 +67,7 @@ namespace std
 
 		time_start = clock();
 		swap(vec1, vec3);
-		displayElapsedTime(time_start, clock());
+		display_elapsed_time(time_start, clock());
 
 		// assert using backup vectors
 		assert(vec1 == backup3);

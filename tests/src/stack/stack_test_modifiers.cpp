@@ -27,7 +27,7 @@ namespace std
 	{
 		std::cout << "TEST: Modifiers: push() \n\n";
 
-		explainTest("Inserts a new element at the top of the stack.");
+		explain_test("Inserts a new element at the top of the stack.");
 
 		// Test vector
 		std::cout << "1. With vector" << std::endl;
@@ -44,7 +44,7 @@ namespace std
 		std::cout << "stack_vec.size() = " << stack_vec.size() << std::endl;
 
 		assert(stack_vec.size() == 1000);
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 
 		// Test deque
 		std::cout << "2. With deque" << std::endl;
@@ -61,7 +61,7 @@ namespace std
 		std::cout << "stack_deque.size() = " << stack_deque.size() << std::endl;
 
 		assert(stack_deque.size() == 1000);
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 
 		// Test list
 		std::cout << "3. With list" << std::endl;
@@ -78,14 +78,14 @@ namespace std
 		std::cout << "stack_lst.size() = " << stack_lst.size() << std::endl;
 
 		assert(stack_lst.size() == 1000);
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 	}
 
 	void	test_stack_pop(void)
 	{
 		std::cout << "TEST: Modifiers: pop() \n\n";
 
-		explainTest("Remove top element.");
+		explain_test("Remove top element.");
 
 		// Test vector
 		std::cout << "1. With vector" << std::endl;
@@ -109,7 +109,7 @@ namespace std
 		std::cout << "stack.size() = " << stack_vec.size() << std::endl;
 
 		assert(stack_vec.size() == 6);
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 
 		// Test deque
 		std::cout << "2. With deque" << std::endl;
@@ -133,7 +133,7 @@ namespace std
 		std::cout << "stack_deque.size() = " << stack_deque.size() << std::endl;
 
 		assert(stack_deque.size() == 6);
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 
 		// Test list
 		std::cout << "3. With list" << std::endl;
@@ -157,6 +157,6 @@ namespace std
 		std::cout << "stack_lst.size() = " << stack_lst.size() << std::endl;
 
 		assert(stack_lst.size() == 6);
-		displayElapsedTime(time_start, time_end);
+		display_elapsed_time(time_start, time_end);
 	}
 }

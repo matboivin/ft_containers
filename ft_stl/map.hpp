@@ -129,7 +129,7 @@ namespace ft
 		{
 		}
 
-	/* Destructor */
+	// destructor
 	template<typename Key, typename T, typename Compare, typename Allocator>
 		map<Key,T,Compare,Allocator>::~map(void)
 		{
@@ -146,7 +146,7 @@ namespace ft
 			return (*this);
 		}
 
-	/* obsevers ************************************************************* */
+	/* observers ************************************************************ */
 
 	template<typename Key, typename T, typename Compare, typename Allocator>
 		typename map<Key,T,Compare,Allocator>::key_compare

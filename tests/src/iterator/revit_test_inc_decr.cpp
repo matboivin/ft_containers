@@ -26,7 +26,7 @@ namespace std
 	{
 		std::cout << "TEST: operator++ \n\n";
 
-		explainTest("Increments iterator position.");
+		explain_test("Increments iterator position.");
 
 		int	arr[5];
 
@@ -58,7 +58,7 @@ namespace std
 	{
 		std::cout << "TEST: operator-- \n\n";
 
-		explainTest("Decreases iterator position.");
+		explain_test("Decreases iterator position.");
 
 		int	arr[5];
 
@@ -90,7 +90,7 @@ namespace std
 	{
 		std::cout << "TEST: operator+= \n\n";
 
-		explainTest("Advances the reverse_iterator by n element positions.");
+		explain_test("Advances the reverse_iterator by n element positions.");
 
 		int	n = 7;
 		int	arr[10];
@@ -114,7 +114,7 @@ namespace std
 	{
 		std::cout << "TEST: operator+ \n\n";
 
-		explainTest("Returns an iterator pointing to the element n positions away.");
+		explain_test("Returns an iterator pointing to the element n positions away.");
 
 		int	n = 5;
 		int	arr[10];
@@ -138,7 +138,7 @@ namespace std
 	{
 		std::cout << "TEST: operator-= \n\n";
 
-		explainTest("Decreases the reverse_iterator by n element positions.");
+		explain_test("Decreases the reverse_iterator by n element positions.");
 
 		int	n = 4;
 		int	arr[10];
@@ -162,7 +162,7 @@ namespace std
 	{
 		std::cout << "TEST: operator- \n\n";
 
-		explainTest("Returns an iterator pointing to the element "
+		explain_test("Returns an iterator pointing to the element "
 					"n positions before the currently pointed one.");
 
 		int	n = 5;

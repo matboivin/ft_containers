@@ -25,34 +25,34 @@ namespace std
 	{
 		std::cout << "TEST: Default Constructor \n\n";
 
-		explainTest("Constructs an empty vector.");
+		explain_test("Constructs an empty vector.");
 
 		clock_t	start = clock();
 
 		vector<int>	vec;
 
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 	}
 
 	void	test_vec_fill_ctor(void)
 	{
 		std::cout << "TEST: Fill Constructor \n\n";
 
-		explainTest("Constructs a vector with n elements. "
+		explain_test("Constructs a vector with n elements. "
 					"Each element is a copy of value passed as parameter.");
 
 		clock_t	start = clock();
 
 		vector<int>	vec1(1000000, 1);
 
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 	}
 
 	void	test_vec_copy_ctor(void)
 	{
 		std::cout << "TEST: Copy constructor \n\n";
 
-		explainTest("Creates a new object from existing one passed as parameter.");
+		explain_test("Creates a new object from existing one passed as parameter.");
 
 		// create a vector
 		vector<int>	vec1(1000000, 1);
@@ -62,7 +62,7 @@ namespace std
 		// create a copy from vec1
 		vector<int>	vec2(vec1);
 
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		// assert they're identical
 		assert(vec1 == vec2);
@@ -72,7 +72,7 @@ namespace std
 	{
 		std::cout << "TEST: Range constructor \n\n";
 
-		explainTest("Creates a new object using a range of elements.");
+		explain_test("Creates a new object using a range of elements.");
 
 		// create a vector
 		vector<int>	test;
@@ -89,23 +89,23 @@ namespace std
 		// create vectors using ranges of elements
 		vector<int>	vec1(test.begin(), test.end());
 
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		start = clock();
 
 		vector<int>	vec2(test.begin(), it);
 
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
-		displayVecInfos(vec1, "vector 1");
-		displayVecInfos(vec2, "vector 2");
+		display_vec_infos(vec1, "vector 1");
+		display_vec_infos(vec2, "vector 2");
 	}
 
 	void	test_vec_copy_assign(void)
 	{
 		std::cout << "TEST: Copy assignment operator \n\n";
 
-		explainTest("Copies a vector from an existing one.");
+		explain_test("Copies a vector from an existing one.");
 
 		// create two vectors
 		vector<int>	vec1(1000000, 1);
@@ -116,7 +116,7 @@ namespace std
 		// create a copy from vec1
 		vec2 = vec1;
 
-		displayElapsedTime(start, clock());
+		display_elapsed_time(start, clock());
 
 		// assert they're identical
 		assert(vec1 == vec2);

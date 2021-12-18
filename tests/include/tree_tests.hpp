@@ -53,7 +53,7 @@ namespace ft
 /* Display the tree size and nodes */
 
 template<typename RBTree>
-	static void	displayTreeInfos(const RBTree& tree, const std::string& title="RB Tree")
+	static void	display_tree_infos(const RBTree& tree, const std::string& title="RB Tree")
 	{
 		std::cout << title
 				<< "\n- size:      " << tree.size()

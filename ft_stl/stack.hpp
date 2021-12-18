@@ -27,7 +27,7 @@ namespace ft
 		class stack
 		{
 		public:
-			//types
+			// types
 			typedef Container							container_type;
 			typedef typename Container::value_type		value_type;
 			typedef typename Container::size_type		size_type;

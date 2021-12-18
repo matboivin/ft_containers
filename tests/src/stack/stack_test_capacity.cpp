@@ -27,7 +27,7 @@ namespace std
 	{
 		std::cout << "TEST: Capacity: size() \n\n";
 
-		explainTest("Test whether container is empty.");
+		explain_test("Test whether container is empty.");
 
 		// Test vector
 		std::cout << "1. With vector" << std::endl;
@@ -82,7 +82,7 @@ namespace std
 	{
 		std::cout << "TEST: Capacity: size() \n\n";
 
-		explainTest("Returns the number of elements in the stack.");
+		explain_test("Returns the number of elements in the stack.");
 
 		// Test vector
 		std::cout << "1. With vector" << std::endl;
