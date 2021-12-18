@@ -20,7 +20,6 @@ IMPL_FILES = algorithm.hpp \
 			 type_traits.hpp \
 			 utility.hpp \
 			 vector.hpp
-#			 map.hpp tree.hpp
 
 IMPL_DIR = ft_stl
 
@@ -55,8 +54,6 @@ TEST_SRC_FILES = main.cpp \
 				 vector_test_swap.cpp \
 				 vector_tests.cpp
 
-# map_tests.cpp map_tests.hpp
-
 INC_DIR = tests/include
 SRC_DIR = tests/src
 TEST_OUT_DIR = tests/outputs
@@ -83,7 +80,7 @@ VPATH = $(SRC_DIR) $(SRC_SUBDIRS)
 # COMPIL AND FLAGS
 
 CPPFLAGS = -I$(IMPL_DIR) -I$(INC_DIR)
-CXX = clang++
+CXX = c++
 CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # RULES
