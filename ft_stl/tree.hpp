@@ -1350,15 +1350,19 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::write_tree_dot(const std::string& filename)
 		{
 			std::ofstream	outfile;
+			std::string		filename_dot = filename + ".dot";
 
 			if (size() == 0)
+			{
+				std::cout << "Didn't create " << filename_dot << std::endl;
 				return ;
+			}
 
-			outfile.open(filename.c_str(), std::ios::out);
+			outfile.open(filename_dot.c_str(), std::ios::out);
 
 			if ( !outfile.is_open() )
 			{
-				std::cout << "Error: Unable to open \'" << filename << "\'" << std::endl;
+				std::cout << "Error: Unable to open \'" << filename_dot << "'" << std::endl;
 				return ;
 			}
 
@@ -1377,8 +1381,15 @@ namespace ft
 			outfile << "\n}";
 
 			outfile.close();
-			std::cout << "Successfully created " << filename << " in working dir" << std::endl;
-			system("dot -Tsvg ast.dot -o ast.svg");
+			std::cout << "Successfully created " << filename_dot << " in working dir" << std::endl;
+
+			std::string	dot_cmd = "dot -Tsvg ";
+
+			dot_cmd += filename;
+			dot_cmd += ".dot -o ";
+			dot_cmd += filename;
+			dot_cmd += ".svg";
+			system(dot_cmd.c_str());
 		}
 
 } // namespace ft

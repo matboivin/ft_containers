@@ -471,7 +471,7 @@ namespace ft
 			std::cout << it->first << " => " << it->second << '\n';
 		}
 
-		tree.write_tree_dot("ast_before.dot");
+		tree.write_tree_dot("ast_before");
 
 		copy_tree = tree;
 
@@ -512,7 +512,7 @@ namespace ft
 			std::cout << it->first << " => " << it->second << '\n';
 		}
 
-		tree.write_tree_dot("ast_after.dot");
+		tree.write_tree_dot("ast_after");
 
 		std::cout << "\n\n";
 	}
