@@ -588,6 +588,24 @@ namespace ft
 			reverse_iterator		rend(void);
 			const_reverse_iterator	rend(void) const;
 
+			// capacity
+			bool					empty(void) const;
+			size_type				size(void) const;
+			size_type				max_size(void) const;
+
+			// modifiers
+			ft::pair<iterator,bool>	insert(const value_type& val);
+			iterator				insert(iterator position, const value_type& val);
+			template<typename InputIterator>
+				void				insert(InputIterator first, InputIterator last,
+										   typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
+										   										value_type>::value>::type* = 0);
+			// void				erase(iterator position);
+			// size_type			erase(const key_type& k);
+			// void				erase(iterator first, iterator last);
+			void					swap(RedBlackTree& other);
+			void					clear(void);
+
 			// lookup
 			size_type				count(const key_type& k) const;
 			iterator				find(const key_type& k);
@@ -598,21 +616,6 @@ namespace ft
 			const_iterator			upper_bound(const key_type& k) const;
 			ft::pair<iterator,iterator>				equal_range(const key_type& k);
 			ft::pair<const_iterator,const_iterator>	equal_range(const key_type& k) const;
-
-			// capacity
-			bool					empty(void) const;
-			size_type				size(void) const;
-			size_type				max_size(void) const;
-
-			// modifiers
-			ft::pair<iterator,bool>	insert(const value_type& val);
-			iterator				insert(iterator position, const value_type& val);
-			template<typename InputIterator>
-				void	insert(InputIterator first, InputIterator last,
-							   typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
-							   									value_type>::value>::type* = 0);
-			void					swap(RedBlackTree& other);
-			void					clear(void);
 
 			// debug
 			static void	write_node(std::ofstream& outfile, node_pointer node);
@@ -1102,7 +1105,7 @@ namespace ft
 			return (const_iterator(this->_M_header._M_left));
 		}
 
-	// Returns an iterator referring to the past-the-end element in the tree
+	// Returns an iterator representing the past-the-end element in the tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::end(void)
@@ -1152,6 +1155,7 @@ namespace ft
 
 	/* capacity ************************************************************* */
 
+	// Returns true if the tree is empty, false otherwise
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		bool
 		RedBlackTree<Key,Val,Compare,Alloc>::empty(void) const
@@ -1159,6 +1163,7 @@ namespace ft
 			return (this->_M_node_count == 0);
 		}
 
+	// Returns the number of nodes in the tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::size_type
 		RedBlackTree<Key,Val,Compare,Alloc>::size(void) const
@@ -1166,11 +1171,80 @@ namespace ft
 			return (this->_M_node_count);
 		}
 
+	/*
+	 * Gets the maximum number of elements that the tree can hold.
+	 *
+	 * This is the maximum potential size the container can reach due to known system
+	 * or library implementation limitations.
+	 */
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::size_type
 		RedBlackTree<Key,Val,Compare,Alloc>::max_size(void) const
 		{
 			return (this->get_node_alloc().max_size());
+		}
+
+	/* modifiers ************************************************************ */
+
+	// Inserts a new element
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
+		RedBlackTree<Key,Val,Compare,Alloc>::insert(const value_type& val)
+		{
+			return (_M_insert_node(iterator(_M_get_root()), val));
+		}
+
+	// Inserts a new element with a hint for the position
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
+		RedBlackTree<Key,Val,Compare,Alloc>::insert(iterator position, const value_type& val)
+		{
+			return (_M_insert_node(position, val));
+		}
+
+	// Inserts a range of new elements
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+	template<typename InputIterator>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::insert(InputIterator first, InputIterator last,
+													typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
+													value_type>::value>::type*)
+		{
+			while (first != last)
+			{
+				_M_insert_node(end(), *first);
+				++first;
+			}
+		}
+
+	// Exchanges the content of the tree and the other tree
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::swap(RedBlackTree& other)
+		{
+			if (this == &other)
+				return ;
+
+			key_compare	tmp(this->_M_key_compare);
+
+			this->_M_key_compare = other._M_key_compare;
+			other._M_key_compare = tmp;
+
+			if (size() && other.size())
+				this->_M_swap(other);
+			else if (other.size())
+				this->_M_copy_reset(other);
+			else
+				other._M_copy_reset(*this);
+		}
+
+	// Destroys all elements from the tree, leaving it with a size of 0
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::clear(void)
+		{
+			_M_erase(this->_M_header._M_parent);
+			this->_M_reset();
 		}
 
 	/* lookup *************************************************************** */
@@ -1318,67 +1392,6 @@ namespace ft
 			const_iterator	last = upper_bound(k);
 
 			return (ft::pair<const_iterator,const_iterator>(first, last));
-		}
-
-	/* modifiers ************************************************************ */
-
-	// tmp (insert from map)
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
-		RedBlackTree<Key,Val,Compare,Alloc>::insert(const value_type& val)
-		{
-			return (_M_insert_node(iterator(_M_get_root()), val));
-		}
-
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
-		RedBlackTree<Key,Val,Compare,Alloc>::insert(iterator position, const value_type& val)
-		{
-			return (_M_insert_node(position, val));
-		}
-
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-	template<typename InputIterator>
-		void
-		RedBlackTree<Key,Val,Compare,Alloc>::insert(InputIterator first, InputIterator last,
-													typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
-													value_type>::value>::type*)
-		{
-			while (first != last)
-			{
-				_M_insert_node(end(), *first);
-				++first;
-			}
-		}
-
-	// Exchanges the content of the tree and the other tree
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		void
-		RedBlackTree<Key,Val,Compare,Alloc>::swap(RedBlackTree& other)
-		{
-			if (this == &other)
-				return ;
-
-			key_compare	tmp(this->_M_key_compare);
-
-			this->_M_key_compare = other._M_key_compare;
-			other._M_key_compare = tmp;
-
-			if (size() && other.size())
-				this->_M_swap(other);
-			else if (other.size())
-				this->_M_copy_reset(other);
-			else
-				other._M_copy_reset(*this);
-		}
-
-	// Destroys all elements from the tree, leaving it with a size of 0
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		void
-		RedBlackTree<Key,Val,Compare,Alloc>::clear(void)
-		{
-			_M_erase(this->_M_header._M_parent);
-			this->_M_reset();
 		}
 
 	/* debug **************************************************************** */
