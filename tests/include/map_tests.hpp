@@ -18,7 +18,7 @@
 #include "tests.hpp"
 
 #if defined(TEST_FT)
-//# include "map.hpp"
+# include "map.hpp"
 
 namespace ft
 #else
@@ -27,7 +27,15 @@ namespace ft
 namespace std
 #endif
 {
+	typedef map<int, std::string>	map_type;
+
 	void	test_map(void);
+
+	// construct/assign
+	void	test_map_default_ctor(void);
+	void	test_map_range_ctor(void);
+	void	test_map_copy_ctor(void);
+	void	test_map_copy_assign(void);
 }
 
 #endif

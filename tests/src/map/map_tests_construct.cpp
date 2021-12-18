@@ -23,11 +23,56 @@ namespace ft
 namespace std
 #endif
 {
-	void	test_map(void)
+	void	test_map_default_ctor(void)
 	{
-		test_map_default_ctor();
-		test_map_range_ctor();
-		test_map_copy_ctor();
-		test_map_copy_assign();
+		std::cout << "TEST: Default Constructor \n\n";
+
+		explain_test("Constructs an empty map.");
+
+		clock_t	start = clock();
+
+		map_type	map;
+
+		display_elapsed_time(start, clock());
+	}
+
+	void	test_map_range_ctor(void)
+	{
+		std::cout << "TEST: range Constructor \n\n";
+
+		explain_test("Constructs a map with a range of elements.");
+
+		// clock_t	start = clock();
+
+		// map_type	map;
+
+		// display_elapsed_time(start, clock());
+	}
+
+	void	test_map_copy_ctor(void)
+	{
+		std::cout << "TEST: Copy constructor \n\n";
+
+		explain_test("Creates a new object from existing one passed as parameter.");
+
+		// create a map
+		// map_type	map;
+
+		// clock_t	start = clock();
+
+		// create a copy from map1
+		// map_type	map_cpy(map);
+
+		// display_elapsed_time(start, clock());
+
+		// assert they're identical
+		//assert(map == map_cpy);
+	}
+
+	void	test_map_copy_assign(void)
+	{
+		std::cout << "TEST: Copy assignment operator \n\n";
+
+		explain_test("Copies a map from an existing one.");
 	}
 }

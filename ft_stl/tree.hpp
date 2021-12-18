@@ -494,7 +494,8 @@ namespace ft
 	/*
 	 * Red Black Tree template class
 	 */
-	template<typename Key, typename Val,
+	template<typename Key,
+			 typename Val,
 			 typename Compare = std::less<Key>,
 			 typename Alloc = std::allocator<Val> >
 		class RedBlackTree
@@ -559,7 +560,7 @@ namespace ft
 
 		public:
 			// default constructor
-			RedBlackTree(const allocator_type& alloc = allocator_type());
+			RedBlackTree(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
 
 			// copy constructor
 			RedBlackTree(const RedBlackTree& other);
@@ -1014,9 +1015,9 @@ namespace ft
 
 	// default constructor
 	template<typename Key, typename Val, typename Compare, typename Alloc>
-		RedBlackTree<Key,Val,Compare,Alloc>::RedBlackTree(const allocator_type& alloc)
+		RedBlackTree<Key,Val,Compare,Alloc>::RedBlackTree(const key_compare& comp, const allocator_type& alloc)
 		: _M_alloc(alloc),
-		  _M_key_compare()
+		  _M_key_compare(comp)
 		{
 		}
 

@@ -24,7 +24,7 @@ namespace ft
 
 	/*
 	 * Map template class
-	 * Store elements as key,value pairs.
+	 * Store elements as key,value pairs. Each key is unique.
 	 */
 	template<typename Key,
 			 typename T,
@@ -51,25 +51,20 @@ namespace ft
 			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 			typedef std::size_t												size_type;
 
-		private:
-			typedef typename Allocator::value_type							_alloc_value_type;
-
+			// function object to compare the keys of the stored elements
 			class value_compare
 			{
 				friend class map;
-
 			protected:
 				// attributes
 				Compare	comp; // A binary predicate
-				value_compare(Compare c) : comp(c) {}
+				value_compare(Compare c) : comp(c) {} // constructed with map's comparison object
 			public:
-				bool	operator()(const value_type& x, const value_type& y) const
-				{
-					return comp(x.first, y.first);
-				}
+				bool	operator()(const value_type& x, const value_type& y) const { return comp(x.first, y.first); }
 			};
 
 		private:
+			typedef typename Allocator::value_type											_alloc_value_type;
 			typedef typename allocator_type::template rebind<value_type>::other				_pair_alloc_type;
 			typedef ft::RedBlackTree<key_type, value_type, key_compare, _pair_alloc_type>	_repr_type;
 
@@ -98,7 +93,8 @@ namespace ft
 			map&	operator=(const map& other);
 
 			// observers
-			key_compare	key_comp(void) const;
+			key_compare		key_comp(void) const;
+			value_compare	value_comp(void) const;
 		}; // class map
 
 	/* Map implementation *************************************************** */
@@ -108,7 +104,7 @@ namespace ft
 	// default constructor
 	template<typename Key, typename T, typename Compare, typename Allocator>
 	map<Key,T,Compare,Allocator>::map(const key_compare& comp, const allocator_type& alloc)
-	: _M_tree()
+	: _M_tree(comp, alloc)
 	{
 	}
 
@@ -116,9 +112,8 @@ namespace ft
 	template<typename Key, typename T, typename Compare, typename Allocator>
 	template <typename InputIterator>
 		map<Key,T,Compare,Allocator>::map(InputIterator first, InputIterator last,
-										const key_compare& comp, const allocator_type& alloc
-										)
-		: _M_tree()
+										  const key_compare& comp, const allocator_type& alloc)
+		: _M_tree(comp, alloc)
 		{
 		}
 
@@ -141,18 +136,26 @@ namespace ft
 		map<Key,T,Compare,Allocator>::operator=(const map& other)
 		{
 			if (this != &other)
-				//
-
+				this->_M_tree = other._M_tree;
 			return (*this);
 		}
 
 	/* observers ************************************************************ */
 
+	// return a copy of the function used to compare the keys of elements
 	template<typename Key, typename T, typename Compare, typename Allocator>
 		typename map<Key,T,Compare,Allocator>::key_compare
 		map<Key,T,Compare,Allocator>::key_comp(void) const
 		{
 			return (this->_M_tree.key_comp());
+		}
+
+	// return a new function object to compare the keys of elements
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		typename map<Key,T,Compare,Allocator>::value_compare
+		map<Key,T,Compare,Allocator>::value_comp(void) const
+		{
+			return (value_compare(this->_M_tree.key_comp()));
 		}
 
 } // namespace ft

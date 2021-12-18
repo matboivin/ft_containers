@@ -15,6 +15,7 @@ COL_RESET = \033[0m
 
 IMPL_FILES = algorithm.hpp \
 			 iterator.hpp \
+			 map.hpp \
 			 stack.hpp \
 			 tree.hpp \
 			 type_traits.hpp \
@@ -26,6 +27,7 @@ IMPL_DIR = ft_stl
 # TESTS
 
 TEST_INC_FILES = tests.hpp \
+				 map_tests.hpp \
 				 revit_tests.hpp \
 				 stack_tests.hpp \
 				 vector_tests.hpp
@@ -33,6 +35,8 @@ TEST_INC_FILES = tests.hpp \
 TEST_SRC_FILES = main.cpp \
 				 generate_output.cpp \
 				 test_utils.cpp \
+				 map_tests_construct.cpp \
+				 map_tests.cpp \
 				 revit_test_comp_ops.cpp \
 				 revit_test_construct.cpp \
 				 revit_test_elem_access.cpp \
