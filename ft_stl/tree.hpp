@@ -549,6 +549,8 @@ namespace ft
 			const_iterator			lower_bound(const key_type& k) const;
 			iterator				upper_bound(const key_type& k);
 			const_iterator			upper_bound(const key_type& k) const;
+			ft::pair<iterator,iterator>				equal_range(const key_type& k);
+			ft::pair<const_iterator,const_iterator>	equal_range(const key_type& k) const;
 
 			// capacity
 			bool					empty(void) const;
@@ -1127,14 +1129,21 @@ namespace ft
 
 	/* lookup *************************************************************** */
 
-	/* Returns 1 if the tree contains an element matching key k */
+	/* Returns the number of elements matching key k */
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::size_type
 		RedBlackTree<Key,Val,Compare,Alloc>::count(const key_type& k) const
 		{
+			size_type		count = 0;
 			const_iterator	it = this->find(k);
 
-			return (it != this->end());
+			while ((it != this->end()) && (k == _M_get_key(it._M_node)))
+			{
+				++count;
+				++it;
+			}
+
+			return (count);
 		}
 
 	/* Gets the element with the key k, else return end */
@@ -1240,6 +1249,30 @@ namespace ft
 				++it;
 			}
 			return (ite);
+		}
+
+	/*
+	 * Returns the bounds of a range that have a key equivalent to k.
+	 * If k is not found, returns two iterators pointing to the first element after k.
+	 */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,typename RedBlackTree<Key,Val,Compare,Alloc>::iterator>
+		RedBlackTree<Key,Val,Compare,Alloc>::equal_range(const key_type& k)
+		{
+			iterator	first = lower_bound(k);
+			iterator	last = upper_bound(k);
+
+			return (ft::pair<iterator,iterator>(first, last));
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator,typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator>
+		RedBlackTree<Key,Val,Compare,Alloc>::equal_range(const key_type& k) const
+		{
+			const_iterator	first = lower_bound(k);
+			const_iterator	last = upper_bound(k);
+
+			return (ft::pair<const_iterator,const_iterator>(first, last));
 		}
 
 	/* modifiers ************************************************************ */
