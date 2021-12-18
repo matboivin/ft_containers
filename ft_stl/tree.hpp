@@ -1355,16 +1355,20 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::swap(RedBlackTree& other)
 		{
-			key_compare		tmp_key_cmp(this->_M_key_compare);
+			if (this == &other)
+				return ;
+
+			key_compare	tmp(this->_M_key_compare);
 
 			this->_M_key_compare = other._M_key_compare;
-			other._M_key_compare = tmp_key_cmp;
-			if (size() > 0)
+			other._M_key_compare = tmp;
+
+			if (size() && other.size())
 				this->_M_swap(other);
-			else if (other.size() == 0)
-				other._M_copy_reset(*this);
-			else
+			else if (other.size())
 				this->_M_copy_reset(other);
+			else
+				other._M_copy_reset(*this);
 		}
 
 	/* Destroys all elements from the tree, leaving it with a size of 0 */

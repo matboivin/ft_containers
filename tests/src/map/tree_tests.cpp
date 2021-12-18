@@ -599,7 +599,7 @@ namespace ft
 
 		empty_tree.swap(other_tree);
 
-		displayTreeInfos(tree, "tree");
+		displayTreeInfos(empty_tree, "empty tree");
 		displayTreeInfos(other_tree, "other tree");
 
 		std::cout << "first node (reference): " << ref.first << " => " << ref.second << '\n'
@@ -607,15 +607,15 @@ namespace ft
 
 		empty_tree.swap(other_tree);
 
-		displayTreeInfos(tree, "tree");
+		displayTreeInfos(empty_tree, "empty tree");
 		displayTreeInfos(other_tree, "other tree");
 
 		std::cout << "first node (reference): " << ref.first << " => " << ref.second << '\n'
 				  << "second node (iterator): " << it->first << " => " << it->second << "\n\n";
 
-		// std::map<int, std::string>	m;
-		// std::map<int, std::string>	other_m;
-		// std::map<int, std::string>	empty_m;
+		std::map<int, std::string>	m;
+		std::map<int, std::string>	other_m;
+		std::map<int, std::string>	empty_m;
 
 		// m[8]  = "eight";
 		// m[18] = "eighteen";
