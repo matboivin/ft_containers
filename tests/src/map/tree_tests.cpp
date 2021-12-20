@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 19:13:13 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/20 23:50:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,27 @@ namespace ft
 				  << "end(): " << (--tree.end())->second << '\n';
 
 		display_tree_infos(tree);
+		std::cout << "tree size: " << tree.size() << '\n';
+
+		for (tree_type::iterator it = tree.begin();
+			 it != tree.end();
+			 ++it)
+		{
+			std::cout << it->first << " => " << it->second << '\n';
+		}
+
+		std::cout << "TEST: Iterator with empty tree\n\n";
+
+		tree.clear();
+
+		tree_type::iterator	end = tree.end();
+		--end;
+
+		for ( ; end != tree.begin(); --end)
+		{
+			std::cout << end->first << " => " << end->second << '\n';
+		}
+		std::cout << end->first << " => " << end->second << '\n';
 	}
 
 	void	test_tree_rev_iterator(void)
