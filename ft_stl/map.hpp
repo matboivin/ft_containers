@@ -103,12 +103,12 @@ namespace ft
 			const_reverse_iterator	rend(void) const;
 
 			// capacity
-			bool		empty(void) const;
-			size_type	size(void) const;
-			size_type	max_size(void) const;
+			bool				empty(void) const;
+			size_type			size(void) const;
+			size_type			max_size(void) const;
 
 			// element access
-			//mapped_type&	operator[](const key_type& k);
+			mapped_type&		operator[](const key_type& k);
 
 			// modifiers
 			pair<iterator,bool>	insert(const value_type& val);
@@ -133,8 +133,8 @@ namespace ft
 			pair<const_iterator,const_iterator>	equal_range(const key_type& k) const;
 
 			// observers
-			key_compare		key_comp(void) const;
-			value_compare	value_comp(void) const;
+			key_compare			key_comp(void) const;
+			value_compare		value_comp(void) const;
 		}; // class map
 
 	/* Map implementation *************************************************** */
@@ -280,11 +280,13 @@ namespace ft
 
 	/* element access ******************************************************* */
 
-	// template<typename Key, typename T, typename Compare, typename Allocator>
-	// 	typename map<Key,T,Compare,Allocator>::imapped_type&
-	// 	map<Key,T,Compare,Allocator>::operator[](const key_type& k)
-	// 	{
-	// 	}
+	/* Insert a new element. If the key already exists, returns a reference to the stored element. */
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		typename map<Key,T,Compare,Allocator>::mapped_type&
+		map<Key,T,Compare,Allocator>::operator[](const key_type& k)
+		{
+			return ( (*( this->insert(ft::make_pair(k, mapped_type())).first)).second );
+		}
 
 	/* modifiers ************************************************************ */
 
