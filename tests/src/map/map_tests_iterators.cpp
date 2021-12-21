@@ -30,7 +30,7 @@ namespace std
 		explain_test("Move through the elements of the container like pointers do.");
 
 		// create map
-		map_type	m;
+		int_s_map	m;
 
 		std::cout << std::boolalpha << "(m.begin() == m.end())? "
 				  << (m.begin() == m.end()) << '\n';
@@ -55,14 +55,14 @@ namespace std
 
 		std::cout << "map size: " << m.size() << '\n';
 
-		for (map_type::iterator it = m.begin();
+		for (int_s_map::iterator it = m.begin();
 			 it != m.end();
 			 ++it)
 		{
 			std::cout << it->first << " => " << it->second << '\n';
 		}
 
-		map_type::iterator	end = m.end();
+		int_s_map::iterator	end = m.end();
 		--end;
 
 		for ( ; end != m.begin(); --end)
@@ -79,7 +79,7 @@ namespace std
 		explain_test("Move through the elements of the container backwards.");
 
 		// create map
-		map_type	m;
+		int_s_map	m;
 
 		m.insert( pair<int, std::string>(8,  "eight") );
 		m.insert( pair<int, std::string>(18, "eighteen") );
@@ -101,7 +101,7 @@ namespace std
 
 		std::cout << "Print the map content using reverse iterator:" << "\n\n";
 
-		for (map_type::reverse_iterator rev_it = m.rbegin();
+		for (int_s_map::reverse_iterator rev_it = m.rbegin();
 			 rev_it != m.rend();
 			 ++rev_it)
 		{

@@ -913,21 +913,20 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_rebalance(node_pointer __node)
 		{
 			// if node is not root or has red parent, rebalance
-			if ((__node != this->_M_header._M_parent) && (__node->_M_parent->_M_color == RED))
+			while ((__node != this->_M_header._M_parent) && (__node->_M_parent->_M_color == RED))
 			{
 				node_pointer	__grand_parent = __node->_M_parent->_M_parent;
-				node_pointer	__uncle;
 
 				if (__node->_M_parent == __grand_parent->_M_left)
 				{
-					__uncle = __grand_parent->_M_right;
+					node_pointer	__uncle = __grand_parent->_M_right;
 
 					if (__uncle && __uncle->_M_color == RED) // uncle is red
 					{
 						__node->_M_parent->_M_color = BLACK;
 						__uncle->_M_color = BLACK;
 						__grand_parent->_M_color = RED;
-						_M_rebalance(__grand_parent);
+						__node = __grand_parent;
 					}
 					else // no uncle or uncle is black
 					{
@@ -938,19 +937,20 @@ namespace ft
 						}
 						_M_rotate_right(__grand_parent);
 						__node->_M_parent->_M_color = BLACK;
-						__grand_parent->_M_color = RED;
+						if (__grand_parent != this->_M_header._M_parent)
+							__grand_parent->_M_color = RED;
 					}
 				}
 				else
 				{
-					__uncle = __grand_parent->_M_left;
+					node_pointer	__uncle = __grand_parent->_M_left;
 
 					if (__uncle && __uncle->_M_color == RED) // uncle is red
 					{
 						__node->_M_parent->_M_color = BLACK;
 						__uncle->_M_color = BLACK;
 						__grand_parent->_M_color = RED;
-						_M_rebalance(__grand_parent);
+						__node = __grand_parent;
 					}
 					else // no uncle or uncle is black
 					{
@@ -961,7 +961,8 @@ namespace ft
 						}
 						_M_rotate_left(__grand_parent);
 						__node->_M_parent->_M_color = BLACK;
-						__grand_parent->_M_color = RED;
+						if (__grand_parent != this->_M_header._M_parent)
+							__grand_parent->_M_color = RED;
 					}
 				}
 			}

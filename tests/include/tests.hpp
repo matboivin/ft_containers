@@ -14,6 +14,8 @@
 #define TESTS_HPP
 
 #include <assert.h>
+#include <cstdlib>
+#include <ctime>
 #include <fstream>
 #include <string>
 #include <time.h>

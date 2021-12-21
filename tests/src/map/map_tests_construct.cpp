@@ -31,7 +31,7 @@ namespace std
 
 		clock_t	start = clock();
 
-		map_type	map;
+		int_map	map;
 
 		display_elapsed_time(start, clock());
 	}
@@ -42,11 +42,17 @@ namespace std
 
 		explain_test("Constructs a map with a range of elements.");
 
-		// clock_t	start = clock();
+		// create a map
+		int_map	m;
 
-		// map_type	map;
+		for (int i = 0; i < 10000; ++i)
+			m[i] = rand();
 
-		// display_elapsed_time(start, clock());
+		clock_t	start = clock();
+
+		int_map	m_range(m.begin(), m.end());
+
+		display_elapsed_time(start, clock());
 	}
 
 	void	test_map_copy_ctor(void)
@@ -56,14 +62,17 @@ namespace std
 		explain_test("Creates a new object from existing one passed as parameter.");
 
 		// create a map
-		// map_type	map;
+		int_map	m;
 
-		// clock_t	start = clock();
+		for (int i = 0; i < 10000; ++i)
+			m[i] = rand();
 
-		// create a copy from map1
-		// map_type	map_cpy(map);
+		clock_t	start = clock();
 
-		// display_elapsed_time(start, clock());
+		// create a copy from m
+		int_map	m_cpy(m);
+
+		display_elapsed_time(start, clock());
 
 		// assert they're identical
 		//assert(map == map_cpy);
@@ -74,5 +83,19 @@ namespace std
 		std::cout << "TEST: Copy assignment operator \n\n";
 
 		explain_test("Copies a map from an existing one.");
+
+		// create maps
+		int_map	m;
+		int_map	m_cpy;
+
+		for (int i = 0; i < 10000; ++i)
+			m[i] = rand();
+
+		clock_t	start = clock();
+
+		// create a copy from m
+		m_cpy = m;
+
+		display_elapsed_time(start, clock());
 	}
 }

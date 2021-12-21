@@ -25,14 +25,16 @@ namespace std
 {
 	void	test_map(void)
 	{
-		test_map_default_ctor();
-		test_map_range_ctor();
-		test_map_copy_ctor();
-		test_map_copy_assign();
+		srand(time(0));
 
-		// iterators
-		test_map_iterator();
-		test_map_rev_iterator();
+		// test_map_default_ctor();
+		// test_map_range_ctor();
+		// test_map_copy_ctor();
+		// test_map_copy_assign();
+
+		// // iterators
+		// test_map_iterator();
+		// test_map_rev_iterator();
 
 		// elements access
 		test_map_subscript_op();

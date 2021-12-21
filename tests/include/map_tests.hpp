@@ -27,7 +27,8 @@ namespace ft
 namespace std
 #endif
 {
-	typedef map<int, std::string>	map_type;
+	typedef map<int, std::string>	int_s_map;
+	typedef map<int, int>			int_map;
 
 	void	test_map(void);
 
