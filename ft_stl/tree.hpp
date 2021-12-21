@@ -1007,7 +1007,7 @@ namespace ft
 			const key_type				__key = __val.first;
 			ft::pair<node_pointer,bool>	__res = _M_get_insert_pos(__pos, __key);
 
-			if (_M_get_key(__res.first) == __key) // key already exists
+			if ((__res.first != this->end().get_node()) && (_M_get_key(__res.first) == __key)) // key already exists
 				return (_pair_it_bool(iterator(__res.first), false));
 
 			node_pointer	__node = _M_create_node(__val);

@@ -59,7 +59,6 @@ namespace std
 		m.clear();
 
 		int	random_n;
-		int	count = 0;
 
 		for (int i = 0; i < 10000; ++i)
 		{
@@ -67,16 +66,15 @@ namespace std
 			m[i] = random_n;
 			cmp_m[i] = random_n;
 		}
-		for (int i = 0; i < 10000; ++i)
-		{
-			if (m[i] != cmp_m[i])
-			{
-				++count;
-				std::cout << "m[" << i << "] = " << m[i] << "\n\n";
-			}
-		}
 
-		std::cout << "Differences count: " << count << "\n\n";
+		std::size_t	len = m.size();
+
+		std::cout << "Map has " << len << " elements\n\n";
+
+		for (std::size_t i = 0; i <= len; ++i)
+		{
+			assert(m[i] == cmp_m[i]);
+		}
 
 	#if defined(TEST_FT)
 		m.write_tree_dot("ast");
