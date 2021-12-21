@@ -14,8 +14,8 @@
 #define TREE_HPP
 
 #include <cstdlib> // system
-#include <fstream>
-#include <iostream>
+#include <fstream> // debug
+#include <iostream> // debug
 #include <memory>
 #include "iterator.hpp"
 #include "utility.hpp"
@@ -822,29 +822,29 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_insert_pos(iterator __hint, const key_type& __key)
 		{
 			bool			__insert_left = true;
-			node_pointer	__parent;
+			node_pointer	__pos;
 
 			// check whether the new node is lower than the current leftmost node
 			if ( _M_key_compare( __key, _M_get_key(_M_get_leftmost()) ) )
 			{
-				__parent = _M_get_leftmost();
+				__pos = _M_get_leftmost();
 			}
 			// check whether the new node is greater than the current rightmost node
 			else if ( _M_key_compare(_M_get_key(_M_get_rightmost()), __key ) )
 			{
 				__insert_left = false;
-				__parent = _M_get_rightmost();
+				__pos = _M_get_rightmost();
 			}
 			// else move down the tree until finding a leaf
 			else
 			{
 				node_pointer	__cursor = _M_get_pos_from_hint(__hint, __key);
 
-				__parent = __cursor;
+				__pos = __cursor;
 
 				while (__cursor != 0)
 				{
-					__parent = __cursor;
+					__pos = __cursor;
 
 					if (_M_key_compare(__key, _M_get_key(__cursor))) // (node < cursor)
 					{
@@ -862,7 +862,7 @@ namespace ft
 					}
 				}
 			}
-			return (ft::pair<node_pointer,bool>(__parent, __insert_left));
+			return (ft::pair<node_pointer,bool>(__pos, __insert_left));
 		}
 
 	// Rotate left

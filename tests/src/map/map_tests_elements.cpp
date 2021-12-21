@@ -44,5 +44,30 @@ namespace std
 				  << "m[4] is " << m[4] << '\n';
 
 		display_elapsed_time(start, clock());
+
+		m.clear();
+
+		start = clock();
+
+		m[8]  = "eight";
+		m[18] = "eighteen";
+		m[5]  = "five";
+		m[15] = "fifteen";
+		m[17] = "seventeen";
+		m[25] = "twenty-five";
+		m[40] = "fourty";
+		m[80] = "eigthy";
+		m[11] = "eleven";
+		m[20] = "twenty";
+		m[2]  = "two";
+		m[987] = "nine-hundred eighty-seven";
+		m[100] = "one-hundred";
+		m[16] = "sixteen";
+
+		display_elapsed_time(start, clock());
+
+	#if defined(TEST_FT)
+		m.write_tree_dot("ast");
+	#endif
 	}
 }

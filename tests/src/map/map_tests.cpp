@@ -35,6 +35,6 @@ namespace std
 		test_map_rev_iterator();
 
 		// elements access
-		//test_map_subscript_op();
+		test_map_subscript_op();
 	}
 }

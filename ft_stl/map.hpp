@@ -139,6 +139,9 @@ namespace ft
 			// observers
 			key_compare			key_comp(void) const;
 			value_compare		value_comp(void) const;
+
+			// debug
+			void				write_tree_dot(const std::string& filename);
 		}; // class map
 
 	/* Map implementation *************************************************** */
@@ -441,6 +444,15 @@ namespace ft
 		map<Key,T,Compare,Allocator>::value_comp(void) const
 		{
 			return (value_compare(this->_M_tree.key_comp()));
+		}
+
+	/* debug **************************************************************** */
+
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		void
+		map<Key,T,Compare,Allocator>::write_tree_dot(const std::string& filename)
+		{
+			this->_M_tree.write_tree_dot(filename);
 		}
 
 } // namespace ft
