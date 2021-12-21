@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/21 01:05:14 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/21 01:17:39 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #define TREE_HPP
 
 #include <cstdlib> // system
+#include <fstream>
+#include <iostream>
 #include <memory>
 #include "iterator.hpp"
 #include "utility.hpp"
