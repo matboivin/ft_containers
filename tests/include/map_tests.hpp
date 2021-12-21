@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 17:42:14 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/21 00:28:02 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@ namespace std
 	void	test_map_range_ctor(void);
 	void	test_map_copy_ctor(void);
 	void	test_map_copy_assign(void);
+
+	// iterators
+	void	test_map_iterator(void);
+	void	test_map_rev_iterator(void);
+
+	// element access
+	void	test_map_subscript_op(void);
 }
 
 #endif

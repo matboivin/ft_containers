@@ -36,6 +36,8 @@ TEST_SRC_FILES = main.cpp \
 				 generate_output.cpp \
 				 test_utils.cpp \
 				 map_tests_construct.cpp \
+				 map_tests_elements.cpp \
+				 map_tests_iterators.cpp \
 				 map_tests.cpp \
 				 revit_test_comp_ops.cpp \
 				 revit_test_construct.cpp \

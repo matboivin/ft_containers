@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 18:34:10 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/21 01:05:14 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -501,7 +501,7 @@ namespace ft
 		class RedBlackTree
 		: public RBTreeHeader<Val>
 		{
-		protected:
+		public:
 			// types
 			typedef Alloc									allocator_type;
 			typedef Key										key_type;
@@ -516,7 +516,6 @@ namespace ft
 			typedef RBTreeNode<Val>*						node_pointer;
 			typedef const RBTreeNode<Val>*					const_node_pointer;
 
-		public:
 			// iterators
 			typedef RBtree_iterator<Val>					iterator;
 			typedef RBtree_const_iterator<Val>				const_iterator;
@@ -735,14 +734,14 @@ namespace ft
 		const typename RedBlackTree<Key,Val,Compare,Alloc>::key_type&
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_key(node_pointer __node) const
 		{
-			return (static_cast<key_type&>(__node->_get_value_ptr()->first));
+			return (static_cast<const key_type&>(_M_get_value(__node).first));
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		const typename RedBlackTree<Key,Val,Compare,Alloc>::key_type&
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_key(const_node_pointer __node) const
 		{
-			return (static_cast<const key_type&>(__node->_get_value_ptr()->first));
+			return (static_cast<const key_type&>(_M_get_value(__node).first));
 		}
 
 	// Get pair<key,value>
@@ -1199,7 +1198,7 @@ namespace ft
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::insert(iterator position, const value_type& val)
 		{
-			return (_M_insert_node(position, val));
+			return (_M_insert_node(position, val).first);
 		}
 
 	// Inserts a range of new elements

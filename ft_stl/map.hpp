@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 20:54:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/21 01:03:11 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,6 @@ namespace ft
 			typedef typename allocator_type::const_reference				const_reference;
 			typedef typename allocator_type::pointer						pointer;
 			typedef typename allocator_type::const_pointer					const_pointer;
-			typedef ft::RBtree_iterator<pointer>							iterator;
-			typedef ft::RBtree_const_iterator<pointer>						const_iterator;
-			typedef ft::reverse_iterator<iterator>							reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
-			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
 			typedef std::size_t												size_type;
 
 			// function object to compare the keys of the stored elements
@@ -71,6 +66,13 @@ namespace ft
 			_repr_type	_M_tree;
 
 		public:
+			// types
+			typedef typename _repr_type::iterator					iterator;
+			typedef typename _repr_type::const_iterator				const_iterator;
+			typedef typename _repr_type::reverse_iterator			reverse_iterator;
+			typedef typename _repr_type::const_reverse_iterator		const_reverse_iterator;
+			typedef typename _repr_type::difference_type			difference_type;
+
 			// default constructor
 			explicit map(const key_compare& comp = key_compare(),
 						const allocator_type& alloc = allocator_type()
@@ -114,7 +116,9 @@ namespace ft
 			pair<iterator,bool>	insert(const value_type& val);
 			iterator			insert(iterator position, const value_type& val);
 			template <class InputIterator>
-				void			insert(InputIterator first, InputIterator last);
+				void			insert(InputIterator first, InputIterator last,
+									   typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
+									   										value_type>::value>::type* = 0);
 			// void				erase(iterator position);
 			// size_type			erase(const key_type& k);
 			// void				erase(iterator first, iterator last);
@@ -285,7 +289,12 @@ namespace ft
 		typename map<Key,T,Compare,Allocator>::mapped_type&
 		map<Key,T,Compare,Allocator>::operator[](const key_type& k)
 		{
-			return ( (*( this->insert(ft::make_pair(k, mapped_type())).first)).second );
+			iterator	it = this->_M_tree.lower_bound(k);
+
+			if ((it == end()) || (it->first != k))
+				it = insert(it, value_type(k, mapped_type()));
+
+			return ((*it).second);
 		}
 
 	/* modifiers ************************************************************ */
@@ -310,7 +319,9 @@ namespace ft
 	template<typename Key, typename T, typename Compare, typename Allocator>
 	template <class InputIterator>
 		void
-		map<Key,T,Compare,Allocator>::insert(InputIterator first, InputIterator last)
+		map<Key,T,Compare,Allocator>::insert(InputIterator first, InputIterator last,
+											 typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
+											 value_type>::value>::type*)
 		{
 			return (this->_M_tree.insert(first, last));
 		}
