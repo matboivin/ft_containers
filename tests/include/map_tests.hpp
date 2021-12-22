@@ -53,6 +53,11 @@ namespace std
 	void	test_map_iterator(void);
 	void	test_map_rev_iterator(void);
 
+	// capacity
+	void	test_map_empty(void);
+	void	test_map_size(void);
+	void	test_map_max_size(void);
+
 	// element access
 	void	test_map_subscript_op(void);
 

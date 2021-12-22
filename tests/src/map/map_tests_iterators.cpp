@@ -53,8 +53,6 @@ namespace std
 				  << "begin(): " << m.begin()->second << '\n'
 				  << "end(): " << (--m.end())->second << "\n\n";
 
-		std::cout << "map size: " << m.size() << '\n';
-
 		std::cout << "Print the map content using iterator:" << "\n\n";
 
 		for (int_s_map::iterator it = m.begin();
@@ -67,7 +65,7 @@ namespace std
 		int_s_map::iterator	end = m.end();
 		--end;
 
-		std::cout << "\n\nPrint the map content from the end, decrementing iterator:" << "\n\n";
+		std::cout << "\nPrint the map content from the end, decrementing iterator:" << "\n\n";
 
 		for ( ; end != m.begin(); --end)
 		{
@@ -98,8 +96,8 @@ namespace std
 
 		std::cout << std::boolalpha << "(m.begin() == m.end())? "
 				  << (m.begin() == m.end()) << '\n'
-				  << "begin(): " << m.begin()->second << '\n'
-				  << "end(): " << (--m.end())->second << '\n';
+				  << "begin()->second = " << m.begin()->second << '\n'
+				  << "end()->second   = " << (--m.end())->second << '\n';
 
 		std::cout << "map size: " << m.size() << "\n\n";
 

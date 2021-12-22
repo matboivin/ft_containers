@@ -35,6 +35,7 @@ TEST_INC_FILES = tests.hpp \
 TEST_SRC_FILES = main.cpp \
 				 generate_output.cpp \
 				 test_utils.cpp \
+				 map_tests_capacity.cpp \
 				 map_tests_construct.cpp \
 				 map_tests_elements.cpp \
 				 map_tests_iterators.cpp \

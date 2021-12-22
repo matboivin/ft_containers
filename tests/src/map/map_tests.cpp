@@ -43,6 +43,11 @@ namespace std
 		test_map_iterator();
 		test_map_rev_iterator();
 
+		// capacity
+		test_map_empty();
+		test_map_size();
+		test_map_max_size();
+
 		// elements access
 		test_map_subscript_op();
 

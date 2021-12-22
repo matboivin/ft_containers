@@ -46,7 +46,7 @@ namespace std
 		int_map	m;
 
 		for (int i = 0; i < 10000; ++i)
-			m[i] = rand();
+			m[rand()] = rand();
 
 		clock_t	start = clock();
 
@@ -65,17 +65,34 @@ namespace std
 		int_map	m;
 
 		for (int i = 0; i < 10000; ++i)
-			m[i] = rand();
+			m[rand()] = rand();
 
 		clock_t	start = clock();
 
 		// create a copy from m
-		int_map	m_cpy(m);
+		int_map	cpy_m(m);
 
 		display_elapsed_time(start, clock());
 
-		// assert they're identical
-		//assert(map == map_cpy);
+		// check they're identical
+		int_map::iterator	it = m.begin();
+		int_map::iterator	cpy_it = cpy_m.begin();
+
+		for ( ; it != m.end() && cpy_it != cpy_m.end(); ++it, ++cpy_it)
+			assert((it->first == cpy_it->first) && (it->second == cpy_it->second));
+
+		int	random_key = rand();
+
+		std::cout << "m[" << random_key << "]     = " << m[random_key] << '\n'
+				  << "cpy_m[" << random_key << "] = " << cpy_m[random_key] << "\n\n";
+
+		m[random_key] = rand();
+
+		std::cout << "m[" << random_key << "]     = " << m[random_key] << '\n'
+				  << "cpy_m[" << random_key << "] = " << cpy_m[random_key] << "\n\n";
+
+		// check the copy didn't change
+		assert(m[random_key] != cpy_m[random_key]);
 	}
 
 	void	test_map_copy_assign(void)
@@ -86,16 +103,36 @@ namespace std
 
 		// create maps
 		int_map	m;
-		int_map	m_cpy;
+		int_map	cpy_m;
 
 		for (int i = 0; i < 10000; ++i)
-			m[i] = rand();
+			m[rand()] = rand();
 
 		clock_t	start = clock();
 
 		// create a copy from m
-		m_cpy = m;
+		cpy_m = m;
 
 		display_elapsed_time(start, clock());
+
+		// check they're identical
+		int_map::iterator	it = m.begin();
+		int_map::iterator	cpy_it = cpy_m.begin();
+
+		for ( ; it != m.end() && cpy_it != cpy_m.end(); ++it, ++cpy_it)
+			assert((it->first == cpy_it->first) && (it->second == cpy_it->second));
+
+		int	random_key = rand();
+
+		std::cout << "before:\nm[" << random_key << "]     = " << m[random_key] << '\n'
+				  << "cpy_m[" << random_key << "] = " << cpy_m[random_key] << "\n\n";
+
+		m[random_key] = rand();
+
+		std::cout << "after:\nm[" << random_key << "]     = " << m[random_key] << '\n'
+				  << "cpy_m[" << random_key << "] = " << cpy_m[random_key] << "\n\n";
+
+		// check the copy didn't change
+		assert(m[random_key] != cpy_m[random_key]);
 	}
 }
