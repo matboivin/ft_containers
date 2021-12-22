@@ -877,7 +877,7 @@ namespace ft
 				__y->_M_left->_M_parent = __x;
 			__y->_M_parent = __x->_M_parent;
 			if (__x == this->_M_header._M_parent)
-				this->_M_header._M_parent = __y;
+				__x = __y;
 			else if (__x == __x->_M_parent->_M_left)
 				__x->_M_parent->_M_left = __y;
 			else
@@ -898,7 +898,7 @@ namespace ft
 				__y->_M_right->_M_parent = __x;
 			__y->_M_parent = __x->_M_parent;
 			if (__x == this->_M_header._M_parent)
-				this->_M_header._M_parent = __y;
+				__x = __y;
 			else if (__x == __x->_M_parent->_M_right)
 				__x->_M_parent->_M_right = __y;
 			else
@@ -1495,7 +1495,7 @@ namespace ft
 			outfile << "\n}";
 
 			outfile.close();
-			std::cout << "Successfully created " << filename_dot << " in working dir" << std::endl;
+			// std::cout << "Successfully created " << filename_dot << " in working dir" << std::endl;
 
 			// std::string	dot_cmd = "dot -Tsvg ";
 			// dot_cmd += filename;

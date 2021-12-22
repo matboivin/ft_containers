@@ -49,7 +49,10 @@ namespace std
 
 		m.clear();
 
-		int_s_map	m2;
+		// tmp test
+
+		int_s_map					m2;
+		std::map<int, std::string>	cmp_m2;
 
 		m2[8]  = "eight";
 		m2[18] = "eighteen";
@@ -66,9 +69,35 @@ namespace std
 		m2[100] = "one-hundred";
 		m2[16] = "sixteen";
 
+		cmp_m2[8]  = "eight";
+		cmp_m2[18] = "eighteen";
+		cmp_m2[5]  = "five";
+		cmp_m2[15] = "fifteen";
+		cmp_m2[17] = "seventeen";
+		cmp_m2[25] = "twenty-five";
+		cmp_m2[40] = "fourty";
+		cmp_m2[80] = "eigthy";
+		cmp_m2[11] = "eleven";
+		cmp_m2[20] = "twenty";
+		cmp_m2[2]  = "two";
+		cmp_m2[987] = "nine-hundred eighty-seven";
+		cmp_m2[100] = "one-hundred";
+		cmp_m2[16] = "sixteen";
+
+		std::size_t	len = m2.size();
+
+		std::cout << "Map has " << len << " elements\n\n";
+
+		for (std::size_t i = 0; i <= len; ++i)
+		{
+			assert(m2[i] == cmp_m2[i]);
+		}
+
 	#if defined(TEST_FT)
 		m2.write_tree_dot("ast");
 	#endif
+
+	// !tmp test
 
 		m.clear();
 
@@ -90,7 +119,7 @@ namespace std
 			cmp_m[i] = random_n;
 		}
 
-		std::size_t	len = m.size();
+		len = m.size();
 
 		std::cout << "Map has " << len << " elements\n\n";
 
