@@ -559,6 +559,8 @@ namespace ft
 												  node_pointer __node, node_pointer __parent);
 			ft::pair<iterator,bool>		_M_insert_node(iterator __pos, const value_type& __val);
 
+			void						_M_BST_delete(iterator __pos);
+
 		public:
 			// default constructor
 			RedBlackTree(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
@@ -601,7 +603,7 @@ namespace ft
 				void				insert(InputIterator first, InputIterator last,
 										   typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
 										   										value_type>::value>::type* = 0);
-			// void				erase(iterator position);
+			void					erase(iterator position);
 			// size_type			erase(const key_type& k);
 			// void				erase(iterator first, iterator last);
 			void					swap(RedBlackTree& other);
@@ -1006,6 +1008,16 @@ namespace ft
 			return (_pair_it_bool(iterator(__node), true));
 		}
 
+	// Standard Binary Search Tree deletion
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_BST_delete(iterator __pos)
+		{
+			// node is leaf
+			// node has one child
+			// node has two children
+		}
+
 	/* construct/copy/destroy *********************************************** */
 
 	// default constructor
@@ -1207,6 +1219,14 @@ namespace ft
 				_M_insert_node(end(), *first);
 				++first;
 			}
+		}
+
+	// Erase the element pointed to by the given iterator
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::erase(iterator position)
+		{
+			this->_M_BST_delete(position);
 		}
 
 	// Exchanges the content of the tree and the other tree

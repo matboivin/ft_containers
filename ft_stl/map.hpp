@@ -119,7 +119,7 @@ namespace ft
 				void			insert(InputIterator first, InputIterator last,
 									   typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
 									   										value_type>::value>::type* = 0);
-			// void				erase(iterator position);
+			void				erase(iterator position);
 			// size_type			erase(const key_type& k);
 			// void				erase(iterator first, iterator last);
 			void				swap(map& x);
@@ -328,6 +328,14 @@ namespace ft
 											 value_type>::value>::type*)
 		{
 			return (this->_M_tree.insert(first, last));
+		}
+
+	// Erase the element pointed to by the given iterator
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		void
+		map<Key,T,Compare,Allocator>::erase(iterator position)
+		{
+			this->_M_tree.erase(position);
 		}
 
 	// Exchanges the content of the map and the other map
