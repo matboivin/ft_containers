@@ -295,8 +295,9 @@ namespace ft
 			iterator	it = this->_M_tree.lower_bound(k);
 
 			if ((it == end()) || (it->first != k))
+			{
 				it = insert(it, value_type(k, mapped_type()));
-
+			}
 			return ((*it).second);
 		}
 

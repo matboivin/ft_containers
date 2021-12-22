@@ -877,7 +877,7 @@ namespace ft
 				__y->_M_left->_M_parent = __x;
 			__y->_M_parent = __x->_M_parent;
 			if (__x == this->_M_header._M_parent)
-				__x = __y;
+				this->_M_header._M_parent = __y;
 			else if (__x == __x->_M_parent->_M_left)
 				__x->_M_parent->_M_left = __y;
 			else
@@ -898,7 +898,7 @@ namespace ft
 				__y->_M_right->_M_parent = __x;
 			__y->_M_parent = __x->_M_parent;
 			if (__x == this->_M_header._M_parent)
-				__x = __y;
+				this->_M_header._M_parent = __y;
 			else if (__x == __x->_M_parent->_M_right)
 				__x->_M_parent->_M_right = __y;
 			else
@@ -929,13 +929,6 @@ namespace ft
 					__uncle->_M_color = BLACK;
 					__grand_parent->_M_color = RED;
 					__node = __grand_parent;
-					__node->_M_parent->_M_color = BLACK;
-					if (__node->_M_parent == __grand_parent->_M_left)
-						__uncle = __grand_parent->_M_right;
-					else
-						__uncle = __grand_parent->_M_left;
-					__uncle->_M_color = BLACK;
-					__node->_M_parent->_M_parent->_M_color = RED;
 				}
 				else // no uncle or uncle is black
 				{
@@ -943,25 +936,23 @@ namespace ft
 					{
 						if (__node == __node->_M_parent->_M_right)
 						{
-							_M_rotate_left(__node->_M_parent);
-							__node = __node->_M_left;
+							__node = __node->_M_parent;
+							_M_rotate_left(__node);
 						}
-						_M_rotate_right(__grand_parent);
 						__node->_M_parent->_M_color = BLACK;
-						if (__grand_parent != this->_M_header._M_parent)
-							__grand_parent->_M_color = RED;
+						__grand_parent->_M_color = RED;
+						_M_rotate_right(__grand_parent);
 					}
 					else
 					{
 						if (__node == __node->_M_parent->_M_left)
 						{
-							_M_rotate_right(__node->_M_parent);
-							__node = __node->_M_right;
+							__node = __node->_M_parent;
+							_M_rotate_right(__node);
 						}
-						_M_rotate_left(__grand_parent);
 						__node->_M_parent->_M_color = BLACK;
-						if (__grand_parent != this->_M_header._M_parent)
-							__grand_parent->_M_color = RED;
+						__grand_parent->_M_color = RED;
+						_M_rotate_left(__grand_parent);
 					}
 				}
 			}

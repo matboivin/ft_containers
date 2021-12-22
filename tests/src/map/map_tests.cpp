@@ -25,7 +25,7 @@ namespace std
 {
 	void	test_map(void)
 	{
-		srand(time(0));
+		srand(42);
 
 		// test_map_default_ctor();
 		// test_map_range_ctor();

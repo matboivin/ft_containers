@@ -139,7 +139,7 @@ test_tree:
 	valgrind --leak-check=full ./test_tree
 
 debug_42:
-	$(CXX) -I$(IMPL_DIR) $(CXXFLAGS) main.cpp -o test_42
+	$(CXX) -I$(IMPL_DIR) $(CXXFLAGS) main42.cpp -o test_42
 	./test_42 42
 
 check_leaks: $(NAME)
