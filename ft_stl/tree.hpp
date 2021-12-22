@@ -1246,32 +1246,36 @@ namespace ft
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::find(const key_type& k)
 		{
-			iterator	it = begin();
-			iterator	ite = end();
+			node_pointer	__cursor = this->_M_header._M_parent;
 
-			while (it != ite)
+			while (__cursor != 0)
 			{
-				if (k == _M_get_key(it._M_node))
-					return (it);
-				++it;
+				if (k == _M_get_key(__cursor))
+					return (iterator(__cursor));
+				else if (_M_key_compare(k, _M_get_key(__cursor)))
+					__cursor = __cursor->_M_left;
+				else
+					__cursor = __cursor->_M_right;
 			}
-			return (ite);
+			return (iterator(&this->_M_header));
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::find(const key_type& k) const
 		{
-			const_iterator	it = begin();
-			const_iterator	ite = end();
+			node_pointer	__cursor = this->_M_header._M_parent;
 
-			while (it != ite)
+			while (__cursor != 0)
 			{
-				if (k == _M_get_key(it._M_node))
-					return (it);
-				++it;
+				if (k == _M_get_key(__cursor))
+					return (iterator(__cursor));
+				else if (_M_key_compare(k, _M_get_key(__cursor)))
+					__cursor = __cursor->_M_left;
+				else
+					__cursor = __cursor->_M_right;
 			}
-			return (ite);
+			return (const_iterator(&this->_M_header));
 		}
 
 	// Returns the number of elements matching key k
@@ -1299,13 +1303,13 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::lower_bound(const key_type& k)
 		{
 			node_pointer	__cursor = this->_M_header._M_parent;
-			node_pointer	__bound = _M_get_end();
+			node_pointer	__lower_bound = &this->_M_header;
 
 			while (__cursor != 0)
 			{
 				if (!_M_key_compare(_M_get_key(__cursor), k)) // k <= elem
 				{
-					__bound = __cursor;
+					__lower_bound = __cursor;
 					__cursor = __cursor->_M_left;
 				}
 				else
@@ -1313,7 +1317,7 @@ namespace ft
 					__cursor = __cursor->_M_right;
 				}
 			}
-			return (iterator(__bound));
+			return (iterator(__lower_bound));
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
@@ -1321,13 +1325,13 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::lower_bound(const key_type& k) const
 		{
 			node_pointer	__cursor = this->_M_header._M_parent;
-			node_pointer	__bound = _M_get_end();
+			node_pointer	__lower_bound = &this->_M_header;
 
 			while (__cursor != 0)
 			{
 				if (!_M_key_compare(_M_get_key(__cursor), k)) // k <= elem
 				{
-					__bound = __cursor;
+					__lower_bound = __cursor;
 					__cursor = __cursor->_M_left;
 				}
 				else
@@ -1335,7 +1339,7 @@ namespace ft
 					__cursor = __cursor->_M_right;
 				}
 			}
-			return (const_iterator(__bound));
+			return (const_iterator(__lower_bound));
 		}
 
 	/*
@@ -1346,32 +1350,44 @@ namespace ft
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::upper_bound(const key_type& k)
 		{
-			iterator	it = begin();
-			iterator	ite = end();
+			node_pointer	__cursor = this->_M_header._M_parent;
+			node_pointer	__upper_bound = &this->_M_header;
 
-			while (it != ite)
+			while (__cursor != 0)
 			{
-				if (_M_key_compare(k, _M_get_key(it._M_node))) // k < elem
-					return (it);
-				++it;
+				if (_M_key_compare(k, _M_get_key(__cursor))) // k < elem
+				{
+					__upper_bound = __cursor;
+					__cursor = __cursor->_M_left;
+				}
+				else
+				{
+					__cursor = __cursor->_M_right;
+				}
 			}
-			return (ite);
+			return (iterator(__upper_bound));
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::upper_bound(const key_type& k) const
 		{
-			const_iterator	it = begin();
-			const_iterator	ite = end();
+			node_pointer	__cursor = this->_M_header._M_parent;
+			node_pointer	__upper_bound = &this->_M_header;
 
-			while (it != ite)
+			while (__cursor != 0)
 			{
-				if (_M_key_compare(k, _M_get_key(it._M_node))) // k < elem
-					return (it);
-				++it;
+				if (_M_key_compare(k, _M_get_key(__cursor))) // k < elem
+				{
+					__upper_bound = __cursor;
+					__cursor = __cursor->_M_left;
+				}
+				else
+				{
+					__cursor = __cursor->_M_right;
+				}
 			}
-			return (ite);
+			return (const_iterator(__upper_bound));
 		}
 
 	/*

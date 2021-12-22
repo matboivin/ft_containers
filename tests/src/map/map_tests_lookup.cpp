@@ -42,18 +42,32 @@ namespace std
 
 		int_map		m;
 
-
-		for (int i = 0; i < 100; ++i)
+		for (int i = 0; i < 10000; ++i)
 		{
 			m[rand()] = rand();
 		}
 
-		int_map::iterator	it = m.end();
-		--it;
+		int_map::iterator	it = m.begin();
+		int_map::iterator	ite = m.end();
+		--ite;
 
 		clock_t	start = clock();
 
-		std::cout << "m.count(" << it->first << "):  " << m.count(it->first) << "\n\n";
+		std::cout << "m.count(" << ite->first << "):       " << m.count(ite->first) << "\n\n";
+
+		display_elapsed_time(start, clock());
+
+		start = clock();
+
+		std::cout << "m.lower_bound(" << ite->first << "): "
+				  << m.lower_bound(ite->first)->first << " => " << m.lower_bound(ite->first)->second << "\n\n";
+
+		display_elapsed_time(start, clock());
+
+		start = clock();
+
+		std::cout << "m.upper_bound(" << it->first << "):  "
+				  << m.upper_bound(it->first)->first << " => " << m.lower_bound(it->first)->second << "\n\n";
 
 		display_elapsed_time(start, clock());
 	}
