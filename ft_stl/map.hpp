@@ -371,7 +371,7 @@ namespace ft
 		typename map<Key,T,Compare,Allocator>::size_type
 		map<Key,T,Compare,Allocator>::count(const key_type& k) const
 		{
-			return (this->_M_tree.count(k) != this->_M_tree.end());
+			return (this->_M_tree.find(k) != this->_M_tree.end());
 		}
 
 	/*

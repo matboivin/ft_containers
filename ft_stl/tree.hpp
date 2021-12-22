@@ -1298,32 +1298,44 @@ namespace ft
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::lower_bound(const key_type& k)
 		{
-			iterator	it = begin();
-			iterator	ite = end();
+			node_pointer	__cursor = this->_M_header._M_parent;
+			node_pointer	__bound = _M_get_end();
 
-			while (it != ite)
+			while (__cursor != 0)
 			{
-				if (!_M_key_compare(_M_get_key(it._M_node), k)) // k <= elem
-					return (it);
-				++it;
+				if (!_M_key_compare(_M_get_key(__cursor), k)) // k <= elem
+				{
+					__bound = __cursor;
+					__cursor = __cursor->_M_left;
+				}
+				else
+				{
+					__cursor = __cursor->_M_right;
+				}
 			}
-			return (ite);
+			return (iterator(__bound));
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::lower_bound(const key_type& k) const
 		{
-			const_iterator	it = begin();
-			const_iterator	ite = end();
+			node_pointer	__cursor = this->_M_header._M_parent;
+			node_pointer	__bound = _M_get_end();
 
-			while (it != ite)
+			while (__cursor != 0)
 			{
-				if (!_M_key_compare(_M_get_key(it._M_node), k)) // k <= elem
-					return (it);
-				++it;
+				if (!_M_key_compare(_M_get_key(__cursor), k)) // k <= elem
+				{
+					__bound = __cursor;
+					__cursor = __cursor->_M_left;
+				}
+				else
+				{
+					__cursor = __cursor->_M_right;
+				}
 			}
-			return (ite);
+			return (const_iterator(__bound));
 		}
 
 	/*

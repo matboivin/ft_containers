@@ -44,6 +44,9 @@ namespace std
 
 	// element access
 	void	test_map_subscript_op(void);
+
+	// lookup
+	void	test_map_lookup(void);
 }
 
 #endif
