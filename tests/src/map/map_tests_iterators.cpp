@@ -50,8 +50,8 @@ namespace std
 
 		std::cout << std::boolalpha << "(m.begin() == m.end())? "
 				  << (m.begin() == m.end()) << '\n'
-				  << "begin(): " << m.begin()->second << '\n'
-				  << "end(): " << (--m.end())->second << "\n\n";
+				  << "begin() = " << m.begin()->first << '\n'
+				  << "end()   = " << (--m.end())->first << "\n\n";
 
 		std::cout << "Print the map content using iterator:" << "\n\n";
 

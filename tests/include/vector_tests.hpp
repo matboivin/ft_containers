@@ -60,7 +60,7 @@ namespace std
 	void	test_vec_push_back(void);
 	void	test_vec_insert_val(void);
 	void	test_vec_insert_nval(void);
-	void	test_vec_insert_it(void);
+	void	test_vec_insert_range(void);
 	void	test_vec_pop_back(void);
 	void	test_vec_erase_pos(void);
 	void	test_vec_erase_it(void);

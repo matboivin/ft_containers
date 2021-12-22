@@ -61,7 +61,7 @@ namespace std
 		test_vec_pop_back();
 		test_vec_insert_val();
 		test_vec_insert_nval();
-		test_vec_insert_it();
+		test_vec_insert_range();
 		test_vec_erase_pos();
 		test_vec_erase_it();
 		test_vec_swap();

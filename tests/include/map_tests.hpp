@@ -61,8 +61,17 @@ namespace std
 	// element access
 	void	test_map_subscript_op(void);
 
+	// modifiers
+	void	test_map_insert_val(void);
+	void	test_map_insert_pos(void);
+	void	test_map_insert_range(void);
+	void	test_map_swap(void);
+	void	test_map_clear(void);
+
 	// lookup
 	void	test_map_lookup(void);
+
+	// observers
 }
 
 #endif

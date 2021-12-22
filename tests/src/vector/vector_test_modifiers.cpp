@@ -194,7 +194,7 @@ namespace std
 		assert(vec == result);
 	}
 
-	void	test_vec_insert_it(void)
+	void	test_vec_insert_range(void)
 	{
 		std::cout << "TEST: Modifiers: insert(pos, first, last) \n\n";
 
