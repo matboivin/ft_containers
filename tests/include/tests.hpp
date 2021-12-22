@@ -18,7 +18,6 @@
 #include <ctime>
 #include <fstream>
 #include <string>
-#include <time.h>
 
 /*
  * Colors for a more readable output

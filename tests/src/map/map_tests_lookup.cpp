@@ -17,17 +17,6 @@
 #include "tests.hpp"
 #include "map_tests.hpp"
 
-#define MAX_RAM 4294967295
-#define BUFFER_SIZE 4096
-
-struct Buffer
-{
-	int		idx;
-	char	buff[BUFFER_SIZE];
-};
-
-#define COUNT (MAX_RAM / (int)sizeof(Buffer))
-
 #if defined(TEST_FT)
 namespace ft
 #else
@@ -42,10 +31,8 @@ namespace std
 
 		int_map		m;
 
-		for (int i = 0; i < 10000; ++i)
-		{
+		for (int i = 0; i < COUNT; ++i)
 			m[rand()] = rand();
-		}
 
 		int_map::iterator	it = m.begin();
 		int_map::iterator	ite = m.end();
