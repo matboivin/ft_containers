@@ -916,19 +916,30 @@ namespace ft
 			while ((__node != this->_M_header._M_parent) && (__node->_M_parent->_M_color == RED))
 			{
 				node_pointer	__grand_parent = __node->_M_parent->_M_parent;
+				node_pointer	__uncle;
 
 				if (__node->_M_parent == __grand_parent->_M_left)
-				{
-					node_pointer	__uncle = __grand_parent->_M_right;
+					__uncle = __grand_parent->_M_right;
+				else
+					__uncle = __grand_parent->_M_left;
 
-					if (__uncle && __uncle->_M_color == RED) // uncle is red
-					{
-						__node->_M_parent->_M_color = BLACK;
-						__uncle->_M_color = BLACK;
-						__grand_parent->_M_color = RED;
-						__node = __grand_parent;
-					}
-					else // no uncle or uncle is black
+				if (__uncle && __uncle->_M_color == RED) // uncle is red
+				{
+					__node->_M_parent->_M_color = BLACK;
+					__uncle->_M_color = BLACK;
+					__grand_parent->_M_color = RED;
+					__node = __grand_parent;
+					__node->_M_parent->_M_color = BLACK;
+					if (__node->_M_parent == __grand_parent->_M_left)
+						__uncle = __grand_parent->_M_right;
+					else
+						__uncle = __grand_parent->_M_left;
+					__uncle->_M_color = BLACK;
+					__node->_M_parent->_M_parent->_M_color = RED;
+				}
+				else // no uncle or uncle is black
+				{
+					if (__node->_M_parent == __grand_parent->_M_left)
 					{
 						if (__node == __node->_M_parent->_M_right)
 						{
@@ -940,19 +951,7 @@ namespace ft
 						if (__grand_parent != this->_M_header._M_parent)
 							__grand_parent->_M_color = RED;
 					}
-				}
-				else
-				{
-					node_pointer	__uncle = __grand_parent->_M_left;
-
-					if (__uncle && __uncle->_M_color == RED) // uncle is red
-					{
-						__node->_M_parent->_M_color = BLACK;
-						__uncle->_M_color = BLACK;
-						__grand_parent->_M_color = RED;
-						__node = __grand_parent;
-					}
-					else // no uncle or uncle is black
+					else
 					{
 						if (__node == __node->_M_parent->_M_left)
 						{

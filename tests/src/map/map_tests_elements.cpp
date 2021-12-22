@@ -49,6 +49,29 @@ namespace std
 
 		m.clear();
 
+		int_s_map	m2;
+
+		m2[8]  = "eight";
+		m2[18] = "eighteen";
+		m2[5]  = "five";
+		m2[15] = "fifteen";
+		m2[17] = "seventeen";
+		m2[25] = "twenty-five";
+		m2[40] = "fourty";
+		m2[80] = "eigthy";
+		m2[11] = "eleven";
+		m2[20] = "twenty";
+		m2[2]  = "two";
+		m2[987] = "nine-hundred eighty-seven";
+		m2[100] = "one-hundred";
+		m2[16] = "sixteen";
+
+	#if defined(TEST_FT)
+		m2.write_tree_dot("ast");
+	#endif
+
+		m.clear();
+
 		start = clock();
 
 		for (int i = 0; i < 10000; ++i)
@@ -75,9 +98,5 @@ namespace std
 		{
 			assert(m[i] == cmp_m[i]);
 		}
-
-	#if defined(TEST_FT)
-		m.write_tree_dot("ast");
-	#endif
 	}
 }
