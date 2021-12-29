@@ -1,16 +1,16 @@
 #include <iostream>
 #include <string>
 #include <deque>
-// #if 1 //CREATE A REAL STL EXAMPLE
-	// #include <map>
-	// #include <stack>
-	// #include <vector>
-	// namespace ft = std;
-// #else
+#if 1 //CREATE A REAL STL EXAMPLE
+	#include <map>
+	#include <stack>
+	#include <vector>
+	namespace ft = std;
+#else
 	#include <map.hpp>
 	#include <stack.hpp>
 	#include <vector.hpp>
-// #endif
+#endif
 
 #include <cstdlib>
 #include <ctime>
@@ -18,6 +18,7 @@
 
 #define MAX_RAM 4294967296
 #define BUFFER_SIZE 4096
+
 struct Buffer
 {
 	int idx;
@@ -57,7 +58,7 @@ int main(int argc, char** argv) {
 	const int seed = atoi(argv[1]);
 	srand(seed);
 
-	clock_t	start = clock();
+	clock_t	start = clock(); // start time
 
 	ft::vector<std::string> vector_str;
 	ft::vector<int> vector_int;
@@ -119,6 +120,7 @@ int main(int argc, char** argv) {
 
 	double	elapsed = static_cast<double>(clock() - start) / CLOCKS_PER_SEC;
 
-	std::cout << std::fixed << elapsed << " seconds\n";
+	std::cout << std::fixed << elapsed << " seconds\n"; // print elapsed time
+
 	return (0);
 }
