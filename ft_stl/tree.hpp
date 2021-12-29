@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/21 01:17:39 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/29 17:25:01 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -559,7 +559,7 @@ namespace ft
 												  node_pointer __node, node_pointer __parent);
 			ft::pair<iterator,bool>		_M_insert_node(iterator __pos, const value_type& __val);
 
-			void						_M_BST_delete(iterator __pos);
+			void						_M_delete_node(node_pointer __node);
 
 		public:
 			// default constructor
@@ -772,50 +772,50 @@ namespace ft
 			if (__hint == end())
 				--__hint;
 
-			if (__hint._M_node == this->_M_header._M_parent)
-				return (__hint._M_node);
+			if (__hint.get_node() == this->_M_header._M_parent)
+				return (__hint.get_node());
 
 			// find nearest position if hint is not root
 			iterator	__prev(__hint);
 
 			// node < hint pos
-			if (_M_key_compare( __key, _M_get_key(__hint._M_node) ))
+			if (_M_key_compare( __key, _M_get_key(__hint.get_node()) ))
 			{
 				// node < root && root < hint pos
 				if (_M_key_compare( __key, _M_get_key(this->_M_header._M_parent))
-					&& _M_key_compare( _M_get_key(this->_M_header._M_parent), _M_get_key(__hint._M_node) ))
+					&& _M_key_compare( _M_get_key(this->_M_header._M_parent), _M_get_key(__hint.get_node()) ))
 				{
 					__hint = this->_M_header._M_parent; // start from root directly
 				}
 				else
 				{
 					--__hint;
-					while (__hint._M_node && _M_key_compare(__key, _M_get_key(__hint._M_node)))
+					while (__hint.get_node() && _M_key_compare(__key, _M_get_key(__hint.get_node())))
 					{
 						__prev = __hint;
 						--__hint;
 					}
 				}
 			}
-			else if (_M_key_compare(_M_get_key(__hint._M_node), __key)) // node > hint pos
+			else if (_M_key_compare(_M_get_key(__hint.get_node()), __key)) // node > hint pos
 			{
 				// node > root && root > hint pos
 				if (_M_key_compare( _M_get_key(this->_M_header._M_parent),  __key)
-					&& _M_key_compare( _M_get_key(__hint._M_node), _M_get_key(this->_M_header._M_parent) ))
+					&& _M_key_compare( _M_get_key(__hint.get_node()), _M_get_key(this->_M_header._M_parent) ))
 				{
 					__hint = this->_M_header._M_parent; // start from root directly
 				}
 				else
 				{
 					++__hint;
-					while (__hint._M_node && _M_key_compare(_M_get_key(__hint._M_node), __key))
+					while (__hint.get_node() && _M_key_compare(_M_get_key(__hint.get_node()), __key))
 					{
 						__prev = __hint;
 						++__hint;
 					}
 				}
 			}
-			return (__hint._M_node);
+			return (__hint.get_node());
 		}
 
 	// Gets position to insert new node
@@ -1011,11 +1011,39 @@ namespace ft
 	// Standard Binary Search Tree deletion
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_BST_delete(iterator __pos)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete_node(node_pointer __node)
 		{
-			// node is leaf
+			if (__node->_M_left == 0 && __node->_M_right == 0) // node is leaf
+			{
+				node_pointer	__parent = __node->_M_parent;
+				bool			__delete_left = (__node == __parent->_M_left);
+				_M_drop_node(__node);
+				if (__delete_left)
+				{
+					__parent->_M_left = 0;
+					if (__node == this->_M_header._M_left)
+						this->_M_header._M_left = __parent; // update leftmost
+				}
+				else
+				{
+					__parent->_M_right = 0;
+					if (__node == this->_M_header._M_right)
+						this->_M_header._M_right = __parent; // update rightmost
+				}
+			}
 			// node has one child
+			else if (__node->_M_left)
+			{
+				__node = __node->_M_left;
+				_M_drop_node(__node->_M_left);
+			}
+			else if (__node->_M_right)
+			{
+				__node = __node->_M_right;
+				_M_drop_node(__node->_M_right);
+			}
 			// node has two children
+			--this->_M_node_count;
 		}
 
 	/* construct/copy/destroy *********************************************** */
@@ -1226,7 +1254,7 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::erase(iterator position)
 		{
-			this->_M_BST_delete(position);
+			this->_M_delete_node(position.get_node());
 		}
 
 	// Exchanges the content of the tree and the other tree
@@ -1306,7 +1334,7 @@ namespace ft
 			size_type		count = 0;
 			const_iterator	it = this->find(k);
 
-			while ((it != this->end()) && (k == _M_get_key(it._M_node)))
+			while ((it != this->end()) && (k == _M_get_key( it.get_node() )))
 			{
 				++count;
 				++it;
@@ -1536,12 +1564,12 @@ namespace ft
 			outfile.close();
 			// std::cout << "Successfully created " << filename_dot << " in working dir" << std::endl;
 
-			// std::string	dot_cmd = "dot -Tsvg ";
-			// dot_cmd += filename;
-			// dot_cmd += ".dot -o ";
-			// dot_cmd += filename;
-			// dot_cmd += ".svg";
-			// system(dot_cmd.c_str());
+			std::string	dot_cmd = "dot -Tsvg ";
+			dot_cmd += filename;
+			dot_cmd += ".dot -o ";
+			dot_cmd += filename;
+			dot_cmd += ".svg";
+			system(dot_cmd.c_str());
 		}
 
 } // namespace ft

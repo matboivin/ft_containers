@@ -60,6 +60,7 @@
 - [Red Black Tree Rotations | Red Black tree Insertion](https://youtu.be/vQUXO2XYUl8)
 - [Red-Black Tree (Fully Explained, With Java Code)](https://www.happycoders.eu/algorithms/red-black-tree-java/)
 - [5.17 Red Black Tree Insertion](https://youtu.be/qA02XWRTBdw)
+- [Red-Black Tree | Set 3 (Delete)](https://www.geeksforgeeks.org/red-black-tree-set-3-delete-2/)
 
 ### Style guidelines
 

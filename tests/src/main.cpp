@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:23:19 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 19:10:40 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/29 17:14:23 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,15 +23,15 @@ int	main(void)
 	// ft::test_vector();
 	// ft::test_stack();
 	// ft::test_revit();
-	ft::test_map();
+	// ft::test_map();
 	#elif defined(TEST_STD)
 	// std::test_vector();
 	// std::test_stack();
 	// std::test_revit();
-	std::test_map();
+	// std::test_map();
 	#else
-	// ft::test_tree();
-	generate_output();
+	ft::test_tree();
+	// generate_output();
 	#endif
 
 	return (0);

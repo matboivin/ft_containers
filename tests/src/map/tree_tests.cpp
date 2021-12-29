@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/20 23:50:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2021/12/29 17:25:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -579,6 +579,50 @@ namespace ft
 		std::cout << "\n\n";
 	}
 
+	void	test_tree_erase(void)
+	{
+		std::cout << "TEST: Modifiers: erase() \n\n";
+
+		explain_test("Erase element(s) from the tree.");
+
+		tree_type	tree;
+
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(8,  "eight") );
+		tree.insert( pair<int, std::string>(18, "eighteen") );
+		tree.insert( pair<int, std::string>(5,  "five") );
+		tree.insert( pair<int, std::string>(15, "fifteen") );
+		tree.insert( pair<int, std::string>(15, "fifteen") );
+		tree.insert( pair<int, std::string>(17, "seventeen") );
+		tree.insert( pair<int, std::string>(25, "twenty-five") );
+		tree.insert( pair<int, std::string>(40, "fourty") );
+		tree.insert( pair<int, std::string>(80, "eighty") );
+		tree.insert( pair<int, std::string>(11, "eleven") );
+		tree.insert( pair<int, std::string>(11, "eleven") );
+		tree.insert( pair<int, std::string>(80, "eighty") );
+		tree.insert( pair<int, std::string>(11, "eleven") );
+		tree.insert( pair<int, std::string>(80, "eighty") );
+		tree.insert( pair<int, std::string>(20, "twenty") );
+
+		tree.write_tree_dot("ast_before");
+
+		display_tree_infos(tree);
+
+		tree.erase(tree.begin());
+
+		display_tree_infos(tree);
+
+		tree.write_tree_dot("ast_after");
+
+		std::cout << "tree size: " << tree.size() << '\n';
+
+		std::cout << "\n\n";
+	}
+
 	void	test_tree_swap(void)
 	{
 		std::cout << "TEST: Modifiers: swap() \n\n";
@@ -701,30 +745,30 @@ namespace ft
 
 	void	test_tree(void)
 	{
-		ft::test_tree_default_ctor();
-		ft::test_tree_copy_ctor();
-		ft::test_tree_copy_assign();
+		// ft::test_tree_default_ctor();
+		// ft::test_tree_copy_ctor();
+		// ft::test_tree_copy_assign();
 
-		// iterators
-		ft::test_tree_iterator();
-		ft::test_tree_rev_iterator();
+		// // iterators
+		// ft::test_tree_iterator();
+		// ft::test_tree_rev_iterator();
 
-		// capacity
-		ft::test_tree_empty();
-		ft::test_tree_size();
-		ft::test_tree_max_size();
+		// // capacity
+		// ft::test_tree_empty();
+		// ft::test_tree_size();
+		// ft::test_tree_max_size();
 
-		// elements access
-		ft::test_tree_count();
-		ft::test_tree_find();
-		ft::test_tree_lower_bound();
-		ft::test_tree_upper_bound();
-		ft::test_tree_equal_range();
+		// // elements access
+		// ft::test_tree_count();
+		// ft::test_tree_find();
+		// ft::test_tree_lower_bound();
+		// ft::test_tree_upper_bound();
+		// ft::test_tree_equal_range();
 
-		// modifiers
-		ft::test_tree_insert();
-		// ft::test_tree_erase();
-		ft::test_tree_swap();
-		ft::test_tree_clear();
+		// // modifiers
+		// ft::test_tree_insert();
+		ft::test_tree_erase();
+		// ft::test_tree_swap();
+		// ft::test_tree_clear();
 	}
 }
