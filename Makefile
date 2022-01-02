@@ -1,6 +1,6 @@
-NAME = ft_containers
-NAME_STD = original
-NAME_CMP = test_containers
+NAME =		ft_containers
+NAME_STD =	original
+NAME_CMP =	test_containers
 
 SHELL = /bin/sh
 RM = /bin/rm
@@ -8,83 +8,101 @@ RM = /bin/rm
 .SUFFIXES:
 .SUFFIXES: .cpp .hpp .o
 
-COL_WHITE_B = \033[1;37m
-COL_RESET = \033[0m
+COL_WHITE_B =	\033[1;37m
+COL_RESET =		\033[0m
 
 # STL IMPLEMENTATION
 
-IMPL_FILES = algorithm.hpp \
-			 iterator.hpp \
-			 map.hpp \
-			 stack.hpp \
-			 tree.hpp \
-			 type_traits.hpp \
-			 utility.hpp \
-			 vector.hpp
+IMPL_FILES =		algorithm.hpp \
+					iterator.hpp \
+					map.hpp \
+					stack.hpp \
+					tree.hpp \
+					type_traits.hpp \
+					utility.hpp \
+					vector.hpp
 
-IMPL_DIR = ft_stl
+# TEST FILES
 
-# TESTS
+INC_FILES =			tests.hpp \
+					map_tests.hpp \
+					revit_tests.hpp \
+					stack_tests.hpp \
+					vector_tests.hpp
 
-TEST_INC_FILES = tests.hpp \
-				 map_tests.hpp \
-				 revit_tests.hpp \
-				 stack_tests.hpp \
-				 vector_tests.hpp
+CMP_SRC_FILES =		main.cpp \
+					generate_output.cpp \
+					test_utils.cpp
 
-TEST_SRC_FILES = main.cpp \
-				 generate_output.cpp \
-				 test_utils.cpp \
-				 map_tests_capacity.cpp \
-				 map_tests_construct.cpp \
-				 map_tests_elements.cpp \
-				 map_tests_iterators.cpp \
-				 map_tests_lookup.cpp \
-				 map_tests_modifiers.cpp \
-				 map_tests.cpp \
-				 revit_test_comp_ops.cpp \
-				 revit_test_construct.cpp \
-				 revit_test_elem_access.cpp \
-				 revit_test_inc_decr.cpp \
-				 revit_test_math_ops.cpp \
-				 revit_tests.cpp \
-				 stack_test_capacity.cpp \
-				 stack_test_comp_ops.cpp \
-				 stack_test_construct.cpp \
-				 stack_test_elements.cpp \
-				 stack_test_modifiers.cpp \
-				 stack_tests.cpp \
-				 vector_test_capacity.cpp \
-				 vector_test_comp_ops.cpp \
-				 vector_test_construct.cpp \
-				 vector_test_elements.cpp \
-				 vector_test_iterator.cpp \
-				 vector_test_modifiers.cpp \
-				 vector_test_swap.cpp \
-				 vector_tests.cpp
+IT_SRC_FILES =		revit_test_comp_ops.cpp \
+					revit_test_construct.cpp \
+					revit_test_elem_access.cpp \
+					revit_test_inc_decr.cpp \
+					revit_test_math_ops.cpp \
+					revit_tests.cpp
 
-INC_DIR = tests/include
-SRC_DIR = tests/src
-TEST_OUT_DIR = tests/outputs
+MAP_SRC_FILES =		map_tests_capacity.cpp \
+					map_tests_construct.cpp \
+					map_tests_elements.cpp \
+					map_tests_iterators.cpp \
+					map_tests_lookup.cpp \
+					map_tests_modifiers.cpp \
+					map_tests.cpp
 
-SUBDIRS = iterator map stack vector
-SRC_SUBDIRS = $(addprefix $(SRC_DIR)/, $(SUBDIRS))
+STACK_SRC_FILES =	stack_test_capacity.cpp \
+					stack_test_comp_ops.cpp \
+					stack_test_construct.cpp \
+					stack_test_elements.cpp \
+					stack_test_modifiers.cpp \
+					stack_tests.cpp
+
+TREE_SRC_FILES =	tree_tests_capacity.cpp \
+					tree_tests_construct.cpp \
+					tree_tests_elements.cpp \
+					tree_tests_iterators.cpp \
+					tree_tests_modifiers.cpp \
+					tree_tests.cpp
+
+VEC_SRC_FILES =		vector_test_capacity.cpp \
+					vector_test_comp_ops.cpp \
+					vector_test_construct.cpp \
+					vector_test_elements.cpp \
+					vector_test_iterator.cpp \
+					vector_test_modifiers.cpp \
+					vector_test_swap.cpp \
+					vector_tests.cpp
+
+# DIRECTORIES
+
+IMPL_DIR =		ft_stl
+
+INC_DIR =		tests/include
+SRC_DIR =		tests/src
+TEST_OUT_DIR =	tests/outputs
+SUBDIRS =		iterator map stack tree vector
+SRC_SUBDIRS =	$(addprefix $(SRC_DIR)/, $(SUBDIRS))
+
+OBJ_DIR =		obj
+
+VPATH =			$(SRC_DIR) $(SRC_SUBDIRS)
+
+# ALL SRC FILES
+
+SRC_FILES =		$(CMP_SRC_FILES) $(VEC_SRC_FILES) $(STACK_SRC_FILES) $(MAP_SRC_FILES) $(IT_SRC_FILES)
+TREE_FILES =	$(addprefix $(SRC_DIR)/tree/, $(TREE_SRC_FILES))
 
 # OBJ
 
-OBJ_FILES = $(TEST_SRC_FILES:%.cpp=%.o)
-OBJ_DIR = obj
+OBJ_FILES = $(SRC_FILES:%.cpp=%.o)
 
-OBJ = $(addprefix $(OBJ_DIR)/ft/, $(OBJ_FILES))
-OBJ_STD = $(addprefix $(OBJ_DIR)/original/, $(OBJ_FILES))
-OBJ_CMP = $(OBJ_DIR)/cmp/main.o $(OBJ_DIR)/cmp/generate_output.o $(OBJ_DIR)/cmp/test_utils.o
+OBJ =		$(addprefix $(OBJ_DIR)/ft/, $(OBJ_FILES))
+OBJ_STD =	$(addprefix $(OBJ_DIR)/original/, $(OBJ_FILES))
+OBJ_CMP =	$(addprefix $(OBJ_DIR)/cmp/, $(CMP_SRC_FILES:%.cpp=%.o))
 
 # INC AND PATHS
 
 INC = $(addprefix $(IMPL_DIR)/, $(IMPL_FILES)) \
 	  $(addprefix $(INC_DIR)/, $(TEST_INC_FILES))
-
-VPATH = $(SRC_DIR) $(SRC_SUBDIRS)
 
 # COMPIL AND FLAGS
 
@@ -136,7 +154,7 @@ debug:
 	./$(NAME_CMP)
 
 debug_tree:
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) tests/src/map/tree_tests.cpp tests/src/main.cpp tests/src/test_utils.cpp -o test_tree
+	$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(TREE_FILES) $(addprefix $(SRC_DIR)/, $(CMP_SRC_FILES)) -o test_tree
 
 test_tree:
 	valgrind --leak-check=full ./test_tree
@@ -148,9 +166,8 @@ check_leaks: $(NAME)
 	valgrind --leak-check=full ./$(NAME)
 
 show:
-	@echo "VPATH\n$(VPATH)\n"
+	@echo "OBJ_FILES\n$(OBJ_FILES)\n"
 	@echo "INC\n$(INC)\n"
-	@echo "SRC_SUBDIRS\n$(SRC_SUBDIRS)"
 
 # CLEAN
 

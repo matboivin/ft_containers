@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/29 17:14:39 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/02 18:37:09 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,16 @@
 
 #include <iostream>
 #include <string>
+#include <map>
 #include "tests.hpp"
 #include "tree.hpp"
 
 namespace ft
 {
+
+	typedef RedBlackTree<int,pair<int, std::string> >						tree_type;
+	typedef pair<RedBlackTree<int,pair<int, std::string> >::iterator,bool>	pair_type;
+
 	void	test_tree(void);
 
 	// construct/assign
@@ -70,6 +75,24 @@ template<typename RBTree>
 
 		for (; it != tree.end(); ++it)
 			std::cout << it->first << " => " << it->second << '\n';
+		std::cout << "\n\n";
+	}
+
+template<typename Map>
+	void	display_map_infos(const Map& m, const std::string& title="map")
+	{
+		std::cout << title
+				  << "\n- size:      " << m.size()
+				  << "\n- contents:  \n";
+
+		if ( !m.size() )
+		{
+			std::cout << "(empty)\n\n";
+			return ;
+		}
+
+		for (typename Map::const_iterator it_m = m.begin(); it_m != m.end(); ++it_m)
+			std::cout << it_m->first << " => " << it_m->second << '\n';
 		std::cout << "\n\n";
 	}
 

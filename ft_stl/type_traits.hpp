@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:29:54 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/08 10:42:05 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/02 18:54:05 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,6 @@ namespace ft
 		: public true_type {};
 
 	template<>
-		struct __is_integral_helper<long long int>
-		: public true_type {};
-
-	template<>
 		struct __is_integral_helper<unsigned char>
 		: public true_type {};
 
@@ -128,10 +124,6 @@ namespace ft
 
 	template<>
 		struct __is_integral_helper<unsigned long int>
-		: public true_type {};
-
-	template<>
-		struct __is_integral_helper<unsigned long long int>
 		: public true_type {};
 
 	// Trait class that identifies whether T is an integral type
