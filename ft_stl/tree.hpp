@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/02 18:30:19 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/03 16:38:13 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -559,7 +559,9 @@ namespace ft
 												  node_pointer __x, node_pointer __parent);
 			ft::pair<iterator,bool>		_M_insert_node(iterator __pos, const value_type& __val);
 
-			void						_M_delete_node(node_pointer __x, node_pointer __parent);
+			node_pointer				_M_get_inorder_successor(node_pointer __x, const key_type& k);
+			node_pointer				_M_get_successor(node_pointer __x);
+			void						_M_delete_node(node_pointer __x, node_pointer __y, node_pointer __parent);
 			void						_M_delete(node_pointer __x);
 
 		public:
@@ -605,7 +607,7 @@ namespace ft
 										   typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
 										   										value_type>::value>::type* = 0);
 			void					erase(iterator position);
-			// size_type			erase(const key_type& k);
+			size_type				erase(const key_type& k);
 			// void				erase(iterator first, iterator last);
 			void					swap(RedBlackTree& other);
 			void					clear(void);
@@ -1009,22 +1011,53 @@ namespace ft
 			return (_pair_it_bool(iterator(__node), true));
 		}
 
+	// Find in-order successor
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_inorder_successor(node_pointer __x, const key_type& k)
+		{
+			if (__x)
+			{
+				_M_get_inorder_successor(__x->_M_left, k);
+				if (_M_get_key(__x) > k)
+					return (__x);
+				_M_get_inorder_successor(__x->_M_right, k);
+			}
+			return (0);
+		}
+
+	// Find successor for deletion
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_successor(node_pointer __x)
+		{
+			if (__x->_M_left == 0 && __x->_M_right == 0) // node is leaf
+				return (0);
+			else if (__x->_M_left && __x->_M_right == 0) // node has one child
+				return (__x->_M_left);
+			else if (__x->_M_left == 0 && __x->_M_right)
+				return (__x->_M_right);
+
+			// node has two children
+			return (_M_get_inorder_successor(__x, _M_get_key(__x)));
+		}
+
 	// Delete node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete_node(node_pointer __x, node_pointer __parent)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete_node(node_pointer __x, node_pointer __y, node_pointer __parent)
 		{
 			bool	__delete_left = (__x == __parent->_M_left);
 
 			if (__delete_left)
 			{
-				__parent->_M_left = __x->_M_left;
+				__parent->_M_left = __y;
 				if (__x == this->_M_header._M_left)
 					this->_M_header._M_left = __parent; // update leftmost
 			}
 			else
 			{
-				__parent->_M_right = __x->_M_right;
+				__parent->_M_right = __y;
 				if (__x == this->_M_header._M_right)
 					this->_M_header._M_right = __parent; // update rightmost
 			}
@@ -1037,22 +1070,9 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete(node_pointer __x)
 		{
-			if (__x->_M_left == 0 && __x->_M_right == 0) // node is leaf
-			{
-				_M_delete_node(__x, __x->_M_parent);
-			}
-			// node has one child
-			else if (__x->_M_left)
-			{
-				__x = __x->_M_left;
-				_M_delete_node(__x->_M_left, __x);
-			}
-			else if (__x->_M_right)
-			{
-				__x = __x->_M_right;
-				_M_delete_node(__x->_M_right, __x);
-			}
-			// node has two children
+			node_pointer	__y = _M_get_successor(__x);
+
+			_M_delete_node(__x, __y, __x->_M_parent);
 		}
 
 	/* construct/copy/destroy *********************************************** */
@@ -1263,7 +1283,24 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::erase(iterator position)
 		{
+			std::cout << "tree::erase(pos)\n";
 			this->_M_delete(position.get_node());
+		}
+
+	// Erase the element with the key k
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		typename RedBlackTree<Key,Val,Compare,Alloc>::size_type
+		RedBlackTree<Key,Val,Compare,Alloc>::erase(const key_type& k)
+		{
+			iterator	it = this->find(k);
+
+			if ((it != this->end()) && (k == _M_get_key( it.get_node() )))
+			{
+				std::cout << "tree::erase(" << k << ")\n";
+				this->erase(it);
+				return (1);
+			}
+			return (0);
 		}
 
 	// Exchanges the content of the tree and the other tree

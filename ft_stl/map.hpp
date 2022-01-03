@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/21 01:03:11 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/03 15:39:34 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ namespace ft
 									   typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
 									   										value_type>::value>::type* = 0);
 			void				erase(iterator position);
-			// size_type			erase(const key_type& k);
+			size_type			erase(const key_type& k);
 			// void				erase(iterator first, iterator last);
 			void				swap(map& x);
 			void				clear(void);
@@ -336,6 +336,14 @@ namespace ft
 		map<Key,T,Compare,Allocator>::erase(iterator position)
 		{
 			this->_M_tree.erase(position);
+		}
+
+	// Erase the element with the key k
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		typename map<Key,T,Compare,Allocator>::size_type
+		map<Key,T,Compare,Allocator>::erase(const key_type& k)
+		{
+			return (this->_M_tree.erase(k));
 		}
 
 	// Exchanges the content of the map and the other map

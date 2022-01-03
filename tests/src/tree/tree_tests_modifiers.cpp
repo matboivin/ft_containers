@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/02 18:35:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/03 16:35:07 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,34 +106,33 @@ namespace ft
 
 		tree_type	tree;
 
-		tree.insert( pair<int, std::string>(8,  "eight") );
-		tree.insert( pair<int, std::string>(8,  "eight") );
-		tree.insert( pair<int, std::string>(8,  "eight") );
-		tree.insert( pair<int, std::string>(8,  "eight") );
-		tree.insert( pair<int, std::string>(8,  "eight") );
-		tree.insert( pair<int, std::string>(8,  "eight") );
-		tree.insert( pair<int, std::string>(18, "eighteen") );
-		tree.insert( pair<int, std::string>(5,  "five") );
-		tree.insert( pair<int, std::string>(15, "fifteen") );
-		tree.insert( pair<int, std::string>(15, "fifteen") );
+		tree.insert( pair<int, std::string>(76, "seventy-six") );
+		tree.insert( pair<int, std::string>(54, "fifty-four") );
+		tree.insert( pair<int, std::string>(28, "twenty-eight") );
+		tree.insert( pair<int, std::string>(29, "twenty-nine") );
+		tree.insert( pair<int, std::string>(97, "ninety-seven") );
+		tree.insert( pair<int, std::string>(65, "sixty-five") );
+		tree.insert( pair<int, std::string>(81, "eighty-one") );
+		tree.insert( pair<int, std::string>(54, "fifty-four") );
+		tree.insert( pair<int, std::string>(32, "thirty-two") );
+		tree.insert( pair<int, std::string>(44, "fourty-four") );
+		tree.insert( pair<int, std::string>(82, "eighty-two") );
+		tree.insert( pair<int, std::string>(80, "twenty-five") );
+		tree.insert( pair<int, std::string>(78, "seventy-eight") );
 		tree.insert( pair<int, std::string>(17, "seventeen") );
-		tree.insert( pair<int, std::string>(25, "twenty-five") );
-		tree.insert( pair<int, std::string>(40, "fourty") );
-		tree.insert( pair<int, std::string>(80, "eighty") );
-		tree.insert( pair<int, std::string>(11, "eleven") );
-		tree.insert( pair<int, std::string>(11, "eleven") );
-		tree.insert( pair<int, std::string>(80, "eighty") );
-		tree.insert( pair<int, std::string>(11, "eleven") );
-		tree.insert( pair<int, std::string>(80, "eighty") );
-		tree.insert( pair<int, std::string>(20, "twenty") );
+		tree.insert( pair<int, std::string>(10, "ten") );
 
 		tree.write_tree_dot("ast_before");
 
 		display_tree_infos(tree);
 
-		tree.erase(tree.begin());
+		tree.erase(tree.begin()); // 10
 
-		display_tree_infos(tree);
+		// display_tree_infos(tree);
+
+		tree.erase(32); // one child
+
+		// display_tree_infos(tree);
 
 		tree.write_tree_dot("ast_after");
 
@@ -200,41 +199,6 @@ namespace ft
 		std::map<int, std::string>	m;
 		std::map<int, std::string>	other_m;
 		std::map<int, std::string>	empty_m;
-
-		// m[8]  = "eight";
-		// m[18] = "eighteen";
-		// m[5]  = "five";
-		// m[15] = "fifteen";
-		// m[17] = "seventeen";
-		// m[25] = "twenty-five";
-		// m[40] = "fourty";
-		// m[80] = "eigthy";
-		// m[11] = "eleven";
-		// m[20] = "twenty";
-
-		// other_m[12] = "twelve";
-
-		// const std::pair<int, std::string>&			ref_m = *(m.begin());
-		// const std::map<int, std::string>::iterator	it_m = ++m.begin();
-
-		// display_map_infos(m);
-		// display_map_infos(other_m, "other map");
-
-		// std::cout << "first node (reference): " << ref_m.first << " => " << ref_m.second << '\n'
-		// 		  << "second node (iterator): " << it_m->first << " => " << it_m->second << "\n\n";
-
-		// m.swap(other_m);
-
-		// display_map_infos(m);
-		// display_map_infos(other_m, "other map");
-
-		// std::cout << "first node (reference): " << ref_m.first << " => " << ref_m.second << '\n'
-		// 		  << "second node (iterator): " << it_m->first << " => " << it_m->second << "\n\n";
-
-		// other_m.swap(empty_m);
-
-		// display_map_infos(other_m, "other map");
-		// display_map_infos(empty_m, "empty map");
 	}
 
 	void	test_tree_clear(void)
