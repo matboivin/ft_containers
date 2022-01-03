@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/03 16:35:07 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/03 17:38:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,19 +126,19 @@ namespace ft
 
 		display_tree_infos(tree);
 
+		std::cout << "Erase a leaf node\n\n";
+
 		tree.erase(tree.begin()); // 10
 
-		// display_tree_infos(tree);
+		display_tree_infos(tree);
+
+		std::cout << "Erase a node that has one child\n\n";
 
 		tree.erase(32); // one child
 
-		// display_tree_infos(tree);
+		display_tree_infos(tree);
 
 		tree.write_tree_dot("ast_after");
-
-		std::cout << "tree size: " << tree.size() << '\n';
-
-		std::cout << "\n\n";
 	}
 
 	void	test_tree_swap(void)

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/03 16:38:13 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/03 17:36:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -534,14 +534,15 @@ namespace ft
 			key_compare		_M_key_compare;
 
 		protected:
-			// helpers
+			// helpers creation/destruction
 			node_pointer				_M_allocate_node(void);
 			void						_M_construct_node(node_pointer __x, const value_type& __val);
 			node_pointer				_M_create_node(const value_type& __val);
-			void						_M_destroy_node(node_pointer __x);
 			void						_M_deallocate_node(node_pointer __x);
+			void						_M_destroy_node(node_pointer __x);
 			void						_M_drop_node(node_pointer __x);
 			void						_M_erase(node_pointer __x);
+			// getters
 			node_pointer				_M_get_root(void) const;
 			node_pointer				_M_get_end(void) const;
 			node_pointer				_M_get_leftmost(void) const;
@@ -550,15 +551,15 @@ namespace ft
 			const key_type&				_M_get_key(const_node_pointer __x) const;
 			const_reference				_M_get_value(node_pointer __x) const;
 			const_reference				_M_get_value(const_node_pointer __x) const;
+			// helpers insertion
 			node_pointer				_M_get_pos_from_hint(iterator __hint, const key_type& __key);
 			ft::pair<node_pointer,bool>	_M_get_insert_pos(iterator __hint, const key_type& __key);
 			void						_M_rotate_left(node_pointer __x);
 			void						_M_rotate_right(node_pointer __x);
 			void						_M_rebalance(node_pointer __x);
-			void						_M_insert(bool insert_left,
-												  node_pointer __x, node_pointer __parent);
-			ft::pair<iterator,bool>		_M_insert_node(iterator __pos, const value_type& __val);
-
+			void						_M_insert_node(bool __insert_left, node_pointer __x, node_pointer __parent);
+			ft::pair<iterator,bool>		_M_insert(iterator __pos, const value_type& __val);
+			// helpers deletion
 			node_pointer				_M_get_inorder_successor(node_pointer __x, const key_type& k);
 			node_pointer				_M_get_successor(node_pointer __x);
 			void						_M_delete_node(node_pointer __x, node_pointer __y, node_pointer __parent);
@@ -633,7 +634,7 @@ namespace ft
 
 	/* Tree implementation ************************************************** */
 
-	/* helpers ************************************************************** */
+	/* helpers creation/destruction ***************************************** */
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
@@ -666,17 +667,17 @@ namespace ft
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_destroy_node(node_pointer __x)
-		{
-			this->_M_alloc.destroy(__x->_get_value_ptr());
-		}
-
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_deallocate_node(node_pointer __x)
 		{
 			if (__x)
 				this->get_node_alloc().deallocate(__x, 1);
+		}
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_destroy_node(node_pointer __x)
+		{
+			this->_M_alloc.destroy(__x->_get_value_ptr());
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
@@ -703,6 +704,8 @@ namespace ft
 				__x = __y;
 			}
 		}
+
+	/* getters ************************************************************** */
 
 	// Get root node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
@@ -765,6 +768,8 @@ namespace ft
 		{
 			return (*__x->_get_value_ptr());
 		}
+
+	/* helpers insertion **************************************************** */
 
 	// Gets position to insert new node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
@@ -967,8 +972,8 @@ namespace ft
 	// Actually perform the insertion
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert(bool insert_left,
-													   node_pointer __x, node_pointer __parent)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(bool __insert_left,
+															node_pointer __x, node_pointer __parent)
 		{
 			__x->_M_parent = __parent;
 
@@ -978,7 +983,7 @@ namespace ft
 				this->_M_header._M_left = __x;
 				this->_M_header._M_right = __x;
 			}
-			else if (insert_left)
+			else if (__insert_left)
 			{
 				__parent->_M_left = __x;
 				if (__parent == this->_M_header._M_left)
@@ -997,7 +1002,7 @@ namespace ft
 	// Inserts one node with no hint
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(iterator __pos, const value_type& __val)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert(iterator __pos, const value_type& __val)
 		{
 			const key_type				__key = __val.first;
 			ft::pair<node_pointer,bool>	__res = _M_get_insert_pos(__pos, __key);
@@ -1007,9 +1012,11 @@ namespace ft
 
 			node_pointer	__node = _M_create_node(__val);
 
-			_M_insert(__res.second, __node, __res.first);
+			_M_insert_node(__res.second, __node, __res.first);
 			return (_pair_it_bool(iterator(__node), true));
 		}
+
+	/* helpers deletion ***************************************************** */
 
 	// Find in-order successor
 	template<typename Key, typename Val, typename Compare, typename Alloc>
@@ -1019,7 +1026,7 @@ namespace ft
 			if (__x)
 			{
 				_M_get_inorder_successor(__x->_M_left, k);
-				if (_M_get_key(__x) > k)
+				if (_M_key_compare(_M_get_key(__x), k)) // node < k
 					return (__x);
 				_M_get_inorder_successor(__x->_M_right, k);
 			}
@@ -1033,11 +1040,10 @@ namespace ft
 		{
 			if (__x->_M_left == 0 && __x->_M_right == 0) // node is leaf
 				return (0);
-			else if (__x->_M_left && __x->_M_right == 0) // node has one child
+			else if (__x->_M_left && __x->_M_right == 0) // node has one left child
 				return (__x->_M_left);
-			else if (__x->_M_left == 0 && __x->_M_right)
+			else if (__x->_M_left == 0 && __x->_M_right) // node has one right child
 				return (__x->_M_right);
-
 			// node has two children
 			return (_M_get_inorder_successor(__x, _M_get_key(__x)));
 		}
@@ -1045,7 +1051,8 @@ namespace ft
 	// Delete node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete_node(node_pointer __x, node_pointer __y, node_pointer __parent)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete_node(node_pointer __x, node_pointer __y,
+															node_pointer __parent)
 		{
 			bool	__delete_left = (__x == __parent->_M_left);
 
@@ -1061,6 +1068,8 @@ namespace ft
 				if (__x == this->_M_header._M_right)
 					this->_M_header._M_right = __parent; // update rightmost
 			}
+			if (__y)
+				__y->_M_parent = __parent;
 			_M_drop_node(__x);
 			--this->_M_node_count;
 		}
@@ -1109,7 +1118,7 @@ namespace ft
 
 				while (first != last)
 				{
-					_M_insert_node(end(), *first);
+					_M_insert(end(), *first);
 					++first;
 				}
 			}
@@ -1252,7 +1261,7 @@ namespace ft
 		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
 		RedBlackTree<Key,Val,Compare,Alloc>::insert(const value_type& val)
 		{
-			return (_M_insert_node(iterator(_M_get_root()), val));
+			return (_M_insert(iterator(_M_get_root()), val));
 		}
 
 	// Inserts a new element with a hint for the position
@@ -1260,7 +1269,7 @@ namespace ft
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::insert(iterator position, const value_type& val)
 		{
-			return (_M_insert_node(position, val).first);
+			return (_M_insert(position, val).first);
 		}
 
 	// Inserts a range of new elements
@@ -1273,7 +1282,7 @@ namespace ft
 		{
 			while (first != last)
 			{
-				_M_insert_node(end(), *first);
+				_M_insert(end(), *first);
 				++first;
 			}
 		}
@@ -1283,7 +1292,6 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::erase(iterator position)
 		{
-			std::cout << "tree::erase(pos)\n";
 			this->_M_delete(position.get_node());
 		}
 
@@ -1296,7 +1304,6 @@ namespace ft
 
 			if ((it != this->end()) && (k == _M_get_key( it.get_node() )))
 			{
-				std::cout << "tree::erase(" << k << ")\n";
 				this->erase(it);
 				return (1);
 			}
