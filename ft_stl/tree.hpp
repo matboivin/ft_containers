@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/03 17:36:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/03 18:22:15 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -560,7 +560,6 @@ namespace ft
 			void						_M_insert_node(bool __insert_left, node_pointer __x, node_pointer __parent);
 			ft::pair<iterator,bool>		_M_insert(iterator __pos, const value_type& __val);
 			// helpers deletion
-			node_pointer				_M_get_inorder_successor(node_pointer __x, const key_type& k);
 			node_pointer				_M_get_successor(node_pointer __x);
 			void						_M_delete_node(node_pointer __x, node_pointer __y, node_pointer __parent);
 			void						_M_delete(node_pointer __x);
@@ -1018,21 +1017,6 @@ namespace ft
 
 	/* helpers deletion ***************************************************** */
 
-	// Find in-order successor
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_inorder_successor(node_pointer __x, const key_type& k)
-		{
-			if (__x)
-			{
-				_M_get_inorder_successor(__x->_M_left, k);
-				if (_M_key_compare(_M_get_key(__x), k)) // node < k
-					return (__x);
-				_M_get_inorder_successor(__x->_M_right, k);
-			}
-			return (0);
-		}
-
 	// Find successor for deletion
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
@@ -1045,7 +1029,8 @@ namespace ft
 			else if (__x->_M_left == 0 && __x->_M_right) // node has one right child
 				return (__x->_M_right);
 			// node has two children
-			return (_M_get_inorder_successor(__x, _M_get_key(__x)));
+			node_pointer	__y = __x->_increment_node(__x);
+			return (__y);
 		}
 
 	// Delete node
@@ -1068,8 +1053,24 @@ namespace ft
 				if (__x == this->_M_header._M_right)
 					this->_M_header._M_right = __parent; // update rightmost
 			}
-			if (__y)
+			if (__y) // tmp non-recursive
+			{
+				if (__x != __y->_M_parent && __x->_M_left)
+				{
+					__y->_M_left = __x->_M_left;
+					__x->_M_left->_M_parent = __y;
+				}
+				if (__x != __y->_M_parent && __x->_M_right)
+				{
+					__y->_M_right = __x->_M_right;
+					__x->_M_right->_M_parent = __y;
+				}
+				if (__y == __y->_M_parent->_M_left)
+					__y->_M_parent->_M_left = 0;
+				else
+					__y->_M_parent->_M_right = 0;
 				__y->_M_parent = __parent;
+			}
 			_M_drop_node(__x);
 			--this->_M_node_count;
 		}

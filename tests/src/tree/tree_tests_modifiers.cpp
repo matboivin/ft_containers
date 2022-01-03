@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/03 17:38:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/03 18:21:42 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ namespace ft
 		tree.insert( pair<int, std::string>(54, "fifty-four") );
 		tree.insert( pair<int, std::string>(32, "thirty-two") );
 		tree.insert( pair<int, std::string>(44, "fourty-four") );
+		tree.insert( pair<int, std::string>(79, "seventy-nine") );
 		tree.insert( pair<int, std::string>(82, "eighty-two") );
 		tree.insert( pair<int, std::string>(80, "twenty-five") );
 		tree.insert( pair<int, std::string>(78, "seventy-eight") );
@@ -129,13 +130,16 @@ namespace ft
 		std::cout << "Erase a leaf node\n\n";
 
 		tree.erase(tree.begin()); // 10
-
 		display_tree_infos(tree);
 
 		std::cout << "Erase a node that has one child\n\n";
 
-		tree.erase(32); // one child
+		tree.erase(32);
+		display_tree_infos(tree);
 
+		std::cout << "Erase a node that has two children\n\n";
+
+		tree.erase(81);
 		display_tree_infos(tree);
 
 		tree.write_tree_dot("ast_after");
