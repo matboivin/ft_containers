@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/04 16:01:31 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/04 16:56:52 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -559,6 +559,7 @@ namespace ft
 			ft::pair<iterator,bool>		_M_insert(iterator __pos, const value_type& __val);
 			// helpers deletion
 			node_pointer				_M_get_successor(node_pointer __node);
+			void						_M_set_siblings(node_pointer __node, node_pointer __successor);
 			void						_M_delete_node(node_pointer __node, node_pointer __y, node_pointer __parent);
 			void						_M_delete(node_pointer __node);
 
@@ -1038,6 +1039,30 @@ namespace ft
 			return (__y);
 		}
 
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_set_siblings(node_pointer __node, node_pointer __successor)
+		{
+			if (__node == 0)
+				return ;
+
+			if (__node != __successor->_M_parent && __node->_M_left)
+			{
+				__successor->_M_left = __node->_M_left;
+				__node->_M_left->_M_parent = __successor;
+			}
+			if (__node != __successor->_M_parent && __node->_M_right)
+			{
+				__successor->_M_right = __node->_M_right;
+				__node->_M_right->_M_parent = __successor;
+			}
+			if (__successor == __successor->_M_parent->_M_left)
+				__successor->_M_parent->_M_left = 0;
+			else
+				__successor->_M_parent->_M_right = 0;
+			__successor->_M_parent = __node->_M_parent;
+		}
+
 	// Delete node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
@@ -1048,36 +1073,23 @@ namespace ft
 
 			if (__delete_left)
 			{
-				__parent->_M_left = __successor;
 				if (__node == this->_M_header._M_left)
 					this->_M_header._M_left = __parent; // update leftmost
+				__parent->_M_left = __successor;
 			}
 			else
 			{
-				__parent->_M_right = __successor;
 				if (__node == this->_M_header._M_right)
 					this->_M_header._M_right = __parent; // update rightmost
+				__parent->_M_right = __successor;
 			}
-			if (__successor) // tmp non-recursive
+			if (__successor)
 			{
-				if (__node != __successor->_M_parent && __node->_M_left)
-				{
-					__successor->_M_left = __node->_M_left;
-					__node->_M_left->_M_parent = __successor;
-				}
-				if (__node != __successor->_M_parent && __node->_M_right)
-				{
-					__successor->_M_right = __node->_M_right;
-					__node->_M_right->_M_parent = __successor;
-				}
-				if (__successor == __successor->_M_parent->_M_left)
-					__successor->_M_parent->_M_left = 0;
-				else
-					__successor->_M_parent->_M_right = 0;
-				__successor->_M_parent = __parent;
+				// node has two children
+				if (__node->_M_left && __node->_M_right)
+					_M_delete_node(__successor, _M_get_successor(__successor), __successor->_M_parent);
+				_M_set_siblings(__node, __successor);
 			}
-			_M_drop_node(__node);
-			--this->_M_node_count;
 		}
 
 	// Standard Binary Search Tree deletion
@@ -1088,6 +1100,8 @@ namespace ft
 			node_pointer	__successor = _M_get_successor(__node);
 
 			_M_delete_node(__node, __successor, __node->_M_parent);
+			_M_drop_node(__node);
+			--this->_M_node_count;
 		}
 
 	/* construct/copy/destroy *********************************************** */
