@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/04 17:22:46 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/04 17:27:08 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1527,7 +1527,7 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::write_node(std::ofstream& outfile, node_pointer node)
 		{
-			if (node->_M_value.first != 0)
+			if (node != 0)
 			{
 				if (node->_M_color == RED)
 				{
@@ -1545,7 +1545,7 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::write_node_next(std::ofstream& outfile, node_pointer node)
 		{
-			if (node->_M_value.first != 0)
+			if (node != 0)
 			{
 				outfile << " -> \""
 						<< node->_M_value.first << "=" << node->_M_value.second
@@ -1573,7 +1573,7 @@ namespace ft
 				write_node_next(outfile, node->_M_left);
 				write_branch(outfile, node->_M_left);
 			}
-			else if (!node->_M_left)
+			else if (node->_M_left == 0)
 				write_leaf(outfile, 'L', count++);
 			write_node(outfile, node);
 			if (node->_M_right)
@@ -1581,7 +1581,7 @@ namespace ft
 				write_node_next(outfile, node->_M_right);
 				write_branch(outfile, node->_M_right);
 			}
-			else if (!node->_M_right)
+			else if (node->_M_right == 0)
 				write_leaf(outfile, 'R', count++);
 		}
 

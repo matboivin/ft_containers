@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/04 17:23:39 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/04 17:25:03 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,15 +111,20 @@ namespace ft
 		tree.insert( pair<int, std::string>(14, "fourteen") );
 		tree.insert( pair<int, std::string>(28, "twenty-eight") );
 		tree.insert( pair<int, std::string>(29, "twenty-nine") );
+		tree.insert( pair<int, std::string>(9,  "nine") );
 		tree.insert( pair<int, std::string>(19, "nineteen") );
 		tree.insert( pair<int, std::string>(97, "ninety-seven") );
 		tree.insert( pair<int, std::string>(65, "sixty-five") );
+		tree.insert( pair<int, std::string>(0,  "zero") );
+		tree.insert( pair<int, std::string>(1,  "one") );
 		tree.insert( pair<int, std::string>(81, "eighty-one") );
 		tree.insert( pair<int, std::string>(54, "fifty-four") );
 		tree.insert( pair<int, std::string>(77, "seventy-seven") );
 		tree.insert( pair<int, std::string>(42, "fourty-two") );
+		tree.insert( pair<int, std::string>(60, "sixty") );
 		tree.insert( pair<int, std::string>(2,  "two") );
 		tree.insert( pair<int, std::string>(32, "thirty-two") );
+		tree.insert( pair<int, std::string>(7,  "seven") );
 		tree.insert( pair<int, std::string>(44, "fourty-four") );
 		tree.insert( pair<int, std::string>(79, "seventy-nine") );
 		tree.insert( pair<int, std::string>(82, "eighty-two") );
