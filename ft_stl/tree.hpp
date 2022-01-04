@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/04 16:56:52 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/04 17:12:34 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -559,7 +559,6 @@ namespace ft
 			ft::pair<iterator,bool>		_M_insert(iterator __pos, const value_type& __val);
 			// helpers deletion
 			node_pointer				_M_get_successor(node_pointer __node);
-			void						_M_set_siblings(node_pointer __node, node_pointer __successor);
 			void						_M_delete_node(node_pointer __node, node_pointer __y, node_pointer __parent);
 			void						_M_delete(node_pointer __node);
 
@@ -1017,50 +1016,27 @@ namespace ft
 
 	/* helpers deletion ***************************************************** */
 
-	// Find successor for deletion
+	// Find successor to replace the node to be deleted
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_successor(node_pointer __node)
 		{
-			// node is leaf
-			if (__node->_M_left == 0 && __node->_M_right == 0)
-				return (0);
+			node_pointer	__successor = 0; // if node is leaf, default to 0
+
 			// node has one child
-			else if (__node->_M_left && __node->_M_right == 0)
-				return (__node->_M_left);
+			if (__node->_M_left && __node->_M_right == 0)
+				__successor = __node->_M_left;
 			else if (__node->_M_left == 0 && __node->_M_right)
-				return (__node->_M_right);
-
+				__successor = __node->_M_right;
 			// node has two children
-			node_pointer	__y = __node->_increment_node(__node); // successor
-
-			if (__y == 0)
-				__y = __node->_decrement_node(__node); // predecessor
-			return (__y);
-		}
-
-	template<typename Key, typename Val, typename Compare, typename Alloc>
-		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_set_siblings(node_pointer __node, node_pointer __successor)
-		{
-			if (__node == 0)
-				return ;
-
-			if (__node != __successor->_M_parent && __node->_M_left)
+			else if (__node->_M_left && __node->_M_right)
 			{
-				__successor->_M_left = __node->_M_left;
-				__node->_M_left->_M_parent = __successor;
+				__successor = __node->_increment_node(__node); // successor
+
+				if (__successor == 0)
+					__successor = __node->_decrement_node(__node); // predecessor
 			}
-			if (__node != __successor->_M_parent && __node->_M_right)
-			{
-				__successor->_M_right = __node->_M_right;
-				__node->_M_right->_M_parent = __successor;
-			}
-			if (__successor == __successor->_M_parent->_M_left)
-				__successor->_M_parent->_M_left = 0;
-			else
-				__successor->_M_parent->_M_right = 0;
-			__successor->_M_parent = __node->_M_parent;
+			return (__successor);
 		}
 
 	// Delete node
@@ -1085,10 +1061,22 @@ namespace ft
 			}
 			if (__successor)
 			{
-				// node has two children
-				if (__node->_M_left && __node->_M_right)
+				if (__node->_M_left && __node->_M_right) // node has two children
 					_M_delete_node(__successor, _M_get_successor(__successor), __successor->_M_parent);
-				_M_set_siblings(__node, __successor);
+				if (__node != __successor->_M_parent) // node is not parent of successor
+				{
+					if (__node->_M_left) // set left child of successor
+					{
+						__successor->_M_left = __node->_M_left;
+						__node->_M_left->_M_parent = __successor;
+					}
+					if (__node->_M_right) // set right child of successor
+					{
+						__successor->_M_right = __node->_M_right;
+						__node->_M_right->_M_parent = __successor;
+					}
+				}
+				__successor->_M_parent = __parent;
 			}
 		}
 
@@ -1097,11 +1085,12 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete(node_pointer __node)
 		{
-			node_pointer	__successor = _M_get_successor(__node);
-
-			_M_delete_node(__node, __successor, __node->_M_parent);
-			_M_drop_node(__node);
-			--this->_M_node_count;
+			if (__node != 0)
+			{
+				_M_delete_node(__node, _M_get_successor(__node), __node->_M_parent);
+				_M_drop_node(__node);
+				--this->_M_node_count;
+			}
 		}
 
 	/* construct/copy/destroy *********************************************** */
