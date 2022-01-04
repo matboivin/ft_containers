@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/04 17:12:34 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/04 17:22:46 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1061,20 +1061,17 @@ namespace ft
 			}
 			if (__successor)
 			{
-				if (__node->_M_left && __node->_M_right) // node has two children
+				if (__node->_M_left && __node->_M_right) // if node has two children, repeat with successor
 					_M_delete_node(__successor, _M_get_successor(__successor), __successor->_M_parent);
-				if (__node != __successor->_M_parent) // node is not parent of successor
+				if (__node->_M_left && __node->_M_left != __successor) // set left child of successor
 				{
-					if (__node->_M_left) // set left child of successor
-					{
-						__successor->_M_left = __node->_M_left;
-						__node->_M_left->_M_parent = __successor;
-					}
-					if (__node->_M_right) // set right child of successor
-					{
-						__successor->_M_right = __node->_M_right;
-						__node->_M_right->_M_parent = __successor;
-					}
+					__successor->_M_left = __node->_M_left;
+					__node->_M_left->_M_parent = __successor;
+				}
+				if (__node->_M_right && __node->_M_right != __successor) // set right child of successor
+				{
+					__successor->_M_right = __node->_M_right;
+					__node->_M_right->_M_parent = __successor;
 				}
 				__successor->_M_parent = __parent;
 			}

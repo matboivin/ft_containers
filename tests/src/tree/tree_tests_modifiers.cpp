@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/04 17:05:05 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/04 17:23:39 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,16 +108,22 @@ namespace ft
 
 		tree.insert( pair<int, std::string>(76, "seventy-six") );
 		tree.insert( pair<int, std::string>(54, "fifty-four") );
+		tree.insert( pair<int, std::string>(14, "fourteen") );
 		tree.insert( pair<int, std::string>(28, "twenty-eight") );
 		tree.insert( pair<int, std::string>(29, "twenty-nine") );
+		tree.insert( pair<int, std::string>(19, "nineteen") );
 		tree.insert( pair<int, std::string>(97, "ninety-seven") );
 		tree.insert( pair<int, std::string>(65, "sixty-five") );
 		tree.insert( pair<int, std::string>(81, "eighty-one") );
 		tree.insert( pair<int, std::string>(54, "fifty-four") );
+		tree.insert( pair<int, std::string>(77, "seventy-seven") );
+		tree.insert( pair<int, std::string>(42, "fourty-two") );
+		tree.insert( pair<int, std::string>(2,  "two") );
 		tree.insert( pair<int, std::string>(32, "thirty-two") );
 		tree.insert( pair<int, std::string>(44, "fourty-four") );
 		tree.insert( pair<int, std::string>(79, "seventy-nine") );
 		tree.insert( pair<int, std::string>(82, "eighty-two") );
+		tree.insert( pair<int, std::string>(3,  "three") );
 		tree.insert( pair<int, std::string>(80, "twenty-five") );
 		tree.insert( pair<int, std::string>(78, "seventy-eight") );
 		tree.insert( pair<int, std::string>(17, "seventeen") );
@@ -137,9 +143,9 @@ namespace ft
 		tree.erase(32);
 		display_tree_infos(tree);
 
-		std::cout << "Erase a node that has two children: key=81\n\n";
+		std::cout << "Erase a node that has two children: key=79\n\n";
 
-		tree.erase(81);
+		tree.erase(79);
 		display_tree_infos(tree);
 
 		tree.write_tree_dot("ast_after");
