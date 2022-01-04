@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/03 18:22:15 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/04 16:01:31 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,137 +60,137 @@ namespace ft
 			}
 
 			// Get node holding lower value
-			static node_pointer	_get_leftmost(node_pointer x)
+			static node_pointer	_get_leftmost(node_pointer node)
 			{
-				while (x->_M_left != 0)
-					x = x->_M_left;
-				return (x);
+				while (node->_M_left != 0)
+					node = node->_M_left;
+				return (node);
 			}
 
-			static const_node_pointer	_get_leftmost(const_node_pointer x)
+			static const_node_pointer	_get_leftmost(const_node_pointer node)
 			{
-				while (x->_M_left != 0)
-					x = x->_M_left;
-				return (x);
+				while (node->_M_left != 0)
+					node = node->_M_left;
+				return (node);
 			}
 
 			// Get node holding greater value
-			static node_pointer	_get_rightmost(node_pointer x)
+			static node_pointer	_get_rightmost(node_pointer node)
 			{
-				while (x->_M_right != 0)
-					x = x->_M_right;
-				return (x);
+				while (node->_M_right != 0)
+					node = node->_M_right;
+				return (node);
 			}
 
-			static const_node_pointer	_get_rightmost(const_node_pointer x)
+			static const_node_pointer	_get_rightmost(const_node_pointer node)
 			{
-				while (x->_M_right != 0)
-					x = x->_M_right;
-				return (x);
+				while (node->_M_right != 0)
+					node = node->_M_right;
+				return (node);
 			}
 
 			// Increment node
-			static node_pointer	_increment_node(node_pointer x)
+			static node_pointer	_increment_node(node_pointer node)
 			{
-				if (x->_M_right != 0)
+				if (node->_M_right != 0)
 				{
-					x = x->_M_right;
-					while (x->_M_left != 0)
-						x = x->_M_left;
+					node = node->_M_right;
+					while (node->_M_left != 0)
+						node = node->_M_left;
 				}
 				else
 				{
-					node_pointer	__parent = x->_M_parent;
+					node_pointer	__parent = node->_M_parent;
 
-					while (x == __parent->_M_right)
+					while (node == __parent->_M_right)
 					{
-						x = __parent;
-						if (x->_M_sentinel == 1)
+						node = __parent;
+						if (node->_M_sentinel == 1)
 							break ;
 						__parent = __parent->_M_parent;
 					}
-					if (x != __parent)
-						x = __parent;
+					if (node != __parent)
+						node = __parent;
 				}
-				return (x);
+				return (node);
 			}
 
-			static const_node_pointer	_increment_node(const_node_pointer x)
+			static const_node_pointer	_increment_node(const_node_pointer node)
 			{
-				if (x->_M_right != 0)
+				if (node->_M_right != 0)
 				{
-					x = x->_M_right;
-					while (x->_M_left != 0)
-						x = x->_M_left;
+					node = node->_M_right;
+					while (node->_M_left != 0)
+						node = node->_M_left;
 				}
 				else
 				{
-					node_pointer	__parent = x->_M_parent;
+					node_pointer	__parent = node->_M_parent;
 
-					while (x == __parent->_M_right)
+					while (node == __parent->_M_right)
 					{
-						x = __parent;
-						if (x->_M_sentinel == 1)
+						node = __parent;
+						if (node->_M_sentinel == 1)
 							break ;
 						__parent = __parent->_M_parent;
 					}
-					if (x != __parent)
-						x = __parent;
+					if (node != __parent)
+						node = __parent;
 				}
-				return (x);
+				return (node);
 			}
 
 			// Decrement node
-			static node_pointer	_decrement_node(node_pointer x)
+			static node_pointer	_decrement_node(node_pointer node)
 			{
-				if (x->_M_sentinel == 1)
+				if (node->_M_sentinel == 1)
 				{
-					x = x->_M_right;
+					node = node->_M_right;
 				}
-				else if (x->_M_left != 0)
+				else if (node->_M_left != 0)
 				{
-					x = x->_M_left;
-					while (x->_M_right != 0)
-						x = x->_M_right;
+					node = node->_M_left;
+					while (node->_M_right != 0)
+						node = node->_M_right;
 				}
 				else
 				{
-					node_pointer	__parent = x->_M_parent;
+					node_pointer	__parent = node->_M_parent;
 
-					while (x == __parent->_M_left)
+					while (node == __parent->_M_left)
 					{
-						x = __parent;
+						node = __parent;
 						__parent = __parent->_M_parent;
 					}
-					x = __parent;
+					node = __parent;
 				}
-				return (x);
+				return (node);
 			}
 
-			static const_node_pointer	_decrement_node(const_node_pointer x)
+			static const_node_pointer	_decrement_node(const_node_pointer node)
 			{
-				if (x->_M_sentinel == 1)
+				if (node->_M_sentinel == 1)
 				{
-					x = x->_M_right;
+					node = node->_M_right;
 				}
-				else if (x->_M_left != 0)
+				else if (node->_M_left != 0)
 				{
-					x = x->_M_left;
-					while (x->_M_right != 0)
-						x = x->_M_right;
+					node = node->_M_left;
+					while (node->_M_right != 0)
+						node = node->_M_right;
 				}
 				else
 				{
-					node_pointer	__parent = x->_M_parent;
+					const_node_pointer	__parent = node->_M_parent;
 
-					while (x == __parent->_M_left)
+					while (node == __parent->_M_left)
 					{
-						x = __parent;
+						node = __parent;
 						__parent = __parent->_M_parent;
 					}
-					x = __parent;
+					node = __parent;
 				}
-				return (x);
+				return (node);
 			}
 		}; // struct RBTreeNode
 
@@ -289,8 +289,8 @@ namespace ft
 			}
 
 			// initalization constructor
-			RBtree_iterator(node_pointer x)
-			: _M_node(x)
+			RBtree_iterator(node_pointer node)
+			: _M_node(node)
 			{
 			}
 
@@ -396,8 +396,8 @@ namespace ft
 			}
 
 			// initalization constructor
-			RBtree_const_iterator(const_node_pointer x)
-			: _M_node(x)
+			RBtree_const_iterator(const_node_pointer node)
+			: _M_node(node)
 			{
 			}
 
@@ -477,16 +477,14 @@ namespace ft
 
 	template<typename T1, typename T2>
 		bool
-		operator==(const RBtree_const_iterator<T1>& lhs,
-				   const RBtree_const_iterator<T2>& rhs)
+		operator==(const RBtree_const_iterator<T1>& lhs, const RBtree_const_iterator<T2>& rhs)
 		{
 			return (lhs.get_node() == rhs.get_node());
 		}
 
 	template<typename T1, typename T2>
 		bool
-		operator!=(const RBtree_const_iterator<T1>& lhs,
-				   const RBtree_const_iterator<T2>& rhs)
+		operator!=(const RBtree_const_iterator<T1>& lhs, const RBtree_const_iterator<T2>& rhs)
 		{
 			return (lhs.get_node() != rhs.get_node());
 		}
@@ -536,33 +534,33 @@ namespace ft
 		protected:
 			// helpers creation/destruction
 			node_pointer				_M_allocate_node(void);
-			void						_M_construct_node(node_pointer __x, const value_type& __val);
+			void						_M_construct_node(node_pointer __node, const value_type& __val);
 			node_pointer				_M_create_node(const value_type& __val);
-			void						_M_deallocate_node(node_pointer __x);
-			void						_M_destroy_node(node_pointer __x);
-			void						_M_drop_node(node_pointer __x);
-			void						_M_erase(node_pointer __x);
+			void						_M_deallocate_node(node_pointer __node);
+			void						_M_destroy_node(node_pointer __node);
+			void						_M_drop_node(node_pointer __node);
+			void						_M_erase(node_pointer __node);
 			// getters
 			node_pointer				_M_get_root(void) const;
 			node_pointer				_M_get_end(void) const;
 			node_pointer				_M_get_leftmost(void) const;
 			node_pointer				_M_get_rightmost(void) const;
-			const key_type&				_M_get_key(node_pointer __x) const;
-			const key_type&				_M_get_key(const_node_pointer __x) const;
-			const_reference				_M_get_value(node_pointer __x) const;
-			const_reference				_M_get_value(const_node_pointer __x) const;
+			const key_type&				_M_get_key(node_pointer __node) const;
+			const key_type&				_M_get_key(const_node_pointer __node) const;
+			const_reference				_M_get_value(node_pointer __node) const;
+			const_reference				_M_get_value(const_node_pointer __node) const;
 			// helpers insertion
-			node_pointer				_M_get_pos_from_hint(iterator __hint, const key_type& __key);
-			ft::pair<node_pointer,bool>	_M_get_insert_pos(iterator __hint, const key_type& __key);
+			node_pointer				_M_get_pos_from_hint(iterator __hint, const key_type& __k);
+			ft::pair<node_pointer,bool>	_M_get_insert_pos(iterator __hint, const key_type& __k);
 			void						_M_rotate_left(node_pointer __x);
 			void						_M_rotate_right(node_pointer __x);
-			void						_M_rebalance(node_pointer __x);
-			void						_M_insert_node(bool __insert_left, node_pointer __x, node_pointer __parent);
+			void						_M_rebalance(node_pointer __node);
+			void						_M_insert_node(bool __insert_left, node_pointer __node, node_pointer __parent);
 			ft::pair<iterator,bool>		_M_insert(iterator __pos, const value_type& __val);
 			// helpers deletion
-			node_pointer				_M_get_successor(node_pointer __x);
-			void						_M_delete_node(node_pointer __x, node_pointer __y, node_pointer __parent);
-			void						_M_delete(node_pointer __x);
+			node_pointer				_M_get_successor(node_pointer __node);
+			void						_M_delete_node(node_pointer __node, node_pointer __y, node_pointer __parent);
+			void						_M_delete(node_pointer __node);
 
 		public:
 			// default constructor
@@ -644,9 +642,9 @@ namespace ft
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_construct_node(node_pointer __x, const value_type& __val)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_construct_node(node_pointer __node, const value_type& __val)
 		{
-			this->_M_alloc.construct(__x->_get_value_ptr(), __val);
+			this->_M_alloc.construct(__node->_get_value_ptr(), __val);
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
@@ -666,41 +664,42 @@ namespace ft
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_deallocate_node(node_pointer __x)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_deallocate_node(node_pointer __node)
 		{
-			if (__x)
-				this->get_node_alloc().deallocate(__x, 1);
+			if (__node != 0)
+				this->get_node_alloc().deallocate(__node, 1);
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_destroy_node(node_pointer __x)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_destroy_node(node_pointer __node)
 		{
-			this->_M_alloc.destroy(__x->_get_value_ptr());
+			if (__node != 0)
+				this->_M_alloc.destroy(__node->_get_value_ptr());
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_drop_node(node_pointer __x)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_drop_node(node_pointer __node)
 		{
-			if (__x != 0)
+			if (__node != 0)
 			{
-				_M_destroy_node(__x);
-				_M_deallocate_node(__x);
+				_M_destroy_node(__node);
+				_M_deallocate_node(__node);
 			}
 		}
 
 	// Erase recursively the tree from the node passed as parameter
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_erase(node_pointer __x)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_erase(node_pointer __node)
 		{
-			while (__x != 0)
+			while (__node != 0)
 			{
-				_M_erase(__x->_M_right);
-				node_pointer	__y = __x->_M_left;
-				_M_drop_node(__x);
-				__x = __y;
+				_M_erase(__node->_M_right);
+				node_pointer	__y = __node->_M_left;
+				_M_drop_node(__node);
+				__node = __y;
 			}
 		}
 
@@ -741,31 +740,31 @@ namespace ft
 	// Get only key of the pair
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		const typename RedBlackTree<Key,Val,Compare,Alloc>::key_type&
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_key(node_pointer __x) const
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_key(node_pointer __node) const
 		{
-			return (static_cast<const key_type&>(_M_get_value(__x).first));
+			return (static_cast<const key_type&>(_M_get_value(__node).first));
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		const typename RedBlackTree<Key,Val,Compare,Alloc>::key_type&
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_key(const_node_pointer __x) const
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_key(const_node_pointer __node) const
 		{
-			return (static_cast<const key_type&>(_M_get_value(__x).first));
+			return (static_cast<const key_type&>(_M_get_value(__node).first));
 		}
 
 	// Get pair<key,value>
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_reference
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_value(node_pointer __x) const
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_value(node_pointer __node) const
 		{
-			return (*__x->_get_value_ptr());
+			return (*__node->_get_value_ptr());
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_reference
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_value(const_node_pointer __x) const
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_value(const_node_pointer __node) const
 		{
-			return (*__x->_get_value_ptr());
+			return (*__node->_get_value_ptr());
 		}
 
 	/* helpers insertion **************************************************** */
@@ -773,7 +772,7 @@ namespace ft
 	// Gets position to insert new node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_pos_from_hint(iterator __hint, const key_type& __key)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_pos_from_hint(iterator __hint, const key_type& __k)
 		{
 			// decrement if hint is past the last element
 			if (__hint == end())
@@ -786,10 +785,10 @@ namespace ft
 			iterator	__prev(__hint);
 
 			// node < hint pos
-			if (_M_key_compare( __key, _M_get_key(__hint.get_node()) ))
+			if (_M_key_compare( __k, _M_get_key(__hint.get_node()) ))
 			{
 				// node < root && root < hint pos
-				if (_M_key_compare( __key, _M_get_key(this->_M_header._M_parent))
+				if (_M_key_compare( __k, _M_get_key(this->_M_header._M_parent))
 					&& _M_key_compare( _M_get_key(this->_M_header._M_parent), _M_get_key(__hint.get_node()) ))
 				{
 					__hint = this->_M_header._M_parent; // start from root directly
@@ -797,17 +796,17 @@ namespace ft
 				else
 				{
 					--__hint;
-					while (__hint.get_node() && _M_key_compare(__key, _M_get_key(__hint.get_node())))
+					while (__hint.get_node() && _M_key_compare(__k, _M_get_key(__hint.get_node())))
 					{
 						__prev = __hint;
 						--__hint;
 					}
 				}
 			}
-			else if (_M_key_compare(_M_get_key(__hint.get_node()), __key)) // node > hint pos
+			else if (_M_key_compare(_M_get_key(__hint.get_node()), __k)) // node > hint pos
 			{
 				// node > root && root > hint pos
-				if (_M_key_compare( _M_get_key(this->_M_header._M_parent),  __key)
+				if (_M_key_compare( _M_get_key(this->_M_header._M_parent),  __k)
 					&& _M_key_compare( _M_get_key(__hint.get_node()), _M_get_key(this->_M_header._M_parent) ))
 				{
 					__hint = this->_M_header._M_parent; // start from root directly
@@ -815,7 +814,7 @@ namespace ft
 				else
 				{
 					++__hint;
-					while (__hint.get_node() && _M_key_compare(_M_get_key(__hint.get_node()), __key))
+					while (__hint.get_node() && _M_key_compare(_M_get_key(__hint.get_node()), __k))
 					{
 						__prev = __hint;
 						++__hint;
@@ -828,18 +827,18 @@ namespace ft
 	// Gets position to insert new node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer,bool>
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_insert_pos(iterator __hint, const key_type& __key)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_insert_pos(iterator __hint, const key_type& __k)
 		{
 			bool			__insert_left = true;
 			node_pointer	__pos;
 
 			// check whether the new node is lower than the current leftmost node
-			if ( _M_key_compare( __key, _M_get_key(_M_get_leftmost()) ) )
+			if ( _M_key_compare( __k, _M_get_key(_M_get_leftmost()) ) )
 			{
 				__pos = _M_get_leftmost();
 			}
 			// check whether the new node is greater than the current rightmost node
-			else if ( _M_key_compare(_M_get_key(_M_get_rightmost()), __key ) )
+			else if ( _M_key_compare(_M_get_key(_M_get_rightmost()), __k ) )
 			{
 				__insert_left = false;
 				__pos = _M_get_rightmost();
@@ -847,7 +846,7 @@ namespace ft
 			// else move down the tree until finding a leaf
 			else
 			{
-				node_pointer	__cursor = _M_get_pos_from_hint(__hint, __key);
+				node_pointer	__cursor = _M_get_pos_from_hint(__hint, __k);
 
 				__pos = __cursor;
 
@@ -855,12 +854,12 @@ namespace ft
 				{
 					__pos = __cursor;
 
-					if (_M_key_compare(__key, _M_get_key(__cursor))) // (node < cursor)
+					if (_M_key_compare(__k, _M_get_key(__cursor))) // (node < cursor)
 					{
 						__cursor = __cursor->_M_left;
 						__insert_left = true;
 					}
-					else if (_M_key_compare(_M_get_key(__cursor), __key)) // (node > cursor)
+					else if (_M_key_compare(_M_get_key(__cursor), __k)) // (node > cursor)
 					{
 						__cursor = __cursor->_M_right;
 						__insert_left = false;
@@ -919,47 +918,47 @@ namespace ft
 	// Rebalance tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_rebalance(node_pointer __x)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_rebalance(node_pointer __node)
 		{
 			// if node is not root or has red parent, rebalance
-			while ((__x != this->_M_header._M_parent) && (__x->_M_parent->_M_color == RED))
+			while ((__node != this->_M_header._M_parent) && (__node->_M_parent->_M_color == RED))
 			{
-				node_pointer	__grand_parent = __x->_M_parent->_M_parent;
+				node_pointer	__grand_parent = __node->_M_parent->_M_parent;
 				node_pointer	__uncle;
 
-				if (__x->_M_parent == __grand_parent->_M_left)
+				if (__node->_M_parent == __grand_parent->_M_left)
 					__uncle = __grand_parent->_M_right;
 				else
 					__uncle = __grand_parent->_M_left;
 
 				if (__uncle && __uncle->_M_color == RED) // uncle is red
 				{
-					__x->_M_parent->_M_color = BLACK;
+					__node->_M_parent->_M_color = BLACK;
 					__uncle->_M_color = BLACK;
 					__grand_parent->_M_color = RED;
-					__x = __grand_parent;
+					__node = __grand_parent;
 				}
 				else // no uncle or uncle is black
 				{
-					if (__x->_M_parent == __grand_parent->_M_left)
+					if (__node->_M_parent == __grand_parent->_M_left)
 					{
-						if (__x == __x->_M_parent->_M_right)
+						if (__node == __node->_M_parent->_M_right)
 						{
-							__x = __x->_M_parent;
-							_M_rotate_left(__x);
+							__node = __node->_M_parent;
+							_M_rotate_left(__node);
 						}
-						__x->_M_parent->_M_color = BLACK;
+						__node->_M_parent->_M_color = BLACK;
 						__grand_parent->_M_color = RED;
 						_M_rotate_right(__grand_parent);
 					}
 					else
 					{
-						if (__x == __x->_M_parent->_M_left)
+						if (__node == __node->_M_parent->_M_left)
 						{
-							__x = __x->_M_parent;
-							_M_rotate_right(__x);
+							__node = __node->_M_parent;
+							_M_rotate_right(__node);
 						}
-						__x->_M_parent->_M_color = BLACK;
+						__node->_M_parent->_M_color = BLACK;
 						__grand_parent->_M_color = RED;
 						_M_rotate_left(__grand_parent);
 					}
@@ -972,29 +971,29 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(bool __insert_left,
-															node_pointer __x, node_pointer __parent)
+															node_pointer __node, node_pointer __parent)
 		{
-			__x->_M_parent = __parent;
+			__node->_M_parent = __parent;
 
 			if (this->_M_node_count == 0) // first node becomes the root
 			{
-				this->_M_header._M_parent = __x;
-				this->_M_header._M_left = __x;
-				this->_M_header._M_right = __x;
+				this->_M_header._M_parent = __node;
+				this->_M_header._M_left = __node;
+				this->_M_header._M_right = __node;
 			}
 			else if (__insert_left)
 			{
-				__parent->_M_left = __x;
+				__parent->_M_left = __node;
 				if (__parent == this->_M_header._M_left)
-					this->_M_header._M_left = __x; // update leftmost
+					this->_M_header._M_left = __node; // update leftmost
 			}
 			else
 			{
-				__parent->_M_right = __x;
+				__parent->_M_right = __node;
 				if (__parent == this->_M_header._M_right)
-					this->_M_header._M_right = __x; // update rightmost
+					this->_M_header._M_right = __node; // update rightmost
 			}
-			_M_rebalance(__x);
+			_M_rebalance(__node);
 			++this->_M_node_count;
 		}
 
@@ -1003,10 +1002,10 @@ namespace ft
 		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert(iterator __pos, const value_type& __val)
 		{
-			const key_type				__key = __val.first;
-			ft::pair<node_pointer,bool>	__res = _M_get_insert_pos(__pos, __key);
+			const key_type				__k = __val.first;
+			ft::pair<node_pointer,bool>	__res = _M_get_insert_pos(__pos, __k);
 
-			if ((__res.first != this->end().get_node()) && (_M_get_key(__res.first) == __key)) // key already exists
+			if ((__res.first != this->end().get_node()) && (_M_get_key(__res.first) == __k)) // key already exists
 				return (_pair_it_bool(iterator(__res.first), false));
 
 			node_pointer	__node = _M_create_node(__val);
@@ -1020,69 +1019,75 @@ namespace ft
 	// Find successor for deletion
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_successor(node_pointer __x)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_successor(node_pointer __node)
 		{
-			if (__x->_M_left == 0 && __x->_M_right == 0) // node is leaf
+			// node is leaf
+			if (__node->_M_left == 0 && __node->_M_right == 0)
 				return (0);
-			else if (__x->_M_left && __x->_M_right == 0) // node has one left child
-				return (__x->_M_left);
-			else if (__x->_M_left == 0 && __x->_M_right) // node has one right child
-				return (__x->_M_right);
+			// node has one child
+			else if (__node->_M_left && __node->_M_right == 0)
+				return (__node->_M_left);
+			else if (__node->_M_left == 0 && __node->_M_right)
+				return (__node->_M_right);
+
 			// node has two children
-			node_pointer	__y = __x->_increment_node(__x);
+			node_pointer	__y = __node->_increment_node(__node); // successor
+
+			if (__y == 0)
+				__y = __node->_decrement_node(__node); // predecessor
 			return (__y);
 		}
 
 	// Delete node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete_node(node_pointer __x, node_pointer __y,
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete_node(node_pointer __node, node_pointer __successor,
 															node_pointer __parent)
 		{
-			bool	__delete_left = (__x == __parent->_M_left);
+			bool	__delete_left = (__node == __parent->_M_left);
 
 			if (__delete_left)
 			{
-				__parent->_M_left = __y;
-				if (__x == this->_M_header._M_left)
+				__parent->_M_left = __successor;
+				if (__node == this->_M_header._M_left)
 					this->_M_header._M_left = __parent; // update leftmost
 			}
 			else
 			{
-				__parent->_M_right = __y;
-				if (__x == this->_M_header._M_right)
+				__parent->_M_right = __successor;
+				if (__node == this->_M_header._M_right)
 					this->_M_header._M_right = __parent; // update rightmost
 			}
-			if (__y) // tmp non-recursive
+			if (__successor) // tmp non-recursive
 			{
-				if (__x != __y->_M_parent && __x->_M_left)
+				if (__node != __successor->_M_parent && __node->_M_left)
 				{
-					__y->_M_left = __x->_M_left;
-					__x->_M_left->_M_parent = __y;
+					__successor->_M_left = __node->_M_left;
+					__node->_M_left->_M_parent = __successor;
 				}
-				if (__x != __y->_M_parent && __x->_M_right)
+				if (__node != __successor->_M_parent && __node->_M_right)
 				{
-					__y->_M_right = __x->_M_right;
-					__x->_M_right->_M_parent = __y;
+					__successor->_M_right = __node->_M_right;
+					__node->_M_right->_M_parent = __successor;
 				}
-				if (__y == __y->_M_parent->_M_left)
-					__y->_M_parent->_M_left = 0;
+				if (__successor == __successor->_M_parent->_M_left)
+					__successor->_M_parent->_M_left = 0;
 				else
-					__y->_M_parent->_M_right = 0;
-				__y->_M_parent = __parent;
+					__successor->_M_parent->_M_right = 0;
+				__successor->_M_parent = __parent;
 			}
-			_M_drop_node(__x);
+			_M_drop_node(__node);
 			--this->_M_node_count;
 		}
 
 	// Standard Binary Search Tree deletion
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete(node_pointer __x)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete(node_pointer __node)
 		{
-			node_pointer	__y = _M_get_successor(__x);
+			node_pointer	__successor = _M_get_successor(__node);
 
-			_M_delete_node(__x, __y, __x->_M_parent);
+			_M_delete_node(__node, __successor, __node->_M_parent);
 		}
 
 	/* construct/copy/destroy *********************************************** */
