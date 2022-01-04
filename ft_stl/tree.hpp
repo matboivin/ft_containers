@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/04 17:27:08 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/04 17:48:04 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -555,11 +555,12 @@ namespace ft
 			void						_M_rotate_left(node_pointer __x);
 			void						_M_rotate_right(node_pointer __x);
 			void						_M_rebalance(node_pointer __node);
-			void						_M_insert_node(bool __insert_left, node_pointer __node, node_pointer __parent);
+			void						_M_insert_rebalance(bool __insert_left, node_pointer __node, node_pointer __parent);
 			ft::pair<iterator,bool>		_M_insert(iterator __pos, const value_type& __val);
 			// helpers deletion
 			node_pointer				_M_get_successor(node_pointer __node);
-			void						_M_delete_node(node_pointer __node, node_pointer __y, node_pointer __parent);
+			void						_M_set_successor(node_pointer __node, node_pointer __successor,
+														 node_pointer __parent);
 			void						_M_delete(node_pointer __node);
 
 		public:
@@ -970,8 +971,8 @@ namespace ft
 	// Actually perform the insertion
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(bool __insert_left,
-															node_pointer __node, node_pointer __parent)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_rebalance(bool __insert_left,
+																 node_pointer __node, node_pointer __parent)
 		{
 			__node->_M_parent = __parent;
 
@@ -1010,7 +1011,7 @@ namespace ft
 
 			node_pointer	__node = _M_create_node(__val);
 
-			_M_insert_node(__res.second, __node, __res.first);
+			_M_insert_rebalance(__res.second, __node, __res.first);
 			return (_pair_it_bool(iterator(__node), true));
 		}
 
@@ -1039,11 +1040,11 @@ namespace ft
 			return (__successor);
 		}
 
-	// Delete node
+	// Set successor of node to be deleted
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete_node(node_pointer __node, node_pointer __successor,
-															node_pointer __parent)
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_set_successor(node_pointer __node, node_pointer __successor,
+															  node_pointer __parent)
 		{
 			bool	__delete_left = (__node == __parent->_M_left);
 
@@ -1062,7 +1063,7 @@ namespace ft
 			if (__successor)
 			{
 				if (__node->_M_left && __node->_M_right) // if node has two children, repeat with successor
-					_M_delete_node(__successor, _M_get_successor(__successor), __successor->_M_parent);
+					_M_set_successor(__successor, _M_get_successor(__successor), __successor->_M_parent);
 				if (__node->_M_left && __node->_M_left != __successor) // set left child of successor
 				{
 					__successor->_M_left = __node->_M_left;
@@ -1075,6 +1076,11 @@ namespace ft
 				}
 				__successor->_M_parent = __parent;
 			}
+			// recolor
+			if (__node->_M_color == RED || (__successor != 0 && __successor->_M_color == RED))
+				__successor->_M_color = BLACK;
+			// else if (__node->_M_color == BLACK && (__successor == 0 || __successor->_M_color == BLACK))
+				// rotate
 		}
 
 	// Standard Binary Search Tree deletion
@@ -1084,7 +1090,7 @@ namespace ft
 		{
 			if (__node != 0)
 			{
-				_M_delete_node(__node, _M_get_successor(__node), __node->_M_parent);
+				_M_set_successor(__node, _M_get_successor(__node), __node->_M_parent);
 				_M_drop_node(__node);
 				--this->_M_node_count;
 			}
