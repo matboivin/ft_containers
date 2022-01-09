@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/03 15:39:34 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/09 18:08:35 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ namespace ft
 									   										value_type>::value>::type* = 0);
 			void				erase(iterator position);
 			size_type			erase(const key_type& k);
-			// void				erase(iterator first, iterator last);
+			void				erase(iterator first, iterator last);
 			void				swap(map& x);
 			void				clear(void);
 
@@ -344,6 +344,14 @@ namespace ft
 		map<Key,T,Compare,Allocator>::erase(const key_type& k)
 		{
 			return (this->_M_tree.erase(k));
+		}
+
+	// Erase a range of elements
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		typename map<Key,T,Compare,Allocator>::size_type
+		map<Key,T,Compare,Allocator>::erase(iterator first, iterator last)
+		{
+			return (this->_M_tree.erase(first, last));
 		}
 
 	// Exchanges the content of the map and the other map

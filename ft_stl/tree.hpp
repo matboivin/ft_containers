@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/09 17:46:57 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/09 18:07:34 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -517,6 +517,7 @@ namespace ft
 
 	/*
 	 * Red Black Tree template class
+	 * A self-balancing binary tree
 	 */
 	template<typename Key,
 			 typename Val,
@@ -633,7 +634,7 @@ namespace ft
 										   										value_type>::value>::type* = 0);
 			void					erase(iterator position);
 			size_type				erase(const key_type& k);
-			// void				erase(iterator first, iterator last);
+			void					erase(iterator first, iterator last);
 			void					swap(RedBlackTree& other);
 			void					clear(void);
 
@@ -716,17 +717,16 @@ namespace ft
 			}
 		}
 
-	// Erase recursively the tree from the node passed as parameter
+	// Erase recursively the tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_erase(node_pointer __node)
 		{
-			while (__node != 0)
+			if (__node != 0)
 			{
+				_M_erase(__node->_M_left);
 				_M_erase(__node->_M_right);
-				node_pointer	__y = __node->_M_left;
 				_M_drop_node(__node);
-				__node = __y;
 			}
 		}
 
@@ -1002,7 +1002,7 @@ namespace ft
 			return (ft::pair<node_pointer,bool>(__pos, __insert_left));
 		}
 
-	// Actually perform the insertion
+	// Insert a node and rebalance the tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert_node(bool __insert_left,
@@ -1153,7 +1153,7 @@ namespace ft
 			}
 		}
 
-	// Standard Binary Search Tree deletion
+	// Delete a node and rebalance the tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_delete_node(node_pointer __node)
@@ -1384,12 +1384,24 @@ namespace ft
 		{
 			iterator	it = this->find(k);
 
-			if ((it != this->end()) && (k == _M_get_key( it.get_node() )))
+			if ((it != this->end()) && (k == _M_get_key(it.get_node())))
 			{
-				this->erase(it);
+				this->_M_delete_node(it.get_node());
 				return (1);
 			}
 			return (0);
+		}
+
+	// Erase a range of elements
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		RedBlackTree<Key,Val,Compare,Alloc>::erase(iterator first, iterator last)
+		{
+			while (first != last)
+			{
+				_M_erase(*first);
+				++first;
+			}
 		}
 
 	// Exchanges the content of the tree and the other tree
