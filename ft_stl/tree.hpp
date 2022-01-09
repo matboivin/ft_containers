@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/04 17:48:04 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/09 16:58:28 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,80 +62,98 @@ namespace ft
 			// Get node holding lower value
 			static node_pointer	_get_leftmost(node_pointer node)
 			{
-				while (node->_M_left != 0)
-					node = node->_M_left;
+				if (node != 0)
+				{
+					while (node->_M_left != 0)
+						node = node->_M_left;
+				}
 				return (node);
 			}
 
 			static const_node_pointer	_get_leftmost(const_node_pointer node)
 			{
-				while (node->_M_left != 0)
-					node = node->_M_left;
+				if (node != 0)
+				{
+					while (node->_M_left != 0)
+						node = node->_M_left;
+				}
 				return (node);
 			}
 
 			// Get node holding greater value
 			static node_pointer	_get_rightmost(node_pointer node)
 			{
-				while (node->_M_right != 0)
-					node = node->_M_right;
+				if (node != 0)
+				{
+					while (node->_M_right != 0)
+						node = node->_M_right;
+				}
 				return (node);
 			}
 
 			static const_node_pointer	_get_rightmost(const_node_pointer node)
 			{
-				while (node->_M_right != 0)
-					node = node->_M_right;
+				if (node != 0)
+				{
+					while (node->_M_right != 0)
+						node = node->_M_right;
+				}
 				return (node);
 			}
 
 			// Increment node
 			static node_pointer	_increment_node(node_pointer node)
 			{
-				if (node->_M_right != 0)
+				if (node != 0)
 				{
-					node = node->_M_right;
-					while (node->_M_left != 0)
-						node = node->_M_left;
-				}
-				else
-				{
-					node_pointer	__parent = node->_M_parent;
-
-					while (node == __parent->_M_right)
+					if (node->_M_right != 0)
 					{
-						node = __parent;
-						if (node->_M_sentinel == 1)
-							break ;
-						__parent = __parent->_M_parent;
+						node = node->_M_right;
+						while (node->_M_left != 0)
+							node = node->_M_left;
 					}
-					if (node != __parent)
-						node = __parent;
+					else
+					{
+						node_pointer	__parent = node->_M_parent;
+
+						while (node == __parent->_M_right)
+						{
+							node = __parent;
+							if (node->_M_sentinel == 1)
+								break ;
+							__parent = __parent->_M_parent;
+						}
+						if (node != __parent)
+							node = __parent;
+					}
 				}
 				return (node);
 			}
 
 			static const_node_pointer	_increment_node(const_node_pointer node)
 			{
-				if (node->_M_right != 0)
+				if (node != 0)
 				{
-					node = node->_M_right;
-					while (node->_M_left != 0)
-						node = node->_M_left;
-				}
-				else
-				{
-					node_pointer	__parent = node->_M_parent;
-
-					while (node == __parent->_M_right)
+					if (node->_M_right != 0)
 					{
-						node = __parent;
-						if (node->_M_sentinel == 1)
-							break ;
-						__parent = __parent->_M_parent;
+						node = node->_M_right;
+						while (node->_M_left != 0)
+							node = node->_M_left;
 					}
-					if (node != __parent)
-						node = __parent;
+					else
+					{
+						node_pointer	__parent = node->_M_parent;
+
+						while (node == __parent->_M_right)
+						{
+							node = __parent;
+							if (node->_M_sentinel == 1)
+								break ;
+							__parent = __parent->_M_parent;
+						}
+						if (node != __parent)
+							node = __parent;
+					}
 				}
 				return (node);
 			}
@@ -143,52 +161,58 @@ namespace ft
 			// Decrement node
 			static node_pointer	_decrement_node(node_pointer node)
 			{
-				if (node->_M_sentinel == 1)
+				if (node != 0)
 				{
-					node = node->_M_right;
-				}
-				else if (node->_M_left != 0)
-				{
-					node = node->_M_left;
-					while (node->_M_right != 0)
-						node = node->_M_right;
-				}
-				else
-				{
-					node_pointer	__parent = node->_M_parent;
-
-					while (node == __parent->_M_left)
+					if (node->_M_sentinel == 1)
 					{
-						node = __parent;
-						__parent = __parent->_M_parent;
+						node = node->_M_right;
 					}
-					node = __parent;
+					else if (node->_M_left != 0)
+					{
+						node = node->_M_left;
+						while (node->_M_right != 0)
+							node = node->_M_right;
+					}
+					else
+					{
+						node_pointer	__parent = node->_M_parent;
+
+						while (node == __parent->_M_left)
+						{
+							node = __parent;
+							__parent = __parent->_M_parent;
+						}
+						node = __parent;
+					}
 				}
 				return (node);
 			}
 
 			static const_node_pointer	_decrement_node(const_node_pointer node)
 			{
-				if (node->_M_sentinel == 1)
+				if (node != 0)
 				{
-					node = node->_M_right;
-				}
-				else if (node->_M_left != 0)
-				{
-					node = node->_M_left;
-					while (node->_M_right != 0)
-						node = node->_M_right;
-				}
-				else
-				{
-					const_node_pointer	__parent = node->_M_parent;
-
-					while (node == __parent->_M_left)
+					if (node->_M_sentinel == 1)
 					{
-						node = __parent;
-						__parent = __parent->_M_parent;
+						node = node->_M_right;
 					}
-					node = __parent;
+					else if (node->_M_left != 0)
+					{
+						node = node->_M_left;
+						while (node->_M_right != 0)
+							node = node->_M_right;
+					}
+					else
+					{
+						const_node_pointer	__parent = node->_M_parent;
+
+						while (node == __parent->_M_left)
+						{
+							node = __parent;
+							__parent = __parent->_M_parent;
+						}
+						node = __parent;
+					}
 				}
 				return (node);
 			}
@@ -879,6 +903,9 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_rotate_left(node_pointer __x)
 		{
+			if (__x == 0)
+				return ;
+
 			node_pointer	__y = __x->_M_right;
 
 			__x->_M_right = __y->_M_left;
@@ -900,6 +927,9 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_rotate_right(node_pointer __x)
 		{
+			if (__x == 0)
+				return ;
+
 			node_pointer	__y = __x->_M_left;
 
 			__x->_M_left = __y->_M_right;
@@ -1060,7 +1090,7 @@ namespace ft
 					this->_M_header._M_right = __parent; // update rightmost
 				__parent->_M_right = __successor;
 			}
-			if (__successor)
+			if (__successor != 0)
 			{
 				if (__node->_M_left && __node->_M_right) // if node has two children, repeat with successor
 					_M_set_successor(__successor, _M_get_successor(__successor), __successor->_M_parent);
@@ -1077,8 +1107,10 @@ namespace ft
 				__successor->_M_parent = __parent;
 			}
 			// recolor
-			if (__node->_M_color == RED || (__successor != 0 && __successor->_M_color == RED))
+			// if either node to be deleted or successor is red
+			if ((__successor != 0) && (__node->_M_color == RED || __successor->_M_color == RED))
 				__successor->_M_color = BLACK;
+			// 
 			// else if (__node->_M_color == BLACK && (__successor == 0 || __successor->_M_color == BLACK))
 				// rotate
 		}
