@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/09 19:50:49 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/11 18:56:51 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1062,10 +1062,8 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_rebalance_after_del(node_pointer __node)
 		{
-			node_pointer	__root = this->_M_header._M_parent;
-
-			// while node is and is black, rebalance
-			while ((__node != __root) && (__node->_M_color == BLACK))
+			// while node is not root and is black, rebalance
+			while ((__node != this->_M_header._M_parent) && (__node->_M_color == BLACK))
 			{
 				bool			__is_left = (__node == __node->_M_parent->_M_left);
 				node_pointer	__sibling;
@@ -1082,35 +1080,30 @@ namespace ft
 						_M_rotate_left(__node->_M_parent);
 						__sibling = __node->_M_parent->_M_right;
 					}
-					// sibling's children are both not red
+					// at least one child is not red
 					else if ((__sibling != 0)
-							&& (__sibling->_M_right != 0) && (__sibling->_M_right->_M_color != RED))
+							&& ((__sibling->_M_right == 0) || (__sibling->_M_right->_M_color == BLACK)))
 					{
 						__sibling->_M_color = RED;
-						// left is not red
+						// both are not red
 						if ((__sibling->_M_left == 0) || (__sibling->_M_left->_M_color == BLACK))
+							__node = __node->_M_parent;
+						else // only right child is not red
 						{
-							if (__sibling->_M_left != 0)
-								__sibling->_M_left->_M_color = BLACK;
+							__sibling->_M_left->_M_color = BLACK;
 							_M_rotate_right(__sibling);
 							__sibling = __node->_M_parent->_M_right;
 						}
-						else
-							__node = __node->_M_parent;
 					}
 					else
 					{
 						if (__sibling != 0)
-						{
 							__sibling->_M_color = __node->_M_parent->_M_color;
-							__node->_M_parent->_M_color = BLACK;
-							if (__sibling->_M_right != 0)
-							{
-								__sibling->_M_right->_M_color = BLACK;
-								_M_rotate_left(__node->_M_parent);
-							}
-						}
-						__node = __root;
+						__node->_M_parent->_M_color = BLACK;
+						if ((__sibling != 0) && (__sibling->_M_right != 0))
+							__sibling->_M_right->_M_color = BLACK;
+						_M_rotate_left(__node->_M_parent);
+						this->_M_header._M_parent = __node;
 					}
 				}
 				else // node is right child of its parent
@@ -1125,39 +1118,34 @@ namespace ft
 						_M_rotate_right(__node->_M_parent);
 						__sibling = __node->_M_parent->_M_left;
 					}
-					// sibling's children are both not red
+					// at least one child is red
 					else if ((__sibling != 0)
-							&& (__sibling->_M_left != 0) && (__sibling->_M_left->_M_color != RED))
+							&& ((__sibling->_M_left == 0) || (__sibling->_M_left->_M_color == BLACK)))
 					{
 						__sibling->_M_color = RED;
-						// left is not red
+						// both are not red
 						if ((__sibling->_M_right == 0) || (__sibling->_M_right->_M_color == BLACK))
+							__node = __node->_M_parent;
+						else // only left child is not red
 						{
-							if (__sibling->_M_right != 0)
-								__sibling->_M_right->_M_color = BLACK;
+							__sibling->_M_right->_M_color = BLACK;
 							_M_rotate_left(__sibling);
 							__sibling = __node->_M_parent->_M_left;
 						}
-						else
-							__node = __node->_M_parent;
 					}
 					else
 					{
 						if (__sibling != 0)
-						{
 							__sibling->_M_color = __node->_M_parent->_M_color;
-							__node->_M_parent->_M_color = BLACK;
-							if (__sibling->_M_left != 0)
-							{
-								__sibling->_M_left->_M_color = BLACK;
-								_M_rotate_right(__node->_M_parent);
-							}
-						}
-						__node = __root;
+						__node->_M_parent->_M_color = BLACK;
+						if ((__sibling != 0) && (__sibling->_M_left != 0))
+							__sibling->_M_left->_M_color = BLACK;
+						_M_rotate_right(__node->_M_parent);
+						this->_M_header._M_parent = __node;
 					}
 				}
 			}
-			if (__node == __root)
+			if (__node == this->_M_header._M_parent)
 				__node->_M_color = BLACK;
 		}
 
