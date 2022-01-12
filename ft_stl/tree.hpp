@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/12 19:26:47 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/12 20:10:15 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1064,11 +1064,11 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_rebalance_del(bool __is_left,
 															  node_pointer __node, node_pointer __parent)
 		{
+			node_pointer	__sibling;
+
 			// while node is not root and is black, rebalance
 			while ((__node != this->_M_header._M_parent) && !(__node != 0 && __node->_M_color == RED))
 			{
-				node_pointer	__sibling;
-
 				if (__is_left) // node is left child of its parent
 				{
 					__sibling = __parent->_M_right;
@@ -1101,9 +1101,8 @@ namespace ft
 								__sibling->_M_color = RED;
 								_M_rotate_right(__sibling);
 								__sibling = __parent->_M_right;
-								__node = this->_M_header._M_parent;
 							}
-							else // default case
+							else
 							{
 								__sibling->_M_color = __parent->_M_color;
 								__parent->_M_color = BLACK;
@@ -1147,9 +1146,8 @@ namespace ft
 								__sibling->_M_color = RED;
 								_M_rotate_left(__sibling);
 								__sibling = __parent->_M_left;
-								__node = this->_M_header._M_parent;
 							}
-							else // default case
+							else
 							{
 								__sibling->_M_color = __parent->_M_color;
 								__parent->_M_color = BLACK;
@@ -1162,8 +1160,9 @@ namespace ft
 					}
 				}
 				__parent = __node->_M_parent;
-				__node->_M_color = BLACK;
-			};
+				__is_left = ((__parent->_M_left != 0) && (__node == __parent->_M_left));
+			}
+			__node->_M_color = BLACK;
 		}
 
 	// Find successor to replace the node to be deleted
@@ -1237,12 +1236,12 @@ namespace ft
 			if (__node != 0)
 			{
 				node_pointer	__successor;
-				bool			__delete_left;
+				bool			__is_left;
 
 				__successor = _M_get_successor(__node);
-				__delete_left = _M_set_successor(__node, __successor, __node->_M_parent);
+				__is_left = _M_set_successor(__node, __successor, __node->_M_parent);
 				if (__node->_M_color == BLACK)
-					_M_rebalance_del(__delete_left, __successor, __node->_M_parent);
+					_M_rebalance_del(__is_left, __successor, __node->_M_parent);
 				_M_drop_node(__node);
 				--this->_M_node_count;
 			}
