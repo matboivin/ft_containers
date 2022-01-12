@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/12 16:59:25 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/12 19:01:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,9 +143,14 @@ namespace ft
 		tree.erase(tree.begin());
 		display_tree_infos(tree);
 
-		std::cout << "Erase a node that has one child: key=32\n\n";
+		std::cout << "Erase a node that has one child: key=9\n\n";
 
 		tree.erase(9);
+		display_tree_infos(tree);
+
+		std::cout << "Erase a node that has one child: key=32\n\n";
+
+		tree.erase(32);
 		display_tree_infos(tree);
 
 		// std::cout << "Erase a node that has two children: key=79\n\n";
