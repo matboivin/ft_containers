@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/12 20:10:15 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/13 17:39:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -273,7 +273,6 @@ namespace ft
 				_M_header._M_sentinel = other._M_header._M_sentinel;
 				_M_header._M_parent->_M_parent = &_M_header;
 				_M_node_count = other._M_node_count;
-
 				other._M_reset();
 			}
 
@@ -859,7 +858,7 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_rebalance_insert(node_pointer __node)
 		{
 			// while node is not root or has red parent, rebalance
-			while ((__node != this->_M_header._M_parent) && (__node->_M_parent->_M_color == RED))
+			while (__node != this->_M_header._M_parent && __node->_M_parent->_M_color == RED)
 			{
 				node_pointer	__grand_parent = __node->_M_parent->_M_parent;
 				node_pointer	__uncle;
@@ -869,7 +868,7 @@ namespace ft
 				else
 					__uncle = __grand_parent->_M_left;
 
-				if (__uncle && __uncle->_M_color == RED) // uncle is red
+				if (__uncle != 0 && __uncle->_M_color == RED) // uncle is red
 				{
 					__node->_M_parent->_M_color = BLACK;
 					__uncle->_M_color = BLACK;
@@ -942,7 +941,7 @@ namespace ft
 			else if (_M_key_compare(_M_get_key(__hint.get_node()), __k)) // node > hint pos
 			{
 				// node > root && root > hint pos
-				if (_M_key_compare( _M_get_key(this->_M_header._M_parent),  __k)
+				if (_M_key_compare( _M_get_key(this->_M_header._M_parent), __k)
 					&& _M_key_compare( _M_get_key(__hint.get_node()), _M_get_key(this->_M_header._M_parent) ))
 				{
 					__hint = this->_M_header._M_parent; // start from root directly
@@ -966,7 +965,7 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_insert_pos(iterator __hint, const key_type& __k)
 		{
 			bool			__insert_left = true;
-			node_pointer	__pos;
+			node_pointer	__pos = 0;
 
 			// check whether the new node is lower than the current leftmost node
 			if ( _M_key_compare( __k, _M_get_key(_M_get_leftmost()) ) )
@@ -984,12 +983,9 @@ namespace ft
 			{
 				node_pointer	__cursor = _M_get_pos_from_hint(__hint, __k);
 
-				__pos = __cursor;
-
 				while (__cursor != 0)
 				{
 					__pos = __cursor;
-
 					if (_M_key_compare(__k, _M_get_key(__cursor))) // (node < cursor)
 					{
 						__cursor = __cursor->_M_left;
@@ -1047,7 +1043,7 @@ namespace ft
 			const key_type				__k = __val.first;
 			ft::pair<node_pointer,bool>	__res = _M_get_insert_pos(__pos, __k);
 
-			if ((__res.first != this->end().get_node()) && (_M_get_key(__res.first) == __k)) // key already exists
+			if (__res.first != this->end().get_node() && _M_get_key(__res.first) == __k) // key already exists
 				return (_pair_it_bool(iterator(__res.first), false));
 
 			node_pointer	__node = _M_create_node(__val);
@@ -1067,14 +1063,14 @@ namespace ft
 			node_pointer	__sibling;
 
 			// while node is not root and is black, rebalance
-			while ((__node != this->_M_header._M_parent) && !(__node != 0 && __node->_M_color == RED))
+			while (__node != this->_M_header._M_parent && (__node == 0 || __node->_M_color == BLACK))
 			{
 				if (__is_left) // node is left child of its parent
 				{
 					__sibling = __parent->_M_right;
 
 					// sibling is red
-					if ((__sibling != 0) && (__sibling->_M_color == RED))
+					if (__sibling != 0 && __sibling->_M_color == RED)
 					{
 						__sibling->_M_color = BLACK;
 						__parent->_M_color = RED;
@@ -1082,19 +1078,20 @@ namespace ft
 						__sibling = __parent->_M_right;
 					}
 					// both children are not red
-					else if ((__sibling != 0)
-							&& ((__sibling->_M_left == 0) || (__sibling->_M_left->_M_color == BLACK))
-							&& ((__sibling->_M_right == 0) || (__sibling->_M_right->_M_color == BLACK)))
+					else if (__sibling != 0
+							&& (__sibling->_M_left == 0 || __sibling->_M_left->_M_color == BLACK)
+							&& (__sibling->_M_right == 0 || __sibling->_M_right->_M_color == BLACK))
 					{
 						__sibling->_M_color = RED;
 						__node = __parent;
+						__parent = __node->_M_parent;
 					}
 					else
 					{
 						if (__sibling != 0)
 						{
 							// only right child is not red
-							if ((__sibling->_M_right == 0) || (__sibling->_M_right->_M_color == BLACK))
+							if (__sibling->_M_right == 0 || __sibling->_M_right->_M_color == BLACK)
 							{
 								if (__sibling->_M_left != 0)
 									__sibling->_M_left->_M_color = BLACK;
@@ -1102,16 +1099,13 @@ namespace ft
 								_M_rotate_right(__sibling);
 								__sibling = __parent->_M_right;
 							}
-							else
-							{
-								__sibling->_M_color = __parent->_M_color;
-								__parent->_M_color = BLACK;
-								if (__sibling->_M_right != 0) 
-									__sibling->_M_right->_M_color = BLACK;
-								_M_rotate_left(__parent);
-							}
+							__sibling->_M_color = __parent->_M_color;
+							__parent->_M_color = BLACK;
+							if (__sibling->_M_right != 0) 
+								__sibling->_M_right->_M_color = BLACK;
+							_M_rotate_left(__parent);
+							break ;
 						}
-						__node = this->_M_header._M_parent;
 					}
 				}
 				else // node is right child of its parent
@@ -1119,7 +1113,7 @@ namespace ft
 					__sibling = __parent->_M_left;
 
 					// sibling is red
-					if ((__sibling != 0) && (__sibling->_M_color == RED))
+					if (__sibling != 0 && __sibling->_M_color == RED)
 					{
 						__sibling->_M_color = BLACK;
 						__parent->_M_color = RED;
@@ -1127,19 +1121,20 @@ namespace ft
 						__sibling = __parent->_M_left;
 					}
 					// both children are not red
-					else if ((__sibling != 0)
-							&& ((__sibling->_M_left == 0) || (__sibling->_M_left->_M_color == BLACK))
-							&& ((__sibling->_M_right == 0) || (__sibling->_M_right->_M_color == BLACK)))
+					else if (__sibling != 0
+							&& (__sibling->_M_left == 0 || __sibling->_M_left->_M_color == BLACK)
+							&& (__sibling->_M_right == 0 || __sibling->_M_right->_M_color == BLACK))
 					{
 						__sibling->_M_color = RED;
 						__node = __parent;
+						__parent = __node->_M_parent;
 					}
 					else
 					{
 						if (__sibling != 0)
 						{
 							// only left child is not red
-							if ((__sibling->_M_left == 0) || (__sibling->_M_left->_M_color == BLACK))
+							if (__sibling->_M_left == 0 || __sibling->_M_left->_M_color == BLACK)
 							{
 								if (__sibling->_M_right != 0)
 									__sibling->_M_right->_M_color = BLACK;
@@ -1147,22 +1142,19 @@ namespace ft
 								_M_rotate_left(__sibling);
 								__sibling = __parent->_M_left;
 							}
-							else
-							{
-								__sibling->_M_color = __parent->_M_color;
-								__parent->_M_color = BLACK;
-								if (__sibling->_M_left != 0)
-									__sibling->_M_left->_M_color = BLACK;
-								_M_rotate_right(__parent);
-							}
+							__sibling->_M_color = __parent->_M_color;
+							__parent->_M_color = BLACK;
+							if (__sibling->_M_left != 0)
+								__sibling->_M_left->_M_color = BLACK;
+							_M_rotate_right(__parent);
+							break ;
 						}
-						__node = this->_M_header._M_parent;
 					}
 				}
-				__parent = __node->_M_parent;
-				__is_left = ((__parent->_M_left != 0) && (__node == __parent->_M_left));
+				__is_left = (__parent->_M_left != 0 && __node == __parent->_M_left);
 			}
-			__node->_M_color = BLACK;
+			if (__node != 0)
+				__node->_M_color = BLACK;
 		}
 
 	// Find successor to replace the node to be deleted
@@ -1173,12 +1165,12 @@ namespace ft
 			node_pointer	__successor = 0; // if node is leaf, default to 0
 
 			// node has one child
-			if (__node->_M_left && __node->_M_right == 0)
+			if (__node->_M_left != 0 && __node->_M_right == 0)
 				__successor = __node->_M_left;
-			else if (__node->_M_left == 0 && __node->_M_right)
+			else if (__node->_M_left == 0 && __node->_M_right != 0)
 				__successor = __node->_M_right;
 			// node has two children
-			else if (__node->_M_left && __node->_M_right)
+			else if (__node->_M_left != 0 && __node->_M_right != 0)
 			{
 				__successor = __node->_increment_node(__node); // successor
 
@@ -1194,7 +1186,7 @@ namespace ft
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_set_successor(node_pointer __node, node_pointer __successor,
 															  node_pointer __parent)
 		{
-			bool	__delete_left = ((__parent->_M_left != 0) && (__node == __parent->_M_left));
+			bool	__delete_left = (__parent->_M_left != 0 && __node == __parent->_M_left);
 
 			if (__delete_left)
 			{
@@ -1211,14 +1203,14 @@ namespace ft
 			if (__successor != 0)
 			{
 				__successor->_M_color = __node->_M_color;
-				if (__node->_M_left && __node->_M_right) // if node has two children, repeat with successor
+				if (__node->_M_left != 0 && __node->_M_right != 0) // if node has two children, repeat with successor
 					_M_set_successor(__successor, _M_get_successor(__successor), __successor->_M_parent);
-				if (__node->_M_left && __node->_M_left != __successor) // set left child of successor
+				if (__node->_M_left != 0 && __node->_M_left != __successor) // set left child of successor
 				{
 					__successor->_M_left = __node->_M_left;
 					__node->_M_left->_M_parent = __successor;
 				}
-				if (__node->_M_right && __node->_M_right != __successor) // set right child of successor
+				if (__node->_M_right != 0 && __node->_M_right != __successor) // set right child of successor
 				{
 					__successor->_M_right = __node->_M_right;
 					__node->_M_right->_M_parent = __successor;
@@ -1465,7 +1457,7 @@ namespace ft
 		{
 			iterator	it = this->find(k);
 
-			if ((it != this->end()) && (k == _M_get_key(it.get_node())))
+			if (it != this->end() && k == _M_get_key(it.get_node()))
 			{
 				this->_M_delete_node(it.get_node());
 				return (1);
@@ -1478,10 +1470,18 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::erase(iterator first, iterator last)
 		{
-			while (first != last)
+			if (first == begin() && end() == end())
 			{
-				_M_erase_recursive(*first);
-				++first;
+				_M_erase_recursive(this->_M_header._M_parent);
+				this->_M_reset();
+			}
+			else
+			{
+				while (first != last)
+				{
+					this->_M_delete_node(*first);
+					++first;
+				}
 			}
 		}
 
@@ -1562,7 +1562,7 @@ namespace ft
 			size_type		count = 0;
 			const_iterator	it = this->find(k);
 
-			while ((it != this->end()) && (k == _M_get_key( it.get_node() )))
+			while (it != this->end() && k == _M_get_key(it.get_node()))
 			{
 				++count;
 				++it;
