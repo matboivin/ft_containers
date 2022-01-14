@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/09 18:08:35 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/14 20:07:50 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -348,7 +348,7 @@ namespace ft
 
 	// Erase a range of elements
 	template<typename Key, typename T, typename Compare, typename Allocator>
-		typename map<Key,T,Compare,Allocator>::size_type
+		void
 		map<Key,T,Compare,Allocator>::erase(iterator first, iterator last)
 		{
 			return (this->_M_tree.erase(first, last));
