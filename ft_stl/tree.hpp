@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/14 19:56:54 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/14 20:05:27 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1157,11 +1157,11 @@ namespace ft
 					}
 				}
 			}
-			if (__subst != 0)
+			if (__subst != 0 && __subst->_M_color == RED)
 				__subst->_M_color = BLACK;
 		}
 
-	// Find successor to replace the node to be deleted
+	// Find successor that will replace the node to be deleted
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_subst(node_pointer __node)
