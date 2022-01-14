@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/13 19:58:52 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/14 18:18:27 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1160,21 +1160,17 @@ namespace ft
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_successor(node_pointer __node)
 		{
-			node_pointer	__successor = 0;
+			node_pointer	__successor = 0; // default case: no children
 
-			// node has one child
-			if (__node->_M_left != 0 && __node->_M_right == 0)
-				__successor = __node->_M_left;
-			else if (__node->_M_left == 0 && __node->_M_right != 0)
-				__successor = __node->_M_right;
 			// node has two children
-			else if (__node->_M_left != 0 && __node->_M_right != 0)
-			{
-				__successor = __node->_increment_node(__node); // successor
-
-				if (__successor == 0)
-					__successor = __node->_decrement_node(__node); // predecessor
-			}
+			if (__node->_M_left != 0 && __node->_M_right != 0)
+				__successor = __node->_increment_node(__node);
+			// node has one left child
+			else if (__node->_M_left != 0)
+				__successor = __node->_M_left;
+			// node has one right child
+			else if (__node->_M_right != 0)
+				__successor = __node->_M_right;
 			return (__successor);
 		}
 
@@ -1185,21 +1181,28 @@ namespace ft
 		{
 			NodeColor		__deleted_color = __node->_M_color;
 			bool			__delete_left = (__node == __node->_M_parent->_M_left);
+			node_pointer	__last_subst = __subst;
+			node_pointer	__parent = __node->_M_parent;
 
 			if (__node->_M_left != 0 && __node->_M_right != 0) // node to be deleted has two children
 			{
-				if (__node->_M_left != 0 && __node->_M_left != __subst)
+				__last_subst = __subst->_M_right;
+				if (__node->_M_left != __subst)
 				{
 					__subst->_M_left = __node->_M_left;
 					__node->_M_left->_M_parent = __subst;
 				}
-				if (__node->_M_right != 0 && __node->_M_right != __subst)
+				if (__node->_M_right != __subst)
 				{
-					// _M_set_subst(__subst, _M_get_successor(__subst));
+					__parent = __subst->_M_parent;
+					if (__last_subst != 0)
+						__last_subst->_M_parent = __parent;
+					__subst->_M_parent->_M_left = __last_subst;
 					__subst->_M_right = __node->_M_right;
 					__node->_M_right->_M_parent = __subst;
 				}
-				__node->_M_color = __subst->_M_color;
+				else
+					__parent = __subst;
 				__subst->_M_color = __deleted_color;
 			}
 			if (this->_M_header._M_parent == __node) // update root
@@ -1208,18 +1211,28 @@ namespace ft
 			{
 				__node->_M_parent->_M_left = __subst;
 				if (this->_M_header._M_left == __node) // update leftmost
-					this->_M_header._M_left = __node->_M_parent;
+				{
+					if (__node->_M_right == 0)
+						this->_M_header._M_left = __node->_M_parent;
+					else
+						this->_M_header._M_left = __node->_get_leftmost(__node);
+				}
 			}
 			else
 			{
 				__node->_M_parent->_M_right = __subst;
 				if (this->_M_header._M_right == __node) // update rightmost
-					this->_M_header._M_right = __node->_M_parent;
+				{
+					if (__node->_M_left == 0)
+						this->_M_header._M_right = __node->_M_parent;
+					else
+						this->_M_header._M_right = __node->_get_rightmost(__node);
+				}
 			}
 			if (__subst != 0)
 				__subst->_M_parent = __node->_M_parent;
 			if (__deleted_color == BLACK)
-				_M_rebalance_del(__subst, __node->_M_parent);
+				_M_rebalance_del(__last_subst, __parent);
 		}
 
 	// Delete a node and rebalance the tree
@@ -1229,7 +1242,9 @@ namespace ft
 		{
 			if (__node != 0)
 			{
-				_M_set_subst(__node, _M_get_successor(__node));
+				node_pointer	__successor = _M_get_successor(__node);
+
+				_M_set_subst(__node, __successor);
 				_M_drop_node(__node);
 				--this->_M_node_count;
 			}
