@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/16 22:27:04 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/16 22:52:38 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1201,44 +1201,53 @@ namespace ft
 				if (__node->_M_right != __subst)
 				{
 					__parent = __subst->_M_parent;
-					if (__last_subst != 0)
-						__last_subst->_M_parent = __parent;
 					__subst->_M_parent->_M_left = __last_subst;
 					__subst->_M_right = __node->_M_right;
 					__node->_M_right->_M_parent = __subst;
 				}
 				else
 					__parent = __subst;
-			}
-			if (this->_M_header._M_parent == __node) // update root
-				this->_M_header._M_parent = __subst;
-			if (__delete_left)
-			{
-				__node->_M_parent->_M_left = __subst;
-				if (this->_M_header._M_left == __node) // update leftmost
-				{
-					if (__node->_M_right == 0)
-						this->_M_header._M_left = __node->_M_parent;
-					else
-						this->_M_header._M_left = __node->_get_leftmost(__node);
-				}
+				if (this->_M_header._M_parent == __node) // update root
+					this->_M_header._M_parent = __subst;
+				if (__delete_left)
+					__node->_M_parent->_M_left = __subst;
+				else
+					__node->_M_parent->_M_right = __subst;
+				__subst->_M_parent = __node->_M_parent;
+				__node->_M_color = __subst->_M_color;
+				__subst->_M_color = __deleted_color;
 			}
 			else
 			{
-				__node->_M_parent->_M_right = __subst;
-				if (this->_M_header._M_right == __node) // update rightmost
+				if (this->_M_header._M_parent == __node) // update root
+					this->_M_header._M_parent = __subst;
+				if (__delete_left)
 				{
-					if (__node->_M_left == 0)
-						this->_M_header._M_right = __node->_M_parent;
-					else
-						this->_M_header._M_right = __node->_get_rightmost(__node);
+					__node->_M_parent->_M_left = __subst;
+					if (this->_M_header._M_left == __node) // update leftmost
+					{
+						if (__node->_M_right == 0)
+							this->_M_header._M_left = __node->_M_parent;
+						else
+							this->_M_header._M_left = __node->_get_leftmost(__node);
+					}
+				}
+				else
+				{
+					__node->_M_parent->_M_right = __subst;
+					if (this->_M_header._M_right == __node) // update rightmost
+					{
+						if (__node->_M_left == 0)
+							this->_M_header._M_right = __node->_M_parent;
+						else
+							this->_M_header._M_right = __node->_get_rightmost(__node);
+					}
 				}
 			}
+			if (__last_subst != 0)
+				__last_subst->_M_parent = __parent;
 			if (__subst != 0)
-			{
 				__subst->_M_parent = __node->_M_parent;
-				__subst->_M_color = __deleted_color;
-			}
 			if (__deleted_color == BLACK)
 				_M_rebalance_del(__last_subst, __parent);
 		}

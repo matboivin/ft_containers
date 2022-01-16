@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:13 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 16:13:01 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/16 23:04:34 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ namespace std
 		assert(res == prev);
 
 		std::cout << "*(std::rev_it++) = " << res
-				  << "*rev_it     = " << *rev_it << "\n\n";
+				  << "\n*rev_it     = " << *rev_it << "\n\n";
 	}
 
 	void	test_revit_decrement(void)

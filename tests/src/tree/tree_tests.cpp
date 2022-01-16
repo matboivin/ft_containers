@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/16 22:19:25 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/16 22:51:00 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,31 +22,31 @@ namespace ft
 	{
 		std::cout << std::setw(42) << " TREE \n\n";
 
-		// ft::test_tree_default_ctor();
-		// ft::test_tree_copy_ctor();
-		// ft::test_tree_copy_assign();
+		ft::test_tree_default_ctor();
+		ft::test_tree_copy_ctor();
+		ft::test_tree_copy_assign();
 
-		// // iterators
-		// ft::test_tree_iterator();
-		// ft::test_tree_rev_iterator();
+		// iterators
+		ft::test_tree_iterator();
+		ft::test_tree_rev_iterator();
 
-		// // capacity
-		// ft::test_tree_empty();
-		// ft::test_tree_size();
-		// ft::test_tree_max_size();
+		// capacity
+		ft::test_tree_empty();
+		ft::test_tree_size();
+		ft::test_tree_max_size();
 
-		// // elements access
-		// ft::test_tree_count();
-		// ft::test_tree_find();
-		// ft::test_tree_lower_bound();
-		// ft::test_tree_upper_bound();
-		// ft::test_tree_equal_range();
+		// elements access
+		ft::test_tree_count();
+		ft::test_tree_find();
+		ft::test_tree_lower_bound();
+		ft::test_tree_upper_bound();
+		ft::test_tree_equal_range();
 
-		// // modifiers
-		// ft::test_tree_insert();
-		// ft::test_tree_erase_one();
+		// modifiers
+		ft::test_tree_insert();
+		ft::test_tree_erase_one();
 		ft::test_tree_erase_range();
-		// ft::test_tree_swap();
-		// ft::test_tree_clear();
+		ft::test_tree_swap();
+		ft::test_tree_clear();
 	}
 }
