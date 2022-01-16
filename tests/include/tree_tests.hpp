@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/02 18:37:09 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/16 22:19:19 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ namespace ft
 
 	// modifiers
 	void	test_tree_insert(void);
-	void	test_tree_erase(void);
+	void	test_tree_erase_one(void);
+	void	test_tree_erase_range(void);
 	void	test_tree_swap(void);
 	void	test_tree_clear(void);
 }

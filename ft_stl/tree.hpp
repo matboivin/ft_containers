@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/14 20:05:27 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/16 22:27:04 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1489,7 +1489,7 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::erase(iterator first, iterator last)
 		{
-			if (first == begin() && end() == end())
+			if (first == begin() && last == end())
 			{
 				_M_erase_recursive(this->_M_header._M_parent);
 				this->_M_reset();
@@ -1497,10 +1497,7 @@ namespace ft
 			else
 			{
 				while (first != last)
-				{
-					this->_M_delete_node(*first);
-					++first;
-				}
+					this->erase(first++);
 			}
 		}
 

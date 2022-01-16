@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/12 20:10:29 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/16 22:28:07 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ namespace ft
 		std::cout << "\n\n";
 	}
 
-	void	test_tree_erase(void)
+	void	test_tree_erase_one(void)
 	{
 		std::cout << "TEST: Modifiers: erase() \n\n";
 
@@ -159,6 +159,60 @@ namespace ft
 		display_tree_infos(tree);
 
 		tree.write_tree_dot("ast_after");
+	}
+
+	void	test_tree_erase_range(void)
+	{
+		std::cout << "TEST: Modifiers: erase() \n\n";
+
+		explain_test("Erase a range of elements from the tree.");
+
+		tree_type	tree;
+
+		tree.insert( pair<int, std::string>(76, "seventy-six") );
+		tree.insert( pair<int, std::string>(54, "fifty-four") );
+		tree.insert( pair<int, std::string>(14, "fourteen") );
+		tree.insert( pair<int, std::string>(28, "twenty-eight") );
+		tree.insert( pair<int, std::string>(29, "twenty-nine") );
+		tree.insert( pair<int, std::string>(9,  "nine") );
+		tree.insert( pair<int, std::string>(19, "nineteen") );
+		tree.insert( pair<int, std::string>(97, "ninety-seven") );
+		tree.insert( pair<int, std::string>(65, "sixty-five") );
+		tree.insert( pair<int, std::string>(0,  "zero") );
+		tree.insert( pair<int, std::string>(1,  "one") );
+		tree.insert( pair<int, std::string>(81, "eighty-one") );
+		tree.insert( pair<int, std::string>(54, "fifty-four") );
+		tree.insert( pair<int, std::string>(77, "seventy-seven") );
+		tree.insert( pair<int, std::string>(42, "fourty-two") );
+		tree.insert( pair<int, std::string>(60, "sixty") );
+		tree.insert( pair<int, std::string>(2,  "two") );
+		tree.insert( pair<int, std::string>(32, "thirty-two") );
+		tree.insert( pair<int, std::string>(7,  "seven") );
+		tree.insert( pair<int, std::string>(44, "fourty-four") );
+		tree.insert( pair<int, std::string>(79, "seventy-nine") );
+		tree.insert( pair<int, std::string>(82, "eighty-two") );
+		tree.insert( pair<int, std::string>(3,  "three") );
+		tree.insert( pair<int, std::string>(80, "twenty-five") );
+		tree.insert( pair<int, std::string>(78, "seventy-eight") );
+		tree.insert( pair<int, std::string>(17, "seventeen") );
+		tree.insert( pair<int, std::string>(10, "ten") );
+
+		display_tree_infos(tree);
+
+		tree_type::iterator	from = tree.find(7);
+		tree_type::iterator	to = tree.find(80);
+
+		std::cout << "Erase range[" << from->first << ", " << to->first << ")\n\n";
+
+		tree.erase(from, to);
+		display_tree_infos(tree);
+
+		tree.write_tree_dot("ast_after_range");
+
+		std::cout << "Erase range[begin, end)\n\n";
+
+		tree.erase(tree.begin(), tree.end());
+		display_tree_infos(tree);
 	}
 
 	void	test_tree_swap(void)
