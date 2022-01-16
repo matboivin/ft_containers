@@ -16,6 +16,7 @@ COL_RESET =		\033[0m
 IMPL_FILES =		algorithm.hpp \
 					iterator.hpp \
 					map.hpp \
+					set.hpp \
 					stack.hpp \
 					tree.hpp \
 					type_traits.hpp \
@@ -27,6 +28,7 @@ IMPL_FILES =		algorithm.hpp \
 INC_FILES =			tests.hpp \
 					map_tests.hpp \
 					revit_tests.hpp \
+					set_tests.hpp \
 					stack_tests.hpp \
 					vector_tests.hpp
 
@@ -48,6 +50,9 @@ MAP_SRC_FILES =		map_tests_capacity.cpp \
 					map_tests_lookup.cpp \
 					map_tests_modifiers.cpp \
 					map_tests.cpp
+
+SET_SRC_FILES =		set_test_construct.cpp \
+					set_tests.cpp
 
 STACK_SRC_FILES =	stack_test_capacity.cpp \
 					stack_test_comp_ops.cpp \
@@ -79,7 +84,7 @@ IMPL_DIR =		ft_stl
 INC_DIR =		tests/include
 SRC_DIR =		tests/src
 TEST_OUT_DIR =	tests/outputs
-SUBDIRS =		iterator map stack tree vector
+SUBDIRS =		iterator map set stack tree vector
 SRC_SUBDIRS =	$(addprefix $(SRC_DIR)/, $(SUBDIRS))
 
 OBJ_DIR =		obj
@@ -88,7 +93,7 @@ VPATH =			$(SRC_DIR) $(SRC_SUBDIRS)
 
 # ALL SRC FILES
 
-SRC_FILES =		$(CMP_SRC_FILES) $(VEC_SRC_FILES) $(STACK_SRC_FILES) $(MAP_SRC_FILES) $(IT_SRC_FILES)
+SRC_FILES =		$(CMP_SRC_FILES) $(MAP_SRC_FILES) $(VEC_SRC_FILES) $(STACK_SRC_FILES) $(SET_SRC_FILES) $(IT_SRC_FILES)
 TREE_FILES =	$(addprefix $(SRC_DIR)/tree/, $(TREE_SRC_FILES))
 
 # OBJ
