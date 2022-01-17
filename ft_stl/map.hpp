@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/17 17:57:09 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:43:50 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,18 +59,18 @@ namespace ft
 
 		private:
 			// alias for the tree
-			typedef ft::RedBlackTree<key_type, value_type, key_compare, allocator_type>	_repr_type;
+			typedef ft::RedBlackTree<key_type, value_type, key_compare, allocator_type>	_tree_type;
 
 			// attribute
-			_repr_type	_M_tree;
+			_tree_type	_M_tree;
 
 		public:
 			// types
-			typedef typename _repr_type::iterator				iterator;
-			typedef typename _repr_type::const_iterator			const_iterator;
-			typedef typename _repr_type::reverse_iterator		reverse_iterator;
-			typedef typename _repr_type::const_reverse_iterator	const_reverse_iterator;
-			typedef typename _repr_type::difference_type		difference_type;
+			typedef typename _tree_type::iterator				iterator;
+			typedef typename _tree_type::const_iterator			const_iterator;
+			typedef typename _tree_type::reverse_iterator		reverse_iterator;
+			typedef typename _tree_type::const_reverse_iterator	const_reverse_iterator;
+			typedef typename _tree_type::difference_type		difference_type;
 
 			// default constructor
 			explicit map(const key_compare& comp = key_compare(),
@@ -137,6 +137,9 @@ namespace ft
 			// observers
 			key_compare			key_comp(void) const;
 			value_compare		value_comp(void) const;
+
+			// allocator
+			allocator_type		get_allocator(void) const;
 
 			// debug
 			void				write_tree_dot(const std::string& filename);
@@ -469,6 +472,16 @@ namespace ft
 			return (value_compare(this->_M_tree.key_comp()));
 		}
 
+	/* allocator ************************************************************ */
+
+	// Returns a copy of the allocator
+	template<typename Key, typename T, typename Compare, typename Allocator>
+		typename map<Key,T,Compare,Allocator>::allocator_type
+		map<Key,T,Compare,Allocator>::get_allocator(void) const
+		{
+			return (this->_M_tree.get_allocator());
+		}
+
 	/* debug **************************************************************** */
 
 	template<typename Key, typename T, typename Compare, typename Allocator>
@@ -477,7 +490,6 @@ namespace ft
 		{
 			this->_M_tree.write_tree_dot(filename);
 		}
-
 } // namespace ft
 
 #endif
