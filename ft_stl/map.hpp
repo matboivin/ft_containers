@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/14 20:07:50 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/17 17:57:09 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,23 +35,22 @@ namespace ft
 		{
 		public:
 			// types
-			typedef Key														key_type;
-			typedef T														mapped_type;
-			typedef ft::pair<const Key, T>									value_type;
-			typedef Compare													key_compare;
-			typedef Allocator												allocator_type;
-			typedef typename allocator_type::reference						reference;
-			typedef typename allocator_type::const_reference				const_reference;
-			typedef typename allocator_type::pointer						pointer;
-			typedef typename allocator_type::const_pointer					const_pointer;
-			typedef std::size_t												size_type;
+			typedef Key											key_type;
+			typedef T											mapped_type;
+			typedef ft::pair<const Key, T>						value_type;
+			typedef Compare										key_compare;
+			typedef Allocator									allocator_type;
+			typedef typename allocator_type::reference			reference;
+			typedef typename allocator_type::const_reference	const_reference;
+			typedef typename allocator_type::pointer			pointer;
+			typedef typename allocator_type::const_pointer		const_pointer;
+			typedef std::size_t									size_type;
 
 			// function object to compare the keys of the stored elements
 			class value_compare
 			{
 				friend class map;
 			protected:
-				// attributes
 				Compare	comp; // A binary predicate
 				value_compare(Compare c) : comp(c) {} // constructed with map's comparison object
 			public:
@@ -59,31 +58,29 @@ namespace ft
 			};
 
 		private:
-			typedef typename Allocator::value_type											_alloc_value_type;
-			typedef typename allocator_type::template rebind<value_type>::other				_pair_alloc_type;
-			typedef ft::RedBlackTree<key_type, value_type, key_compare, _pair_alloc_type>	_repr_type;
+			// alias for the tree
+			typedef ft::RedBlackTree<key_type, value_type, key_compare, allocator_type>	_repr_type;
 
+			// attribute
 			_repr_type	_M_tree;
 
 		public:
 			// types
-			typedef typename _repr_type::iterator					iterator;
-			typedef typename _repr_type::const_iterator				const_iterator;
-			typedef typename _repr_type::reverse_iterator			reverse_iterator;
-			typedef typename _repr_type::const_reverse_iterator		const_reverse_iterator;
-			typedef typename _repr_type::difference_type			difference_type;
+			typedef typename _repr_type::iterator				iterator;
+			typedef typename _repr_type::const_iterator			const_iterator;
+			typedef typename _repr_type::reverse_iterator		reverse_iterator;
+			typedef typename _repr_type::const_reverse_iterator	const_reverse_iterator;
+			typedef typename _repr_type::difference_type		difference_type;
 
 			// default constructor
 			explicit map(const key_compare& comp = key_compare(),
-						const allocator_type& alloc = allocator_type()
-						);
+						 const allocator_type& alloc = allocator_type());
 
 			// range constructor
 			template <typename InputIterator>
 				map(InputIterator first, InputIterator last,
 					const key_compare& comp = key_compare(),
-					const allocator_type& alloc = allocator_type()
-					);
+					const allocator_type& alloc = allocator_type());
 
 			// copy constructor
 			map(const map& other);
@@ -117,8 +114,9 @@ namespace ft
 			iterator			insert(iterator position, const value_type& val);
 			template <class InputIterator>
 				void			insert(InputIterator first, InputIterator last,
-									   typename ft::enable_if<ft::is_same<typename InputIterator::value_type,
-									   										value_type>::value>::type* = 0);
+									   typename ft::enable_if<
+									   		ft::is_same<typename InputIterator::value_type,
+									   					value_type>::value>::type* = 0);
 			void				erase(iterator position);
 			size_type			erase(const key_type& k);
 			void				erase(iterator first, iterator last);

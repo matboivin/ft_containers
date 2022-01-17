@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/15 14:40:14 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:19:13 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ namespace ft
 
 		protected:
 			// helpers
-			pointer			_M_allocate(size_type __n);
-			void			_M_create_storage(size_type __n);
-			void			_M_deallocate(pointer __p, size_type __n);
+			pointer			_M_allocate(const size_type __n);
+			void			_M_create_storage(const size_type __n);
+			void			_M_deallocate(pointer __p, const size_type __n);
 			void			_M_swap_data(vector& __x);
 			void			_M_default_initialize(size_type __n);
 			template<typename InputIterator>
@@ -74,8 +74,8 @@ namespace ft
 			void			_M_fill_insert(iterator __pos, size_type __n, const value_type& __val);
 			size_type		_M_calculateGrowth(const size_type __n);
 			void			_M_erase_at_end(pointer __pos);
-			void			_M_range_check(size_type __n) const;
-			size_type		_M_len_check(size_type __n, const char* __s) const;
+			void			_M_range_check(const size_type __n) const;
+			size_type		_M_len_check(const size_type __n, const char* __s) const;
 
 		public:
 			// default constructor
@@ -135,8 +135,7 @@ namespace ft
 			// modifiers
 			template<typename InputIterator>
 				void		assign(InputIterator first, InputIterator last,
-								   typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type* = 0
-								   );
+								   typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type* = 0);
 			void			assign(size_type n, const value_type& val);
 			void			push_back(const value_type& val);
 			void			pop_back(void);
@@ -145,8 +144,7 @@ namespace ft
 			template<typename InputIterator>
 				void		insert(iterator position,
 								   InputIterator first, InputIterator last,
-								   typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type* = 0
-								   );
+								   typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type* = 0);
 			iterator		erase(iterator position);
 			iterator		erase(iterator first, iterator last);
 			void			swap(vector& other);
@@ -181,7 +179,7 @@ namespace ft
 	/* Allocate a storage space of size n */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::pointer
-		vector<T,Alloc>::_M_allocate(size_type __n)
+		vector<T,Alloc>::_M_allocate(const size_type __n)
 		{
 			if (__n > 0)
 				return (this->_M_alloc.allocate(__n));
@@ -194,7 +192,7 @@ namespace ft
 	 */
 	template<typename T, typename Alloc>
 		void
-		vector<T,Alloc>::_M_create_storage(size_type __n)
+		vector<T,Alloc>::_M_create_storage(const size_type __n)
 		{
 			this->_M_begin = this->_M_allocate(__n);
 			this->_M_end = this->_M_begin; // since it's empty, points to the beginning
@@ -204,7 +202,7 @@ namespace ft
 	/* Deallocate a storage space of size n pointed to by pointer p */
 	template<typename T, typename Alloc>
 		void
-		vector<T,Alloc>::_M_deallocate(pointer __p, size_type __n)
+		vector<T,Alloc>::_M_deallocate(pointer __p, const size_type __n)
 		{
 			if (__p)
 				this->_M_alloc.deallocate(__p, __n);
@@ -436,7 +434,7 @@ namespace ft
 	/* Safety check for storage length */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::size_type
-		vector<T,Alloc>::_M_len_check(size_type __n, const char* __s) const
+		vector<T,Alloc>::_M_len_check(const size_type __n, const char* __s) const
 		{
 			size_type	__size_left = max_size() - size();
 
@@ -455,7 +453,7 @@ namespace ft
 	/* Safety check for at() */
 	template<typename T, typename Alloc>
 		void
-		vector<T,Alloc>::_M_range_check(size_type __n) const
+		vector<T,Alloc>::_M_range_check(const size_type __n) const
 		{
 			if (__n >= size())
 			{

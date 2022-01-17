@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:28:28 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/07 00:06:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/17 18:15:49 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ namespace ft
 		{
 			for ( ; first1 != last1; ++first1, ++first2 )
 			{
-				if ( !(*first1 == *first2) )
+				if (!(*first1 == *first2))
 					return (false);
 			}
 			return (true);
@@ -66,7 +66,7 @@ namespace ft
 		{
 			for ( ; first1 != last1; ++first1, ++first2 )
 			{
-				if ( !pred(*first1, *first2) )
+				if (!pred(*first1, *first2))
 					return (false);
 			}
 			return (true);
@@ -88,14 +88,14 @@ namespace ft
 		lexicographical_compare(InputIterator1 first1, InputIterator1 last1,
 								InputIterator2 first2, InputIterator2 last2)
 		{
-			for ( ; (first1 != last1) && (first2 != last2); ++first1, ++first2 )
+			for ( ; (first1 != last1) && (first2 != last2); ++first1, ++first2)
 			{
 				if (*first1 < *first2)
 					return (true);
 				if (*first1 > *first2)
 					return (false);
 			}
-			return ( (first1 == last1) && (first2 != last2) );
+			return ((first1 == last1) && (first2 != last2));
 		}
 
 	/*
@@ -117,14 +117,14 @@ namespace ft
 								InputIterator2 first2, InputIterator2 last2,
 								Compare comp)
 		{
-			for ( ; (first1 != last1) && (first2 != last2); ++first1, ++first2 )
+			for ( ; (first1 != last1) && (first2 != last2); ++first1, ++first2)
 			{
-				if ( comp(*first1, *first2) )
+				if (comp(*first1, *first2))
 					return (true);
-				if ( comp(*first2, *first1) )
+				if (comp(*first2, *first1))
 					return (false);
 			}
-			return ( (first1 == last1) && (first2 != last2) );
+			return ((first1 == last1) && (first2 != last2));
 		}
 } // namespace ft
 
