@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/17 18:19:13 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:48:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,7 +247,7 @@ namespace ft
 		void
 		vector<T,Alloc>::_M_range_initialize(InputIterator __first, InputIterator __last)
 		{
-			difference_type	__len = __first - __last;
+			difference_type	__len = ft::distance(__first, __last);
 
 			if (__len > 0)
 			{
@@ -266,7 +266,7 @@ namespace ft
 		void
 		vector<T, Alloc>::_M_range_insert(iterator __pos, InputIterator __first, InputIterator __last)
 		{
-			difference_type	__len = __first - __last;
+			difference_type	__len = ft::distance(__first, __last);
 
 			if (__len > 0)
 			{

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/27 23:32:03 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/10 19:03:30 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:20:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,6 +226,46 @@ namespace std
 		clock_t	time_start = clock();
 		vec.insert(vec.begin() + 5, vec2.begin(), vec2.end());
 		vec.insert(vec.end(), vec2.begin(), vec2.end());
+		clock_t	time_end = clock();
+
+		display_vec_infos(vec, "after");
+		display_elapsed_time(time_start, time_end);
+
+		assert(vec == result);
+	}
+
+	void	test_vec_insert_rrange(void)
+	{
+		std::cout << "TEST: Modifiers: insert(pos, first, last) \n\n";
+
+		explain_test("Insert a range of elements with reverse iterators.");
+
+		// create vectors
+		vector<int>	vec;
+		vector<int>	vec2;
+		vector<int>	result;
+
+		// fill them
+		for ( int i = 0; i < 10; ++i )
+			vec.push_back(i);
+
+		for ( int i = 250; i < 300; i += 10 )
+			vec2.push_back(i);
+
+		for ( int i = 0; i < 5; ++i )
+			result.push_back(i);
+		for ( int i = 250; i < 300; i += 10 )
+			result.push_back(i);
+		for ( int i = 5; i < 10; ++i )
+			result.push_back(i);
+		for ( int i = 250; i < 300; i += 10 )
+			result.push_back(i);
+
+		display_vec_infos(vec, "before");
+
+		clock_t	time_start = clock();
+		vec.insert((vec.rend() - 5).base(), vec2.rend().base(), vec2.rbegin().base());
+		vec.insert(vec.rbegin().base(), vec2.rend().base(), vec2.rbegin().base());
 		clock_t	time_end = clock();
 
 		display_vec_infos(vec, "after");

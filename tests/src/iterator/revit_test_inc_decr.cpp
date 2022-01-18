@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 14:51:13 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/16 23:04:34 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/18 16:42:16 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ namespace std
 		for ( int i = 0; i < 5; i++ )
 			arr[i] = i;
 
-		std::reverse_iterator<int*>	rev_it(arr + 5);
+		std::reverse_iterator<int*>	rev_it(arr + 1);
 
 		std::cout << "*rev_it     = " << *rev_it
 				  << "\n*(--rev_it) = " << *(--rev_it) << std::endl;

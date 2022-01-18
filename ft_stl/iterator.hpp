@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/16 18:28:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/18 17:49:00 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ namespace ft
 			typedef const T*						pointer;
 			typedef const T&						reference;
 		};
-
 
 	/* Predefined iterators ************************************************* */
 
@@ -206,7 +205,7 @@ namespace ft
 			{
 				reverse_iterator	backup = *this;
 
-				++(*this);
+				--_M_current;
 				return (backup);
 			}
 
@@ -231,7 +230,7 @@ namespace ft
 			{
 				reverse_iterator	backup = *this;
 
-				--(*this);
+				++_M_current;
 				return (backup);
 			}
 
@@ -578,6 +577,23 @@ namespace ft
 		{
 			typedef T	type;
 		};
+
+	// helpers
+
+	/* Get the distance between two iterators */
+	template<typename Iterator>
+		typename ft::iterator_traits<Iterator>::difference_type
+		distance(Iterator first, Iterator last)
+		{
+			typename ft::iterator_traits<Iterator>::difference_type	len = 0;
+
+			while (first != last)
+			{
+				++first;
+				++len;
+			}
+			return (len);
+		}
 } // namespace ft
 
 #endif
