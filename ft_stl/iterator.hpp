@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/18 17:49:00 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/18 18:35:10 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -577,23 +577,6 @@ namespace ft
 		{
 			typedef T	type;
 		};
-
-	// helpers
-
-	/* Get the distance between two iterators */
-	template<typename Iterator>
-		typename ft::iterator_traits<Iterator>::difference_type
-		distance(Iterator first, Iterator last)
-		{
-			typename ft::iterator_traits<Iterator>::difference_type	len = 0;
-
-			while (first != last)
-			{
-				++first;
-				++len;
-			}
-			return (len);
-		}
 } // namespace ft
 
 #endif
