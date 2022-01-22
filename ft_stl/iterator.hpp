@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/18 18:35:10 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/22 21:51:22 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,11 @@ namespace ft
 		{
 		public:
 			// types
-			typedef ft::random_access_iterator_tag	iterator_category;
-			typedef T								value_type;
-			typedef std::ptrdiff_t					difference_type;
-			typedef T*								pointer;
-			typedef T&								reference;
+			typedef random_access_iterator_tag	iterator_category;
+			typedef T							value_type;
+			typedef std::ptrdiff_t				difference_type;
+			typedef T*							pointer;
+			typedef T&							reference;
 		};
 
 	/* Partial specialization for pointers to const */
@@ -95,11 +95,11 @@ namespace ft
 		struct iterator_traits<const T*>
 		{
 			// types
-			typedef ft::random_access_iterator_tag	iterator_category;
-			typedef T								value_type;
-			typedef std::ptrdiff_t					difference_type;
-			typedef const T*						pointer;
-			typedef const T&						reference;
+			typedef random_access_iterator_tag	iterator_category;
+			typedef T							value_type;
+			typedef std::ptrdiff_t				difference_type;
+			typedef const T*					pointer;
+			typedef const T&					reference;
 		};
 
 	/* Predefined iterators ************************************************* */
@@ -112,15 +112,16 @@ namespace ft
 	 */
 	template<typename Iterator>
 		class reverse_iterator
-		: public ft::iterator<typename ft::iterator_traits<Iterator>::iterator_category,
-							  typename ft::iterator_traits<Iterator>::value_type,
-							  typename ft::iterator_traits<Iterator>::difference_type,
-							  typename ft::iterator_traits<Iterator>::pointer,
-							  typename ft::iterator_traits<Iterator>::reference>
+		: public iterator<typename iterator_traits<Iterator>::iterator_category,
+						  typename iterator_traits<Iterator>::value_type,
+						  typename iterator_traits<Iterator>::difference_type,
+						  typename iterator_traits<Iterator>::pointer,
+						  typename iterator_traits<Iterator>::reference>
 		{
-		private:
+		protected:
 			// More readable private alias
-			typedef typename ft::iterator_traits<Iterator>		_iter_traits;
+			typedef iterator_traits<Iterator>					_iter_traits;
+			Iterator	_M_current; // copy of the original iterator
 
 		public:
 			// types
@@ -130,9 +131,6 @@ namespace ft
 			typedef typename _iter_traits::difference_type		difference_type;
 			typedef typename _iter_traits::pointer				pointer;
 			typedef typename _iter_traits::reference			reference;
-
-		protected:
-			Iterator	_M_current; // copy of the original iterator
 
 		public:
 			// default constructor
@@ -310,8 +308,7 @@ namespace ft
 	 */
 	template<typename Iterator>
 		typename reverse_iterator<Iterator>::difference_type
-		operator-(const reverse_iterator<Iterator>& lhs,
-				  const reverse_iterator<Iterator>& rhs)
+		operator-(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
 		{
 			return (rhs.base() - lhs.base());
 		}
@@ -326,15 +323,16 @@ namespace ft
 
 	template<typename Iterator, typename Container>
 		class base_iterator
-		: public ft::iterator<typename ft::iterator_traits<Iterator>::iterator_category,
-							  typename ft::iterator_traits<Iterator>::value_type,
-							  typename ft::iterator_traits<Iterator>::difference_type,
-							  typename ft::iterator_traits<Iterator>::pointer,
-							  typename ft::iterator_traits<Iterator>::reference>
+		: public iterator<typename iterator_traits<Iterator>::iterator_category,
+						  typename iterator_traits<Iterator>::value_type,
+						  typename iterator_traits<Iterator>::difference_type,
+						  typename iterator_traits<Iterator>::pointer,
+						  typename iterator_traits<Iterator>::reference>
 		{
-		private:
+		protected:
 			// More readable private alias
-			typedef typename ft::iterator_traits<Iterator>		_iter_traits;
+			typedef iterator_traits<Iterator>					_iter_traits;
+			Iterator	_M_current; // copy of the original iterator
 
 		public:
 			// types
@@ -344,9 +342,6 @@ namespace ft
 			typedef typename _iter_traits::difference_type		difference_type;
 			typedef typename _iter_traits::pointer				pointer;
 			typedef typename _iter_traits::reference			reference;
-
-		protected:
-			Iterator	_M_current; // copy of the original iterator
 
 		public:
 			// default constructor
@@ -364,7 +359,7 @@ namespace ft
 			// copy constructor
 			template<typename Iter>
 				base_iterator(const base_iterator<Iter,
-							  typename ft::enable_if<(ft::is_same<Iter,
+							  typename enable_if<(is_same<Iter,
 							  typename Container::pointer>::value), Container>::type>& other
 							  )
 				: _M_current(other.base())
@@ -543,24 +538,24 @@ namespace ft
 
 	// specializations to return true for iterators that can be cast to input iterator
 	template<>
-		struct __is_input_iter_helper<ft::input_iterator_tag>
+		struct __is_input_iter_helper<input_iterator_tag>
 		: public true_type {};
 
 	template<>
-		struct __is_input_iter_helper<ft::forward_iterator_tag>
+		struct __is_input_iter_helper<forward_iterator_tag>
 		: public true_type {};
 
 	template<>
-		struct __is_input_iter_helper<ft::bidirectional_iterator_tag>
+		struct __is_input_iter_helper<bidirectional_iterator_tag>
 		: public true_type {};
 
 	template<>
-		struct __is_input_iter_helper<ft::random_access_iterator_tag>
+		struct __is_input_iter_helper<random_access_iterator_tag>
 		: public true_type {};
 	
 	template<typename Iter>
 		struct is_input_iter
-		: public __is_input_iter_helper<typename ft::remove_cv<Iter>::type>::type {};
+		: public __is_input_iter_helper<typename remove_cv<Iter>::type>::type {};
 
 	/*
 	 * The type T is defined only if Cond (T is not an integral type) is true
@@ -573,7 +568,7 @@ namespace ft
 
 	template<typename T>
 		struct requires_input_iter<true,T>
-		: public is_input_iter<typename ft::iterator_traits<T>::iterator_category>
+		: public is_input_iter<typename iterator_traits<T>::iterator_category>
 		{
 			typedef T	type;
 		};

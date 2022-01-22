@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/17 18:06:50 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/22 21:59:21 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -296,12 +296,12 @@ namespace ft
 		struct RBtree_iterator
 		{
 			// types
-			typedef T										value_type;
-			typedef T&										reference;
-			typedef T*										pointer;
-			typedef typename ft::bidirectional_iterator_tag	iterator_category;
-			typedef std::ptrdiff_t							difference_type;
-			typedef RBTreeNode<T>*							node_pointer;
+			typedef T							value_type;
+			typedef T&							reference;
+			typedef T*							pointer;
+			typedef bidirectional_iterator_tag	iterator_category;
+			typedef std::ptrdiff_t				difference_type;
+			typedef RBTreeNode<T>*				node_pointer;
 
 			node_pointer	_M_node; // copy of the original iterator
 
@@ -400,13 +400,13 @@ namespace ft
 		struct RBtree_const_iterator
 		{
 			// types
-			typedef T										value_type;
-			typedef const T&								reference;
-			typedef const T*								pointer;
-			typedef RBtree_iterator<T>						iterator;
-			typedef typename ft::bidirectional_iterator_tag	iterator_category;
-			typedef std::ptrdiff_t							difference_type;
-			typedef const RBTreeNode<T>*					const_node_pointer;
+			typedef T							value_type;
+			typedef const T&					reference;
+			typedef const T*					pointer;
+			typedef RBtree_iterator<T>			iterator;
+			typedef bidirectional_iterator_tag	iterator_category;
+			typedef std::ptrdiff_t				difference_type;
+			typedef const RBTreeNode<T>*		const_node_pointer;
 
 			const_node_pointer	_M_node; // copy of the original iterator
 
@@ -555,37 +555,37 @@ namespace ft
 
 		protected:
 			// helpers creation/destruction
-			node_pointer				_M_allocate_node(void);
-			void						_M_construct_node(node_pointer __node, const value_type& __val);
-			node_pointer				_M_create_node(const value_type& __val);
-			void						_M_deallocate_node(node_pointer __node);
-			void						_M_destroy_node(node_pointer __node);
-			void						_M_drop_node(node_pointer __node);
-			void						_M_erase_recursive(node_pointer __node);
+			node_pointer			_M_allocate_node(void);
+			void					_M_construct_node(node_pointer __node, const value_type& __val);
+			node_pointer			_M_create_node(const value_type& __val);
+			void					_M_deallocate_node(node_pointer __node);
+			void					_M_destroy_node(node_pointer __node);
+			void					_M_drop_node(node_pointer __node);
+			void					_M_erase_recursive(node_pointer __node);
 			// getters
-			node_pointer				_M_get_root(void) const;
-			node_pointer				_M_get_end(void) const;
-			node_pointer				_M_get_leftmost(void) const;
-			node_pointer				_M_get_rightmost(void) const;
-			const key_type&				_M_get_key(node_pointer __node) const;
-			const key_type&				_M_get_key(const_node_pointer __node) const;
-			const_reference				_M_get_value(node_pointer __node) const;
-			const_reference				_M_get_value(const_node_pointer __node) const;
+			node_pointer			_M_get_root(void) const;
+			node_pointer			_M_get_end(void);
+			node_pointer			_M_get_leftmost(void) const;
+			node_pointer			_M_get_rightmost(void) const;
+			const key_type&			_M_get_key(node_pointer __node) const;
+			const key_type&			_M_get_key(const_node_pointer __node) const;
+			const_reference			_M_get_value(node_pointer __node) const;
+			const_reference			_M_get_value(const_node_pointer __node) const;
 			// helpers balancing
-			void						_M_rotate_left(node_pointer __x);
-			void						_M_rotate_right(node_pointer __x);
+			void					_M_rotate_left(node_pointer __x);
+			void					_M_rotate_right(node_pointer __x);
 			// helpers insertion
-			void						_M_rebalance_insert(node_pointer __node);
-			node_pointer				_M_get_pos_from_hint(iterator __hint, const key_type& __k);
-			ft::pair<node_pointer,bool>	_M_get_insert_pos(iterator __hint, const key_type& __k);
-			void						_M_insert_node(const bool __insert_left,
-													   node_pointer __node, node_pointer __parent);
-			ft::pair<iterator,bool>		_M_insert(iterator __pos, const value_type& __val);
+			void					_M_rebalance_insert(node_pointer __node);
+			node_pointer			_M_get_pos_from_hint(iterator __hint, const key_type& __k);
+			pair<node_pointer,bool>	_M_get_insert_pos(iterator __hint, const key_type& __k);
+			void					_M_insert_node(const bool __insert_left,
+												   node_pointer __node, node_pointer __parent);
+			pair<iterator,bool>		_M_insert(iterator __pos, const value_type& __val);
 			// helpers deletion
-			void						_M_rebalance_del(node_pointer __subst, node_pointer __parent);
-			node_pointer				_M_get_subst(node_pointer __node);
-			void						_M_set_subst(node_pointer __node, node_pointer __subst);
-			void						_M_delete_node(node_pointer __node);
+			void					_M_rebalance_del(node_pointer __subst, node_pointer __parent);
+			node_pointer			_M_get_subst(node_pointer __node);
+			void					_M_set_subst(node_pointer __node, node_pointer __subst);
+			void					_M_delete_node(node_pointer __node);
 
 		public:
 			// default constructor
@@ -623,13 +623,13 @@ namespace ft
 			size_type				max_size(void) const;
 
 			// modifiers
-			ft::pair<iterator,bool>	insert(const value_type& val);
+			pair<iterator,bool>	insert(const value_type& val);
 			iterator				insert(iterator position, const value_type& val);
 			template<typename InputIterator>
 				void				insert(InputIterator first, InputIterator last,
-										   typename ft::enable_if<
-										   		ft::is_same<typename InputIterator::value_type,
-										   					value_type>::value>::type* = 0);
+										   typename enable_if<
+										   		is_same<typename InputIterator::value_type,
+										   		value_type>::value>::type* = 0);
 			void					erase(iterator position);
 			size_type				erase(const key_type& k);
 			void					erase(iterator first, iterator last);
@@ -644,8 +644,8 @@ namespace ft
 			const_iterator			lower_bound(const key_type& k) const;
 			iterator				upper_bound(const key_type& k);
 			const_iterator			upper_bound(const key_type& k) const;
-			ft::pair<iterator,iterator>				equal_range(const key_type& k);
-			ft::pair<const_iterator,const_iterator>	equal_range(const key_type& k) const;
+			pair<iterator,iterator>				equal_range(const key_type& k);
+			pair<const_iterator,const_iterator>	equal_range(const key_type& k) const;
 
 			// debug
 			static void	write_node(std::ofstream& outfile, node_pointer node);
@@ -741,7 +741,7 @@ namespace ft
 	// Get end (header)
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
-		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_end(void) const
+		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_end(void)
 		{
 			return (&this->_M_header);
 		}
@@ -959,14 +959,18 @@ namespace ft
 
 	// Gets position to insert new node
 	template<typename Key, typename Val, typename Compare, typename Alloc>
-		typename ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer,bool>
+		pair<typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer,bool>
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_insert_pos(iterator __hint, const key_type& __k)
 		{
 			bool			__insert_left = true;
 			node_pointer	__pos = 0;
 
+			if (this->_M_node_count == 0)
+			{
+				__pos = _M_get_end();
+			}
 			// check whether the new node is lower than the current leftmost node
-			if ( _M_key_compare( __k, _M_get_key(_M_get_leftmost()) ) )
+			else if ( _M_key_compare( __k, _M_get_key(_M_get_leftmost()) ) )
 			{
 				__pos = _M_get_leftmost();
 			}
@@ -996,11 +1000,11 @@ namespace ft
 					}
 					else // key already exists
 					{
-						return (ft::pair<node_pointer,bool>(__cursor, 0));
+						return (pair<node_pointer,bool>(__cursor, 0));
 					}
 				}
 			}
-			return (ft::pair<node_pointer,bool>(__pos, __insert_left));
+			return (pair<node_pointer,bool>(__pos, __insert_left));
 		}
 
 	// Insert a node and rebalance the tree
@@ -1035,19 +1039,20 @@ namespace ft
 
 	// Inserts one node with no hint
 	template<typename Key, typename Val, typename Compare, typename Alloc>
-		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
+		pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_insert(iterator __pos, const value_type& __val)
 		{
 			const key_type				__k = __val.first;
-			ft::pair<node_pointer,bool>	__res = _M_get_insert_pos(__pos, __k);
+			pair<node_pointer,bool>	__pos_k = _M_get_insert_pos(__pos, __k);
 
-			if (__res.first != this->end().get_node() && _M_get_key(__res.first) == __k) // key already exists
-				return (ft::pair<iterator,bool>(iterator(__res.first), false));
+			// if key already exists
+			if (__pos_k.first != this->end().get_node() && _M_get_key(__pos_k.first) == __k)
+				return (pair<iterator,bool>(iterator(__pos_k.first), false));
 
 			node_pointer	__node = _M_create_node(__val);
 
-			_M_insert_node(__res.second, __node, __res.first);
-			return (ft::pair<iterator,bool>(iterator(__node), true));
+			_M_insert_node(__pos_k.second, __node, __pos_k.first);
+			return (pair<iterator,bool>(iterator(__node), true));
 		}
 
 	/* helpers deletion ***************************************************** */
@@ -1441,7 +1446,7 @@ namespace ft
 
 	// Inserts a new element
 	template<typename Key, typename Val, typename Compare, typename Alloc>
-		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
+		pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
 		RedBlackTree<Key,Val,Compare,Alloc>::insert(const value_type& val)
 		{
 			return (_M_insert(iterator(_M_get_root()), val));
@@ -1460,8 +1465,8 @@ namespace ft
 	template<typename InputIterator>
 		void
 		RedBlackTree<Key,Val,Compare,Alloc>::insert(InputIterator first, InputIterator last,
-													typename ft::enable_if<
-														ft::is_same<typename InputIterator::value_type,
+													typename enable_if<
+														is_same<typename InputIterator::value_type,
 														value_type>::value>::type*)
 		{
 			while (first != last)
@@ -1697,23 +1702,23 @@ namespace ft
 	 * If k is not found, returns two iterators pointing to the first element after k.
 	 */
 	template<typename Key, typename Val, typename Compare, typename Alloc>
-		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,typename RedBlackTree<Key,Val,Compare,Alloc>::iterator>
+		pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,typename RedBlackTree<Key,Val,Compare,Alloc>::iterator>
 		RedBlackTree<Key,Val,Compare,Alloc>::equal_range(const key_type& k)
 		{
 			iterator	first = lower_bound(k);
 			iterator	last = upper_bound(k);
 
-			return (ft::pair<iterator,iterator>(first, last));
+			return (pair<iterator,iterator>(first, last));
 		}
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
-		ft::pair<typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator,typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator>
+		pair<typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator,typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator>
 		RedBlackTree<Key,Val,Compare,Alloc>::equal_range(const key_type& k) const
 		{
 			const_iterator	first = lower_bound(k);
 			const_iterator	last = upper_bound(k);
 
-			return (ft::pair<const_iterator,const_iterator>(first, last));
+			return (pair<const_iterator,const_iterator>(first, last));
 		}
 
 	/* debug **************************************************************** */

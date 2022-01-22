@@ -113,7 +113,7 @@ INC = $(addprefix $(IMPL_DIR)/, $(IMPL_FILES)) \
 
 CPPFLAGS = -I$(IMPL_DIR) -I$(INC_DIR)
 CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
 
 # RULES
 

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/17 18:43:50 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:28:25 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,10 +295,8 @@ namespace ft
 		{
 			iterator	it = this->_M_tree.lower_bound(k);
 
-			if ((it == end()) || (it->first != k))
-			{
+			if ((it == end()) || key_comp()(k, it->first))
 				it = insert(it, value_type(k, mapped_type()));
-			}
 			return ((*it).second);
 		}
 

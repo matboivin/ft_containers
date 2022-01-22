@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:29:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/02 18:54:05 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/22 21:45:51 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ namespace ft
 	// Trait class that identifies whether T is an integral type
 	template<typename T>
 		struct is_integral
-		: public __is_integral_helper<typename ft::remove_cv<T>::type>::type {};
+		: public __is_integral_helper<typename remove_cv<T>::type>::type {};
 
 	// Trait class that identifies whether T is the same type as U
 	template<typename T, typename U>
