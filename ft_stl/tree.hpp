@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/22 22:53:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/23 00:39:15 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1461,11 +1461,11 @@ namespace ft
 			this->_M_key_compare = other._M_key_compare;
 			other._M_key_compare = tmp;
 
-			if (size() && other.size())
+			if (size() > 0 && other.size() > 0)
 				this->_M_swap(other);
-			else if (other.size())
+			else if (other.size() > 0)
 				this->_M_copy_reset(other);
-			else
+			else if (size() > 0)
 				other._M_copy_reset(*this);
 		}
 

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/22 23:28:48 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/22 23:52:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,27 +148,6 @@ namespace ft
 			void			swap(vector& other);
 			void			clear(void);
 		}; // class vector
-
-	// non-member function overloads
-
-	// relational operators
-	template<typename T, typename Alloc>
-		bool	operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-	template<typename T, typename Alloc>
-		bool	operator!=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-	template<typename T, typename Alloc>
-		bool	operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-	template<typename T, typename Alloc>
-		bool	operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-	template<typename T, typename Alloc>
-		bool	operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-	template<typename T, typename Alloc>
-		bool	operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs);
-
-	// swap
-	template<typename T, typename Alloc>
-		void	swap(vector<T,Alloc>& lhs, vector<T,Alloc>& rhs);
-
 
 	/* Vector implementation ************************************************ */
 
@@ -880,7 +859,7 @@ namespace ft
 	template<typename T, typename Alloc>
 		bool
 		operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-		{ return (!(lhs > rhs)); }
+		{ return (!(rhs < lhs)); }
 
 	template<typename T, typename Alloc>
 		bool
@@ -890,9 +869,9 @@ namespace ft
 	/* Exchange contents of two vectors */
 	template<typename T, typename Alloc>
 		void
-		swap(vector<T,Alloc>& rhs, vector<T,Alloc>& lhs)
+		swap(vector<T,Alloc>& x, vector<T,Alloc>& y)
 		{
-			rhs.swap(lhs);
+			x.swap(y);
 		}
 } // namespace ft
 
