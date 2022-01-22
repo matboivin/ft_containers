@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/22 21:51:22 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/22 23:10:56 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,26 +135,21 @@ namespace ft
 		public:
 			// default constructor
 			reverse_iterator(void)
-			: _M_current()
-			{
-			}
+			: _M_current() { }
 
 			// initalization constructor
 			explicit reverse_iterator(iterator_type x)
-			: _M_current(x)
-			{
-			}
+			: _M_current(x) { }
 
 			// copy constructor
 			template<typename Iter>
 				reverse_iterator(const reverse_iterator<Iter>& other)
-				: _M_current(other.base())
-				{
-				}
+				: _M_current(other.base()) { }
 
 			// copy assignment operator
 			template<typename Iter>
-				reverse_iterator&	operator=(const reverse_iterator<Iter>& other)
+				reverse_iterator&
+				operator=(const reverse_iterator<Iter>& other)
 				{
 					if (this != &other)
 						this->_M_current = other.base();
@@ -163,15 +158,15 @@ namespace ft
 				}
 
 			// return copy of the original iterator
-			iterator_type	base(void) const
-			{
-				return (_M_current);
-			}
+			iterator_type
+			base(void) const
+			{ return (_M_current); }
 
 			// accesses the pointed-to element
 			// Internally, the function decreases a copy of its base iterator
 			// and returns * the result of dereferencing it
-			reference	operator*(void) const
+			reference
+			operator*(void) const
 			{
 				iterator_type	copy = _M_current;
 
@@ -180,26 +175,26 @@ namespace ft
 			}
 
 			// Internally, the function calls operator* and returns its address
-			pointer	operator->(void) const
-			{
-				return ( &(operator*()) );
-			}
+			pointer
+			operator->(void) const
+			{ return ( &(operator*()) ); }
 
 			// accesses an element by index
-			reference	operator[](difference_type n) const
-			{
-				return ( *(*this + n) );
-			}
+			reference
+			operator[](difference_type n) const
+			{ return ( *(*this + n) ); }
 
 			// advances or decrements the iterator
 
-			reverse_iterator&	operator++(void)
+			reverse_iterator&
+			operator++(void)
 			{
 				--_M_current;
 				return (*this);
 			}
 
-			reverse_iterator	operator++(int)
+			reverse_iterator
+			operator++(int)
 			{
 				reverse_iterator	backup = *this;
 
@@ -207,24 +202,26 @@ namespace ft
 				return (backup);
 			}
 
-			reverse_iterator&	operator+=(difference_type n)
+			reverse_iterator&
+			operator+=(difference_type n)
 			{
 				_M_current -= n;
 				return (*this);
 			}
 
-			reverse_iterator	operator+(difference_type n) const
-			{
-				return ( reverse_iterator(base() - n) );
-			}
+			reverse_iterator
+			operator+(difference_type n) const
+			{ return ( reverse_iterator(base() - n) ); }
 
-			reverse_iterator&	operator--(void)
+			reverse_iterator&
+			operator--(void)
 			{
 				++_M_current;
 				return (*this);
 			}
 
-			reverse_iterator	operator--(int)
+			reverse_iterator
+			operator--(int)
 			{
 				reverse_iterator	backup = *this;
 
@@ -232,16 +229,16 @@ namespace ft
 				return (backup);
 			}
 
-			reverse_iterator&	operator-=(difference_type n)
+			reverse_iterator&
+			operator-=(difference_type n)
 			{
 				_M_current += n;
 				return (*this);
 			}
 
-			reverse_iterator	operator-(difference_type n) const
-			{
-				return ( reverse_iterator(base() + n) );
-			}
+			reverse_iterator
+			operator-(difference_type n) const
+			{ return (reverse_iterator(base() + n)); }
 		}; // class reverse_iterator
 
 	/* Relational operators */
@@ -249,44 +246,32 @@ namespace ft
 	template<typename Iter1, typename Iter2>
 		bool
 		operator==(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs)
-		{
-			return (lhs.base() == rhs.base());
-		}
+		{ return (lhs.base() == rhs.base()); }
 
 	template<typename Iter1, typename Iter2>
 		bool
 		operator!=(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs)
-		{
-			return (lhs.base() != rhs.base());
-		}
+		{ return (lhs.base() != rhs.base()); }
 
 	template<typename Iter1, typename Iter2>
 		bool
 		operator<(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs)
-		{
-			return (lhs.base() > rhs.base());
-		}
+		{ return (lhs.base() > rhs.base()); }
 
 	template<typename Iter1, typename Iter2>
 		bool
 		operator<=(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs)
-		{
-			return (lhs.base() >= rhs.base());
-		}
+		{ return (lhs.base() >= rhs.base()); }
 
 	template<typename Iter1, typename Iter2>
 		bool
 		operator>(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs)
-		{
-			return (lhs.base() < rhs.base());
-		}
+		{ return (lhs.base() < rhs.base()); }
 
 	template<typename Iter1, typename Iter2>
 		bool
 		operator>=(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs)
-		{
-			return (lhs.base() <= rhs.base());
-		}
+		{ return (lhs.base() <= rhs.base()); }
 
 	/*
 	 * Addition operator
@@ -297,9 +282,7 @@ namespace ft
 		reverse_iterator<Iterator>
 		operator+(typename reverse_iterator<Iterator>::difference_type n,
 				  const reverse_iterator<Iterator>& rev_it)
-		{
-			return ( reverse_iterator<Iterator>(rev_it.base() - n) );
-		}
+		{ return ( reverse_iterator<Iterator>(rev_it.base() - n) ); }
 
 	/*
 	 * Subtraction operator
@@ -309,9 +292,7 @@ namespace ft
 	template<typename Iterator>
 		typename reverse_iterator<Iterator>::difference_type
 		operator-(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
-		{
-			return (rhs.base() - lhs.base());
-		}
+		{ return (rhs.base() - lhs.base()); }
 
 
 	/* Base iterator ******************************************************** */
@@ -331,8 +312,9 @@ namespace ft
 		{
 		protected:
 			// More readable private alias
-			typedef iterator_traits<Iterator>					_iter_traits;
-			Iterator	_M_current; // copy of the original iterator
+			typedef iterator_traits<Iterator>	_iter_traits;
+			// copy of the original iterator
+			Iterator							_M_current;
 
 		public:
 			// types
@@ -346,15 +328,11 @@ namespace ft
 		public:
 			// default constructor
 			base_iterator(void)
-			: _M_current(Iterator())
-			{
-			}
+			: _M_current(Iterator()) { }
 
 			// initalization constructor
 			base_iterator(iterator_type x)
-			: _M_current(x)
-			{
-			}
+			: _M_current(x) { }
 
 			// copy constructor
 			template<typename Iter>
@@ -362,13 +340,12 @@ namespace ft
 							  typename enable_if<(is_same<Iter,
 							  typename Container::pointer>::value), Container>::type>& other
 							  )
-				: _M_current(other.base())
-				{
-				}
+				: _M_current(other.base()) { }
 
 			// copy assignment operator
 			template<typename Iter>
-				base_iterator&	operator=(const base_iterator<Iter,Container>& other)
+				base_iterator&
+				operator=(const base_iterator<Iter,Container>& other)
 				{
 					if (this != &other)
 						this->_M_current = other.base();
@@ -377,37 +354,35 @@ namespace ft
 				}
 
 			// return copy of the original iterator
-			iterator_type	base(void) const
-			{
-				return (_M_current);
-			}
+			iterator_type
+			base(void) const
+			{ return (_M_current); }
 
 			// accesses the pointed-to element
-			reference	operator*(void) const
-			{
-				return (*_M_current);
-			}
+			reference
+			operator*(void) const
+			{ return (*_M_current); }
 
-			pointer	operator->(void) const
-			{
-				return (_M_current);
-			}
+			pointer
+			operator->(void) const
+			{ return (_M_current); }
 
 			// accesses an element by index
-			reference	operator[](difference_type n) const
-			{
-				return (_M_current[n]);
-			}
+			reference
+			operator[](difference_type n) const
+			{ return (_M_current[n]); }
 
 			// advances or decrements the iterator
 
-			base_iterator&	operator++(void)
+			base_iterator&
+			operator++(void)
 			{
 				++_M_current;
 				return (*this);
 			}
 
-			base_iterator	operator++(int)
+			base_iterator
+			operator++(int)
 			{
 				base_iterator	backup = *this;
 
@@ -415,24 +390,26 @@ namespace ft
 				return (backup);
 			}
 
-			base_iterator&	operator+=(difference_type n)
+			base_iterator&
+			operator+=(difference_type n)
 			{
 				_M_current += n;
 				return (*this);
 			}
 
-			base_iterator	operator+(difference_type n) const
-			{
-				return ( base_iterator(base() + n) );
-			}
+			base_iterator
+			operator+(difference_type n) const
+			{ return (base_iterator(base() + n)); }
 
-			base_iterator&	operator--(void)
+			base_iterator&
+			operator--(void)
 			{
 				--_M_current;
 				return (*this);
 			}
 
-			base_iterator	operator--(int)
+			base_iterator
+			operator--(int)
 			{
 				base_iterator	backup = *this;
 
@@ -440,67 +417,49 @@ namespace ft
 				return (backup);
 			}
 
-			base_iterator&	operator-=(difference_type n)
+			base_iterator&
+			operator-=(difference_type n)
 			{
 				_M_current -= n;
 				return (*this);
 			}
 
-			base_iterator	operator-(difference_type n) const
-			{
-				return ( base_iterator(base() - n) );
-			}
+			base_iterator
+			operator-(difference_type n) const
+			{ return (base_iterator(base() - n)); }
 		}; // class base_iterator
 
 	/* Relational operators */
 
 	template<typename Iter1, typename Iter2, typename Container>
 		bool
-		operator==(const base_iterator<Iter1,Container>& lhs,
-				   const base_iterator<Iter2,Container>& rhs)
-		{
-			return (lhs.base() == rhs.base());
-		}
+		operator==(const base_iterator<Iter1,Container>& lhs, const base_iterator<Iter2,Container>& rhs)
+		{ return (lhs.base() == rhs.base()); }
 
 	template<typename Iter1, typename Iter2, typename Container>
 		bool
-		operator!=(const base_iterator<Iter1,Container>& lhs,
-				   const base_iterator<Iter2,Container>& rhs)
-		{
-			return (lhs.base() != rhs.base());
-		}
+		operator!=(const base_iterator<Iter1,Container>& lhs, const base_iterator<Iter2,Container>& rhs)
+		{ return (lhs.base() != rhs.base()); }
 
 	template<typename Iter1, typename Iter2, typename Container>
 		bool
-		operator<(const base_iterator<Iter1,Container>& lhs,
-				   const base_iterator<Iter2,Container>& rhs)
-		{
-			return (lhs.base() < rhs.base());
-		}
+		operator<(const base_iterator<Iter1,Container>& lhs, const base_iterator<Iter2,Container>& rhs)
+		{ return (lhs.base() < rhs.base()); }
 
 	template<typename Iter1, typename Iter2, typename Container>
 		bool
-		operator<=(const base_iterator<Iter1,Container>& lhs,
-				   const base_iterator<Iter2,Container>& rhs)
-		{
-			return (lhs.base() <= rhs.base());
-		}
+		operator<=(const base_iterator<Iter1,Container>& lhs, const base_iterator<Iter2,Container>& rhs)
+		{ return (lhs.base() <= rhs.base()); }
 
 	template<typename Iter1, typename Iter2, typename Container>
 		bool
-		operator>(const base_iterator<Iter1,Container>& lhs,
-				   const base_iterator<Iter2,Container>& rhs)
-		{
-			return (lhs.base() > rhs.base());
-		}
+		operator>(const base_iterator<Iter1,Container>& lhs, const base_iterator<Iter2,Container>& rhs)
+		{ return (lhs.base() > rhs.base()); }
 
 	template<typename Iter1, typename Iter2, typename Container>
 		bool
-		operator>=(const base_iterator<Iter1,Container>& lhs,
-				   const base_iterator<Iter2,Container>& rhs)
-		{
-			return (lhs.base() >= rhs.base());
-		}
+		operator>=(const base_iterator<Iter1,Container>& lhs, const base_iterator<Iter2,Container>& rhs)
+		{ return (lhs.base() >= rhs.base()); }
 
 	/*
 	 * Addition operator
@@ -511,9 +470,7 @@ namespace ft
 		base_iterator<Iterator,Container>
 		operator+(typename base_iterator<Iterator,Container>::difference_type n,
 				  const base_iterator<Iterator,Container>& it)
-		{
-			return ( base_iterator<Iterator,Container>(it.base() + n) );
-		}
+		{ return (base_iterator<Iterator,Container>(it.base() + n));}
 
 	/*
 	 * Subtraction operator
@@ -524,9 +481,7 @@ namespace ft
 		typename base_iterator<Iterator,Container>::difference_type
 		operator-(const base_iterator<Iterator,Container>& lhs,
 				  const base_iterator<Iterator,Container>& rhs)
-		{
-			return (rhs.base() - lhs.base());
-		}
+		{ return (rhs.base() - lhs.base()); }
 
 	/* iterator types ******************************************************* */
 

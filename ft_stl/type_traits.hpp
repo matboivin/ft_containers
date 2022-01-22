@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:29:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/22 21:45:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/22 23:01:55 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,68 +79,68 @@ namespace ft
 	// False by default
 	template<typename T>
 		struct __is_integral_helper
-		: public false_type {};
+		: public false_type { };
 
 	// Specializations to return true for integral types
 	template<>
 		struct __is_integral_helper<bool>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_integral_helper<char>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_integral_helper<wchar_t>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_integral_helper<signed char>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_integral_helper<short int>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_integral_helper<int>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_integral_helper<long int>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_integral_helper<unsigned char>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_integral_helper<unsigned short int>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_integral_helper<unsigned int>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_integral_helper<unsigned long int>
-		: public true_type {};
+		: public true_type { };
 
 	// Trait class that identifies whether T is an integral type
 	template<typename T>
 		struct is_integral
-		: public __is_integral_helper<typename remove_cv<T>::type>::type {};
+		: public __is_integral_helper<typename remove_cv<T>::type>::type { };
 
 	// Trait class that identifies whether T is the same type as U
 	template<typename T, typename U>
-		struct is_same : false_type {};
+		struct is_same : false_type { };
 
 	template<typename T>
-		struct is_same<T,T> : true_type {};
+		struct is_same<T,T> : true_type { };
 
 	// The type T is defined only if Cond is true
 	template<bool Cond, typename T = void>
-		struct enable_if {};
+		struct enable_if { };
 
 	template<typename T>
 		struct enable_if<true, T>

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/19 19:37:08 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/22 23:28:48 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,18 +40,18 @@ namespace ft
 		{
 		public:
 			// types
-			typedef T														value_type;
-			typedef Alloc													allocator_type;
-			typedef typename allocator_type::reference						reference;
-			typedef typename allocator_type::const_reference				const_reference;
-			typedef typename allocator_type::pointer						pointer;
-			typedef typename allocator_type::const_pointer					const_pointer;
-			typedef ft::base_iterator<pointer, vector>						iterator;
-			typedef ft::base_iterator<const_pointer, vector>				const_iterator;
-			typedef ft::reverse_iterator<iterator>							reverse_iterator;
-			typedef ft::reverse_iterator<const_iterator>					const_reverse_iterator;
-			typedef typename ft::iterator_traits<iterator>::difference_type	difference_type;
-			typedef std::size_t												size_type;
+			typedef T													value_type;
+			typedef Alloc												allocator_type;
+			typedef typename allocator_type::reference					reference;
+			typedef typename allocator_type::const_reference			const_reference;
+			typedef typename allocator_type::pointer					pointer;
+			typedef typename allocator_type::const_pointer				const_pointer;
+			typedef ft::base_iterator<pointer, vector>					iterator;
+			typedef ft::base_iterator<const_pointer, vector>			const_iterator;
+			typedef ft::reverse_iterator<iterator>						reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>				const_reverse_iterator;
+			typedef typename iterator_traits<iterator>::difference_type	difference_type;
+			typedef std::size_t											size_type;
 
 		private:
 			// attributes
@@ -87,10 +87,8 @@ namespace ft
 			
 			// range constructor
 			template<typename InputIterator>
-				vector(InputIterator first, InputIterator last,
-					   const allocator_type& alloc = allocator_type(),
-					   typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type* = 0
-					   );
+				vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
+					   typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type* = 0);
 
 			// copy constructor
 			vector(const vector& other);
@@ -244,7 +242,11 @@ namespace ft
 		void
 		vector<T,Alloc>::_M_range_initialize(InputIterator __first, InputIterator __last)
 		{
-			difference_type	__len = __first - __last;
+			difference_type	__len = 0;
+			InputIterator	__cursor(__first);
+
+			for ( ; __cursor != __last && __cursor != end(); ++__cursor)
+				++__len;
 
 			if (__len > 0)
 			{
@@ -263,7 +265,11 @@ namespace ft
 		void
 		vector<T, Alloc>::_M_range_insert(iterator __pos, InputIterator __first, InputIterator __last)
 		{
-			difference_type	__len = __first - __last;
+			difference_type	__len = 0;
+			InputIterator	__cursor(__first);
+
+			for ( ; __cursor != __last && __cursor != end(); ++__cursor)
+				++__len;
 
 			if (__len > 0)
 			{
@@ -522,9 +528,7 @@ namespace ft
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::allocator_type
 		vector<T,Alloc>::get_alloc(void) const
-		{
-			return (allocator_type(this->_M_alloc));
-		}
+		{ return (allocator_type(this->_M_alloc)); }
 
 
 	/* iterators ************************************************************ */
@@ -533,46 +537,34 @@ namespace ft
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::iterator
 		vector<T,Alloc>::begin(void)
-		{
-			return (iterator(this->_M_begin));
-		}
+		{ return (iterator(this->_M_begin)); }
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_iterator
 		vector<T,Alloc>::begin(void) const
-		{
-			return (const_iterator(this->_M_begin));
-		}
+		{ return (const_iterator(this->_M_begin)); }
 
 	/* Returns an iterator referring to the past-the-end element in the vector */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::iterator
 		vector<T,Alloc>::end(void)
-		{
-			return (iterator(this->_M_end));
-		}
+		{ return (iterator(this->_M_end)); }
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_iterator
 		vector<T,Alloc>::end(void) const
-		{
-			return (const_iterator(this->_M_end));
-		}
+		{ return (const_iterator(this->_M_end)); }
 
 	/* Returns a reverse iterator pointing to the last element in the vector */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::reverse_iterator
 		vector<T,Alloc>::rbegin(void)
-		{
-			return (reverse_iterator(end()));
-		}
+		{ return (reverse_iterator(end())); }
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_reverse_iterator
 		vector<T,Alloc>::rbegin(void) const
-		{
-			return (const_reverse_iterator(end()));
-		}
+		{ return (const_reverse_iterator(end())); }
 
 	/*
 	 * Returns a reverse iterator pointing to the theoretical element preceding
@@ -581,16 +573,12 @@ namespace ft
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::reverse_iterator
 		vector<T,Alloc>::rend(void)
-		{
-			return (reverse_iterator(begin()));
-		}
+		{ return (reverse_iterator(begin())); }
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_reverse_iterator
 		vector<T,Alloc>::rend(void) const
-		{
-			return (const_reverse_iterator(begin()));
-		}
+		{ return (const_reverse_iterator(begin())); }
 
 
 	/* capacity ************************************************************* */
@@ -599,17 +587,13 @@ namespace ft
 	template<typename T, typename Alloc>
 		bool
 		vector<T,Alloc>::empty(void) const
-		{
-			return (begin() == end());
-		}
+		{ return (begin() == end()); }
 
 	/* Get the size of the vector */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::size_type
 		vector<T,Alloc>::size(void) const
-		{
-			return (size_type(this->_M_end - this->_M_begin));
-		}
+		{ return (size_type(this->_M_end - this->_M_begin)); }
 
 	/*
 	 * Gets the maximum number of elements that the vector can hold.
@@ -620,9 +604,7 @@ namespace ft
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::size_type
 		vector<T,Alloc>::max_size(void) const
-		{
-			return (this->_M_alloc.max_size());
-		}
+		{ return (this->_M_alloc.max_size()); }
 
 	/*
 	 * Resizes the container so that it contains n elements.
@@ -647,9 +629,7 @@ namespace ft
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::size_type
 		vector<T,Alloc>::capacity(void) const
-		{
-			return (size_type(this->_M_end_of_storage - this->_M_begin));
-		}
+		{ return (size_type(this->_M_end_of_storage - this->_M_begin)); }
 
 	/* Requests that the vector capacity be at least enough to contain n elements */
 	template<typename T, typename Alloc>
@@ -681,16 +661,12 @@ namespace ft
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::reference
 		vector<T,Alloc>::operator[](size_type n)
-		{
-			return (this->_M_begin[n]);
-		}
+		{ return (this->_M_begin[n]); }
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_reference
 		vector<T,Alloc>::operator[](size_type n) const
-		{
-			return (this->_M_begin[n]);
-		}
+		{ return (this->_M_begin[n]); }
 
 	/* Returns the element at the specified position in the container */
 	template<typename T, typename Alloc>
@@ -713,31 +689,23 @@ namespace ft
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::reference
 		vector<T,Alloc>::front(void)
-		{
-			return ( *(begin()) );
-		}
+		{ return ( *(begin()) ); }
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_reference
 		vector<T,Alloc>::front(void) const
-		{
-			return ( *(begin()) );
-		}
+		{ return ( *(begin()) ); }
 
 	/* Returns the last element in the vector */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::reference
 		vector<T,Alloc>::back(void)
-		{
-			return ( *(end() - 1) );
-		}
+		{ return ( *(end() - 1) ); }
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_reference
 		vector<T,Alloc>::back(void) const
-		{
-			return ( *(end() - 1) );
-		}
+		{ return ( *(end() - 1) ); }
 
 
 	/* modifiers ************************************************************ */
@@ -750,8 +718,7 @@ namespace ft
 	template<typename InputIterator>
 		void
 		vector<T,Alloc>::assign(InputIterator first, InputIterator last,
-								typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type*
-								)
+								typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type*)
 		{
 			_M_erase_at_end(_M_begin);
 			_M_deallocate(_M_begin, capacity());
@@ -893,45 +860,32 @@ namespace ft
 	template<typename T, typename Alloc>
 		bool
 		operator==(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-		{
-			return ( (lhs.size() == rhs.size())
-					&& (ft::equal( lhs.begin(), lhs.end(), rhs.begin() )) );
-		}
+		{ return ( (lhs.size() == rhs.size()) && (ft::equal( lhs.begin(), lhs.end(), rhs.begin())) ); }
 
 	template<typename T, typename Alloc>
-	bool
-	operator!=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-	{
-		return ( !(lhs == rhs) );
-	}
+		bool
+		operator!=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
+		{ return (!(lhs == rhs)); }
 
 	template<typename T, typename Alloc>
 		bool
 		operator<(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-		{
-			return (ft::lexicographical_compare( lhs.begin(), lhs.end(), rhs.begin(), rhs.end() ));
-		}
+		{ return (ft::lexicographical_compare( lhs.begin(), lhs.end(), rhs.begin(), rhs.end() )); }
 
 	template<typename T, typename Alloc>
 		bool
 		operator>(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-		{
-			return (rhs < lhs);
-		}
+		{ return (rhs < lhs); }
 
 	template<typename T, typename Alloc>
 		bool
 		operator<=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-		{
-			return ( !(lhs > rhs) );
-		}
+		{ return (!(lhs > rhs)); }
 
 	template<typename T, typename Alloc>
 		bool
 		operator>=(const vector<T,Alloc>& lhs, const vector<T,Alloc>& rhs)
-		{
-			return ( !(lhs < rhs) );
-		}
+		{ return (!(lhs < rhs)); }
 
 	/* Exchange contents of two vectors */
 	template<typename T, typename Alloc>

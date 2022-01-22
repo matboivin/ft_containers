@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/17 18:14:55 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:48:10 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,20 @@ namespace ft
 		public:
 			// constructor
 			explicit stack(const container_type& ctnr = container_type())
-			: c(ctnr)
-			{
-			}
+			: c(ctnr) { }
 
 			// copy constructor
 			stack(const stack& other)
-			: c(other.c)
-			{
-			}
+			: c(other.c) { }
 
 			// destructor
-			~stack(void) {}
+			~stack(void) { }
 
 			// copy assignment operator
 			stack&	operator=(const stack& other)
 			{
 				if (this != &other)
 					c = other.c;
-
 				return (*this);
 			}
 
@@ -78,12 +73,10 @@ namespace ft
 
 			// friend relational operators
 			template<typename _T, typename _Container>
-				friend bool	operator==(const stack<_T, _Container>& lhs,
-									   const stack<_T, _Container>& rhs);
+				friend bool	operator==(const stack<_T, _Container>& lhs, const stack<_T, _Container>& rhs);
 
 			template<typename _T, typename _Container>
-				friend bool	operator<(const stack<_T, _Container>& lhs,
-									  const stack<_T, _Container>& rhs);
+				friend bool	operator<(const stack<_T, _Container>& lhs, const stack<_T, _Container>& rhs);
 		}; // class stack
 
 	/*
@@ -94,44 +87,32 @@ namespace ft
 	template<typename T, typename Container>
 		bool
 		operator==(const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{
-			return (lhs.c == rhs.c);
-		}
+		{ return (lhs.c == rhs.c); }
 
 	template<typename T, typename Container>
 		bool
 		operator!=(const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{
-			return ( !(lhs == rhs) );
-		}
+		{ return ( !(lhs == rhs) ); }
 
 	template<typename T, typename Container>
 		bool
 		operator<(const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{
-			return (lhs.c < rhs.c);
-		}
+		{ return (lhs.c < rhs.c); }
 
 	template<typename T, typename Container>
 		bool
 		operator>(const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{
-			return (rhs < lhs);
-		}
+		{ return (rhs < lhs); }
 
 	template<typename T, typename Container>
 		bool
 		operator<=(const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{
-			return ( !(lhs > rhs) );
-		}
+		{ return ( !(lhs > rhs) ); }
 
 	template<typename T, typename Container>
 		bool
 		operator>=(const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{
-			return ( !(lhs < rhs) );
-		}
+		{ return ( !(lhs < rhs) ); }
 } // namespace ft
 
 #endif

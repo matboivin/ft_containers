@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:28:28 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/17 18:15:49 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:53:48 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ namespace ft
 		bool
 		equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
 		{
-			for ( ; first1 != last1; ++first1, ++first2 )
+			for ( ; first1 != last1; ++first1, ++first2)
 			{
 				if (!(*first1 == *first2))
 					return (false);
@@ -64,7 +64,7 @@ namespace ft
 		equal(InputIterator1 first1, InputIterator1 last1, InputIterator2 first2,
 			BinaryPredicate pred)
 		{
-			for ( ; first1 != last1; ++first1, ++first2 )
+			for ( ; first1 != last1; ++first1, ++first2)
 			{
 				if (!pred(*first1, *first2))
 					return (false);

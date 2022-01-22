@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/22 21:59:21 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/22 22:53:24 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,17 @@ namespace ft
 			int				_M_sentinel;
 
 			// Retrieve the value address
-			Val*	_get_value_ptr(void)
-			{
-				return (&this->_M_value);
-			}
+			Val*
+			_get_value_ptr(void)
+			{ return (&this->_M_value); }
 
-			const Val*	_get_value_ptr(void) const
-			{
-				return (&this->_M_value);
-			}
+			const Val*
+			_get_value_ptr(void) const
+			{ return (&this->_M_value); }
 
 			// Get node holding lower value
-			static node_pointer	_get_leftmost(node_pointer node)
+			static node_pointer
+			_get_leftmost(node_pointer node)
 			{
 				if (node != 0)
 				{
@@ -70,7 +69,8 @@ namespace ft
 				return (node);
 			}
 
-			static const_node_pointer	_get_leftmost(const_node_pointer node)
+			static const_node_pointer
+			_get_leftmost(const_node_pointer node)
 			{
 				if (node != 0)
 				{
@@ -81,7 +81,8 @@ namespace ft
 			}
 
 			// Get node holding greater value
-			static node_pointer	_get_rightmost(node_pointer node)
+			static node_pointer
+			_get_rightmost(node_pointer node)
 			{
 				if (node != 0)
 				{
@@ -91,7 +92,8 @@ namespace ft
 				return (node);
 			}
 
-			static const_node_pointer	_get_rightmost(const_node_pointer node)
+			static const_node_pointer
+			_get_rightmost(const_node_pointer node)
 			{
 				if (node != 0)
 				{
@@ -102,7 +104,8 @@ namespace ft
 			}
 
 			// Increment node
-			static node_pointer	_increment_node(node_pointer node)
+			static node_pointer
+			_increment_node(node_pointer node)
 			{
 				if (node != 0)
 				{
@@ -130,7 +133,8 @@ namespace ft
 				return (node);
 			}
 
-			static const_node_pointer	_increment_node(const_node_pointer node)
+			static const_node_pointer
+			_increment_node(const_node_pointer node)
 			{
 				if (node != 0)
 				{
@@ -159,7 +163,8 @@ namespace ft
 			}
 
 			// Decrement node
-			static node_pointer	_decrement_node(node_pointer node)
+			static node_pointer
+			_decrement_node(node_pointer node)
 			{
 				if (node != 0)
 				{
@@ -188,7 +193,8 @@ namespace ft
 				return (node);
 			}
 
-			static const_node_pointer	_decrement_node(const_node_pointer node)
+			static const_node_pointer
+			_decrement_node(const_node_pointer node)
 			{
 				if (node != 0)
 				{
@@ -233,12 +239,11 @@ namespace ft
 
 			// default constructor
 			RBTreeHeader(void)
-			{
-				_M_reset();
-			}
+			{ _M_reset(); }
 
 			// swap data
-			void	_M_swap(RBTreeHeader& other)
+			void
+			_M_swap(RBTreeHeader& other)
 			{
 				const NodeColor		tmp_color(_M_header._M_color);
 				RBTreeNode<Val>*	tmp_parent(_M_header._M_parent);
@@ -264,7 +269,8 @@ namespace ft
 				other._M_node_count = tmp_count;
 			}
 
-			void	_M_copy_reset(RBTreeHeader& other)
+			void
+			_M_copy_reset(RBTreeHeader& other)
 			{
 				_M_header._M_color = other._M_header._M_color;
 				_M_header._M_parent = other._M_header._M_parent;
@@ -277,7 +283,8 @@ namespace ft
 			}
 
 			// set defaults
-			void	_M_reset(void)
+			void
+			_M_reset(void)
 			{
 				_M_header._M_color = RED;
 				_M_header._M_parent = 0; // will be the root
@@ -307,24 +314,19 @@ namespace ft
 
 			// default constructor
 			RBtree_iterator(void)
-			: _M_node(0)
-			{
-			}
+			: _M_node(0) { }
 
 			// initalization constructor
 			RBtree_iterator(node_pointer node)
-			: _M_node(node)
-			{
-			}
+			: _M_node(node) { }
 
 			// copy constructor
 			RBtree_iterator(const RBtree_iterator& other)
-			: _M_node(other.get_node())
-			{
-			}
+			: _M_node(other.get_node()) { }
 
 			// copy assignment operator
-			RBtree_iterator&	operator=(const RBtree_iterator& other)
+			RBtree_iterator&
+			operator=(const RBtree_iterator& other)
 			{
 				if (this != &other)
 					this->_M_node = other.get_node();
@@ -332,31 +334,28 @@ namespace ft
 			}
 
 			// return copy of the underlying node
-			node_pointer	get_node(void) const
-			{
-				return (_M_node);
-			}
+			node_pointer
+			get_node(void) const
+			{ return (_M_node); }
 
 			// accesses the pointed-to element
 			reference	operator*(void) const
-			{
-				return (*_M_node->_get_value_ptr());
-			}
+			{ return (*_M_node->_get_value_ptr()); }
 
 			pointer	operator->(void) const
-			{
-				return (_M_node->_get_value_ptr());
-			}
+			{ return (_M_node->_get_value_ptr()); }
 
 			// advances or decrements the iterator
 
-			RBtree_iterator&	operator++(void)
+			RBtree_iterator&
+			operator++(void)
 			{
 				this->_M_node = this->_M_node->_increment_node(this->_M_node);
 				return (*this);
 			}
 
-			RBtree_iterator	operator++(int)
+			RBtree_iterator
+			operator++(int)
 			{
 				RBtree_iterator	backup = *this;
 
@@ -364,13 +363,15 @@ namespace ft
 				return (backup);
 			}
 
-			RBtree_iterator&	operator--(void)
+			RBtree_iterator&
+			operator--(void)
 			{
 				this->_M_node = this->_M_node->_decrement_node(this->_M_node);
 				return (*this);
 			}
 
-			RBtree_iterator	operator--(int)
+			RBtree_iterator
+			operator--(int)
 			{
 				RBtree_iterator	backup = *this;
 
@@ -384,16 +385,12 @@ namespace ft
 	template<typename T1, typename T2>
 		bool
 		operator==(const RBtree_iterator<T1>& lhs, const RBtree_iterator<T2>& rhs)
-		{
-			return (lhs.get_node() == rhs.get_node());
-		}
+		{ return (lhs.get_node() == rhs.get_node()); }
 
 	template<typename T1, typename T2>
 		bool
 		operator!=(const RBtree_iterator<T1>& lhs, const RBtree_iterator<T2>& rhs)
-		{
-			return (lhs.get_node() != rhs.get_node());
-		}
+		{ return (lhs.get_node() != rhs.get_node()); }
 
 	// Red Black Tree const_iterator
 	template<typename T>
@@ -412,66 +409,57 @@ namespace ft
 
 			// default constructor
 			RBtree_const_iterator(void)
-			: _M_node(0)
-			{
-			}
+			: _M_node(0) { }
 
 			// initalization constructor
 			RBtree_const_iterator(const_node_pointer node)
-			: _M_node(node)
-			{
-			}
+			: _M_node(node) { }
 
 			// copy constructor
 			RBtree_const_iterator(const RBtree_const_iterator& other)
-			: _M_node(other.get_node())
-			{
-			}
+			: _M_node(other.get_node()) { }
 
 			RBtree_const_iterator(const iterator& other)
-			: _M_node(other.get_node())
-			{
-			}
+			: _M_node(other.get_node()) { }
 
 			// copy assignment operator
-			RBtree_const_iterator&	operator=(const RBtree_const_iterator& other)
+			RBtree_const_iterator&
+			operator=(const RBtree_const_iterator& other)
 			{
 				if (this != &other)
 					this->_M_node = other.get_node();
 				return (*this);
 			}
 
-			iterator	remove_const(void) const
-			{
-				return (iterator(const_cast<typename iterator::node_pointer>(this->_M_node)));
-			}
+			iterator
+			remove_const(void) const
+			{ return (iterator(const_cast<typename iterator::node_pointer>(this->_M_node))); }
 
 			// return copy of the underlying node
-			const_node_pointer	get_node(void) const
-			{
-				return (_M_node);
-			}
+			const_node_pointer
+			get_node(void) const
+			{ return (_M_node); }
 
 			// accesses the pointed-to element
-			reference	operator*(void) const
-			{
-				return (*_M_node->_get_value_ptr());
-			}
+			reference
+			operator*(void) const
+			{ return (*_M_node->_get_value_ptr()); }
 
-			pointer	operator->(void) const
-			{
-				return (_M_node->_get_value_ptr());
-			}
+			pointer
+			operator->(void) const
+			{ return (_M_node->_get_value_ptr()); }
 
 			// advances or decrements the iterator
 
-			RBtree_const_iterator&	operator++(void)
+			RBtree_const_iterator&
+			operator++(void)
 			{
 				this->_M_node = this->_M_node->_increment_node(this->_M_node);
 				return (*this);
 			}
 
-			RBtree_const_iterator	operator++(int)
+			RBtree_const_iterator
+			operator++(int)
 			{
 				RBtree_const_iterator	backup = *this;
 
@@ -479,13 +467,15 @@ namespace ft
 				return (backup);
 			}
 
-			RBtree_const_iterator&	operator--(void)
+			RBtree_const_iterator&
+			operator--(void)
 			{
 				this->_M_node = this->_M_node->_decrement_node(this->_M_node);
 				return (*this);
 			}
 
-			RBtree_const_iterator	operator--(int)
+			RBtree_const_iterator
+			operator--(int)
 			{
 				RBtree_const_iterator	backup = *this;
 
@@ -499,16 +489,12 @@ namespace ft
 	template<typename T1, typename T2>
 		bool
 		operator==(const RBtree_const_iterator<T1>& lhs, const RBtree_const_iterator<T2>& rhs)
-		{
-			return (lhs.get_node() == rhs.get_node());
-		}
+		{ return (lhs.get_node() == rhs.get_node()); }
 
 	template<typename T1, typename T2>
 		bool
 		operator!=(const RBtree_const_iterator<T1>& lhs, const RBtree_const_iterator<T2>& rhs)
-		{
-			return (lhs.get_node() != rhs.get_node());
-		}
+		{ return (lhs.get_node() != rhs.get_node()); }
 
 	/* Tree definition ****************************************************** */
 
@@ -662,9 +648,7 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_allocate_node(void)
-		{
-			return (this->get_node_alloc().allocate(1));
-		}
+		{ return (this->get_node_alloc().allocate(1)); }
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		void
@@ -734,63 +718,47 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_root(void) const
-		{
-			return (this->_M_header._M_parent);
-		}
+		{ return (this->_M_header._M_parent); }
 
 	// Get end (header)
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_end(void)
-		{
-			return (&this->_M_header);
-		}
+		{ return (&this->_M_header); }
 
 	// Get node holding lowest value
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_leftmost(void) const
-		{
-			return (this->_M_header._M_left);
-		}
+		{ return (this->_M_header._M_left); }
 
 	// Get node holding greatest value
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_rightmost(void) const
-		{
-			return (this->_M_header._M_right);
-		}
+		{ return (this->_M_header._M_right); }
 
 	// Get only key of the pair
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		const typename RedBlackTree<Key,Val,Compare,Alloc>::key_type&
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_key(node_pointer __node) const
-		{
-			return (static_cast<const key_type&>(_M_get_value(__node).first));
-		}
+		{ return (static_cast<const key_type&>(_M_get_value(__node).first)); }
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		const typename RedBlackTree<Key,Val,Compare,Alloc>::key_type&
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_key(const_node_pointer __node) const
-		{
-			return (static_cast<const key_type&>(_M_get_value(__node).first));
-		}
+		{ return (static_cast<const key_type&>(_M_get_value(__node).first)); }
 
 	// Get pair<key,value>
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_reference
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_value(node_pointer __node) const
-		{
-			return (*__node->_get_value_ptr());
-		}
+		{ return (*__node->_get_value_ptr()); }
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_reference
 		RedBlackTree<Key,Val,Compare,Alloc>::_M_get_value(const_node_pointer __node) const
-		{
-			return (*__node->_get_value_ptr());
-		}
+		{ return (*__node->_get_value_ptr()); }
 
 	/* helpers balancing **************************************************** */
 
@@ -1278,17 +1246,13 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,Compare,Alloc>::RedBlackTree(const key_compare& comp, const allocator_type& alloc)
 		: _M_alloc(alloc),
-		  _M_key_compare(comp)
-		{
-		}
+		  _M_key_compare(comp) { }
 
 	// copy constructor
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,Compare,Alloc>::RedBlackTree(const RedBlackTree& other)
 		: _M_alloc(other._M_alloc),
-		  _M_key_compare(other._M_key_compare)
-		{
-		}
+		  _M_key_compare(other._M_key_compare) { }
 
 	// copy assignment operator
 	template<typename Key, typename Val, typename Compare, typename Alloc>
@@ -1326,25 +1290,19 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::allocator_type
 		RedBlackTree<Key,Val,Compare,Alloc>::get_alloc(void) const
-		{
-			return (allocator_type(this->_M_alloc));
-		}
+		{ return (allocator_type(this->_M_alloc)); }
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::_node_alloc_type
 		RedBlackTree<Key,Val,Compare,Alloc>::get_node_alloc(void) const
-		{
-			return (_node_alloc_type(this->_M_alloc));
-		}
+		{ return (_node_alloc_type(this->_M_alloc)); }
 
 	/* getters ************************************************************** */
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::key_compare
 		RedBlackTree<Key,Val,Compare,Alloc>::key_comp(void) const
-		{
-			return (this->_M_key_compare);
-		}
+		{ return (this->_M_key_compare); }
 
 	/* iterators ************************************************************ */
 
@@ -1352,46 +1310,34 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::begin(void)
-		{
-			return (iterator(this->_M_header._M_left));
-		}
+		{ return (iterator(this->_M_header._M_left)); }
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::begin(void) const
-		{
-			return (const_iterator(this->_M_header._M_left));
-		}
+		{ return (const_iterator(this->_M_header._M_left)); }
 
 	// Returns an iterator representing the past-the-end element in the tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::end(void)
-		{
-			return (iterator(&this->_M_header));
-		}
+		{ return (iterator(&this->_M_header)); }
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::end(void) const
-		{
-			return (const_iterator(&this->_M_header));
-		}
+		{ return (const_iterator(&this->_M_header)); }
 
 	// Returns a reverse iterator pointing to the last element in the tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::reverse_iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::rbegin(void)
-		{
-			return (reverse_iterator(end()));
-		}
+		{ return (reverse_iterator(end())); }
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_reverse_iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::rbegin(void) const
-		{
-			return (const_reverse_iterator(end()));
-		}
+		{ return (const_reverse_iterator(end())); }
 
 	/*
 	 * Returns a reverse iterator pointing to the theoretical element preceding
@@ -1400,16 +1346,12 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::reverse_iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::rend(void)
-		{
-			return (reverse_iterator(begin()));
-		}
+		{ return (reverse_iterator(begin())); }
 
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::const_reverse_iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::rend(void) const
-		{
-			return (const_reverse_iterator(begin()));
-		}
+		{ return (const_reverse_iterator(begin())); }
 
 	/* capacity ************************************************************* */
 
@@ -1417,17 +1359,13 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		bool
 		RedBlackTree<Key,Val,Compare,Alloc>::empty(void) const
-		{
-			return (this->_M_node_count == 0);
-		}
+		{ return (this->_M_node_count == 0); }
 
 	// Returns the number of nodes in the tree
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::size_type
 		RedBlackTree<Key,Val,Compare,Alloc>::size(void) const
-		{
-			return (this->_M_node_count);
-		}
+		{ return (this->_M_node_count); }
 
 	/*
 	 * Gets the maximum number of elements that the tree can hold.
@@ -1438,9 +1376,7 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::size_type
 		RedBlackTree<Key,Val,Compare,Alloc>::max_size(void) const
-		{
-			return (this->get_node_alloc().max_size());
-		}
+		{ return (this->get_node_alloc().max_size()); }
 
 	/* modifiers ************************************************************ */
 
@@ -1448,17 +1384,13 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		pair<typename RedBlackTree<Key,Val,Compare,Alloc>::iterator,bool>
 		RedBlackTree<Key,Val,Compare,Alloc>::insert(const value_type& val)
-		{
-			return (_M_insert(iterator(_M_get_root()), val));
-		}
+		{ return (_M_insert(iterator(_M_get_root()), val)); }
 
 	// Inserts a new element with a hint for the position
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,Compare,Alloc>::insert(iterator position, const value_type& val)
-		{
-			return (_M_insert(position, val).first);
-		}
+		{ return (_M_insert(position, val).first); }
 
 	// Inserts a range of new elements
 	template<typename Key, typename Val, typename Compare, typename Alloc>
