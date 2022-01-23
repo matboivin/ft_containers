@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/23 21:54:56 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/23 23:28:48 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -378,19 +378,15 @@ namespace ft
 				this->_M_node = this->_M_node->_decrement_node(this->_M_node);
 				return (backup);
 			}
+
+			friend bool
+			operator==(const RBtree_iterator<T>& lhs, const RBtree_iterator<T>& rhs)
+			{ return (lhs._M_node == rhs._M_node); }
+
+			friend bool
+			operator!=(const RBtree_iterator<T>& lhs, const RBtree_iterator<T>& rhs)
+			{ return (!(lhs == rhs)); }
 		}; // struct RBtree_iterator
-
-	// Relational operators
-
-	template<typename T1, typename T2>
-		bool
-		operator==(const RBtree_iterator<T1>& lhs, const RBtree_iterator<T2>& rhs)
-		{ return (lhs.get_node() == rhs.get_node()); }
-
-	template<typename T1, typename T2>
-		bool
-		operator!=(const RBtree_iterator<T1>& lhs, const RBtree_iterator<T2>& rhs)
-		{ return (lhs.get_node() != rhs.get_node()); }
 
 	// Red Black Tree const_iterator
 	template<typename T>
@@ -482,19 +478,15 @@ namespace ft
 				this->_M_node = this->_M_node->_decrement_node(this->_M_node);
 				return (backup);
 			}
+
+			friend bool
+			operator==(const RBtree_const_iterator<T>& lhs, const RBtree_const_iterator<T>& rhs)
+			{ return (lhs._M_node == rhs._M_node); }
+
+			friend bool
+			operator!=(const RBtree_const_iterator<T>& lhs, const RBtree_const_iterator<T>& rhs)
+			{ return (!(lhs == rhs)); }
 		}; // struct RBtree_const_iterator
-
-	// Relational operators
-
-	template<typename T1, typename T2>
-		bool
-		operator==(const RBtree_const_iterator<T1>& lhs, const RBtree_const_iterator<T2>& rhs)
-		{ return (lhs.get_node() == rhs.get_node()); }
-
-	template<typename T1, typename T2>
-		bool
-		operator!=(const RBtree_const_iterator<T1>& lhs, const RBtree_const_iterator<T2>& rhs)
-		{ return (lhs.get_node() != rhs.get_node()); }
 
 	/* Tree definition ****************************************************** */
 
