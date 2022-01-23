@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/23 00:39:15 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/23 21:54:56 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,31 @@ namespace ft
 			RBTreeHeader(void)
 			{ _M_reset(); }
 
+			// set defaults
+			void
+			_M_reset(void)
+			{
+				_M_header._M_color = RED;
+				_M_header._M_parent = 0; // will be the root
+				_M_header._M_left = &_M_header; // leftmost
+				_M_header._M_right = &_M_header; // rightmost
+				_M_header._M_sentinel = 1;
+				_M_node_count = 0;
+			}
+
+			void
+			_M_copy_reset(RBTreeHeader& other)
+			{
+				_M_header._M_color = other._M_header._M_color;
+				_M_header._M_parent = other._M_header._M_parent;
+				_M_header._M_left = other._M_header._M_left;
+				_M_header._M_right = other._M_header._M_right;
+				_M_header._M_sentinel = other._M_header._M_sentinel;
+				_M_header._M_parent->_M_parent = &_M_header;
+				_M_node_count = other._M_node_count;
+				other._M_reset();
+			}
+
 			// swap data
 			void
 			_M_swap(RBTreeHeader& other)
@@ -267,31 +292,6 @@ namespace ft
 				other._M_header._M_sentinel = tmp_sentinel;
 				other._M_header._M_parent->_M_parent = &other._M_header;
 				other._M_node_count = tmp_count;
-			}
-
-			void
-			_M_copy_reset(RBTreeHeader& other)
-			{
-				_M_header._M_color = other._M_header._M_color;
-				_M_header._M_parent = other._M_header._M_parent;
-				_M_header._M_left = other._M_header._M_left;
-				_M_header._M_right = other._M_header._M_right;
-				_M_header._M_sentinel = other._M_header._M_sentinel;
-				_M_header._M_parent->_M_parent = &_M_header;
-				_M_node_count = other._M_node_count;
-				other._M_reset();
-			}
-
-			// set defaults
-			void
-			_M_reset(void)
-			{
-				_M_header._M_color = RED;
-				_M_header._M_parent = 0; // will be the root
-				_M_header._M_left = &_M_header; // leftmost
-				_M_header._M_right = &_M_header; // rightmost
-				_M_header._M_sentinel = 1;
-				_M_node_count = 0;
 			}
 		}; // struct RBTreeHeader
 
@@ -1252,7 +1252,17 @@ namespace ft
 	template<typename Key, typename Val, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,Compare,Alloc>::RedBlackTree(const RedBlackTree& other)
 		: _M_alloc(other._M_alloc),
-		  _M_key_compare(other._M_key_compare) { }
+		  _M_key_compare(other._M_key_compare)
+		{
+			const_iterator	first = other.begin();
+			const_iterator	last = other.end();
+
+			while (first != last)
+			{
+				_M_insert(end(), *first);
+				++first;
+			}
+		}
 
 	// copy assignment operator
 	template<typename Key, typename Val, typename Compare, typename Alloc>

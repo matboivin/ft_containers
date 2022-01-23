@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/21 00:02:04 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/23 13:14:12 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ namespace std
 		for (int i = 0; i < 10; ++i)
 			m2[rand()] = rand();
 
-		// display_m_infos(m1, "before");
+		display_map_infos(m1, "before");
 
 		m1.insert(m2.begin(), m2.end());
 
-		// display_m_infos(m1, "after");
+		display_map_infos(m1, "after");
 
 		for (int i = 0; i < COUNT; ++i)
 			m2[rand()] = rand();
@@ -115,17 +115,11 @@ namespace std
 		for (int i = 0; i < 500; ++i)
 			m2[rand()] = rand();
 
-		// display_m_infos(m1, "map 1");
-		// display_m_infos(m2, "map 2");
-
 		std::cout << "map.swap();\n\n";
 
 		clock_t	time_start = clock();
 		m1.swap(m2);
 		clock_t	time_end = clock();
-
-		// display_m_infos(m1, "map 1");
-		// display_m_infos(m2, "map 2");
 
 		display_elapsed_time(time_start, time_end);
 

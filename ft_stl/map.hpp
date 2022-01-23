@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/23 00:40:14 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/23 13:18:41 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ namespace ft
 
 		private:
 			// alias for the tree
-			typedef ft::RedBlackTree<key_type, value_type, key_compare, allocator_type>	_tree_type;
+			typedef RedBlackTree<key_type, value_type, key_compare, allocator_type>	_tree_type;
 
 			// attribute
 			_tree_type	_M_tree;
@@ -167,7 +167,7 @@ namespace ft
 	template<typename Key, typename T, typename Compare, typename Alloc>
 	template<typename InputIterator>
 		map<Key,T,Compare,Alloc>::map(InputIterator first, InputIterator last,
-										  const key_compare& comp, const allocator_type& alloc)
+									  const key_compare& comp, const allocator_type& alloc)
 		: _M_tree(comp, alloc)
 		{
 			this->_M_tree.insert(first, last);

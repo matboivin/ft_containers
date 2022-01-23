@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/22 22:12:13 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/23 21:19:57 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,20 @@ namespace std
 	void	test_map_lookup(void);
 
 	template<typename Map>
-		void	display_map_infos(const Map& m, const std::string& title="map")
+		void	display_map_infos(Map m, const std::string& title="map")
 		{
 			std::cout << title
 					<< "\n- size:      " << m.size()
 					<< "\n- contents:  \n";
 
 			if ( !m.size() )
-			{
 				std::cout << "(empty)\n\n";
-				return ;
+			else
+			{
+				for (typename Map::iterator it_m = m.begin(); it_m != m.end(); ++it_m)
+					std::cout << it_m->first << " => " << it_m->second << '\n';
+				std::cout << "\n\n";
 			}
-
-			for (typename Map::const_iterator it_m = m.begin(); it_m != m.end(); ++it_m)
-				std::cout << it_m->first << " => " << it_m->second << '\n';
-			std::cout << "\n\n";
 		}
 }
 
