@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/23 23:28:48 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/23 23:36:37 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include <fstream> // debug
 #include <iostream> // debug
 #include <memory>
+#include "algorithm.hpp"
 #include "iterator.hpp"
 #include "utility.hpp"
 
@@ -601,7 +602,7 @@ namespace ft
 			size_type				max_size(void) const;
 
 			// modifiers
-			pair<iterator,bool>	insert(const value_type& val);
+			pair<iterator,bool>		insert(const value_type& val);
 			iterator				insert(iterator position, const value_type& val);
 			template<typename InputIterator>
 				void				insert(InputIterator first, InputIterator last,
@@ -1763,6 +1764,58 @@ namespace ft
 			dot_cmd += filename;
 			dot_cmd += ".svg";
 			system(dot_cmd.c_str());
+		}
+
+
+	/* non-member function overloads **************************************** */
+
+	/*
+	 * Relational operators
+	 * Make comparison between two trees
+	 */
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		bool
+		operator==(const RedBlackTree<Key,Val,Compare,Alloc>& lhs,
+				   const RedBlackTree<Key,Val,Compare,Alloc>& rhs)
+		{ return ((lhs.size() == rhs.size()) && (ft::equal( lhs.begin(), lhs.end(), rhs.begin()))); }
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		bool
+		operator!=(const RedBlackTree<Key,Val,Compare,Alloc>& lhs,
+				   const RedBlackTree<Key,Val,Compare,Alloc>& rhs)
+		{ return (!(lhs == rhs)); }
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		bool
+		operator<(const RedBlackTree<Key,Val,Compare,Alloc>& lhs,
+				  const RedBlackTree<Key,Val,Compare,Alloc>& rhs)
+		{ return (ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end())); }
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		bool
+		operator>(const RedBlackTree<Key,Val,Compare,Alloc>& lhs,
+				  const RedBlackTree<Key,Val,Compare,Alloc>& rhs)
+		{ return (rhs < lhs); }
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		bool
+		operator<=(const RedBlackTree<Key,Val,Compare,Alloc>& lhs,
+				   const RedBlackTree<Key,Val,Compare,Alloc>& rhs)
+		{ return (!(rhs < lhs)); }
+
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		bool
+		operator>=(const RedBlackTree<Key,Val,Compare,Alloc>& lhs,
+				   const RedBlackTree<Key,Val,Compare,Alloc>& rhs)
+		{ return (!(lhs < rhs)); }
+
+	/* Exchange contents of two trees */
+	template<typename Key, typename Val, typename Compare, typename Alloc>
+		void
+		swap(RedBlackTree<Key,Val,Compare,Alloc>& x, RedBlackTree<Key,Val,Compare,Alloc>& y)
+		{
+			x.swap(y);
 		}
 
 } // namespace ft
