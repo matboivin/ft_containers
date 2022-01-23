@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/18 16:27:42 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/23 23:46:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,23 +83,20 @@ template<typename Vec>
 				<< "\n- contents:  ";
 				
 		if ( !v.size() )
-		{
 			std::cout << "(empty)\n\n";
-			return ;
-		}
-
-		typename Vec::const_iterator it = v.begin();
-
-		std::cout << "[ ";
-		for ( int i = 0; it != v.end(); ++i, ++it )
+		else
 		{
-			std::cout << *it;
-			if ( it != (v.end() - 1) )
-				std::cout << ", ";
-			if ((i != 0) && (i % 10 == 0))
-				std::cout << "\n               ";
+			std::cout << "[ ";
+			for (int i = 0, typename Vec::const_iterator it = v.begin(); it != v.end(); ++i, ++it)
+			{
+				std::cout << *it;
+				if ( it != (v.end() - 1) )
+					std::cout << ", ";
+				if ((i != 0) && (i % 10 == 0))
+					std::cout << "\n               ";
+			}
+			std::cout << " ]\n\n";
 		}
-		std::cout << " ]\n\n";
 	}
 
 #endif

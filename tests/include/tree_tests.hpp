@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/22 22:11:55 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/23 23:47:13 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ namespace ft
 	void	test_tree_erase_range(void);
 	void	test_tree_swap(void);
 	void	test_tree_clear(void);
+
+	// non-member functions
+	// void	test_tree_non_mb_comp_ops(void);
+	// void	test_tree_non_mb_swap(void);
 }
 
 /* Display the tree size and nodes */
@@ -65,18 +69,15 @@ template<typename RBTree>
 				<< "\n- size:      " << tree.size()
 				<< "\n- contents:  ";
 				
-		if ( !tree.size() )
-		{
+		if (tree.empty() == true)
 			std::cout << "(empty)\n\n";
-			return ;
+		else
+		{
+			std::cout << '\n';
+			for (typename RBTree::const_iterator it = tree.begin(); it != tree.end(); ++it)
+				std::cout << it->first << " => " << it->second << '\n';
+			std::cout << "\n\n";
 		}
-		std::cout << '\n';
-
-		typename RBTree::const_iterator it = tree.begin();
-
-		for (; it != tree.end(); ++it)
-			std::cout << it->first << " => " << it->second << '\n';
-		std::cout << "\n\n";
 	}
 
 #endif

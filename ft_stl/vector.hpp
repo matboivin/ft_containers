@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/23 23:35:53 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 00:29:09 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,6 @@
 #include "algorithm.hpp"
 #include "iterator.hpp"
 #include "type_traits.hpp"
-
-/*
- * Credits:
- * Detailed comments mostly from www.cplusplus.com
- */
 
 namespace ft
 {
@@ -87,8 +82,10 @@ namespace ft
 			
 			// range constructor
 			template<typename InputIterator>
-				vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
-					   typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type* = 0);
+				vector(InputIterator first, InputIterator last,
+					   const allocator_type& alloc = allocator_type(),
+					   typename requires_input_iter<
+							(!is_integral<InputIterator>::value), InputIterator>::type* = 0);
 
 			// copy constructor
 			vector(const vector& other);
@@ -133,16 +130,17 @@ namespace ft
 			// modifiers
 			template<typename InputIterator>
 				void		assign(InputIterator first, InputIterator last,
-								   typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type* = 0);
+								   typename requires_input_iter<(!is_integral<InputIterator>::value),
+										InputIterator>::type* = 0);
 			void			assign(size_type n, const value_type& val);
 			void			push_back(const value_type& val);
 			void			pop_back(void);
 			iterator		insert(iterator position, const value_type& val);
 			void			insert(iterator position, size_type n, const value_type& val);
 			template<typename InputIterator>
-				void		insert(iterator position,
-								   InputIterator first, InputIterator last,
-								   typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type* = 0);
+				void		insert(iterator position, InputIterator first, InputIterator last,
+								   typename requires_input_iter<(!is_integral<InputIterator>::value),
+										InputIterator>::type* = 0);
 			iterator		erase(iterator position);
 			iterator		erase(iterator first, iterator last);
 			void			swap(vector& other);
@@ -208,11 +206,8 @@ namespace ft
 		void
 		vector<T,Alloc>::_M_default_initialize(size_type __n)
 		{
-			for (size_type __i = 0; __i < __n; ++__i)
-			{
+			for (size_type __i = 0; __i < __n; ++__i, ++this->_M_end)
 				this->_M_alloc.construct(this->_M_end, value_type());
-				++this->_M_end;
-			}
 		}
 
 	/* Construct with n elements of value val */
@@ -230,11 +225,8 @@ namespace ft
 			if (__len > 0)
 			{
 				_M_create_storage(__len);
-				for ( ; __first != __last; ++__first )
-				{
+				for ( ; __first != __last; ++__first, ++this->_M_end)
 					this->_M_alloc.construct(this->_M_end, *__first);
-					++this->_M_end;
-				}
 			}
 		}
 
@@ -349,7 +341,7 @@ namespace ft
 			// handle overflow
 			if (__dlb_capacity >= max_size())
 				return (max_size());
-			return ( (__n > __dlb_capacity) ? __n : __dlb_capacity );
+			return ((__n > __dlb_capacity) ? __n : __dlb_capacity);
 		}
 
 	/* Destroy elements from a given position to the end */
@@ -359,7 +351,7 @@ namespace ft
 		{
 			size_type	__len = this->_M_end - __pos;
 
-			while (__len--)
+			for (; __len > 0; --__len)
 			{
 				--this->_M_end;
 				this->_M_alloc.destroy(this->_M_end);
@@ -382,7 +374,7 @@ namespace ft
 				__len = size() + size();
 			else
 				__len = size() + __n;
-			return ( (__len > max_size()) ? max_size() : __len );
+			return ((__len > max_size()) ? max_size() : __len);
 		}
 
 	/* Safety check for at() */
@@ -396,56 +388,40 @@ namespace ft
 
 				err_msg << "vector::_M_range_check: __n (which is " << __n
 						<< ") >= this->size() (which is " << this->size() << ")";
-
 				throw std::out_of_range(err_msg.str());
 			}
 		}
 
 	/* construct/copy/destroy *********************************************** */
 
-	/*
-	 * Default constructor
-	 * Constructs an empty container, with no elements.
-	 */
+	/* Default constructor */
 	template<typename T, typename Alloc>
 		vector<T,Alloc>::vector(const allocator_type& alloc)
-		: _M_alloc(alloc), _M_begin(), _M_end(), _M_end_of_storage()
-		{
-		}
+		: _M_alloc(alloc), _M_begin(), _M_end(), _M_end_of_storage() { }
 
-	/*
-	 * Fill constructor
-	 * Constructs a container with n elements. Each element is a copy of val.
-	 */
+	/* Fill constructor */
 	template<typename T, typename Alloc>
 		vector<T,Alloc>::vector(size_type n, const value_type& val, const allocator_type& alloc)
 		: _M_alloc(alloc), _M_begin(), _M_end(), _M_end_of_storage()
 		{
 			_M_create_storage(n);
-			for ( ; n > 0; ++this->_M_end, --n )
+			for (; n > 0; ++this->_M_end, --n)
 				this->_M_alloc.construct(this->_M_end, val);
 		}
 
-	/*
-	 * Range constructor
-	 * Constructs a container with the range of elements [first,last).
-	 */
+	/* Range constructor */
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
 		vector<T,Alloc>::vector(InputIterator first, InputIterator last, const allocator_type& alloc,
-								typename ft::requires_input_iter<
-									(!ft::is_integral<InputIterator>::value),
+								typename requires_input_iter<
+									(!is_integral<InputIterator>::value),
 									InputIterator>::type*)
 		: _M_alloc(alloc), _M_begin(), _M_end(), _M_end_of_storage()
 		{
 			_M_range_initialize(first, last);
 		}
 
-	/*
-	 * Copy constructor
-	 * Constructs a container with a copy the elements of other vector.
-	 * Capacity of the new vector is equal to the size of other to avoid unused capacity.
-	 */
+	/* Copy constructor */
 	template<typename T, typename Alloc>
 		vector<T,Alloc>::vector(const vector& other)
 		: _M_alloc(other.get_alloc())
@@ -453,16 +429,11 @@ namespace ft
 			size_type	len = other.size();
 
 			_M_create_storage(len);
-			for (size_type i = 0; i < len; ++i)
-			{
+			for (size_type i = 0; i < len; ++i, ++this->_M_end)
 				this->_M_alloc.construct(this->_M_end, other[i]);
-				++this->_M_end;
-			}
 		}
 
-	/*
-	 * Destructor
-	 */
+	/* Destructor */
 	template<typename T, typename Alloc>
 		vector<T,Alloc>::~vector(void)
 		{
@@ -470,14 +441,7 @@ namespace ft
 			_M_deallocate(this->_M_begin, capacity());
 		}
 
-	/*
-	 * Copy assignment operator
-	 * Assigns new contents to the container, replacing its current contents,
-	 * and modifying its size accordingly.
-	 * The container preserves its current allocator, which is used to allocate storage
-	 * in case of reallocation.
-	 * Capacity of the vector is equal to the size of other to avoid unused capacity.
-	 */
+	/* Copy assignment operator */
 	template<typename T, typename Alloc>
 		vector<T,Alloc>&
 		vector<T,Alloc>::operator=(const vector& other)
@@ -492,23 +456,18 @@ namespace ft
 					_M_deallocate(this->_M_begin, capacity());
 					_M_create_storage(new_size);
 				}
-				for ( size_type i = 0; i < new_size; ++i )
-				{
+				for (size_type i = 0; i < new_size; ++i, ++this->_M_end)
 					this->_M_alloc.construct(this->_M_end, other[i]);
-					++this->_M_end;
-				}
 			}
 			return (*this);
 		}
 
 	/* allocator ************************************************************ */
 
-	/* Returns a copy of the allocator object associated with the vector */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::allocator_type
 		vector<T,Alloc>::get_alloc(void) const
 		{ return (allocator_type(this->_M_alloc)); }
-
 
 	/* iterators ************************************************************ */
 
@@ -559,37 +518,24 @@ namespace ft
 		vector<T,Alloc>::rend(void) const
 		{ return (const_reverse_iterator(begin())); }
 
-
 	/* capacity ************************************************************* */
 
-	/* Checks whether the vector is empty */
 	template<typename T, typename Alloc>
 		bool
 		vector<T,Alloc>::empty(void) const
 		{ return (begin() == end()); }
 
-	/* Get the size of the vector */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::size_type
 		vector<T,Alloc>::size(void) const
 		{ return (size_type(this->_M_end - this->_M_begin)); }
 
-	/*
-	 * Gets the maximum number of elements that the vector can hold.
-	 *
-	 * This is the maximum potential size the container can reach due to known system
-	 * or library implementation limitations.
-	 */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::size_type
 		vector<T,Alloc>::max_size(void) const
 		{ return (this->_M_alloc.max_size()); }
 
-	/*
-	 * Resizes the container so that it contains n elements.
-	 * If val is specified, the new elements are initialized as copies of val,
-	 * otherwise, they are value-initialized.
-	 */
+	/* Resizes the container so that it contains n elements. */
 	template<typename T, typename Alloc>
 		void
 		vector<T,Alloc>::resize(size_type n, value_type val)
@@ -600,11 +546,6 @@ namespace ft
 				_M_fill_insert(this->end(), n - size(), val);
 		}
 
-	/*
-	 * Gets the size of allocated storage capacity
-	 * i.e., size of the storage space currently allocated for the vector,
-	 * expressed in terms of elements.
-	 */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::size_type
 		vector<T,Alloc>::capacity(void) const
@@ -686,7 +627,6 @@ namespace ft
 		vector<T,Alloc>::back(void) const
 		{ return ( *(end() - 1) ); }
 
-
 	/* modifiers ************************************************************ */
 
 	/*
@@ -697,7 +637,8 @@ namespace ft
 	template<typename InputIterator>
 		void
 		vector<T,Alloc>::assign(InputIterator first, InputIterator last,
-								typename ft::requires_input_iter<(!ft::is_integral<InputIterator>::value), InputIterator>::type*)
+								typename requires_input_iter<
+									(!is_integral<InputIterator>::value), InputIterator>::type*)
 		{
 			_M_erase_at_end(_M_begin);
 			_M_deallocate(_M_begin, capacity());
@@ -714,7 +655,7 @@ namespace ft
 		{
 			resize(n);
 			clear();
-			for (; n > 0; ++this->_M_end, --n)
+			for ( ; n > 0; --n, ++this->_M_end)
 				this->_M_alloc.construct(this->_M_end, val);
 		}
 
@@ -772,9 +713,8 @@ namespace ft
 	template<typename InputIterator>
 		void
 		vector<T,Alloc>::insert(iterator position, InputIterator first, InputIterator last,
-								typename ft::requires_input_iter<
-									(!ft::is_integral<InputIterator>::value),
-									InputIterator>::type*)
+								typename requires_input_iter<
+									(!is_integral<InputIterator>::value), InputIterator>::type*)
 		{
 			if (first != last)
 				_M_range_insert(position, first, last);
@@ -831,10 +771,7 @@ namespace ft
 
 	/* non-member function overloads **************************************** */
 
-	/*
-	 * Relational operators
-	 * Make comparison between two vectors
-	 */
+	/* Relational operators: make comparison between two vectors */
 
 	template<typename T, typename Alloc>
 		bool

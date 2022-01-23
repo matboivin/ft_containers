@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 18:28:19 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/22 23:52:41 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 00:30:23 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 namespace ft
 {
+	/* Map definition and implementation ************************************ */
+
 	/*
 	 * Stack template class
 	 * Encapsulates another container and provides a LIFO way to access to its elements
@@ -57,47 +59,45 @@ namespace ft
 			}
 
 			// capacity
-			bool		empty(void) const { return (c.empty()); }
-			size_type	size(void) const  { return (c.size()); }
+			bool		empty(void) const
+			{ return (c.empty()); }
+
+			size_type	size(void) const
+			{ return (c.size()); }
 
 			// element access
 			// returns the last element (top of the stack)
-			value_type&			top(void)       { return (c.back()); }
-			const value_type&	top(void) const { return (c.back()); }
+			value_type&	top(void)
+			{ return (c.back()); }
+
+			const value_type&	top(void) const
+			{ return (c.back()); }
 
 			// modifiers
 			// push an element on the stop of the stack
-			void	push(const value_type& val) { c.push_back(val); }
+			void	push(const value_type& val)
+			{ c.push_back(val); }
+
 			// removes the last element added
-			void	pop(void) { c.pop_back(); }
+			void	pop(void)
+			{ c.pop_back(); }
 
 			// friend relational operators
-			template<typename _T, typename _Container>
-				friend bool	operator==(const stack<_T, _Container>& lhs, const stack<_T, _Container>& rhs);
+			friend bool	operator==(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
+			{ return (lhs.c == rhs.c); }
 
-			template<typename _T, typename _Container>
-				friend bool	operator<(const stack<_T, _Container>& lhs, const stack<_T, _Container>& rhs);
+			friend bool	operator<(const stack<T, Container>& lhs, const stack<T, Container>& rhs)
+			{ return (lhs.c < rhs.c); }
 		}; // class stack
 
-	/*
-	 * Relational operators
-	 * Make comparison between two stacks
-	 */
+	/* non-member function overloads **************************************** */
 
-	template<typename T, typename Container>
-		bool
-		operator==(const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{ return (lhs.c == rhs.c); }
+	/* Relational operators: make comparison between two stacks */
 
 	template<typename T, typename Container>
 		bool
 		operator!=(const stack<T,Container>& lhs, const stack<T,Container>& rhs)
 		{ return (!(lhs == rhs)); }
-
-	template<typename T, typename Container>
-		bool
-		operator<(const stack<T,Container>& lhs, const stack<T,Container>& rhs)
-		{ return (lhs.c < rhs.c); }
 
 	template<typename T, typename Container>
 		bool
@@ -113,6 +113,7 @@ namespace ft
 		bool
 		operator>=(const stack<T,Container>& lhs, const stack<T,Container>& rhs)
 		{ return (!(lhs < rhs)); }
+
 } // namespace ft
 
 #endif

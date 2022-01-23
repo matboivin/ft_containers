@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 23:18:28 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/22 22:59:37 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 00:05:17 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ namespace ft
 	template<typename Key,
 			 typename Compare = std::less<Key>,
 			 typename Alloc = std::allocator<Key>
-			>
+			 >
 		class set
 		{
 		public:
@@ -47,7 +47,7 @@ namespace ft
 
 		private:
 			// alias for the tree
-			typedef ft::RedBlackTree<key_type, value_type, key_compare, allocator_type>	_tree_type;
+			typedef RedBlackTree<key_type, value_type, key_compare, allocator_type>	_tree_type;
 
 			// attribute
 			_tree_type	_M_tree;
@@ -61,7 +61,8 @@ namespace ft
 			typedef typename _tree_type::difference_type		difference_type;
 
 			// default constructor
-			explicit set(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
+			explicit set(const key_compare& comp = key_compare(),
+						 const allocator_type& alloc = allocator_type());
 
 			// range constructor
 			template <class InputIterator>
@@ -98,8 +99,8 @@ namespace ft
 			iterator				insert(iterator position, const value_type& val);
 			template <class InputIterator>
 				void				insert(InputIterator first, InputIterator last,
-										   typename ft::enable_if<
-										   		ft::is_same<typename InputIterator::value_type,
+										   typename enable_if<
+												is_same<typename InputIterator::value_type,
 												value_type>::value>::type* = 0);
 			void					erase(iterator position);
 			size_type				erase(const key_type& k);
@@ -120,9 +121,6 @@ namespace ft
 
 			// allocator
 			allocator_type			get_allocator(void) const;
-
-			// debug
-			void					write_tree_dot(const std::string& filename);
 		}; // class set
 
 	/* Set implementation *************************************************** */
@@ -165,7 +163,7 @@ namespace ft
 
 	/* iterators ************************************************************ */
 
-	// Returns an iterator pointing to the first element in the set
+	/* Returns an iterator pointing to the first element in the set */
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::iterator
 		set<Key,Compare,Alloc>::begin(void)
@@ -176,7 +174,7 @@ namespace ft
 		set<Key,Compare,Alloc>::begin(void) const
 		{ return (this->_M_tree.begin()); }
 
-	// Returns an iterator representing the past-the-end element in the tree
+	/* Returns an iterator representing the past-the-end element in the tree */
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::iterator
 		set<Key,Compare,Alloc>::end(void)
@@ -187,8 +185,7 @@ namespace ft
 		set<Key,Compare,Alloc>::end(void) const
 		{ return (this->_M_tree.end()); }
 
-	// Returns a reverse iterator pointing to the last element in the set
-
+	/* Returns a reverse iterator pointing to the last element in the set */
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::reverse_iterator
 		set<Key,Compare,Alloc>::rbegin(void)
@@ -215,24 +212,16 @@ namespace ft
 
 	/* capacity ************************************************************* */
 
-	// Returns true if the set is empty, false otherwise
 	template<typename Key, typename Compare, typename Alloc>
 		bool
 		set<Key,Compare,Alloc>::empty(void) const
 		{ return (this->_M_tree.empty()); }
 
-	// Returns the number of elements in the set
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::size_type
 		set<Key,Compare,Alloc>::size(void) const
 		{ return (this->_M_tree.size()); }
 
-	/*
-	 * Gets the maximum number of elements that the set can hold.
-	 *
-	 * This is the maximum potential size the container can reach due to known system
-	 * or library implementation limitations.
-	 */
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::size_type
 		set<Key,Compare,Alloc>::max_size(void) const
@@ -240,19 +229,17 @@ namespace ft
 
 	/* modifiers ************************************************************ */
 
-	// Inserts a new element
+	/* Insert */
 	template<typename Key, typename Compare, typename Alloc>
-		typename ft::pair<typename set<Key,Compare,Alloc>::iterator,bool>
+		pair<typename set<Key,Compare,Alloc>::iterator,bool>
 		set<Key,Compare,Alloc>::insert(const value_type& val)
 		{ return (this->_M_tree.insert(val)); }
 
-	// Inserts a new element with a hint for the position
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::iterator
 		set<Key,Compare,Alloc>::insert(iterator position, const value_type& val)
 		{ return (this->_M_tree.insert(position, val)); }
 
-	// Inserts a range of new elements
 	template<typename Key, typename Compare, typename Alloc>
 	template <class InputIterator>
 		void
@@ -261,7 +248,7 @@ namespace ft
 														value_type>::value>::type*)
 		{ return (this->_M_tree.insert(first, last)); }
 
-	// Erase the element pointed to by the given iterator
+	/* Erase */
 	template<typename Key, typename Compare, typename Alloc>
 		void
 		set<Key,Compare,Alloc>::erase(iterator position)
@@ -269,25 +256,23 @@ namespace ft
 			this->_M_tree.erase(position);
 		}
 
-	// Erase the element with the key k
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::size_type
 		set<Key,Compare,Alloc>::erase(const key_type& k)
 		{ return (this->_M_tree.erase(k)); }
 
-	// Erase a range of elements
 	template<typename Key, typename Compare, typename Alloc>
 		void
 		set<Key,Compare,Alloc>::erase(iterator first, iterator last)
 		{ return (this->_M_tree.erase(first, last)); }
 
-	// Exchanges the content of the set and the other set
+	/* Exchanges the content of the set and the other set */
 	template<typename Key, typename Compare, typename Alloc>
 		void
 		set<Key,Compare,Alloc>::swap(set& x)
 		{ return (this->_M_tree.swap(x._M_tree)); }
 
-	// Destroys all elements from the container, leaving it with a size of 0
+	/* Destroys all elements from the container, leaving it with a size of 0 */
 	template<typename Key, typename Compare, typename Alloc>
 		void
 		set<Key,Compare,Alloc>::clear(void)
@@ -295,7 +280,7 @@ namespace ft
 
 	/* lookup *************************************************************** */
 
-	// Gets the element with the key k, else return end
+	/* Gets the element with the key k, else return end */
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::iterator
 		set<Key,Compare,Alloc>::find(const key_type& k)
@@ -334,19 +319,19 @@ namespace ft
 	 * If k is not found, returns two iterators pointing to the first element after k.
 	 */
 	template<typename Key, typename Compare, typename Alloc>
-		ft::pair<typename set<Key,Compare,Alloc>::iterator,typename set<Key,Compare,Alloc>::iterator>
+		pair<typename set<Key,Compare,Alloc>::iterator,typename set<Key,Compare,Alloc>::iterator>
 		set<Key,Compare,Alloc>::equal_range(const key_type& k)
 		{ return (this->_M_tree.equal_range(k)); }
 
 	/* observers ************************************************************ */
 
-	// Returns a copy of the function used to compare the keys of elements
+	/* Returns a copy of the function used to compare the keys of elements */
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::key_compare
 		set<Key,Compare,Alloc>::key_comp(void) const
 		{ return (this->_M_tree.key_comp()); }
 
-	// Returns a new function object to compare the keys of elements
+	/* Returns a new function object to compare the keys of elements */
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::value_compare
 		set<Key,Compare,Alloc>::value_comp(void) const
@@ -354,20 +339,53 @@ namespace ft
 
 	/* allocator ************************************************************ */
 
-	// Returns a copy of the allocator
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::allocator_type
 		set<Key,Compare,Alloc>::get_allocator(void) const
 		{ return (this->_M_tree.get_allocator()); }
 
-	/* debug **************************************************************** */
+	/* non-member function overloads **************************************** */
+
+	/* Relational operators: make comparison between two sets */
 
 	template<typename Key, typename Compare, typename Alloc>
+		bool
+		operator==(const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>& rhs)
+		{ return (lhs._M_tree == rhs._M_tree); }
+
+	template<typename Key, typename Compare, typename Alloc>
+		bool
+		operator!=(const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>& rhs)
+		{ return (!(lhs == rhs)); }
+
+	template<typename Key, typename Compare, typename Alloc>
+		bool
+		operator<(const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>& rhs)
+		{ return (lhs._M_tree < rhs._M_tree); }
+
+	template<typename Key, typename Compare, typename Alloc>
+		bool
+		operator>(const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>& rhs)
+		{ return (rhs < lhs); }
+
+	template<typename Key, typename Compare, typename Alloc>
+		bool
+		operator<=(const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>& rhs)
+		{ return (!(rhs < lhs)); }
+
+	template<typename Key, typename Compare, typename Alloc>
+		bool
+		operator>=(const set<Key,Compare,Alloc>& lhs, const set<Key,Compare,Alloc>& rhs)
+		{ return (!(lhs < rhs)); }
+
+	/* Exchange contents of two sets */
+	template<typename Key, typename Compare, typename Alloc>
 		void
-		set<Key,Compare,Alloc>::write_tree_dot(const std::string& filename)
+		swap(set<Key,Compare,Alloc>& x, set<Key,Compare,Alloc>& y)
 		{
-			this->_M_tree.write_tree_dot(filename);
+			x.swap(y);
 		}
+
 } // namespace ft
 
 #endif
