@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 16:16:52 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 18:16:58 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -961,7 +961,7 @@ namespace ft
 					}
 					else // key already exists
 					{
-						return (pair<node_pointer,bool>(__cursor, 0));
+						return (pair<node_pointer,bool>(__pos, false));
 					}
 				}
 			}
@@ -1007,8 +1007,12 @@ namespace ft
 			pair<node_pointer,bool>	__pos_k = _M_get_insert_pos(__pos, __k);
 
 			// if key already exists
-			if (__pos_k.first != this->end().get_node() && _M_get_key(__pos_k.first) == __k)
+			if (__pos_k.first != end().get_node()
+				&& (!_M_key_compare(__k, _M_get_key(__pos_k.first))
+				&& !_M_key_compare(_M_get_key(__pos_k.first), __k)))
+			{
 				return (pair<iterator,bool>(iterator(__pos_k.first), false));
+			}
 
 			node_pointer	__node = _M_create_node(__val);
 

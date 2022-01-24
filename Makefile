@@ -44,11 +44,14 @@ IT_SRC_FILES =		revit_test_comp_ops.cpp \
 					revit_tests.cpp
 
 MAP_SRC_FILES =		map_tests_capacity.cpp \
+					map_tests_comp_ops.cpp \
 					map_tests_construct.cpp \
 					map_tests_elements.cpp \
 					map_tests_iterators.cpp \
 					map_tests_lookup.cpp \
 					map_tests_modifiers.cpp \
+					map_tests_observers.cpp \
+					map_tests_swap.cpp \
 					map_tests.cpp
 
 SET_SRC_FILES =		set_test_construct.cpp \

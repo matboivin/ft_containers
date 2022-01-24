@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 16:57:36 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 18:28:36 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,10 @@ namespace std
 
 		// lookup
 		test_map_lookup();
+
+		// observers
+		test_map_key_comp();
+		test_map_value_comp();
 
 		// non-member functions
 		test_map_non_mb_comp_ops();
