@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 00:29:09 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:47:33 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,6 @@ namespace ft
 	/*
 	 * Vector template class
 	 * Array which size can change dynamically
-	 *
-	 * @param T      Type of the elements
-	 * @param Alloc  Type of the allocator object used to define the storage allocation model
 	 */
 	template<typename T, typename Alloc = std::allocator<T> >
 		class vector
@@ -60,7 +57,7 @@ namespace ft
 			pointer			_M_allocate(const size_type __n);
 			void			_M_create_storage(const size_type __n);
 			void			_M_deallocate(pointer __p, const size_type __n);
-			void			_M_swap_data(vector& __x);
+			void			_M_swap(vector& __x);
 			void			_M_default_initialize(size_type __n);
 			template<typename InputIterator>
 				void		_M_range_initialize(InputIterator __first, InputIterator __last);
@@ -161,16 +158,13 @@ namespace ft
 			return (pointer());
 		}
 
-	/*
-	 * Allocate a new storage space and set the pointers to the end
-	 * and to the end of storage
-	 */
+	/* Allocate a new storage space and set the pointers */
 	template<typename T, typename Alloc>
 		void
 		vector<T,Alloc>::_M_create_storage(const size_type __n)
 		{
 			this->_M_begin = this->_M_allocate(__n);
-			this->_M_end = this->_M_begin; // since it's empty, points to the beginning
+			this->_M_end = this->_M_begin;
 			this->_M_end_of_storage = this->_M_begin + __n;
 		}
 
@@ -186,7 +180,7 @@ namespace ft
 	/* Swap vector's data with x */
 	template<typename T, typename Alloc>
 		void
-		vector<T,Alloc>::_M_swap_data(vector& __x)
+		vector<T,Alloc>::_M_swap(vector& __x)
 		{
 			pointer	__tmp_begin(__x._M_begin);
 			pointer	__tmp_end(__x._M_end);
@@ -338,7 +332,6 @@ namespace ft
 		{
 			size_type	__dlb_capacity = capacity() + capacity();
 
-			// handle overflow
 			if (__dlb_capacity >= max_size())
 				return (max_size());
 			return ((__n > __dlb_capacity) ? __n : __dlb_capacity);
@@ -351,7 +344,7 @@ namespace ft
 		{
 			size_type	__len = this->_M_end - __pos;
 
-			for (; __len > 0; --__len)
+			for ( ; __len > 0; --__len)
 			{
 				--this->_M_end;
 				this->_M_alloc.destroy(this->_M_end);
@@ -364,11 +357,10 @@ namespace ft
 		vector<T,Alloc>::_M_len_check(const size_type __n, const char* __s) const
 		{
 			size_type	__size_left = max_size() - size();
+			size_type	__len;
 
 			if (__size_left < __n)
 				throw std::length_error(__s);
-
-			size_type	__len;
 
 			if (size() > __n)
 				__len = size() + size();
@@ -405,7 +397,7 @@ namespace ft
 		: _M_alloc(alloc), _M_begin(), _M_end(), _M_end_of_storage()
 		{
 			_M_create_storage(n);
-			for (; n > 0; ++this->_M_end, --n)
+			for ( ; n > 0; ++this->_M_end, --n)
 				this->_M_alloc.construct(this->_M_end, val);
 		}
 
@@ -629,10 +621,7 @@ namespace ft
 
 	/* modifiers ************************************************************ */
 
-	/*
-	 * Assigns new contents to the vector, replacing its current contents by the
-	 * given range, and modifying its size accordingly.
-	 */
+	/* Assigns new contents to the vector, replacing its current contents */
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
 		void
@@ -645,10 +634,6 @@ namespace ft
 			_M_range_initialize(first, last);
 		}
 
-	/*
-	 * Assigns new contents to the vector, replacing its current contents with the
-	 * given value, and modifying its size accordingly.
-	 */
 	template<typename T, typename Alloc>
 		void
 		vector<T,Alloc>::assign(size_type n, const value_type& val)
@@ -670,10 +655,7 @@ namespace ft
 			++this->_M_end;
 		}
 
-	/*
-	 * Removes the last element in the vector.
-	 * This destroys the removed element and reduce the container size by one.
-	 */
+	/* Removes the last element in the vector. */
 	template<typename T, typename Alloc>
 		void
 		vector<T,Alloc>::pop_back(void)
@@ -682,10 +664,7 @@ namespace ft
 			this->_M_alloc.destroy(this->_M_end);
 		}
 
-	/*
-	 * Insert a single element before the element at the specified position,
-	 * increasing the container size by 1.
-	 */
+	/* Insert a single element before the element at the specified position */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::iterator
 		vector<T,Alloc>::insert(iterator position, const value_type& val)
@@ -694,10 +673,7 @@ namespace ft
 			return (position);
 		}
 
-	/*
-	 * Insert n new elements before the element at the specified position,
-	 * effectively increasing the container size by n.
-	 */
+	/* Insert n new elements before the element at the specified position */
 	template<typename T, typename Alloc>
 		void
 		vector<T,Alloc>::insert(iterator position, size_type n, const value_type& val)
@@ -705,10 +681,7 @@ namespace ft
 			_M_fill_insert(position, n, val);
 		}
 
-	/*
-	 * Insert a range of elements before the element at the specified position,
-	 * effectively increasing the container size by the number of elements inserted.
-	 */
+	/* Insert a range of elements before the element at the specified position */
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
 		void
@@ -757,7 +730,7 @@ namespace ft
 		void
 		vector<T,Alloc>::swap(vector& other)
 		{
-			this->_M_swap_data(other);
+			this->_M_swap(other);
 		}
 
 	/* Destroys all elements from the vector, leaving the container with a size of 0 */
@@ -767,7 +740,6 @@ namespace ft
 		{
 			_M_erase_at_end(this->_M_begin);
 		}
-
 
 	/* non-member function overloads **************************************** */
 

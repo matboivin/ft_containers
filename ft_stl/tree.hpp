@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 20:30:10 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 21:17:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,9 +247,9 @@ namespace ft
 			_M_reset(void)
 			{
 				_M_header._M_color = RED;
-				_M_header._M_parent = 0; // will be the root
-				_M_header._M_left = &_M_header; // leftmost
-				_M_header._M_right = &_M_header; // rightmost
+				_M_header._M_parent = 0;
+				_M_header._M_left = &_M_header;
+				_M_header._M_right = &_M_header;
 				_M_header._M_sentinel = 1;
 				_M_node_count = 0;
 			}
@@ -267,7 +267,6 @@ namespace ft
 				other._M_reset();
 			}
 
-			// swap data
 			void
 			_M_swap(RBTreeHeader& other)
 			{
@@ -346,8 +345,7 @@ namespace ft
 			pointer	operator->(void) const
 			{ return (_M_node->_get_value_ptr()); }
 
-			// advances or decrements the iterator
-
+			// decrements the iterator
 			RBtree_iterator&
 			operator++(void)
 			{
@@ -364,6 +362,7 @@ namespace ft
 				return (backup);
 			}
 
+			// decrements the iterator
 			RBtree_iterator&
 			operator--(void)
 			{
@@ -380,6 +379,7 @@ namespace ft
 				return (backup);
 			}
 
+			// friend relational operators
 			friend bool
 			operator==(const RBtree_iterator<T>& lhs, const RBtree_iterator<T>& rhs)
 			{ return (lhs._M_node == rhs._M_node); }
@@ -446,8 +446,7 @@ namespace ft
 			operator->(void) const
 			{ return (_M_node->_get_value_ptr()); }
 
-			// advances or decrements the iterator
-
+			// advances the iterator
 			RBtree_const_iterator&
 			operator++(void)
 			{
@@ -464,6 +463,7 @@ namespace ft
 				return (backup);
 			}
 
+			// decrements the iterator
 			RBtree_const_iterator&
 			operator--(void)
 			{
@@ -480,6 +480,7 @@ namespace ft
 				return (backup);
 			}
 
+			// friend relational operators
 			friend bool
 			operator==(const RBtree_const_iterator<T>& lhs, const RBtree_const_iterator<T>& rhs)
 			{ return (lhs._M_node == rhs._M_node); }
@@ -530,7 +531,7 @@ namespace ft
 			typedef typename allocator_type::template rebind<RBTreeNode<Val> >::other	_node_alloc_type;
 
 			// attributes
-			allocator_type	_M_alloc; // internal copy of the allocator
+			allocator_type	_M_alloc;
 			key_compare		_M_key_compare;
 
 		protected:
@@ -551,6 +552,8 @@ namespace ft
 			const key_type&			_M_get_key(const_node_pointer __node) const;
 			const_reference			_M_get_value(node_pointer __node) const;
 			const_reference			_M_get_value(const_node_pointer __node) const;
+			// checkers
+			bool					_M_key_exists(const_node_pointer __node, const key_type& __k) const;
 			// helpers balancing
 			void					_M_rotate_left(node_pointer __x);
 			void					_M_rotate_right(node_pointer __x);
@@ -693,7 +696,6 @@ namespace ft
 			}
 		}
 
-	// Erase recursively the tree
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_erase_recursive(node_pointer __node)
@@ -708,31 +710,26 @@ namespace ft
 
 	/* getters ************************************************************** */
 
-	// Get root node
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_get_root(void) const
 		{ return (this->_M_header._M_parent); }
 
-	// Get end (header)
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_get_end(void)
 		{ return (&this->_M_header); }
 
-	// Get node holding lowest value
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_get_leftmost(void) const
 		{ return (this->_M_header._M_left); }
 
-	// Get node holding greatest value
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_get_rightmost(void) const
 		{ return (this->_M_header._M_right); }
 
-	// Get only key of the pair
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		const typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::key_type&
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_get_key(node_pointer __node) const
@@ -743,7 +740,6 @@ namespace ft
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_get_key(const_node_pointer __node) const
 		{ return (KeyGetter()(_M_get_value(__node))); }
 
-	// Get pair<key,value>
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::const_reference
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_get_value(node_pointer __node) const
@@ -754,9 +750,19 @@ namespace ft
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_get_value(const_node_pointer __node) const
 		{ return (*__node->_get_value_ptr()); }
 
+	/* checkers ************************************************************* */
+
+	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
+		bool
+		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_key_exists(const_node_pointer __node, const key_type& __k) const
+		{
+			return (__node != end().get_node()
+					&& !(_M_key_compare(__k, _M_get_key(__node)))
+					&& !(_M_key_compare(_M_get_key(__node), __k)));
+		}
+
 	/* helpers balancing **************************************************** */
 
-	// Rotate left
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_rotate_left(node_pointer __x)
@@ -783,7 +789,6 @@ namespace ft
 			}
 		}
 
-	// Rotate right
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_rotate_right(node_pointer __x)
@@ -864,7 +869,7 @@ namespace ft
 			this->_M_header._M_parent->_M_color = BLACK;
 		}
 
-	// Gets position to insert new node
+	/* Gets position to insert new node using the given hint */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_get_pos_from_hint(iterator __hint, const key_type& __k)
@@ -876,15 +881,14 @@ namespace ft
 			if (__hint.get_node() == this->_M_header._M_parent)
 				return (__hint.get_node());
 
-			// find nearest position if hint is not root
 			iterator	__prev(__hint);
 
 			// node < hint pos
 			if (_M_key_compare( __k, _M_get_key(__hint.get_node()) ))
 			{
 				// node < root && root < hint pos
-				if (_M_key_compare( __k, _M_get_key(this->_M_header._M_parent))
-					&& _M_key_compare( _M_get_key(this->_M_header._M_parent), _M_get_key(__hint.get_node()) ))
+				if (_M_key_compare(__k, _M_get_key(this->_M_header._M_parent))
+					&& _M_key_compare(_M_get_key(this->_M_header._M_parent), _M_get_key(__hint.get_node())))
 				{
 					__hint = this->_M_header._M_parent; // start from root directly
 				}
@@ -901,8 +905,8 @@ namespace ft
 			else if (_M_key_compare(_M_get_key(__hint.get_node()), __k)) // node > hint pos
 			{
 				// node > root && root > hint pos
-				if (_M_key_compare( _M_get_key(this->_M_header._M_parent), __k)
-					&& _M_key_compare( _M_get_key(__hint.get_node()), _M_get_key(this->_M_header._M_parent) ))
+				if (_M_key_compare(_M_get_key(this->_M_header._M_parent), __k)
+					&& _M_key_compare(_M_get_key(__hint.get_node()), _M_get_key(this->_M_header._M_parent)))
 				{
 					__hint = this->_M_header._M_parent; // start from root directly
 				}
@@ -919,7 +923,7 @@ namespace ft
 			return (__hint.get_node());
 		}
 
-	// Gets position to insert new node
+	/* Gets position to insert new node */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		pair<typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::node_pointer,bool>
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_get_insert_pos(iterator __hint, const key_type& __k)
@@ -931,19 +935,16 @@ namespace ft
 			{
 				__pos = _M_get_end();
 			}
-			// check whether the new node is lower than the current leftmost node
-			else if ( _M_key_compare( __k, _M_get_key(_M_get_leftmost()) ) )
+			else if (_M_key_compare(__k, _M_get_key(_M_get_leftmost())))
 			{
 				__pos = _M_get_leftmost();
 			}
-			// check whether the new node is greater than the current rightmost node
-			else if ( _M_key_compare(_M_get_key(_M_get_rightmost()), __k ) )
+			else if (_M_key_compare(_M_get_key(_M_get_rightmost()), __k))
 			{
 				__insert_left = false;
 				__pos = _M_get_rightmost();
 			}
-			// else move down the tree until finding a leaf
-			else
+			else // move down the tree until finding a leaf
 			{
 				node_pointer	__cursor = _M_get_pos_from_hint(__hint, __k);
 
@@ -969,11 +970,11 @@ namespace ft
 			return (pair<node_pointer,bool>(__pos, __insert_left));
 		}
 
-	// Insert a node and rebalance the tree
+	/* Insert a node and rebalance the tree */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_insert_node(const bool __insert_left,
-															node_pointer __node, node_pointer __parent)
+																	  node_pointer __node, node_pointer __parent)
 		{
 			__node->_M_parent = __parent;
 
@@ -999,7 +1000,6 @@ namespace ft
 			++this->_M_node_count;
 		}
 
-	// Inserts one node with no hint
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		pair<typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::iterator,bool>
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_insert(iterator __pos, const value_type& __val)
@@ -1007,13 +1007,8 @@ namespace ft
 			const key_type				__k = KeyGetter()(__val);
 			pair<node_pointer,bool>	__pos_k = _M_get_insert_pos(__pos, __k);
 
-			// if key already exists
-			if (__pos_k.first != end().get_node()
-				&& (!_M_key_compare(__k, _M_get_key(__pos_k.first))
-				&& !_M_key_compare(_M_get_key(__pos_k.first), __k)))
-			{
+			if (_M_key_exists(__pos_k.first, __k))
 				return (pair<iterator,bool>(iterator(__pos_k.first), false));
-			}
 
 			node_pointer	__node = _M_create_node(__val);
 
@@ -1023,7 +1018,7 @@ namespace ft
 
 	/* helpers deletion ***************************************************** */
 
-	// Maintain Red-Black property after deletion
+	/* Maintain Red-Black property after deletion */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_rebalance_del(node_pointer __subst, node_pointer __parent)
@@ -1132,26 +1127,23 @@ namespace ft
 				__subst->_M_color = BLACK;
 		}
 
-	// Find successor that will replace the node to be deleted
+	/* Find successor that will replace the node to be deleted */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::node_pointer
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_get_subst(node_pointer __node)
 		{
 			node_pointer	__subst = 0;
 
-			// node has two children
 			if (__node->_M_left != 0 && __node->_M_right != 0)
 				__subst = __node->_increment_node(__node);
-			// node has one left child
 			else if (__node->_M_left != 0)
 				__subst = __node->_M_left;
-			// node has one right child
 			else if (__node->_M_right != 0)
 				__subst = __node->_M_right;
 			return (__subst);
 		}
 
-	// Set successor of node to be deleted
+	/* Set successor of node to be deleted */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_set_subst(node_pointer __node, node_pointer __subst)
@@ -1223,7 +1215,7 @@ namespace ft
 				_M_rebalance_del(__last_subst, __parent);
 		}
 
-	// Delete a node and rebalance the tree
+	/* Delete a node and rebalance the tree */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_delete_node(node_pointer __node)
@@ -1240,13 +1232,13 @@ namespace ft
 
 	/* construct/copy/destroy *********************************************** */
 
-	// default constructor
+	/* default constructor */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::RedBlackTree(const key_compare& comp, const allocator_type& alloc)
 		: _M_alloc(alloc),
 		  _M_key_compare(comp) { }
 
-	// copy constructor
+	/* copy constructor */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::RedBlackTree(const RedBlackTree& other)
 		: _M_alloc(other._M_alloc),
@@ -1262,7 +1254,7 @@ namespace ft
 			}
 		}
 
-	// copy assignment operator
+	/* copy assignment operator */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>&
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::operator=(const RedBlackTree& other)
@@ -1285,7 +1277,7 @@ namespace ft
 			return (*this);
 		}
 
-	// destructor
+	/* destructor */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::~RedBlackTree(void)
 		{
@@ -1314,7 +1306,7 @@ namespace ft
 
 	/* iterators ************************************************************ */
 
-	// Returns an iterator pointing to the first element in the tree
+	/* Returns an iterator pointing to the first element in the tree */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::begin(void)
@@ -1325,7 +1317,7 @@ namespace ft
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::begin(void) const
 		{ return (const_iterator(this->_M_header._M_left)); }
 
-	// Returns an iterator representing the past-the-end element in the tree
+	/* Returns an iterator representing the past-the-end element in the tree */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::end(void)
@@ -1336,7 +1328,7 @@ namespace ft
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::end(void) const
 		{ return (const_iterator(&this->_M_header)); }
 
-	// Returns a reverse iterator pointing to the last element in the tree
+	/* Returns a reverse iterator pointing to the last element in the tree */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::reverse_iterator
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::rbegin(void)
@@ -1363,24 +1355,16 @@ namespace ft
 
 	/* capacity ************************************************************* */
 
-	// Returns true if the tree is empty, false otherwise
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		bool
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::empty(void) const
 		{ return (this->_M_node_count == 0); }
 
-	// Returns the number of nodes in the tree
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::size_type
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::size(void) const
 		{ return (this->_M_node_count); }
 
-	/*
-	 * Gets the maximum number of elements that the tree can hold.
-	 *
-	 * This is the maximum potential size the container can reach due to known system
-	 * or library implementation limitations.
-	 */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::size_type
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::max_size(void) const
@@ -1388,35 +1372,30 @@ namespace ft
 
 	/* modifiers ************************************************************ */
 
-	// Inserts a new element
+	/* Inserts */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		pair<typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::iterator,bool>
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::insert(const value_type& val)
 		{ return (_M_insert(iterator(_M_get_root()), val)); }
 
-	// Inserts a new element with a hint for the position
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::insert(iterator position, const value_type& val)
 		{ return (_M_insert(position, val).first); }
 
-	// Inserts a range of new elements
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 	template<typename InputIterator>
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::insert(InputIterator first, InputIterator last,
-													typename enable_if<
-														is_same<typename InputIterator::value_type,
-														value_type>::value>::type*)
+															  typename enable_if<
+																is_same<typename InputIterator::value_type,
+																value_type>::value>::type*)
 		{
-			while (first != last)
-			{
+			for ( ; first != last; ++first)
 				_M_insert(end(), *first);
-				++first;
-			}
 		}
 
-	// Erase the element pointed to by the given iterator
+	/* Erase */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::erase(iterator position)
@@ -1424,14 +1403,13 @@ namespace ft
 			this->_M_delete_node(position.get_node());
 		}
 
-	// Erase the element with the key k
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::size_type
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::erase(const key_type& k)
 		{
 			iterator	it = this->find(k);
 
-			if (it != this->end() && k == _M_get_key(it.get_node()))
+			if (_M_key_exists(it.get_node(), k))
 			{
 				this->_M_delete_node(it.get_node());
 				return (1);
@@ -1439,12 +1417,11 @@ namespace ft
 			return (0);
 		}
 
-	// Erase a range of elements
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::erase(iterator first, iterator last)
 		{
-			if (first == begin() && last == end())
+			if (first == begin() && last == end()) // everything
 			{
 				_M_erase_recursive(this->_M_header._M_parent);
 				this->_M_reset();
@@ -1456,7 +1433,7 @@ namespace ft
 			}
 		}
 
-	// Exchanges the content of the tree and the other tree
+	/* Exchanges the content of the tree and the other tree */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::swap(RedBlackTree& other)
@@ -1477,7 +1454,7 @@ namespace ft
 				other._M_copy_reset(*this);
 		}
 
-	// Destroys all elements from the tree, leaving it with a size of 0
+	/* Destroys all elements from the tree, leaving it with a size of 0 */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::clear(void)
@@ -1488,7 +1465,7 @@ namespace ft
 
 	/* lookup *************************************************************** */
 
-	// Gets the element with the key k, else return end
+	/* Gets the element with the key k, else return end */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::iterator
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::find(const key_type& k)
@@ -1525,7 +1502,7 @@ namespace ft
 			return (const_iterator(&this->_M_header));
 		}
 
-	// Returns the number of elements matching key k
+	/* Returns the number of elements matching key k */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::size_type
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::count(const key_type& k) const
