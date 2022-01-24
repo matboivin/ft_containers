@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 16:19:12 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:34:49 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@
 
 namespace ft
 {
-
-	typedef RedBlackTree<int,pair<int, std::string> >						tree_type;
-	typedef pair<RedBlackTree<int,pair<int, std::string> >::iterator,bool>	pair_type;
+	typedef RedBlackTree<int,pair<int, std::string>,get_key_from_pair<int,pair<int, std::string> > >	int_s_tree;
+	typedef pair<typename int_s_tree::iterator,bool>	pair_type;
 
 	void	test_tree(void);
 

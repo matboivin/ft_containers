@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 16:18:55 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 16:56:36 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:32:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ namespace ft
 		explain_test("Operators to make comparison between two trees.");
 
 		// create trees
-		tree_type	tree1;
-		tree_type	tree2;
-		tree_type	tree3;
+		int_s_tree	tree1;
+		int_s_tree	tree2;
+		int_s_tree	tree3;
 
 		tree1.insert( ft::make_pair(12,  "twelve"));
 		tree1.insert( ft::make_pair(5,   "five"));
@@ -37,7 +37,7 @@ namespace ft
 		tree3.insert( ft::make_pair(120,  "one-hundred twenty"));
 
 		// copy of tree3
-		tree_type	tree4(tree3);
+		int_s_tree	tree4(tree3);
 
 		std::cout << std::boolalpha
 				  << "(tree1 > tree2 && tree1 < tree3) ? " << (tree1 > tree2 && tree1 < tree3)

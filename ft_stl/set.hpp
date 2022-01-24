@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 23:18:28 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 00:05:17 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:30:30 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ namespace ft
 
 		private:
 			// alias for the tree
-			typedef RedBlackTree<key_type, value_type, key_compare, allocator_type>	_tree_type;
+			typedef RedBlackTree<key_type, value_type, get_key<key_type>, key_compare, allocator_type>	_tree_type;
 
 			// attribute
 			_tree_type	_M_tree;
@@ -121,6 +121,15 @@ namespace ft
 
 			// allocator
 			allocator_type			get_allocator(void) const;
+
+			// friend relational operators
+			template<typename _Key, typename _Compare, typename _Alloc>
+				friend bool	operator==(const set<_Key,_Compare,_Alloc>& x,
+									   const set<_Key,_Compare,_Alloc>& y);
+
+			template<typename _Key, typename _Compare, typename _Alloc>
+				friend bool	operator<(const set<_Key,_Compare,_Alloc>& x,
+									  const set<_Key,_Compare,_Alloc>& y);
 		}; // class set
 
 	/* Set implementation *************************************************** */

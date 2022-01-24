@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 18:27:42 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 18:44:08 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,13 +96,6 @@ namespace std
 				std::cout << "\n\n";
 			}
 		}
-
-	template<typename T>
-		struct size_compare
-		{
-			bool	operator()(const T& lhs, const T& rhs) const
-			{ return (lhs.size() < rhs.size()); }
-		};
 }
 
 #endif

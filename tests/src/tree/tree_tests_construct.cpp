@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 18:38:08 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:32:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ namespace ft
 
 		clock_t	start = clock();
 
-		tree_type	tree;
+		int_s_tree	tree;
 
 		display_elapsed_time(start, clock());
 	}
@@ -39,7 +39,7 @@ namespace ft
 		explain_test("Creates a new object from existing one passed as parameter.");
 
 		// create tree
-		tree_type	tree;
+		int_s_tree	tree;
 
 		tree.insert( pair<int, std::string>(8,  "eight") );
 		tree.insert( pair<int, std::string>(8,  "eight") );
@@ -65,7 +65,7 @@ namespace ft
 		clock_t	start = clock();
 
 		// create a copy from tree
-		tree_type	copy_tree(tree);
+		int_s_tree	copy_tree(tree);
 
 		display_elapsed_time(start, clock());
 
@@ -86,8 +86,8 @@ namespace ft
 		explain_test("Copies a tree from an existing one.");
 
 		// create trees
-		tree_type	tree;
-		tree_type	copy_tree;
+		int_s_tree	tree;
+		int_s_tree	copy_tree;
 
 		tree.insert( pair<int, std::string>(8,  "eight") );
 		tree.insert( pair<int, std::string>(8,  "eight") );

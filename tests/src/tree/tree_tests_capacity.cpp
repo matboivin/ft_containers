@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 16:20:25 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:32:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ namespace ft
 		explain_test("Returns true if the tree is empty.");
 
 		// create tree
-		tree_type	tree;
+		int_s_tree	tree;
 
 		bool	is_empty = tree.empty();
 
@@ -51,7 +51,7 @@ namespace ft
 		explain_test("Returns true the number of element in the tree.");
 
 		// create tree
-		tree_type	tree;
+		int_s_tree	tree;
 
 		std::size_t	tree_size = tree.size();
 
@@ -76,7 +76,7 @@ namespace ft
 		explain_test("Returns the maximum number of elements that the tree can hold.");
 
 		// Create tree
-		tree_type	tree;
+		int_s_tree	tree;
 
 		// Display capacity
 		std::cout << "tree max size:  " << tree.max_size() << std::endl;

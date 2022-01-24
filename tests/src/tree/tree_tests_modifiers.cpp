@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 16:09:38 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:32:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ namespace ft
 
 		explain_test("Insert element(s) into the tree.");
 
-		tree_type	tree;
-		tree_type	copy_tree;
+		int_s_tree	tree;
+		int_s_tree	copy_tree;
 
 		std::cout << "tree size: " << tree.size()
 				  << "\ncopy size: " << copy_tree.size() << '\n';
@@ -77,8 +77,8 @@ namespace ft
 
 		std::cout << std::setw(42) << " INSERT RANGE \n\n";
 
-		tree_type::iterator	from = copy_tree.begin();
-		tree_type::iterator	to = copy_tree.end();
+		int_s_tree::iterator	from = copy_tree.begin();
+		int_s_tree::iterator	to = copy_tree.end();
 
 		for (int i = 0; i < 4; ++i)
 			++from;
@@ -102,7 +102,7 @@ namespace ft
 
 		explain_test("Erase element(s) from the tree.");
 
-		tree_type	tree;
+		int_s_tree	tree;
 
 		tree.insert( pair<int, std::string>(76, "seventy-six") );
 		tree.insert( pair<int, std::string>(54, "fifty-four") );
@@ -165,7 +165,7 @@ namespace ft
 
 		explain_test("Erase a range of elements from the tree.");
 
-		tree_type	tree;
+		int_s_tree	tree;
 
 		tree.insert( pair<int, std::string>(76, "seventy-six") );
 		tree.insert( pair<int, std::string>(54, "fifty-four") );
@@ -197,8 +197,8 @@ namespace ft
 
 		display_tree_infos(tree);
 
-		tree_type::iterator	from = tree.find(7);
-		tree_type::iterator	to = tree.find(80);
+		int_s_tree::iterator	from = tree.find(7);
+		int_s_tree::iterator	to = tree.find(80);
 
 		std::cout << "Erase range[" << from->first << ", " << to->first << ")\n\n";
 
@@ -219,9 +219,9 @@ namespace ft
 
 		explain_test("Exchanges the content of the tree and the other tree.");
 
-		tree_type	tree;
-		tree_type	other_tree;
-		tree_type	empty_tree;
+		int_s_tree	tree;
+		int_s_tree	other_tree;
+		int_s_tree	empty_tree;
 
 		tree.insert( pair<int, std::string>(8,  "eight") );
 		tree.insert( pair<int, std::string>(18, "eighteen") );
@@ -236,7 +236,7 @@ namespace ft
 		other_tree.insert( pair<int, std::string>(12,  "twelve") );
 
 		const pair<int, std::string>&	ref = *(tree.begin());
-		const tree_type::iterator		it = ++tree.begin();
+		const int_s_tree::iterator		it = ++tree.begin();
 
 		display_tree_infos(tree, "tree");
 		display_tree_infos(other_tree, "other tree");
@@ -279,7 +279,7 @@ namespace ft
 
 		explain_test("Destroys all elements from the tree, leaving it with a size of 0.");
 
-		tree_type	tree;
+		int_s_tree	tree;
 
 		tree.insert( pair<int, std::string>(8,  "eight") );
 		tree.insert( pair<int, std::string>(18, "eighteen") );

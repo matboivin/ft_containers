@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 16:05:19 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:32:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ namespace ft
 		explain_test("Move through the elements of the container like pointers do.");
 
 		// create tree
-		tree_type	tree;
+		int_s_tree	tree;
 
 		std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
 				  << (tree.begin() == tree.end()) << '\n';
@@ -55,14 +55,14 @@ namespace ft
 		display_tree_infos(tree);
 		std::cout << "tree size: " << tree.size() << '\n';
 
-		for (tree_type::iterator it = tree.begin(); it != tree.end(); ++it)
+		for (int_s_tree::iterator it = tree.begin(); it != tree.end(); ++it)
 			std::cout << it->first << " => " << it->second << '\n';
 
 		std::cout << "TEST: Iterator with empty tree\n\n";
 
 		tree.clear();
 
-		tree_type::iterator	end = tree.end();
+		int_s_tree::iterator	end = tree.end();
 		--end;
 
 		for (; end != tree.begin(); --end)
@@ -77,7 +77,7 @@ namespace ft
 		explain_test("Move through the elements of the container backwards.");
 
 		// create tree
-		tree_type	tree;
+		int_s_tree	tree;
 
 		tree.insert( pair<int, std::string>(8,  "eight") );
 		tree.insert( pair<int, std::string>(18, "eighteen") );
@@ -99,7 +99,7 @@ namespace ft
 
 		std::cout << "Print the tree content using reverse iterator:" << std::endl;
 
-		for (tree_type::reverse_iterator rev_it = tree.rbegin(); rev_it != tree.rend(); ++rev_it)
+		for (int_s_tree::reverse_iterator rev_it = tree.rbegin(); rev_it != tree.rend(); ++rev_it)
 			std::cout << rev_it->first << " => " << rev_it->second << '\n';
 		std::cout << "\n\n";
 	}

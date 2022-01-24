@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 23:21:25 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/16 23:39:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 18:52:15 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,5 +31,8 @@ namespace std
 
 		// construct/assign
 		test_set_default_ctor();
+		test_set_range_ctor();
+		test_set_copy_ctor();
+		test_set_copy_assign();
 	}
 }

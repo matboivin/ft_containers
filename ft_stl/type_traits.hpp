@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:29:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/22 23:01:55 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 19:37:26 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ namespace ft
 			static const T					value = v;
 			typedef T						value_type;
 			typedef integral_constant<T,v>	type;
-			operator value_type() const { return value; }
+			operator value_type() const { return (value); }
 		};
 
 	// Represent true and false values

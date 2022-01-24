@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 16:18:58 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 16:32:23 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:32:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ namespace ft
 		explain_test("Exchange contents of 2 trees.");
 
 		// create trees
-		tree_type	tree1;
-		tree_type	tree2;
-		tree_type	tree3;
+		int_s_tree	tree1;
+		int_s_tree	tree2;
+		int_s_tree	tree3;
 
 		// fill them
 		for (int i = 0; i < 10000; ++i)
@@ -39,9 +39,9 @@ namespace ft
 			tree2.insert(ft::make_pair(rand(), "two"));
 
 		// create backup
-		tree_type	backup1(tree1);
-		tree_type	backup2(tree2);
-		tree_type	backup3(tree3);
+		int_s_tree	backup1(tree1);
+		int_s_tree	backup2(tree2);
+		int_s_tree	backup3(tree3);
 
 		// first test
 		display_tree_infos(tree1, "before: tree 1");

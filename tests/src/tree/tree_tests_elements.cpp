@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/02 18:34:38 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 20:32:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ namespace ft
 		explain_test("Returns 1 if the tree contains an element matching key k.");
 
 		std::map<int, std::string>	m;
-		tree_type					tree;
+		int_s_tree					tree;
 
 		m[8]  = "eight";
 		m[18] = "eighteen";
@@ -66,7 +66,7 @@ namespace ft
 		explain_test("Returns the element with the key k, else return end.");
 
 		std::map<int, std::string>	m;
-		tree_type					tree;
+		int_s_tree					tree;
 
 		m[8]  = "eight";
 		m[18] = "eighteen";
@@ -106,7 +106,7 @@ namespace ft
 		explain_test("Returns the first element that is equivalent or after k.");
 
 		std::map<int, std::string>	m;
-		tree_type					tree;
+		int_s_tree					tree;
 
 		m[8]  = "eight";
 		m[18] = "eighteen";
@@ -146,7 +146,7 @@ namespace ft
 		explain_test("Returns the first element that is after k.");
 
 		std::map<int, std::string>	m;
-		tree_type					tree;
+		int_s_tree					tree;
 
 		m[8]  = "eight";
 		m[18] = "eighteen";
@@ -186,7 +186,7 @@ namespace ft
 		explain_test("Returns the bounds of a range that have a key equivalent to k.");
 
 		std::map<int, std::string>	m;
-		tree_type					tree;
+		int_s_tree					tree;
 
 		m[8]  = "eight";
 		m[18] = "eighteen";

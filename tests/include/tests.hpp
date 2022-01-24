@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:45:41 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 18:34:25 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 18:44:03 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,14 @@ namespace std
 		{
 			assert(c == c_ref);
 		}
+
+	// can be used for comparison of objects with size() member function in map and set
+	template<typename T>
+		struct size_compare
+		{
+			bool	operator()(const T& lhs, const T& rhs) const
+			{ return (lhs.size() < rhs.size()); }
+		};
 }
 
 #endif
