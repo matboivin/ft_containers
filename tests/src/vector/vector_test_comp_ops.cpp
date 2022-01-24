@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 16:45:35 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 14:27:45 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 16:56:43 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ namespace std
 
 		explain_test("Operators to make comparison between two vectors.");
 
-		// create vector
+		// create vectors
 		vector<int>	vec1;
 		vector<int>	vec2;
 		vector<int>	vec3;

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/23 23:47:13 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 16:19:12 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ namespace ft
 	void	test_tree_clear(void);
 
 	// non-member functions
-	// void	test_tree_non_mb_comp_ops(void);
-	// void	test_tree_non_mb_swap(void);
+	void	test_tree_non_mb_comp_ops(void);
+	void	test_tree_non_mb_swap(void);
 }
 
 /* Display the tree size and nodes */

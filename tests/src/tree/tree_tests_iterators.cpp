@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/02 18:32:56 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 16:05:19 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,8 @@ namespace ft
 		display_tree_infos(tree);
 		std::cout << "tree size: " << tree.size() << '\n';
 
-		for (tree_type::iterator it = tree.begin();
-			 it != tree.end();
-			 ++it)
-		{
+		for (tree_type::iterator it = tree.begin(); it != tree.end(); ++it)
 			std::cout << it->first << " => " << it->second << '\n';
-		}
 
 		std::cout << "TEST: Iterator with empty tree\n\n";
 
@@ -69,10 +65,8 @@ namespace ft
 		tree_type::iterator	end = tree.end();
 		--end;
 
-		for ( ; end != tree.begin(); --end)
-		{
+		for (; end != tree.begin(); --end)
 			std::cout << end->first << " => " << end->second << '\n';
-		}
 		std::cout << end->first << " => " << end->second << '\n';
 	}
 
@@ -105,12 +99,8 @@ namespace ft
 
 		std::cout << "Print the tree content using reverse iterator:" << std::endl;
 
-		for (tree_type::reverse_iterator rev_it = tree.rbegin();
-			 rev_it != tree.rend();
-			 ++rev_it)
-		{
+		for (tree_type::reverse_iterator rev_it = tree.rbegin(); rev_it != tree.rend(); ++rev_it)
 			std::cout << rev_it->first << " => " << rev_it->second << '\n';
-		}
 		std::cout << "\n\n";
 	}
 }

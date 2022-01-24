@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/02 18:32:27 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 16:04:22 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ namespace ft
 		display_elapsed_time(start, clock());
 
 		// assert they're identical
-		//assert(tree == copy_tree);
+		assert(tree == copy_tree);
 
 		std::cout << "tree size: " << tree.size() << '\n';
 		std::cout << "copy size: " << copy_tree.size() << '\n';
@@ -115,7 +115,7 @@ namespace ft
 		display_elapsed_time(start, clock());
 
 		// assert they're identical
-		//assert(tree == copy_tree);
+		assert(tree == copy_tree);
 
 		std::cout << "tree size: " << tree.size() << '\n';
 		std::cout << "copy size: " << copy_tree.size() << '\n';

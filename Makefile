@@ -62,10 +62,12 @@ STACK_SRC_FILES =	stack_test_capacity.cpp \
 					stack_tests.cpp
 
 TREE_SRC_FILES =	tree_tests_capacity.cpp \
+					tree_tests_comp_ops.cpp \
 					tree_tests_construct.cpp \
 					tree_tests_elements.cpp \
 					tree_tests_iterators.cpp \
 					tree_tests_modifiers.cpp \
+					tree_tests_swap.cpp \
 					tree_tests.cpp
 
 VEC_SRC_FILES =		vector_test_capacity.cpp \

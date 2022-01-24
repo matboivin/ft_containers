@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/23 23:36:37 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 16:16:52 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -607,8 +607,8 @@ namespace ft
 			template<typename InputIterator>
 				void				insert(InputIterator first, InputIterator last,
 										   typename enable_if<
-										   		is_same<typename InputIterator::value_type,
-										   		value_type>::value>::type* = 0);
+												is_same<typename InputIterator::value_type,
+												value_type>::value>::type* = 0);
 			void					erase(iterator position);
 			size_type				erase(const key_type& k);
 			void					erase(iterator first, iterator last);

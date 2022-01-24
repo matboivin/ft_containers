@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/16 22:28:07 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 16:09:38 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@ namespace ft
 		tree_type	tree;
 		tree_type	copy_tree;
 
-		std::cout << "tree size: " << tree.size() << '\n';
-		std::cout << "copy size: " << copy_tree.size() << '\n';
+		std::cout << "tree size: " << tree.size()
+				  << "\ncopy size: " << copy_tree.size() << '\n';
 
 		tree.insert( pair<int, std::string>(8,  "eight") );
 		tree.insert( pair<int, std::string>(8,  "eight") );
@@ -61,21 +61,19 @@ namespace ft
 
 		tree.write_tree_dot("ast_before");
 
+		// perform copy
 		copy_tree = tree;
 
+		// assert they're identical
+		assert(copy_tree == tree);
+
+		// delete original tree
 		tree.clear();
+		// assert copy is not impacted
+		assert(copy_tree.empty() == false);
 
 		std::cout << "tree size: " << tree.size()
 				  << "\ncopy size: " << copy_tree.size() << '\n';
-
-		tree_type::iterator	end = copy_tree.end();
-		--end;
-
-		for ( ; end != copy_tree.begin(); --end)
-		{
-			std::cout << end->first << " => " << end->second << '\n';
-		}
-		std::cout << end->first << " => " << end->second << "\n\n";
 
 		std::cout << std::setw(42) << " INSERT RANGE \n\n";
 
@@ -87,8 +85,8 @@ namespace ft
 		for (int i = 0; i < 2; ++i)
 			--to;
 
-		std::cout << "from: " << from->first << '\n';
-		std::cout << "to:   " << to->first << '\n';
+		std::cout << "from: " << from->first
+				  << "\nto:   " << to->first << '\n';
 
 		tree.insert(from, to);
 		display_tree_infos(tree);
@@ -293,10 +291,15 @@ namespace ft
 		tree.insert( pair<int, std::string>(80, "eighty") );
 		tree.insert( pair<int, std::string>(20, "twenty") );
 
+		assert(tree.empty() == false);
+		assert(tree.size() > 0);
+
 		std::cout << "tree size: " << tree.size() << '\n';
 
 		tree.clear();
 
-		std::cout << "tree size: " << tree.size() << '\n';
+		// check tree is empty
+		assert(tree.empty() == true);
+		assert(tree.size() == 0);
 	}
 }

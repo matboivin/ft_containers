@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/23 23:47:08 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 16:54:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,8 @@ namespace std
 	void	test_map_lookup(void);
 
 	// non-member functions
-	// void	test_map_non_mb_comp_ops(void);
-	// void	test_map_non_mb_swap(void);
+	void	test_map_non_mb_comp_ops(void);
+	void	test_map_non_mb_swap(void);
 
 	template<typename Map>
 		void	display_map_infos(const Map& m, const std::string& title="map")
