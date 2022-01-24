@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 18:44:08 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 21:57:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ namespace std
 	void	test_map_insert_val(void);
 	void	test_map_insert_pos(void);
 	void	test_map_insert_range(void);
+	void	test_map_erase_range(void);
 	void	test_map_swap(void);
 	void	test_map_clear(void);
 

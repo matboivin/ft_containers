@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 20:32:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 23:16:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,9 +207,18 @@ namespace ft
 
 		tree.write_tree_dot("ast_after_range");
 
-		std::cout << "Erase range[begin, end)\n\n";
+		from = ++tree.begin();
+		to = --tree.end();
 
-		tree.erase(tree.begin(), tree.end());
+		std::cout << "Erase range[" << from->first << ", " << to->first << ")\n\n";
+
+		tree.erase(from, to);
+		display_tree_infos(tree);
+
+		std::cout << "Erase everything\n\n";
+
+		while (tree.empty() == false)
+			tree.erase(tree.begin());
 		display_tree_infos(tree);
 	}
 

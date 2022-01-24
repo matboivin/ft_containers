@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 20:30:22 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 23:22:04 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -309,7 +309,9 @@ namespace ft
 	template<typename Key, typename T, typename Compare, typename Alloc>
 		void
 		map<Key,T,Compare,Alloc>::erase(iterator first, iterator last)
-		{ return (this->_M_tree.erase(first, last)); }
+		{
+			this->_M_tree.erase(first, last);
+		}
 
 	/* Exchanges the content of the map and the other map */
 	template<typename Key, typename T, typename Compare, typename Alloc>

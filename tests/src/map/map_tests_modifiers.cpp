@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/23 13:14:12 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 23:18:57 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,73 @@ namespace std
 		display_elapsed_time(start, clock());
 	}
 
+	void	test_map_erase_range(void)
+	{
+		std::cout << "TEST: Modifiers: erase() \n\n";
+
+		explain_test("Erase a range of elements from the map.");
+
+		int_s_map	m;
+
+		m.insert( pair<int, std::string>(76, "seventy-six") );
+		m.insert( pair<int, std::string>(54, "fifty-four") );
+		m.insert( pair<int, std::string>(14, "fourteen") );
+		m.insert( pair<int, std::string>(28, "twenty-eight") );
+		m.insert( pair<int, std::string>(29, "twenty-nine") );
+		m.insert( pair<int, std::string>(9,  "nine") );
+		m.insert( pair<int, std::string>(19, "nineteen") );
+		m.insert( pair<int, std::string>(97, "ninety-seven") );
+		m.insert( pair<int, std::string>(65, "sixty-five") );
+		m.insert( pair<int, std::string>(0,  "zero") );
+		m.insert( pair<int, std::string>(1,  "one") );
+		m.insert( pair<int, std::string>(81, "eighty-one") );
+		m.insert( pair<int, std::string>(54, "fifty-four") );
+		m.insert( pair<int, std::string>(77, "seventy-seven") );
+		m.insert( pair<int, std::string>(42, "fourty-two") );
+		m.insert( pair<int, std::string>(60, "sixty") );
+		m.insert( pair<int, std::string>(2,  "two") );
+		m.insert( pair<int, std::string>(32, "thirty-two") );
+		m.insert( pair<int, std::string>(7,  "seven") );
+		m.insert( pair<int, std::string>(44, "fourty-four") );
+		m.insert( pair<int, std::string>(79, "seventy-nine") );
+		m.insert( pair<int, std::string>(82, "eighty-two") );
+		m.insert( pair<int, std::string>(3,  "three") );
+		m.insert( pair<int, std::string>(80, "twenty-five") );
+		m.insert( pair<int, std::string>(78, "seventy-eight") );
+		m.insert( pair<int, std::string>(17, "seventeen") );
+		m.insert( pair<int, std::string>(10, "ten") );
+
+		display_map_infos(m);
+
+		// test maps
+		int_s_map	cpy_m(m);
+		int_s_map	expected;
+
+		expected.insert( pair<int, std::string>(0,  "zero") );
+		expected.insert( pair<int, std::string>(97, "ninety-seven") );
+
+		int_s_map::iterator	from = m.find(7);
+		int_s_map::iterator	to = m.find(80);
+
+		std::cout << "Erase range[" << from->first << ", " << to->first << ")\n\n";
+
+		m.erase(from, to);
+		display_map_infos(m);
+
+		std::cout << "Erase range[" << (++m.begin())->first << ", " << (--m.end())->first << ")\n\n";
+
+		m.erase(++m.begin(), --m.end());
+		display_map_infos(m);
+
+		assert(m == expected);
+
+		std::cout << "Erase range[begin, end)\n\n";
+
+		cpy_m.erase(cpy_m.begin(), cpy_m.end());
+		display_map_infos(cpy_m);
+
+		assert(cpy_m.empty() == true);
+	}
 
 	void	test_map_swap(void)
 	{

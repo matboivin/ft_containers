@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 21:17:29 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 23:26:21 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1172,7 +1172,7 @@ namespace ft
 					__parent = __subst;
 				if (this->_M_header._M_parent == __node) // update root
 					this->_M_header._M_parent = __subst;
-				if (__delete_left)
+				else if (__delete_left)
 					__node->_M_parent->_M_left = __subst;
 				else
 					__node->_M_parent->_M_right = __subst;
@@ -1184,27 +1184,23 @@ namespace ft
 			{
 				if (this->_M_header._M_parent == __node) // update root
 					this->_M_header._M_parent = __subst;
-				if (__delete_left)
-				{
+				else if (__delete_left)
 					__node->_M_parent->_M_left = __subst;
-					if (this->_M_header._M_left == __node) // update leftmost
-					{
-						if (__node->_M_right == 0)
-							this->_M_header._M_left = __node->_M_parent;
-						else
-							this->_M_header._M_left = __node->_get_leftmost(__node);
-					}
-				}
 				else
-				{
 					__node->_M_parent->_M_right = __subst;
-					if (this->_M_header._M_right == __node) // update rightmost
-					{
-						if (__node->_M_left == 0)
-							this->_M_header._M_right = __node->_M_parent;
-						else
-							this->_M_header._M_right = __node->_get_rightmost(__node);
-					}
+				if (this->_M_header._M_left == __node) // update leftmost
+				{
+					if (__node->_M_right == 0)
+						this->_M_header._M_left = __node->_M_parent;
+					else if (__subst != 0)
+						this->_M_header._M_left = __last_subst->_get_leftmost(__last_subst);
+				}
+				else if (this->_M_header._M_right == __node) // update rightmost
+				{
+					if (__node->_M_left == 0)
+						this->_M_header._M_right = __node->_M_parent;
+					else if (__last_subst != 0)
+						this->_M_header._M_left = __last_subst->_get_rightmost(__last_subst);
 				}
 			}
 			if (__last_subst != 0)
@@ -1400,18 +1396,18 @@ namespace ft
 		void
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::erase(iterator position)
 		{
-			this->_M_delete_node(position.get_node());
+			_M_delete_node(position.get_node());
 		}
 
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::size_type
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::erase(const key_type& k)
 		{
-			iterator	it = this->find(k);
+			iterator	it = find(k);
 
-			if (_M_key_exists(it.get_node(), k))
+			if (it != end())
 			{
-				this->_M_delete_node(it.get_node());
+				_M_delete_node(it.get_node());
 				return (1);
 			}
 			return (0);
@@ -1429,7 +1425,7 @@ namespace ft
 			else
 			{
 				while (first != last)
-					this->erase(first++);
+					erase(first++);
 			}
 		}
 
