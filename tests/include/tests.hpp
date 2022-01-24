@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:45:41 by mboivin           #+#    #+#             */
-/*   Updated: 2021/10/28 16:35:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 18:34:25 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,23 @@ void		explain_test(const std::string& msg);
 int			continue_tests(const std::string& next_test);
 int			generate_output(void);
 std::string	str_to_lower(std::string str);
+
+#if defined(TEST_FT)
+# include "map.hpp"
+
+namespace ft
+#else
+# include <map>
+
+namespace std
+#endif
+{
+	// helper for copy constructor tests
+	template<typename Cont>
+		void	copy_is_identical(Cont c, const Cont& c_ref)
+		{
+			assert(c == c_ref);
+		}
+}
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 16:04:22 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 18:38:08 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ namespace ft
 
 		std::cout << "tree size: " << tree.size() << '\n';
 		std::cout << "copy size: " << copy_tree.size() << '\n';
+
+		// another assert test
+		copy_is_identical(tree, tree);
 	}
 
 	void	test_tree_copy_assign(void)

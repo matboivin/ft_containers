@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:51:27 by mboivin           #+#    #+#             */
-/*   Updated: 2021/11/02 14:06:38 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 18:37:49 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ namespace std
 
 		// assert they're identical
 		assert(stack_vec == copy_stack_vec);
+		// another assert test
+		copy_is_identical(stack_vec, stack_vec);
 
 		// Test deque
 		std::cout << "2. With deque" << std::endl;
@@ -90,6 +92,8 @@ namespace std
 
 		// assert they're identical
 		assert(stack_deque == copy_stack_deque);
+		// another assert test
+		copy_is_identical(stack_deque, stack_deque);
 
 		// Test list
 		std::cout << "3. With list" << std::endl;
@@ -103,6 +107,8 @@ namespace std
 
 		// assert they're identical
 		assert(stack_lst == copy_stack_lst);
+		// another assert test
+		copy_is_identical(stack_lst, stack_lst);
 	}
 
 	void	test_stack_copy_assign(void)

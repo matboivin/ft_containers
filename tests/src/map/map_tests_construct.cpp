@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2021/12/20 23:56:30 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/24 18:35:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,25 +74,8 @@ namespace std
 
 		display_elapsed_time(start, clock());
 
-		// check they're identical
-		int_map::iterator	it = m.begin();
-		int_map::iterator	cpy_it = cpy_m.begin();
-
-		for ( ; it != m.end() && cpy_it != cpy_m.end(); ++it, ++cpy_it)
-			assert((it->first == cpy_it->first) && (it->second == cpy_it->second));
-
-		int	random_key = rand();
-
-		std::cout << "m[" << random_key << "]     = " << m[random_key] << '\n'
-				  << "cpy_m[" << random_key << "] = " << cpy_m[random_key] << "\n\n";
-
-		m[random_key] = rand();
-
-		std::cout << "m[" << random_key << "]     = " << m[random_key] << '\n'
-				  << "cpy_m[" << random_key << "] = " << cpy_m[random_key] << "\n\n";
-
-		// check the copy didn't change
-		assert(m[random_key] != cpy_m[random_key]);
+		// another assert test
+		copy_is_identical(m, m);
 	}
 
 	void	test_map_copy_assign(void)
