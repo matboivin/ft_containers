@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/25 01:11:27 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/25 01:36:13 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,50 @@ namespace ft
 		}; // class reverse_iterator
 
 	/* Relational operators */
+	template<typename Iterator>
+		bool
+		operator==(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+		{ return (lhs.base() == rhs.base()); }
 
+	template<typename Iterator>
+		bool
+		operator!=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+		{ return (lhs.base() != rhs.base()); }
+
+	template<typename Iterator>
+		bool
+		operator<(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+		{ return (lhs.base() > rhs.base()); }
+
+	template<typename Iterator>
+		bool
+		operator<=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+		{ return (lhs.base() >= rhs.base()); }
+
+	template<typename Iterator>
+		bool
+		operator>(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+		{ return (lhs.base() < rhs.base()); }
+
+	template<typename Iterator>
+		bool
+		operator>=(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+		{ return (lhs.base() <= rhs.base()); }
+
+	/* Addition operator */
+	template<typename Iterator>
+		reverse_iterator<Iterator>
+		operator+(typename reverse_iterator<Iterator>::difference_type n,
+				  const reverse_iterator<Iterator>& rev_it)
+		{ return ( reverse_iterator<Iterator>(rev_it.base() - n) ); }
+
+	/* Subtraction operator*/
+	template<typename Iterator>
+		typename reverse_iterator<Iterator>::difference_type
+		operator-(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+		{ return (rhs.base() - lhs.base()); }
+
+	/* Same things for comparison between const and not const */
 	template<typename Iter1, typename Iter2>
 		bool
 		operator==(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs)
@@ -271,27 +314,10 @@ namespace ft
 		operator>=(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs)
 		{ return (lhs.base() <= rhs.base()); }
 
-	/*
-	 * Addition operator
-	 * Returns a reverse iterator pointing to the element located n positions
-	 * away from the element pointed to by rev_it
-	 */
-	template<typename Iterator>
-		reverse_iterator<Iterator>
-		operator+(typename reverse_iterator<Iterator>::difference_type n,
-				  const reverse_iterator<Iterator>& rev_it)
-		{ return ( reverse_iterator<Iterator>(rev_it.base() - n) ); }
-
-	/*
-	 * Subtraction operator
-	 * Computes the distance between two reverse iterators
-	 * The function returns the same as subtracting lhs's base iterator from rhs's base iterator
-	 */
-	template<typename Iterator>
-		typename reverse_iterator<Iterator>::difference_type
-		operator-(const reverse_iterator<Iterator>& lhs, const reverse_iterator<Iterator>& rhs)
+	template<typename Iter1, typename Iter2>
+		typename reverse_iterator<Iter1>::difference_type
+		operator-(const reverse_iterator<Iter1>& lhs, const reverse_iterator<Iter2>& rhs)
 		{ return (rhs.base() - lhs.base()); }
-
 
 	/* Base iterator ******************************************************** */
 
@@ -426,7 +452,57 @@ namespace ft
 		}; // class base_iterator
 
 	/* Relational operators */
+	template<typename Iterator, typename Container>
+		bool
+		operator==(const base_iterator<Iterator,Container>& lhs,
+				   const base_iterator<Iterator,Container>& rhs)
+		{ return (lhs.base() == rhs.base()); }
 
+	template<typename Iterator, typename Container>
+		bool
+		operator!=(const base_iterator<Iterator,Container>& lhs,
+				   const base_iterator<Iterator,Container>& rhs)
+		{ return (lhs.base() != rhs.base()); }
+
+	template<typename Iterator, typename Container>
+		bool
+		operator<(const base_iterator<Iterator,Container>& lhs,
+				  const base_iterator<Iterator,Container>& rhs)
+		{ return (lhs.base() < rhs.base()); }
+
+	template<typename Iterator, typename Container>
+		bool
+		operator<=(const base_iterator<Iterator,Container>& lhs,
+				   const base_iterator<Iterator,Container>& rhs)
+		{ return (lhs.base() <= rhs.base()); }
+
+	template<typename Iterator, typename Container>
+		bool
+		operator>(const base_iterator<Iterator,Container>& lhs,
+				  const base_iterator<Iterator,Container>& rhs)
+		{ return (lhs.base() > rhs.base()); }
+
+	template<typename Iterator, typename Container>
+		bool
+		operator>=(const base_iterator<Iterator,Container>& lhs,
+				   const base_iterator<Iterator,Container>& rhs)
+		{ return (lhs.base() >= rhs.base()); }
+
+	/* Addition operator */
+	template<typename Iterator, typename Container>
+		base_iterator<Iterator,Container>
+		operator+(typename base_iterator<Iterator,Container>::difference_type n,
+				  const base_iterator<Iterator,Container>& it)
+		{ return (base_iterator<Iterator,Container>(it.base() + n));}
+
+	/* Subtraction operator */
+	template<typename Iterator, typename Container>
+		typename base_iterator<Iterator,Container>::difference_type
+		operator-(const base_iterator<Iterator,Container>& lhs,
+				  const base_iterator<Iterator,Container>& rhs)
+		{ return (lhs.base() - rhs.base()); }
+
+	/* Same things for comparison between const and not const */
 	template<typename Iter1, typename Iter2, typename Container>
 		bool
 		operator==(const base_iterator<Iter1,Container>& lhs, const base_iterator<Iter2,Container>& rhs)
@@ -457,26 +533,10 @@ namespace ft
 		operator>=(const base_iterator<Iter1,Container>& lhs, const base_iterator<Iter2,Container>& rhs)
 		{ return (lhs.base() >= rhs.base()); }
 
-	/*
-	 * Addition operator
-	 * Returns a base iterator pointing to the element located n positions
-	 * away from the element pointed to by it
-	 */
-	template<typename Iterator, typename Container>
-		base_iterator<Iterator,Container>
-		operator+(typename base_iterator<Iterator,Container>::difference_type n,
-				  const base_iterator<Iterator,Container>& it)
-		{ return (base_iterator<Iterator,Container>(it.base() + n));}
-
-	/*
-	 * Subtraction operator
-	 * Computes the distance between two base iterators
-	 * The function returns the same as subtracting lhs's base iterator from rhs's base iterator
-	 */
-	template<typename Iterator, typename Container>
-		typename base_iterator<Iterator,Container>::difference_type
-		operator-(const base_iterator<Iterator,Container>& lhs,
-				  const base_iterator<Iterator,Container>& rhs)
+	template<typename Iter1, typename Iter2, typename Container>
+		typename base_iterator<Iter1,Container>::difference_type
+		operator-(const base_iterator<Iter1,Container>& lhs,
+				  const base_iterator<Iter2,Container>& rhs)
 		{ return (lhs.base() - rhs.base()); }
 
 	/* iterator types ******************************************************* */
