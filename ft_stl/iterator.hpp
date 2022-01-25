@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/25 00:36:31 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/25 01:11:27 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,9 +151,7 @@ namespace ft
 				reverse_iterator&
 				operator=(const reverse_iterator<Iter>& other)
 				{
-					if (this != &other)
-						this->_M_current = other.base();
-
+					this->_M_current = other.base();
 					return (*this);
 				}
 
@@ -347,9 +345,7 @@ namespace ft
 				base_iterator&
 				operator=(const base_iterator<Iter,Container>& other)
 				{
-					if (this != &other)
-						this->_M_current = other.base();
-
+					this->_M_current = other.base();
 					return (*this);
 				}
 
