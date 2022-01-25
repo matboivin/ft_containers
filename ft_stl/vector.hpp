@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 20:47:33 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/25 01:01:42 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,11 +210,7 @@ namespace ft
 		void
 		vector<T,Alloc>::_M_range_initialize(InputIterator __first, InputIterator __last)
 		{
-			difference_type	__len = 0;
-			InputIterator	__cursor(__first);
-
-			for ( ; __cursor != __last && __cursor != end(); ++__cursor)
-				++__len;
+			size_type	__len = __last - __first;
 
 			if (__len > 0)
 			{
@@ -230,15 +226,11 @@ namespace ft
 		void
 		vector<T, Alloc>::_M_range_insert(iterator __pos, InputIterator __first, InputIterator __last)
 		{
-			difference_type	__len = 0;
-			InputIterator	__cursor(__first);
-
-			for ( ; __cursor != __last && __cursor != end(); ++__cursor)
-				++__len;
+			size_type	__len = __last - __first;
 
 			if (__len > 0)
 			{
-				if (capacity() - size() >= size_type(__len)) // enough capacity left
+				if (capacity() - size() >= __len) // enough capacity left
 				{
 					iterator	__backup_end = end();
 
@@ -256,8 +248,8 @@ namespace ft
 				}
 				else // not enough capacity
 				{
-					size_type		__nb_elem_before = begin() - __pos;
-					size_type		__nb_elem_after = __pos - end();
+					size_type		__nb_elem_before = __pos - begin();
+					size_type		__nb_elem_after = end() - __pos;
 					const size_type	__new_size = _M_len_check(__len, "vector::_M_range_insert");
 					pointer			__new_start = this->_M_allocate(__new_size);
 					pointer			__new_end = __new_start;
@@ -303,8 +295,8 @@ namespace ft
 				}
 				else // not enough capacity
 				{
-					size_type		__nb_elem_before = begin() - __pos;
-					size_type		__nb_elem_after = __pos - end();
+					size_type		__nb_elem_before = __pos - begin();
+					size_type		__nb_elem_after = end() - __pos;
 					const size_type	__new_size = _M_len_check(__n, "vector::_M_fill_insert");
 					pointer			__new_start = this->_M_allocate(__new_size);
 					pointer			__new_end = __new_start;

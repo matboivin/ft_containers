@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/22 23:10:56 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/25 00:36:31 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -481,7 +481,7 @@ namespace ft
 		typename base_iterator<Iterator,Container>::difference_type
 		operator-(const base_iterator<Iterator,Container>& lhs,
 				  const base_iterator<Iterator,Container>& rhs)
-		{ return (rhs.base() - lhs.base()); }
+		{ return (lhs.base() - rhs.base()); }
 
 	/* iterator types ******************************************************* */
 
