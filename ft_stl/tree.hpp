@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 23:53:30 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/26 21:19:24 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -566,7 +566,7 @@ namespace ft
 			node_pointer			_M_get_pos_from_hint(iterator __hint, const key_type& __k);
 			pair<node_pointer,bool>	_M_get_insert_pos(iterator __hint, const key_type& __k);
 			void					_M_insert_node(const bool __insert_left,
-												   node_pointer __node, node_pointer __parent);
+												node_pointer __node, node_pointer __parent);
 			pair<iterator,bool>		_M_insert(iterator __pos, const value_type& __val);
 			// helpers deletion
 			void					_M_rebalance_del(node_pointer __subst, node_pointer __parent);
@@ -576,7 +576,8 @@ namespace ft
 
 		public:
 			// default constructor
-			RedBlackTree(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
+			RedBlackTree(const key_compare& comp = key_compare(),
+						 const allocator_type& alloc = allocator_type());
 
 			// copy constructor
 			RedBlackTree(const RedBlackTree& other);
@@ -613,10 +614,9 @@ namespace ft
 			pair<iterator,bool>		insert(const value_type& val);
 			iterator				insert(iterator position, const value_type& val);
 			template<typename InputIterator>
-				void				insert(InputIterator first, InputIterator last,
-										   typename enable_if<
-												is_same<typename InputIterator::value_type,
-												value_type>::value>::type* = 0);
+				void				insert(InputIterator first, InputIterator last, typename enable_if<
+											is_same<typename InputIterator::value_type,
+											value_type>::value>::type* = 0);
 			void					erase(iterator position);
 			size_type				erase(const key_type& k);
 			void					erase(iterator first, iterator last);
@@ -778,7 +778,8 @@ namespace ft
 
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		bool
-		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_key_exists(const_node_pointer __node, const key_type& __k) const
+		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_key_exists(
+			const_node_pointer __node, const key_type& __k) const
 		{
 			return (__node != end().get_node()
 					&& !(_M_key_compare(__k, _M_get_key(__node)))
@@ -997,8 +998,8 @@ namespace ft
 	/* Insert a node and rebalance the tree */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		void
-		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_insert_node(const bool __insert_left,
-																	  node_pointer __node, node_pointer __parent)
+		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_insert_node(
+			const bool __insert_left, node_pointer __node, node_pointer __parent)
 		{
 			__node->_M_parent = __parent;
 
@@ -1028,7 +1029,7 @@ namespace ft
 		pair<typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::iterator,bool>
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::_M_insert(iterator __pos, const value_type& __val)
 		{
-			const key_type				__k = KeyGetter()(__val);
+			const key_type			__k = KeyGetter()(__val);
 			pair<node_pointer,bool>	__pos_k = _M_get_insert_pos(__pos, __k);
 
 			if (_M_key_exists(__pos_k.first, __k))
@@ -1255,17 +1256,15 @@ namespace ft
 	/* default constructor */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::RedBlackTree(const key_compare& comp, const allocator_type& alloc)
-		: _M_alloc(alloc),
-		  _M_key_compare(comp) { }
+		: _M_alloc(alloc), _M_key_compare(comp) { }
 
 	/* copy constructor */
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::RedBlackTree(const RedBlackTree& other)
-		: _M_alloc(other._M_alloc),
-		  _M_key_compare(other._M_key_compare)
+		: _M_alloc(other._M_alloc), _M_key_compare(other._M_key_compare)
 		{
-			const_iterator	first = other.begin();
-			const_iterator	last = other.end();
+			const_iterator	first(other.begin());
+			const_iterator	last(other.end());
 
 			while (first != last)
 			{
@@ -1285,8 +1284,8 @@ namespace ft
 				this->_M_reset();
 				this->_M_key_compare = other._M_key_compare;
 
-				const_iterator	first = other.begin();
-				const_iterator	last = other.end();
+				const_iterator	first(other.begin());
+				const_iterator	last(other.end());
 
 				while (first != last)
 				{
@@ -1406,10 +1405,9 @@ namespace ft
 	template<typename Key, typename Val, typename KeyGetter, typename Compare, typename Alloc>
 	template<typename InputIterator>
 		void
-		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::insert(InputIterator first, InputIterator last,
-															  typename enable_if<
-																is_same<typename InputIterator::value_type,
-																value_type>::value>::type*)
+		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::insert(
+			InputIterator first, InputIterator last,
+			typename enable_if<is_same<typename InputIterator::value_type, value_type>::value>::type*)
 		{
 			for ( ; first != last; ++first)
 				_M_insert(end(), *first);
@@ -1427,7 +1425,7 @@ namespace ft
 		typename RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::size_type
 		RedBlackTree<Key,Val,KeyGetter,Compare,Alloc>::erase(const key_type& k)
 		{
-			iterator	it = find(k);
+			iterator	it(find(k));
 
 			if (it != end())
 			{

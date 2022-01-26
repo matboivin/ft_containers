@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/25 00:01:46 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/26 21:20:18 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,9 @@ namespace ft
 			pair<iterator,bool>	insert(const value_type& val);
 			iterator			insert(iterator position, const value_type& val);
 			template<class InputIterator>
-				void			insert(InputIterator first, InputIterator last,
-									   typename enable_if<
-											is_same<typename InputIterator::value_type,
-											value_type>::value>::type* = 0);
+				void			insert(InputIterator first, InputIterator last, typename enable_if<
+									is_same<typename InputIterator::value_type,
+									value_type>::value>::type* = 0);
 			void				erase(iterator position);
 			size_type			erase(const key_type& k);
 			void				erase(iterator first, iterator last);
@@ -165,8 +164,8 @@ namespace ft
 	/* range constructor */
 	template<typename Key, typename T, typename Compare, typename Alloc>
 	template<typename InputIterator>
-		map<Key,T,Compare,Alloc>::map(InputIterator first, InputIterator last,
-									  const key_compare& comp, const allocator_type& alloc)
+		map<Key,T,Compare,Alloc>::map(
+			InputIterator first, InputIterator last, const key_compare& comp, const allocator_type& alloc)
 		: _M_tree(comp, alloc)
 		{
 			this->_M_tree.insert(first, last);
@@ -287,10 +286,9 @@ namespace ft
 	template<typename Key, typename T, typename Compare, typename Alloc>
 	template<class InputIterator>
 		void
-		map<Key,T,Compare,Alloc>::insert(InputIterator first, InputIterator last,
-										 typename enable_if<
-											is_same<typename InputIterator::value_type,
-											value_type>::value>::type*)
+		map<Key,T,Compare,Alloc>::insert(
+			InputIterator first, InputIterator last,
+			typename enable_if<is_same<typename InputIterator::value_type, value_type>::value>::type*)
 		{ return (this->_M_tree.insert(first, last)); }
 
 	/* Erase */

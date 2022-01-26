@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 23:18:28 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 20:30:30 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/26 21:21:29 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,10 +98,9 @@ namespace ft
 			pair<iterator,bool>		insert(const value_type& val);
 			iterator				insert(iterator position, const value_type& val);
 			template <class InputIterator>
-				void				insert(InputIterator first, InputIterator last,
-										   typename enable_if<
-												is_same<typename InputIterator::value_type,
-												value_type>::value>::type* = 0);
+				void				insert(InputIterator first, InputIterator last, typename enable_if<
+											is_same<typename InputIterator::value_type,
+											value_type>::value>::type* = 0);
 			void					erase(iterator position);
 			size_type				erase(const key_type& k);
 			void					erase(iterator first, iterator last);
@@ -252,9 +251,9 @@ namespace ft
 	template<typename Key, typename Compare, typename Alloc>
 	template <class InputIterator>
 		void
-		set<Key,Compare,Alloc>::insert(InputIterator first, InputIterator last,
-									   typename enable_if<is_same<typename InputIterator::value_type,
-														value_type>::value>::type*)
+		set<Key,Compare,Alloc>::insert(
+			InputIterator first, InputIterator last,
+			typename enable_if<is_same<typename InputIterator::value_type, value_type>::value>::type*)
 		{ return (this->_M_tree.insert(first, last)); }
 
 	/* Erase */
@@ -328,7 +327,7 @@ namespace ft
 	 * If k is not found, returns two iterators pointing to the first element after k.
 	 */
 	template<typename Key, typename Compare, typename Alloc>
-		pair<typename set<Key,Compare,Alloc>::iterator,typename set<Key,Compare,Alloc>::iterator>
+		pair<typename set<Key,Compare,Alloc>::iterator, typename set<Key,Compare,Alloc>::iterator>
 		set<Key,Compare,Alloc>::equal_range(const key_type& k)
 		{ return (this->_M_tree.equal_range(k)); }
 

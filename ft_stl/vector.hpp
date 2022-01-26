@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/25 01:01:42 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/26 21:10:00 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,13 +232,13 @@ namespace ft
 			{
 				if (capacity() - size() >= __len) // enough capacity left
 				{
-					iterator	__backup_end = end();
+					iterator	__backup_end(end());
 
 					_M_default_initialize(__len);
 					// if need to move element after filled range
 					if (__pos != __backup_end)
 					{
-						iterator	it = end();
+						iterator	it(end());
 						while (__pos != __backup_end)
 							*(--it) = *(--__backup_end);
 					}
@@ -253,7 +253,7 @@ namespace ft
 					const size_type	__new_size = _M_len_check(__len, "vector::_M_range_insert");
 					pointer			__new_start = this->_M_allocate(__new_size);
 					pointer			__new_end = __new_start;
-					iterator		__it = begin();
+					iterator		__it(begin());
 
 					for ( ; __nb_elem_before > 0; --__nb_elem_before, ++__it, ++__new_end)
 						this->_M_alloc.construct(__new_end, *(__it));
@@ -279,13 +279,13 @@ namespace ft
 			{
 				if (capacity() - size() >= __n) // enough capacity left
 				{
-					iterator	__backup_end = end();
+					iterator	__backup_end(end());
 
 					_M_default_initialize(__n);
 					// if need to move element after filled range
 					if (__pos != __backup_end)
 					{
-						iterator	it = end();
+						iterator	it(end());
 						while (__pos != __backup_end)
 							*(--it) = *(--__backup_end);
 					}
@@ -300,7 +300,7 @@ namespace ft
 					const size_type	__new_size = _M_len_check(__n, "vector::_M_fill_insert");
 					pointer			__new_start = this->_M_allocate(__new_size);
 					pointer			__new_end = __new_start;
-					iterator		__it = begin();
+					iterator		__it(begin());
 
 					for ( ; __nb_elem_before > 0; --__nb_elem_before, ++__it, ++__new_end)
 						this->_M_alloc.construct(__new_end, *(__it));
@@ -691,8 +691,8 @@ namespace ft
 		vector<T,Alloc>::erase(iterator position)
 		{
 			iterator	it(position);
-			iterator	next = position + 1;
-			iterator	ite = end();
+			iterator	next(position + 1);
+			iterator	ite(end());
 
 			while (next != ite)
 				*(it++) = *(next++);
@@ -706,6 +706,8 @@ namespace ft
 		typename vector<T,Alloc>::iterator
 		vector<T,Alloc>::erase(iterator first, iterator last)
 		{
+			iterator	pos(first);
+
 			if (first != last)
 			{
 				iterator	ite = end();
@@ -714,7 +716,7 @@ namespace ft
 					*(first++) = *(last++);
 				_M_erase_at_end(first.base());
 			}
-			return (first);
+			return (pos);
 		}
 
 	/* Exchanges the content of the vector and the other vector */
