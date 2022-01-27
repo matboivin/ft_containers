@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/27 17:05:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/27 20:27:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,8 +200,12 @@ namespace ft
 		void
 		vector<T,Alloc>::_M_default_initialize(size_type __n)
 		{
-			for (size_type __i = 0; __i < __n; ++__i, ++this->_M_end)
+			for (size_type __i = 0;
+				 __i < __n && this->_M_end != this->_M_end_of_storage;
+				 ++__i, ++this->_M_end)
+			{
 				this->_M_alloc.construct(this->_M_end, value_type());
+			}
 		}
 
 	/* Construct with n elements of value val */
@@ -238,35 +242,35 @@ namespace ft
 			{
 				if (capacity() - size() >= __len) // enough capacity left
 				{
+					size_type	__nb_elem_after = end() - __pos;
 					iterator	__backup_end(end());
 
 					_M_default_initialize(__len);
 					// if need to move element after filled range
-					if (__pos != __backup_end)
+					if (__pos != end())
 					{
-						iterator	it(end());
-						while (__pos != __backup_end)
-							*(--it) = *(--__backup_end);
+						for (iterator __it(end()); __nb_elem_after > 0; --__nb_elem_after)
+							*(--__it) = *(--__backup_end);
 					}
 					// fill with the given range
-					for ( ; __first != __last; ++__first, ++__pos)
+					for ( ; __first != __last && __pos != end(); ++__first, ++__pos)
 						*__pos = *__first;
 				}
 				else // not enough capacity
 				{
+					const size_type	__new_size = _M_len_check(__len, "vector::_M_range_insert");
+					iterator		__it(begin());
 					size_type		__nb_elem_before = __pos - begin();
 					size_type		__nb_elem_after = end() - __pos;
-					const size_type	__new_size = _M_len_check(__len, "vector::_M_range_insert");
 					pointer			__new_start = this->_M_allocate(__new_size);
-					pointer			__new_end = __new_start;
-					iterator		__it(begin());
+					pointer			__new_end(__new_start);
 
-					for ( ; __nb_elem_before > 0; --__nb_elem_before, ++__it, ++__new_end)
-						this->_M_alloc.construct(__new_end, *(__it));
+					for ( ; __nb_elem_before > 0 && __it != end(); --__nb_elem_before, ++__it, ++__new_end)
+						this->_M_alloc.construct(__new_end, *__it);
 					for ( ; __first != __last; ++__first, ++__new_end)
 						this->_M_alloc.construct(__new_end, *__first);
-					for ( ; __nb_elem_after > 0; --__nb_elem_after, ++__it, ++__new_end)
-						this->_M_alloc.construct(__new_end, *(__it));
+					for ( ; __nb_elem_after > 0 && __it != end(); --__nb_elem_after, ++__it, ++__new_end)
+						this->_M_alloc.construct(__new_end, *__it);
 					_M_erase_at_end(this->_M_begin);
 					_M_deallocate(this->_M_begin, capacity());
 					this->_M_begin = pointer(__new_start);
@@ -285,35 +289,35 @@ namespace ft
 			{
 				if (capacity() - size() >= __n) // enough capacity left
 				{
+					size_type	__nb_elem_after = end() - __pos;
 					iterator	__backup_end(end());
 
 					_M_default_initialize(__n);
 					// if need to move element after filled range
-					if (__pos != __backup_end)
+					if (__pos != end())
 					{
-						iterator	it(end());
-						while (__pos != __backup_end)
-							*(--it) = *(--__backup_end);
+						for (iterator __it(end()); __nb_elem_after > 0; --__nb_elem_after)
+							*(--__it) = *(--__backup_end);
 					}
 					// fill the range with n values
-					for ( ; __n > 0; --__n, ++__pos)
-						*__pos = __val;
+					for ( ; __n > 0 && __pos != end(); --__n, ++__pos)
+						*__pos = value_type(__val);
 				}
 				else // not enough capacity
 				{
+					const size_type	__new_size = _M_len_check(__n, "vector::_M_fill_insert");
+					iterator		__it(begin());
 					size_type		__nb_elem_before = __pos - begin();
 					size_type		__nb_elem_after = end() - __pos;
-					const size_type	__new_size = _M_len_check(__n, "vector::_M_fill_insert");
 					pointer			__new_start = this->_M_allocate(__new_size);
-					pointer			__new_end = __new_start;
-					iterator		__it(begin());
+					pointer			__new_end(__new_start);
 
-					for ( ; __nb_elem_before > 0; --__nb_elem_before, ++__it, ++__new_end)
-						this->_M_alloc.construct(__new_end, *(__it));
+					for ( ; __nb_elem_before > 0 && __it != end(); --__nb_elem_before, ++__it, ++__new_end)
+						this->_M_alloc.construct(__new_end, *__it);
 					for ( ; __n > 0; --__n, ++__new_end)
-						this->_M_alloc.construct(__new_end, __val);
-					for ( ; __nb_elem_after > 0; --__nb_elem_after, ++__it, ++__new_end)
-						this->_M_alloc.construct(__new_end, *(__it));
+						this->_M_alloc.construct(__new_end, value_type(__val));
+					for ( ; __nb_elem_after > 0 && __it != end(); --__nb_elem_after, ++__it, ++__new_end)
+						this->_M_alloc.construct(__new_end, *__it);
 					_M_erase_at_end(this->_M_begin);
 					_M_deallocate(this->_M_begin, capacity());
 					this->_M_begin = pointer(__new_start);
@@ -667,8 +671,10 @@ namespace ft
 		typename vector<T,Alloc>::iterator
 		vector<T,Alloc>::insert(iterator position, const value_type& val)
 		{
+			size_type	n = position - begin();
+
 			_M_fill_insert(position, 1, val);
-			return (position);
+			return (begin() + n);
 		}
 
 	/* Insert n new elements before the element at the specified position */
@@ -683,9 +689,9 @@ namespace ft
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
 		void
-		vector<T,Alloc>::insert(iterator position, InputIterator first, InputIterator last,
-								typename requires_input_iter<
-									(!is_integral<InputIterator>::value), InputIterator>::type*)
+		vector<T,Alloc>::insert(
+			iterator position, InputIterator first, InputIterator last,
+			typename requires_input_iter<(!is_integral<InputIterator>::value), InputIterator>::type*)
 		{
 			if (first != last)
 				_M_range_insert(position, first, last);
