@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/26 21:19:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/27 21:33:39 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -1217,18 +1217,18 @@ namespace ft
 				{
 					if (__node->_M_right == 0)
 						this->_M_header._M_left = __node->_M_parent;
-					else if (__subst != 0)
-						this->_M_header._M_left = __last_subst->_get_leftmost(__last_subst);
+					else
+						this->_M_header._M_left = __node->_get_leftmost(__last_subst);
 				}
 				else if (this->_M_header._M_right == __node) // update rightmost
 				{
 					if (__node->_M_left == 0)
 						this->_M_header._M_right = __node->_M_parent;
-					else if (__last_subst != 0)
-						this->_M_header._M_left = __last_subst->_get_rightmost(__last_subst);
+					else
+						this->_M_header._M_right = __node->_get_rightmost(__last_subst);
 				}
 			}
-			if (__last_subst != 0)
+			if (__last_subst != 0 && __last_subst != __subst)
 				__last_subst->_M_parent = __parent;
 			if (__subst != 0)
 				__subst->_M_parent = __node->_M_parent;
