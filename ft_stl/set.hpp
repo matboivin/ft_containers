@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 23:18:28 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/26 21:21:29 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/27 22:52:35 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ namespace ft
 
 		public:
 			// types
-			typedef typename _tree_type::iterator				iterator;
+			typedef typename _tree_type::const_iterator			iterator;
 			typedef typename _tree_type::const_iterator			const_iterator;
-			typedef typename _tree_type::reverse_iterator		reverse_iterator;
+			typedef typename _tree_type::const_reverse_iterator	reverse_iterator;
 			typedef typename _tree_type::const_reverse_iterator	const_reverse_iterator;
 			typedef typename _tree_type::difference_type		difference_type;
 
@@ -108,11 +108,11 @@ namespace ft
 			void					clear(void);
 
 			// lookup
-			iterator				find(const key_type& k);
+			iterator				find(const key_type& k) const;
 			size_type				count(const key_type& k) const;
-			iterator				lower_bound(const key_type& k);
-			iterator				upper_bound(const key_type& k);
-			pair<iterator,iterator>	equal_range(const key_type& k);
+			iterator				lower_bound(const key_type& k) const;
+			iterator				upper_bound(const key_type& k) const;
+			pair<iterator,iterator>	equal_range(const key_type& k) const;
 
 			// observers
 			key_compare				key_comp(void) const;
@@ -246,7 +246,7 @@ namespace ft
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::iterator
 		set<Key,Compare,Alloc>::insert(iterator position, const value_type& val)
-		{ return (this->_M_tree.insert(position, val)); }
+		{ return (this->_M_tree.insert(position.remove_const(), val)); }
 
 	template<typename Key, typename Compare, typename Alloc>
 	template <class InputIterator>
@@ -261,7 +261,7 @@ namespace ft
 		void
 		set<Key,Compare,Alloc>::erase(iterator position)
 		{
-			this->_M_tree.erase(position);
+			this->_M_tree.erase(position.remove_const());
 		}
 
 	template<typename Key, typename Compare, typename Alloc>
@@ -272,7 +272,7 @@ namespace ft
 	template<typename Key, typename Compare, typename Alloc>
 		void
 		set<Key,Compare,Alloc>::erase(iterator first, iterator last)
-		{ return (this->_M_tree.erase(first, last)); }
+		{ return (this->_M_tree.erase(first.remove_const(), last.remove_const())); }
 
 	/* Exchanges the content of the set and the other set */
 	template<typename Key, typename Compare, typename Alloc>
@@ -291,8 +291,8 @@ namespace ft
 	/* Gets the element with the key k, else return end */
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::iterator
-		set<Key,Compare,Alloc>::find(const key_type& k)
-		{ return (this->_M_tree.find(k)); }
+		set<Key,Compare,Alloc>::find(const key_type& k) const
+		{ return ((this->_M_tree.find(k)).remove_const()); }
 
 	/*
 	 * Returns the number of elements matching key k
@@ -309,8 +309,8 @@ namespace ft
 	 */
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::iterator
-		set<Key,Compare,Alloc>::lower_bound(const key_type& k)
-		{ return (this->_M_tree.lower_bound(k)); }
+		set<Key,Compare,Alloc>::lower_bound(const key_type& k) const
+		{ return ((this->_M_tree.lower_bound(k)).remove_const()); }
 
 	/*
 	 * Gets the first element that is after k
@@ -318,8 +318,8 @@ namespace ft
 	 */
 	template<typename Key, typename Compare, typename Alloc>
 		typename set<Key,Compare,Alloc>::iterator
-		set<Key,Compare,Alloc>::upper_bound(const key_type& k)
-		{ return (this->_M_tree.upper_bound(k)); }
+		set<Key,Compare,Alloc>::upper_bound(const key_type& k) const
+		{ return ((this->_M_tree.upper_bound(k)).remove_const()); }
 
 	/*
 	 * Returns the bounds of a range that have a key equivalent to k.
@@ -328,8 +328,12 @@ namespace ft
 	 */
 	template<typename Key, typename Compare, typename Alloc>
 		pair<typename set<Key,Compare,Alloc>::iterator, typename set<Key,Compare,Alloc>::iterator>
-		set<Key,Compare,Alloc>::equal_range(const key_type& k)
-		{ return (this->_M_tree.equal_range(k)); }
+		set<Key,Compare,Alloc>::equal_range(const key_type& k) const
+		{
+			pair<const_iterator,const_iterator>	range = this->_M_tree.equal_range(k);
+
+			return (pair<iterator,iterator>(range.first.remove_const(), range.second.remove_const()));
+		}
 
 	/* observers ************************************************************ */
 

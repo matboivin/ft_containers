@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/27 21:33:39 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/27 22:41:44 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -314,7 +314,7 @@ namespace ft
 
 			// default constructor
 			RBtree_iterator(void)
-			: _M_node(0) { }
+			: _M_node() { }
 
 			// initalization constructor
 			RBtree_iterator(node_pointer node)
@@ -406,16 +406,13 @@ namespace ft
 
 			// default constructor
 			RBtree_const_iterator(void)
-			: _M_node(0) { }
+			: _M_node() { }
 
 			// initalization constructor
 			RBtree_const_iterator(const_node_pointer node)
 			: _M_node(node) { }
 
 			// copy constructor
-			RBtree_const_iterator(const RBtree_const_iterator& other)
-			: _M_node(other.get_node()) { }
-
 			RBtree_const_iterator(const iterator& other)
 			: _M_node(other.get_node()) { }
 
@@ -423,11 +420,11 @@ namespace ft
 			RBtree_const_iterator&
 			operator=(const RBtree_const_iterator& other)
 			{
-				if (this != &other)
-					this->_M_node = other.get_node();
+				this->_M_node = other.get_node();
 				return (*this);
 			}
 
+			// remove constness
 			iterator
 			remove_const(void) const
 			{ return (iterator(const_cast<typename iterator::node_pointer>(this->_M_node))); }
