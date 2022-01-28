@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 20:32:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/28 16:30:44 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,23 @@ namespace ft
 		tree.insert( pair<int, std::string>(18, "eighteen") );
 		tree.insert( pair<int, std::string>(5,  "five") );
 		tree.insert( pair<int, std::string>(15, "fifteen") );
+
+		int_s_tree::iterator	it = tree.find(5);
+
+		std::cout << "iterator before: " << (*it).first << '\n';
+
+		tree.erase(15);
+
 		tree.insert( pair<int, std::string>(17, "seventeen") );
 		tree.insert( pair<int, std::string>(25, "twenty-five") );
 		tree.insert( pair<int, std::string>(40, "fourty") );
 		tree.insert( pair<int, std::string>(80, "eighty") );
 		tree.insert( pair<int, std::string>(11, "eleven") );
 		tree.insert( pair<int, std::string>(20, "twenty") );
+
+		tree.insert( pair<int, std::string>(15, "fifteen") );
+
+		std::cout << "iterator after: " << (*it).first << '\n';
 
 		std::cout << std::boolalpha << "(tree.begin() == tree.end())? "
 				  << (tree.begin() == tree.end()) << '\n'
