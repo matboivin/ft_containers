@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/24 17:11:14 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/28 16:11:13 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/28 16:22:20 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,8 +135,8 @@ namespace std
 		expected1.insert(300);
 		expected1.insert(400);
 
-		pair<int,std::string>	highest1 = *s1.rbegin();
-		int_set::iterator		it1 = s1.begin();
+		int					highest1 = *s1.rbegin();
+		int_set::iterator	it1 = s1.begin();
 
 		do
 		{
@@ -172,12 +172,12 @@ namespace std
 		expected2.insert("foo");
 		expected2.insert("qwerty");
 
-		pair<std::string,int>	highest2 = *s2.rbegin();
-		strlen_set::iterator		it2 = s2.begin();
+		std::string				highest2 = *s2.rbegin();
+		strlen_set::iterator	it2 = s2.begin();
 
 		do
 		{
-			std::cout << it2->first << " => " << it2->second << '\n';
+			std::cout << *it2 << '\n';
 		} while (s2.value_comp()(*(it2++), highest2));
 
 		std::cout << '\n';

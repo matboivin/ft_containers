@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/28 16:15:05 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/28 16:20:04 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ namespace std
 
 		start = clock();
 
-		std::cout << "s.find(" << *ite << ") = " << s.find(*ite) << "\n\n";
+		std::cout << "s.find(" << *ite << ") = " << *s.find(*ite) << "\n\n";
 
 		display_elapsed_time(start, clock());
 
@@ -61,7 +61,7 @@ namespace std
 
 		start = clock();
 
-		std::cout << "s.lower_bound(" << *ite << ") = " << s.lower_bound(*ite) << "\n\n";
+		std::cout << "s.lower_bound(" << *ite << ") = " << *s.lower_bound(*ite) << "\n\n";
 
 		display_elapsed_time(start, clock());
 
@@ -71,7 +71,7 @@ namespace std
 
 		start = clock();
 
-		std::cout << "s.upper_bound(" << *it << ") = " << s.upper_bound(*it) << "\n\n";
+		std::cout << "s.upper_bound(" << *it << ") = " << *s.upper_bound(*it) << "\n\n";
 
 		display_elapsed_time(start, clock());
 
@@ -86,8 +86,8 @@ namespace std
 		int_set::iterator							last = it_pair.second;
 
 		std::cout << "s.equal_range(682694293) = "
-				  << first << '\n'
-				  << last << "\n\n";
+				  << *first << '\n'
+				  << *last << "\n\n";
 
 		display_elapsed_time(start, clock());
 	}

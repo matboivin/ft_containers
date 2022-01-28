@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 23:20:45 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 18:46:24 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/28 16:21:25 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ namespace std
 			{
 				std::cout << '\n';
 				for (typename Set::const_iterator it = s.begin(); it != s.end(); ++it)
-					std::cout << it->first << " => " << it->second << '\n';
+					std::cout << *it << '\n';
 				std::cout << "\n\n";
 			}
 		}

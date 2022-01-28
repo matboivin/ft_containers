@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/28 16:01:44 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/28 16:20:59 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ namespace std
 		explain_test("Insert an element giving a hint pos.");
 
 		// create a set
-		int_set	m;
+		int_set	s;
 
 		// fill it
 		for (int i = 0; i < 10000; ++i)
@@ -141,7 +141,7 @@ namespace std
 		int_set::iterator	from = s.find(7);
 		int_set::iterator	to = s.find(80);
 
-		std::cout << "Erase range[" << from << ", " << to << ")\n\n";
+		std::cout << "Erase range[" << *from << ", " << *to << ")\n\n";
 
 		s.erase(from, to);
 		display_set_infos(s);
@@ -201,7 +201,7 @@ namespace std
 		explain_test("Destroys all elements from the container, leaving it with a size of 0.");
 
 		// create a set
-		int_set	m;
+		int_set	s;
 
 		// fill it
 		for (int i = 0; i < COUNT; ++i)
