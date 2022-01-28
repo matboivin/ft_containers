@@ -1,21 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_tests_capacity.cpp                             :+:      :+:    :+:   */
+/*   set_tests_capacity.cpp                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/28 15:45:51 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/28 15:54:02 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <iomanip>
 #include <iostream>
 #include <string>
-#include <map>
 #include "tests.hpp"
-#include "map_tests.hpp"
+#include "set_tests.hpp"
 
 #if defined(TEST_FT)
 namespace ft
@@ -23,65 +22,65 @@ namespace ft
 namespace std
 #endif
 {
-	void	test_map_empty(void)
+	void	test_set_empty(void)
 	{
 		std::cout << "TEST: Capacity: empty() \n\n";
 
-		explain_test("Returns true if the map is empty.");
+		explain_test("Returns true if the set is empty.");
 
-		// create an empty map
-		int_map	m;
+		// create an empty set
+		int_set	s;
 
-		bool	is_empty = m.empty();
+		bool	is_empty = s.empty();
 
-		std::cout << std::boolalpha << "map.empty()? " << is_empty << std::endl;
+		std::cout << std::boolalpha << "set.empty()? " << is_empty << std::endl;
 		assert(is_empty == true);
 
 		// add elements
 		for (int i = 0; i < 42; ++i)
-			m[rand()] = rand();
+			s.insert(rand());
 
-		is_empty = m.empty();
-		std::cout << std::boolalpha << "map.empty()? " << is_empty << std::endl;
+		is_empty = s.empty();
+		std::cout << std::boolalpha << "set.empty()? " << is_empty << std::endl;
 		assert(is_empty == false);
 	}
 
-	void	test_map_size(void)
+	void	test_set_size(void)
 	{
 		std::cout << "TEST: Capacity: size() \n\n";
 
-		explain_test("Returns the number of element in the map.");
+		explain_test("Returns the number of element in the set.");
 
-		// create an empty map
-		int_map	m;
+		// create an empty set
+		int_set	s;
 
-		std::size_t	map_size = m.size();
+		std::size_t	set_size = s.size();
 
-		std::cout << "map.size() = " << map_size << std::endl;
-		assert(map_size == 0);
+		std::cout << "set.size() = " << set_size << std::endl;
+		assert(set_size == 0);
 
 		// add elements
 		for (int i = 0; i < 42; ++i)
-			m[rand()] = rand();
+			s.insert(rand());
 
-		map_size = m.size();
+		set_size = s.size();
 
-		std::cout << "map.size() = " << map_size << std::endl;
-		assert(map_size == 42);
+		std::cout << "set.size() = " << set_size << std::endl;
+		assert(set_size == 42);
 	}
 
-	void	test_map_max_size(void)
+	void	test_set_max_size(void)
 	{
 		std::cout << "TEST: Capacity: max_size() \n\n";
 
-		explain_test("Returns the maximum number of elements that the map can hold.");
+		explain_test("Returns the maximum number of elements that the set can hold.");
 
-		// Create two maps
-		int_map		m1;
-		int_s_map	m2;
+		// Create two sets
+		int_set	s1;
+		str_set	s2;
 
 		// Display capacity
-		std::cout << "map<int,int>:    " << m1.max_size()
-				  << "\nmap<int,string>: " << m2.max_size() << std::endl;
+		std::cout << "set<int>:    " << s1.max_size()
+				  << "\nset<string>: " << s2.max_size() << std::endl;
 	}
 }

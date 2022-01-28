@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_tests_lookup.cpp                               :+:      :+:    :+:   */
+/*   set_tests_lookup.cpp                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/28 15:46:15 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/28 16:15:05 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include <iostream>
 #include <string>
 #include "tests.hpp"
-#include "map_tests.hpp"
+#include "set_tests.hpp"
 
 #if defined(TEST_FT)
 namespace ft
@@ -22,17 +22,17 @@ namespace ft
 namespace std
 #endif
 {
-	void	test_map_lookup(void)
+	void	test_set_lookup(void)
 	{
-		// create a map
-		int_map		m;
+		// create a set
+		int_set		s;
 
 		// fill it
 		for (int i = 0; i < COUNT; ++i)
-			m[rand()] = rand();
+			s.insert(rand());
 
-		int_map::iterator	it = m.begin();
-		int_map::iterator	ite = m.end();
+		int_set::iterator	it = s.begin();
+		int_set::iterator	ite = s.end();
 		--ite;
 
 		std::cout << "TEST: Lookup: count() \n\n";
@@ -41,7 +41,7 @@ namespace std
 
 		clock_t	start = clock();
 
-		std::cout << "m.count(" << ite->first << ") = " << std::boolalpha << m.count(ite->first) << "\n\n";
+		std::cout << "s.count(" << *ite << ") = " << std::boolalpha << s.count(*ite) << "\n\n";
 
 		display_elapsed_time(start, clock());
 
@@ -51,8 +51,7 @@ namespace std
 
 		start = clock();
 
-		std::cout << "m.find(" << ite->first << ") = "
-				  << m.find(ite->first)->first << " => " << m.find(ite->first)->second << "\n\n";
+		std::cout << "s.find(" << *ite << ") = " << s.find(*ite) << "\n\n";
 
 		display_elapsed_time(start, clock());
 
@@ -62,8 +61,7 @@ namespace std
 
 		start = clock();
 
-		std::cout << "m.lower_bound(" << ite->first << ") = "
-				  << m.lower_bound(ite->first)->first << " => " << m.lower_bound(ite->first)->second << "\n\n";
+		std::cout << "s.lower_bound(" << *ite << ") = " << s.lower_bound(*ite) << "\n\n";
 
 		display_elapsed_time(start, clock());
 
@@ -73,8 +71,7 @@ namespace std
 
 		start = clock();
 
-		std::cout << "m.upper_bound(" << it->first << ") = "
-				  << m.upper_bound(it->first)->first << " => " << m.lower_bound(it->first)->second << "\n\n";
+		std::cout << "s.upper_bound(" << *it << ") = " << s.upper_bound(*it) << "\n\n";
 
 		display_elapsed_time(start, clock());
 
@@ -84,13 +81,13 @@ namespace std
 
 		start = clock();
 
-		pair<int_map::iterator,int_map::iterator>	it_pair = m.equal_range(682694293);
-		int_map::iterator							first = it_pair.first;
-		int_map::iterator							last = it_pair.second;
+		pair<int_set::iterator,int_set::iterator>	it_pair = s.equal_range(682694293);
+		int_set::iterator							first = it_pair.first;
+		int_set::iterator							last = it_pair.second;
 
-		std::cout << "m.equal_range(682694293) = "
-				  << first->first << " => " << first->second << '\n'
-				  << last->first << " => " << last->second << "\n\n";
+		std::cout << "s.equal_range(682694293) = "
+				  << first << '\n'
+				  << last << "\n\n";
 
 		display_elapsed_time(start, clock());
 	}

@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/19 23:45:41 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 18:44:03 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/28 16:14:49 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,17 @@
 #define COL_GREEN_B  "\033[1;32m"
 #define COL_YELLOW   "\033[0;33m"
 #define COL_YELLOW_B "\033[1;33m"
+
+#define MAX_RAM 4294967296
+#define BUFFER_SIZE 4096
+
+struct Buffer
+{
+	int		idx;
+	char	buff[BUFFER_SIZE];
+};
+
+#define COUNT (MAX_RAM / (int)sizeof(Buffer))
 
 void		display_elapsed_time(clock_t start, clock_t end);
 void		explain_test(const std::string& msg);

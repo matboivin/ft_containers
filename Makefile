@@ -55,6 +55,13 @@ MAP_SRC_FILES =		map_tests_capacity.cpp \
 					map_tests.cpp
 
 SET_SRC_FILES =		set_test_construct.cpp \
+					set_tests_capacity.cpp \
+					set_tests_comp_ops.cpp \
+					set_tests_iterators.cpp \
+					set_tests_lookup.cpp \
+					set_tests_modifiers.cpp \
+					set_tests_observers.cpp \
+					set_tests_swap.cpp \
 					set_tests.cpp
 
 STACK_SRC_FILES =	stack_test_capacity.cpp \
@@ -117,8 +124,8 @@ INC = $(addprefix $(IMPL_DIR)/, $(IMPL_FILES)) \
 # COMPIL AND FLAGS
 
 CPPFLAGS = -I$(IMPL_DIR) -I$(INC_DIR)
-CXX = c++
-CXXFLAGS = -Wall -Wextra -Werror -std=c++98 -pedantic
+CXX = clang++
+CXXFLAGS = -Wall -Wextra -Werror -std=c++98
 
 # RULES
 

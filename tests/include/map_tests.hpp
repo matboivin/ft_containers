@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/08 15:45:42 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 21:57:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/28 16:14:42 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,17 +16,6 @@
 #include <iostream>
 #include <string>
 #include "tests.hpp"
-
-#define MAX_RAM 4294967296
-#define BUFFER_SIZE 4096
-
-struct Buffer
-{
-	int		idx;
-	char	buff[BUFFER_SIZE];
-};
-
-#define COUNT (MAX_RAM / (int)sizeof(Buffer))
 
 #if defined(TEST_FT)
 # include "map.hpp"
