@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/26 21:20:18 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/30 19:06:50 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,9 +138,6 @@ namespace ft
 
 			// allocator
 			allocator_type		get_allocator(void) const;
-
-			// debug
-			void				write_tree_dot(const std::string& filename);
 
 			// friend relational operators
 			template<typename _Key, typename _T, typename _Compare, typename _Alloc>
@@ -408,15 +405,6 @@ namespace ft
 		typename map<Key,T,Compare,Alloc>::allocator_type
 		map<Key,T,Compare,Alloc>::get_allocator(void) const
 		{ return (this->_M_tree.get_allocator()); }
-
-	/* debug **************************************************************** */
-
-	template<typename Key, typename T, typename Compare, typename Alloc>
-		void
-		map<Key,T,Compare,Alloc>::write_tree_dot(const std::string& filename)
-		{
-			this->_M_tree.write_tree_dot(filename);
-		}
 
 	/* non-member function overloads **************************************** */
 
