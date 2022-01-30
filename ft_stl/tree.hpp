@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/08 11:53:39 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/27 22:41:44 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/30 19:29:53 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,8 +235,8 @@ namespace ft
 		struct RBTreeHeader
 		{
 			// attributes
-			RBTreeNode<Val>		_M_header;
-			std::size_t			_M_node_count;
+			RBTreeNode<Val>	_M_header;
+			std::size_t		_M_node_count;
 
 			// default constructor
 			RBTreeHeader(void)
@@ -498,7 +498,7 @@ namespace ft
 			 typename KeyGetter,
 			 typename Compare = std::less<Key>,
 			 typename Alloc = std::allocator<Val>
-			>
+			 >
 		class RedBlackTree
 		: public RBTreeHeader<Val>
 		{
@@ -562,8 +562,7 @@ namespace ft
 			void					_M_rebalance_insert(node_pointer __node);
 			node_pointer			_M_get_pos_from_hint(iterator __hint, const key_type& __k);
 			pair<node_pointer,bool>	_M_get_insert_pos(iterator __hint, const key_type& __k);
-			void					_M_insert_node(const bool __insert_left,
-												node_pointer __node, node_pointer __parent);
+			void					_M_insert_node(const bool __insert_left, node_pointer __node, node_pointer __parent);
 			pair<iterator,bool>		_M_insert(iterator __pos, const value_type& __val);
 			// helpers deletion
 			void					_M_rebalance_del(node_pointer __subst, node_pointer __parent);
@@ -573,8 +572,7 @@ namespace ft
 
 		public:
 			// default constructor
-			RedBlackTree(const key_compare& comp = key_compare(),
-						 const allocator_type& alloc = allocator_type());
+			RedBlackTree(const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type());
 
 			// copy constructor
 			RedBlackTree(const RedBlackTree& other);
@@ -612,8 +610,7 @@ namespace ft
 			iterator				insert(iterator position, const value_type& val);
 			template<typename InputIterator>
 				void				insert(InputIterator first, InputIterator last, typename enable_if<
-											is_same<typename InputIterator::value_type,
-											value_type>::value>::type* = 0);
+											is_same<typename InputIterator::value_type, value_type>::value>::type* = 0);
 			void					erase(iterator position);
 			size_type				erase(const key_type& k);
 			void					erase(iterator first, iterator last);
@@ -1724,7 +1721,7 @@ namespace ft
 			std::ofstream	outfile;
 			std::string		filename_dot = filename + ".dot";
 
-			if (size() == 0)
+			if (empty())
 			{
 				std::cout << "Didn't create " << filename_dot << std::endl;
 				return ;
@@ -1732,7 +1729,7 @@ namespace ft
 
 			outfile.open(filename_dot.c_str(), std::ios::out);
 
-			if ( !outfile.is_open() )
+			if (!outfile.is_open())
 			{
 				std::cout << "Error: Unable to open \'" << filename_dot << "'" << std::endl;
 				return ;

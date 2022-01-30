@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/16 23:18:28 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/27 22:52:35 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/30 19:15:52 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ namespace ft
 			typedef std::size_t									size_type;
 
 		private:
-			// alias for the tree
+			// alias
 			typedef RedBlackTree<key_type, value_type, get_key<key_type>, key_compare, allocator_type>	_tree_type;
 
 			// attribute

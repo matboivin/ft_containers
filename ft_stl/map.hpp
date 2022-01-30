@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:24:54 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/30 19:06:50 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/30 19:16:00 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ namespace ft
 			};
 
 		private:
-			// alias for the tree
+			// alias
 			typedef RedBlackTree<key_type, value_type, get_key_from_pair<key_type, value_type>, key_compare, allocator_type>	_tree_type;
 
 			// attribute

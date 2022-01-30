@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/07 16:34:57 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/25 01:36:13 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/30 19:15:23 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,29 +28,25 @@ namespace ft
 	// Empty classes to identify categories
 
 	// each value pointed by the iterator is read only once and then the iterator is incremented
-	struct input_iterator_tag {};
-	struct output_iterator_tag {};
+	struct input_iterator_tag { };
+	struct output_iterator_tag { };
 	// access the sequence of elements in a range from its beginning towards its end
-	struct forward_iterator_tag : public input_iterator_tag {};
+	struct forward_iterator_tag : public input_iterator_tag { };
 	// access the sequence of elements in a range in both directions
-	struct bidirectional_iterator_tag : public forward_iterator_tag {};
+	struct bidirectional_iterator_tag : public forward_iterator_tag { };
 	// access elements at an arbitrary offset position relative to the element they point to
-	struct random_access_iterator_tag : public bidirectional_iterator_tag {};
+	struct random_access_iterator_tag : public bidirectional_iterator_tag { };
 
 
 	/* Classes ************************************************************** */
 
-	/*
-	 * Base class to define required types for simple iterators
-	 *
-	 * @param Category  Category to which the iterator belongs to (Iterator Tags)
-	 * @param T         Type of elements pointed by the iterator
-	 * @param Distance  Type to represent the difference between two iterators
-	 * @param Pointer   Type to represent a pointer to an element pointed by the iterator
-	 * @param Reference Type to represent a reference to an element pointed by the iterator
-	 */
-	template<typename Category, typename T, typename Distance = std::ptrdiff_t,
-			 typename Pointer = T*, typename Reference = T&>
+	/* Base class to define required types for simple iterators */
+	template<typename Category,
+			 typename T,
+			 typename Distance = std::ptrdiff_t,
+			 typename Pointer = T*,
+			 typename Reference = T&
+			 >
 		struct iterator
 		{
 			// types
@@ -61,11 +57,7 @@ namespace ft
 			typedef Reference	reference;
 		};
 
-	/*
-	 * Uniform interface to the properties of an iterator
-	 *
-	 * @param Iterator  The iterator type to retrieve properties for iterators
-	 */
+	/* Uniform interface to the properties of an iterator */
 	template<typename Iterator>
 		struct iterator_traits
 		{
@@ -119,9 +111,10 @@ namespace ft
 						  typename iterator_traits<Iterator>::reference>
 		{
 		protected:
-			// More readable private alias
-			typedef iterator_traits<Iterator>					_iter_traits;
-			Iterator	_M_current; // copy of the original iterator
+			// alias
+			typedef iterator_traits<Iterator>	_iter_traits;
+			// copy of the original iterator
+			Iterator							_M_current;
 
 		public:
 			// types
@@ -273,8 +266,7 @@ namespace ft
 	/* Addition operator */
 	template<typename Iterator>
 		reverse_iterator<Iterator>
-		operator+(typename reverse_iterator<Iterator>::difference_type n,
-				  const reverse_iterator<Iterator>& rev_it)
+		operator+(typename reverse_iterator<Iterator>::difference_type n, const reverse_iterator<Iterator>& rev_it)
 		{ return ( reverse_iterator<Iterator>(rev_it.base() - n) ); }
 
 	/* Subtraction operator*/
@@ -321,11 +313,7 @@ namespace ft
 
 	/* Base iterator ******************************************************** */
 
-	/*
-	 * Base iterator
-	 * This class provides a base for custom iterators
-	 */
-
+	/* This class provides a base for custom iterators */
 	template<typename Iterator, typename Container>
 		class base_iterator
 		: public iterator<typename iterator_traits<Iterator>::iterator_category,
@@ -335,7 +323,7 @@ namespace ft
 						  typename iterator_traits<Iterator>::reference>
 		{
 		protected:
-			// More readable private alias
+			// alias
 			typedef iterator_traits<Iterator>	_iter_traits;
 			// copy of the original iterator
 			Iterator							_M_current;
@@ -360,10 +348,9 @@ namespace ft
 
 			// copy constructor
 			template<typename Iter>
-				base_iterator(const base_iterator<Iter,
-							  typename enable_if<(is_same<Iter,
-							  typename Container::pointer>::value), Container>::type>& other
-							  )
+				base_iterator(
+					const base_iterator<Iter, typename enable_if<(is_same<Iter, typename Container::pointer>::value),
+					Container>::type>& other)
 				: _M_current(other.base()) { }
 
 			// copy assignment operator
@@ -454,52 +441,44 @@ namespace ft
 	/* Relational operators */
 	template<typename Iterator, typename Container>
 		bool
-		operator==(const base_iterator<Iterator,Container>& lhs,
-				   const base_iterator<Iterator,Container>& rhs)
+		operator==(const base_iterator<Iterator,Container>& lhs, const base_iterator<Iterator,Container>& rhs)
 		{ return (lhs.base() == rhs.base()); }
 
 	template<typename Iterator, typename Container>
 		bool
-		operator!=(const base_iterator<Iterator,Container>& lhs,
-				   const base_iterator<Iterator,Container>& rhs)
+		operator!=(const base_iterator<Iterator,Container>& lhs, const base_iterator<Iterator,Container>& rhs)
 		{ return (lhs.base() != rhs.base()); }
 
 	template<typename Iterator, typename Container>
 		bool
-		operator<(const base_iterator<Iterator,Container>& lhs,
-				  const base_iterator<Iterator,Container>& rhs)
+		operator<(const base_iterator<Iterator,Container>& lhs, const base_iterator<Iterator,Container>& rhs)
 		{ return (lhs.base() < rhs.base()); }
 
 	template<typename Iterator, typename Container>
 		bool
-		operator<=(const base_iterator<Iterator,Container>& lhs,
-				   const base_iterator<Iterator,Container>& rhs)
+		operator<=(const base_iterator<Iterator,Container>& lhs, const base_iterator<Iterator,Container>& rhs)
 		{ return (lhs.base() <= rhs.base()); }
 
 	template<typename Iterator, typename Container>
 		bool
-		operator>(const base_iterator<Iterator,Container>& lhs,
-				  const base_iterator<Iterator,Container>& rhs)
+		operator>(const base_iterator<Iterator,Container>& lhs, const base_iterator<Iterator,Container>& rhs)
 		{ return (lhs.base() > rhs.base()); }
 
 	template<typename Iterator, typename Container>
 		bool
-		operator>=(const base_iterator<Iterator,Container>& lhs,
-				   const base_iterator<Iterator,Container>& rhs)
+		operator>=(const base_iterator<Iterator,Container>& lhs, const base_iterator<Iterator,Container>& rhs)
 		{ return (lhs.base() >= rhs.base()); }
 
 	/* Addition operator */
 	template<typename Iterator, typename Container>
 		base_iterator<Iterator,Container>
-		operator+(typename base_iterator<Iterator,Container>::difference_type n,
-				  const base_iterator<Iterator,Container>& it)
+		operator+(typename base_iterator<Iterator,Container>::difference_type n, const base_iterator<Iterator,Container>& it)
 		{ return (base_iterator<Iterator,Container>(it.base() + n));}
 
 	/* Subtraction operator */
 	template<typename Iterator, typename Container>
 		typename base_iterator<Iterator,Container>::difference_type
-		operator-(const base_iterator<Iterator,Container>& lhs,
-				  const base_iterator<Iterator,Container>& rhs)
+		operator-(const base_iterator<Iterator,Container>& lhs, const base_iterator<Iterator,Container>& rhs)
 		{ return (lhs.base() - rhs.base()); }
 
 	/* Same things for comparison between const and not const */
@@ -535,8 +514,7 @@ namespace ft
 
 	template<typename Iter1, typename Iter2, typename Container>
 		typename base_iterator<Iter1,Container>::difference_type
-		operator-(const base_iterator<Iter1,Container>& lhs,
-				  const base_iterator<Iter2,Container>& rhs)
+		operator-(const base_iterator<Iter1,Container>& lhs, const base_iterator<Iter2,Container>& rhs)
 		{ return (lhs.base() - rhs.base()); }
 
 	/* iterator types ******************************************************* */
@@ -545,37 +523,32 @@ namespace ft
 
 	// false by default
 	template<typename Iter>
-		struct __is_input_iter_helper : public false_type {};
+		struct __is_input_iter_helper : public false_type { };
 
 	// specializations to return true for iterators that can be cast to input iterator
 	template<>
 		struct __is_input_iter_helper<input_iterator_tag>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_input_iter_helper<forward_iterator_tag>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_input_iter_helper<bidirectional_iterator_tag>
-		: public true_type {};
+		: public true_type { };
 
 	template<>
 		struct __is_input_iter_helper<random_access_iterator_tag>
-		: public true_type {};
+		: public true_type { };
 	
 	template<typename Iter>
 		struct is_input_iter
-		: public __is_input_iter_helper<typename remove_cv<Iter>::type>::type {};
+		: public __is_input_iter_helper<typename remove_cv<Iter>::type>::type { };
 
-	/*
-	 * The type T is defined only if Cond (T is not an integral type) is true
-	 *
-	 * @param Cond  A compile-time constant of type bool
-	 * @param T     A type
-	 */
+	/* The type T is defined only if Cond (T is not an integral type) is true */
 	template<bool Cond, typename T = void>
-		struct requires_input_iter {};
+		struct requires_input_iter { };
 
 	template<typename T>
 		struct requires_input_iter<true,T>

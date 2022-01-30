@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/27 20:27:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/01/30 19:24:23 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,8 @@ namespace ft
 			
 			// range constructor
 			template<typename InputIterator>
-				vector(InputIterator first, InputIterator last,
-					   const allocator_type& alloc = allocator_type(),
-					   typename requires_input_iter<
-							(!is_integral<InputIterator>::value), InputIterator>::type* = 0);
+				vector(InputIterator first, InputIterator last, const allocator_type& alloc = allocator_type(),
+					   typename requires_input_iter<(!is_integral<InputIterator>::value), InputIterator>::type* = 0);
 
 			// copy constructor
 			vector(const vector& other);
@@ -127,8 +125,7 @@ namespace ft
 			// modifiers
 			template<typename InputIterator>
 				void		assign(InputIterator first, InputIterator last,
-								   typename requires_input_iter<(!is_integral<InputIterator>::value),
-										InputIterator>::type* = 0);
+								   typename requires_input_iter<(!is_integral<InputIterator>::value), InputIterator>::type* = 0);
 			void			assign(size_type n, const value_type& val);
 			void			push_back(const value_type& val);
 			void			pop_back(void);
@@ -136,8 +133,7 @@ namespace ft
 			void			insert(iterator position, size_type n, const value_type& val);
 			template<typename InputIterator>
 				void		insert(iterator position, InputIterator first, InputIterator last,
-								   typename requires_input_iter<(!is_integral<InputIterator>::value),
-										InputIterator>::type* = 0);
+								   typename requires_input_iter<(!is_integral<InputIterator>::value), InputIterator>::type* = 0);
 			iterator		erase(iterator position);
 			iterator		erase(iterator first, iterator last);
 			void			swap(vector& other);
@@ -406,10 +402,9 @@ namespace ft
 	/* Range constructor */
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
-		vector<T,Alloc>::vector(InputIterator first, InputIterator last, const allocator_type& alloc,
-								typename requires_input_iter<
-									(!is_integral<InputIterator>::value),
-									InputIterator>::type*)
+		vector<T,Alloc>::vector(
+			InputIterator first, InputIterator last, const allocator_type& alloc,
+			typename requires_input_iter<(!is_integral<InputIterator>::value), InputIterator>::type*)
 		: _M_alloc(alloc), _M_begin(), _M_end(), _M_end_of_storage()
 		{
 			_M_range_initialize(first, last);
@@ -603,23 +598,23 @@ namespace ft
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::reference
 		vector<T,Alloc>::front(void)
-		{ return ( *(begin()) ); }
+		{ return (*(begin())); }
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_reference
 		vector<T,Alloc>::front(void) const
-		{ return ( *(begin()) ); }
+		{ return (*(begin())); }
 
 	/* Returns the last element in the vector */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::reference
 		vector<T,Alloc>::back(void)
-		{ return ( *(end() - 1) ); }
+		{ return (*(end() - 1)); }
 
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::const_reference
 		vector<T,Alloc>::back(void) const
-		{ return ( *(end() - 1) ); }
+		{ return (*(end() - 1)); }
 
 	/* modifiers ************************************************************ */
 
@@ -627,9 +622,9 @@ namespace ft
 	template<typename T, typename Alloc>
 	template<typename InputIterator>
 		void
-		vector<T,Alloc>::assign(InputIterator first, InputIterator last,
-								typename requires_input_iter<
-									(!is_integral<InputIterator>::value), InputIterator>::type*)
+		vector<T,Alloc>::assign(
+			InputIterator first, InputIterator last,
+			typename requires_input_iter<(!is_integral<InputIterator>::value), InputIterator>::type*)
 		{
 			_M_erase_at_end(_M_begin);
 			_M_deallocate(_M_begin, capacity());
