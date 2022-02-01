@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/05 15:25:08 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/30 19:24:23 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/02/01 13:31:22 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ namespace ft
 			template<typename InputIterator>
 				void		_M_range_insert(iterator __pos, InputIterator __first, InputIterator __last);
 			void			_M_fill_insert(iterator __pos, size_type __n, const value_type& __val);
-			size_type		_M_calculateGrowth(const size_type __n);
+			size_type		_M_calculate_growth(const size_type __n);
 			void			_M_erase_at_end(pointer __pos);
 			void			_M_range_check(const size_type __n) const;
 			size_type		_M_len_check(const size_type __n, const char* __s) const;
@@ -326,7 +326,7 @@ namespace ft
 	/* Calculates capacity growth (private member function to help) */
 	template<typename T, typename Alloc>
 		typename vector<T,Alloc>::size_type
-		vector<T,Alloc>::_M_calculateGrowth(const size_type __n)
+		vector<T,Alloc>::_M_calculate_growth(const size_type __n)
 		{
 			size_type	__dlb_capacity = capacity() + capacity();
 
@@ -554,7 +554,7 @@ namespace ft
 			size_type	old_capacity = capacity();
 			pointer		tmp = this->_M_begin;
 
-			_M_create_storage(_M_calculateGrowth(n));
+			_M_create_storage(_M_calculate_growth(n));
 			for (size_type i = 0; i < old_size; ++i, ++this->_M_end)
 			{
 				this->_M_alloc.construct(this->_M_end, tmp[i]);
