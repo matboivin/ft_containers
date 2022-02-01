@@ -2,10 +2,28 @@
 
 `ft_containers` is a school project of 42.
 
-42 is a private, non-profit and tuition-free Computer Science school based on peer-to-peer learning and hands-on projects.  
-All programs written in C follow [42 style guideline](https://github.com/42Paris/norminette).
+42 is a private, non-profit and tuition-free Computer Science school based on peer-to-peer learning and hands-on projects.
 
 > Implementation of the containers in C++.
+
+This is a school exercise about research. Don't use it since it is not suitable at all for production.
+
+## Requirements
+
+This program was developed on Debian Linux. It runs on Debian and Ubuntu.
+
+## Testing
+
+Own tests:
+
+```console
+$ make && make debug
+```
+
+External tests:
+
+- [A complete basic tester](https://github.com/mli42/containers_test)
+- [An unpredictible fuzzing tester (harder to pass)](https://github.com/jgiron42/ft_containers_monkey_tester)
 
 ## Acknowledgements
 
