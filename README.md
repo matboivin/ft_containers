@@ -8,7 +8,7 @@
 
 This is a school exercise about research. Don't use it since it is not suitable at all for production.
 
-## Requirements
+## Requirements
 
 This program was developed on Debian Linux. It runs on Debian and Ubuntu.
 
@@ -19,6 +19,16 @@ Own tests:
 ```console
 $ make && make debug
 ```
+
+Test and draw Red-Black Tree (used for map and set):
+
+```console
+$ make debug_tree && make test_tree
+```
+
+<p align="center">
+  <img src="assets/tree.png" alt="tree diagram" />
+</p>
 
 External tests:
 

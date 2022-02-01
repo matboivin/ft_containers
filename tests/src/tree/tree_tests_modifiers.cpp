@@ -6,7 +6,7 @@
 /*   By: mboivin <mboivin@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 23:47:01 by mboivin           #+#    #+#             */
-/*   Updated: 2022/01/24 23:16:59 by mboivin          ###   ########.fr       */
+/*   Updated: 2022/02/01 14:16:42 by mboivin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ namespace ft
 
 		display_tree_infos(tree);
 
-		tree.write_tree_dot("ast_before");
+		tree.write_tree_dot("rbtree_before");
 
 		// perform copy
 		copy_tree = tree;
@@ -91,7 +91,7 @@ namespace ft
 		tree.insert(from, to);
 		display_tree_infos(tree);
 
-		tree.write_tree_dot("ast_after");
+		tree.write_tree_dot("rbtree_after");
 
 		std::cout << "\n\n";
 	}
@@ -132,7 +132,7 @@ namespace ft
 		tree.insert( pair<int, std::string>(17, "seventeen") );
 		tree.insert( pair<int, std::string>(10, "ten") );
 
-		tree.write_tree_dot("ast_before");
+		tree.write_tree_dot("rbtree_before");
 
 		display_tree_infos(tree);
 
@@ -156,7 +156,7 @@ namespace ft
 		tree.erase(79);
 		display_tree_infos(tree);
 
-		tree.write_tree_dot("ast_after");
+		tree.write_tree_dot("rbtree_after");
 	}
 
 	void	test_tree_erase_range(void)
@@ -205,7 +205,7 @@ namespace ft
 		tree.erase(from, to);
 		display_tree_infos(tree);
 
-		tree.write_tree_dot("ast_after_range");
+		tree.write_tree_dot("rbtree_after_range");
 
 		from = ++tree.begin();
 		to = --tree.end();
